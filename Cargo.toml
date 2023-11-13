@@ -1,6 +1,7 @@
 [workspace]
 
 members = [
+    "auth_proxy",
     "frontend",
     "backend",
 ]

@@ -19,3 +19,8 @@ no_autoreload = false
 [clean]
 dist = "dist"
 cargo = false
+
+
+# Authentication proxy
+[[proxy]]
+backend = "http://auth-proxy:9001"

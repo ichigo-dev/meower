@@ -20,6 +20,7 @@ services:
     command: "trunk serve --address 0.0.0.0 --release"
     depends_on:
       - backend
+      - auth-proxy
     tty: true
 
   ##############################################################################
@@ -37,6 +38,25 @@ services:
     working_dir: /app
     depends_on:
       - postgres
+      - auth-proxy
+    tty: true
+
+  ##############################################################################
+  # Authentication proxy server
+  ##############################################################################
+  auth-proxy:
+    container_name: meower_auth_proxy
+    build:
+      context: .
+      dockerfile: ./docker/auth_proxy/Dockerfile
+    ports:
+      - ${AUTH_PROXY_PORT}:9001
+    volumes:
+      - ./auth_proxy:/app
+    working_dir: /app
+    depends_on:
+      - postgres
+    command: "cargo run"
     tty: true
 
   ##############################################################################

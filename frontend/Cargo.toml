@@ -1,5 +1,5 @@
 [package]
-name = "meower-frontend"
+name = "meower_frontend"
 version = "0.1.0"
 edition = "2021"
 
