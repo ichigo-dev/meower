@@ -12,15 +12,10 @@ ignore = []
 
 [serve]
 address = "127.0.0.1"
-port = 8080
+port = 9000
 open = false
 no_autoreload = false
 
 [clean]
 dist = "dist"
 cargo = false
-
-
-# Authentication proxy
-[[proxy]]
-backend = "http://auth-proxy:9001"
