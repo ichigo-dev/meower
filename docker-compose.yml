@@ -1,16 +1,61 @@
 ################################################################################
 # Docker containers
 ################################################################################
+
 services:
+
+  ##############################################################################
+  # Front-end application
+  ##############################################################################
   frontend:
-    container_name: "meower_frontend"
+    container_name: meower_frontend
     build:
       context: .
       dockerfile: ./docker/frontend/Dockerfile
     ports:
-      - "8080:8080"
+      - ${FRONTEND_PORT}:8080
     volumes:
-      - ./frontend:/frontend
-    working_dir: /frontend
+      - ./frontend:/app
+    working_dir: /app
     command: "trunk serve --address 0.0.0.0 --release"
+    depends_on:
+      - backend
+    tty: true
+
+  ##############################################################################
+  # Back-end application
+  ##############################################################################
+  backend:
+    container_name: meower_backend
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    ports:
+      - ${BACKEND_PORT}:9000
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    depends_on:
+      - postgres
+    tty: true
+
+  ##############################################################################
+  # Postgres database
+  ##############################################################################
+  postgres:
+    container_name: meower_postgres
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ./docker/postgres/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8
+    command: ["-c", "max_connections=200"]
+    restart: always
     tty: true

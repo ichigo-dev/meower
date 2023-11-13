@@ -1,3 +1,10 @@
+# Development
+.env
+
+# Rust outputs
 dist/
 target/
 Cargo.lock
+
+# Postgre Data
+pgdata/
