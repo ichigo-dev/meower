@@ -1,0 +1,16 @@
+################################################################################
+# Docker containers
+################################################################################
+services:
+  frontend:
+    container_name: "meower_frontend"
+    build:
+      context: .
+      dockerfile: ./docker/frontend/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/frontend
+    working_dir: /frontend
+    command: "trunk serve --address 0.0.0.0 --release"
+    tty: true

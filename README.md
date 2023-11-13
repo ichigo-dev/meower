@@ -7,6 +7,13 @@ Task management application
 
 For front-end development, we use Sycamore, a component-based framework made by Rust and using WebAssembly (wasm).
 
+### Run
+
+```sh
+$ sudo docker-compose build --no-cache
+$ sudo docker-compose up
+```
+
 
 ## Back-end
 
