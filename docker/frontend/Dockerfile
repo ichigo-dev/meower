@@ -1,4 +1,4 @@
-FROM rust:1.73.0
+FROM rust:1.73.0 AS base
 
 RUN apt-get update \
     && apt-get install -y libssl-dev pkg-config \

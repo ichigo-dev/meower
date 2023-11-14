@@ -35,6 +35,7 @@ services:
     volumes:
       - ./backend:/app
     working_dir: /app
+    command: "cargo watch -x run"
     depends_on:
       - postgres
     tty: true
@@ -53,7 +54,9 @@ services:
       - ./auth_proxy:/app
     working_dir: /app
     environment:
-      PORT: ${AUTH_PROXY_PORT}
+      AUTH_PROXY_PORT: ${AUTH_PROXY_PORT}
+      PROXY_URL: ${PROXY_URL}
+    command: "cargo watch -x run"
     depends_on:
       - postgres
       - frontend

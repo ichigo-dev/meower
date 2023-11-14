@@ -22,7 +22,7 @@ async fn main()
     });
 
     // Run the server.
-    let port = env::var("PORT")
+    let port = env::var("AUTH_PROXY_PORT")
         .unwrap_or("8080".to_string())
         .parse()
         .unwrap_or(8080);
@@ -43,8 +43,10 @@ async fn proxy( req: Request<Body> ) -> Result<Response<Body>, hyper::Error>
         Some(path) => path,
         None => return Ok(Response::new(Body::empty())),
     };
+    let proxy_url = env::var("PROXY_URL")
+        .unwrap_or("http://frontend:9000".to_string());
     let to_req = Request::builder()
-        .uri("http://frontend:9000".to_string() + path.as_str())
+        .uri(proxy_url + path.as_str())
         .method(req.method())
         .version(req.version())
         .body(req.into_body())
