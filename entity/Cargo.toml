@@ -1,0 +1,8 @@
+[package]
+name = "meower_entity"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+sea-orm = { version = "0.12.6" }

@@ -4,4 +4,6 @@ members = [
     "auth_proxy",
     "frontend",
     "backend",
+    "migration",
+    "entity",
 ]

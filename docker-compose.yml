@@ -34,10 +34,12 @@ services:
       - ${BACKEND_PORT}:9001
     volumes:
       - ./backend:/app
+      - ./migration:/migration
+      - ./entity:/entity
     working_dir: /app
     command: "cargo watch -x run"
     depends_on:
-      - postgres
+      - migration
     tty: true
 
   ##############################################################################
@@ -52,18 +54,20 @@ services:
       - ${AUTH_PROXY_PORT}:8080
     volumes:
       - ./auth_proxy:/app
+      - ./migration:/migration
+      - ./entity:/entity
     working_dir: /app
     environment:
       AUTH_PROXY_PORT: ${AUTH_PROXY_PORT}
       PROXY_URL: ${PROXY_URL}
     command: "cargo watch -x run"
     depends_on:
-      - postgres
+      - migration
       - frontend
     tty: true
 
   ##############################################################################
-  # Postgres database
+  # PostgreSQL database
   ##############################################################################
   postgres:
     container_name: meower_postgres
@@ -81,4 +85,24 @@ services:
       POSTGRES_INITDB_ARGS: --encoding=UTF-8
     command: ["-c", "max_connections=200"]
     restart: always
+    tty: true
+
+  ##############################################################################
+  # Database migration
+  ##############################################################################
+  migration:
+    container_name: meower_migration
+    build:
+      context: .
+      dockerfile: ./docker/migration/Dockerfile
+    ports:
+      - ${MIGRATION_PORT}:5433
+    volumes:
+      - ./migration:/migration
+      - ./entity:/entity
+    working_dir: /
+    environment:
+      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}
+    depends_on:
+      - postgres
     tty: true

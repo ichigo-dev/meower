@@ -19,3 +19,13 @@ For back-end development, we use Axum, a Tokio based framework made by Rust.
 $ sudo docker-compose build --no-cache
 $ sudo docker-compose up
 ```
+
+
+## Migrate database
+
+```sh
+$ sudo docker-compose exec migration bash
+> sea-orm-cli migrate generate [migration file name]
+> sea-orm-cli migrate
+> sea-orm-cli generate -o entity/src/entities
+```
