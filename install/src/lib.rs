@@ -1,6 +1,9 @@
 //------------------------------------------------------------------------------
-//! Data model entities.
+//! Installers for meower application.
+//!
+//! # Usage
+//!
+//! ```sh
+//! $ cargo run --bin install_test_data
+//! ```
 //------------------------------------------------------------------------------
-
-mod entities;
-pub use entities::*;

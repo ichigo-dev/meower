@@ -2,9 +2,13 @@
 
 use sea_orm::entity::prelude::*;
 
+//------------------------------------------------------------------------------
+/// User table model.
+//------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
 #[sea_orm(table_name = "user")]
-pub struct Model {
+pub struct Model
+{
     #[sea_orm(primary_key)]
     pub id: i32,
     pub email: String,

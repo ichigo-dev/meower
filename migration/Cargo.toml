@@ -1,12 +1,14 @@
 [package]
-name = "migration"
+name = "meower_migration"
 version = "0.1.0"
 edition = "2021"
 publish = false
 
+
 [lib]
-name = "migration"
+name = "meower_migration"
 path = "src/lib.rs"
+
 
 [dependencies]
 tokio = { version = "1.34.0", features = ["full"] }

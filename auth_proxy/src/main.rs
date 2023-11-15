@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-/// Authentication server.
+//! Authentication server.
 //------------------------------------------------------------------------------
 
 use std::net::SocketAddr;
@@ -9,6 +9,7 @@ use axum::response::Response;
 use axum::http::Request;
 use axum::body::Body;
 use tower::make::Shared;
+
 
 //------------------------------------------------------------------------------
 /// Main entry point.
@@ -32,6 +33,7 @@ async fn main()
         .await
         .unwrap();
 }
+
 
 //------------------------------------------------------------------------------
 /// Proxies the request to the frontend.
