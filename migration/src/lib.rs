@@ -4,7 +4,8 @@
 
 pub use sea_orm_migration::prelude::*;
 
-mod m20231114_041811_create_user_table;
+mod migration;
+use migration::m20231114_041811_create_user_table;
 
 pub struct Migrator;
 

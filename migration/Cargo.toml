@@ -5,14 +5,24 @@ edition = "2021"
 publish = false
 
 
-[lib]
-name = "meower_migration"
-path = "src/lib.rs"
-
-
 [dependencies]
+meower_entity = { version = "0.1.0", path = "../entity" }
 tokio = { version = "1.34.0", features = ["full"] }
 sea-orm-migration = { version = "0.12.6", features = [
     "runtime-tokio-rustls",
     "sqlx-postgres"
 ]}
+sea-orm = { version = "0.12.6", features = [
+    "runtime-tokio-rustls",
+    "sqlx-postgres"
+]}
+
+
+[lib]
+name = "meower_migration"
+path = "src/lib.rs"
+
+
+[[bin]]
+name = "install_test_data"
+path = "src/install/install_test_data.rs"
