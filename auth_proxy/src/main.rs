@@ -2,15 +2,20 @@
 //! Authentication server.
 //------------------------------------------------------------------------------
 
+mod auth;
 mod login;
+mod assets;
+mod proxy;
 
 use std::net::SocketAddr;
 use std::env;
 
-use axum::response::Response;
-use axum::http::Request;
+use axum::Router;
+use axum::routing::get;
 use axum::body::Body;
-use tower::make::Shared;
+use hyper::client::HttpConnector;
+
+pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
 
 
 //------------------------------------------------------------------------------
@@ -19,49 +24,22 @@ use tower::make::Shared;
 #[tokio::main]
 async fn main()
 {
-    let service = tower::service_fn(move |req: Request<_>|
-    {
-        async move { proxy(req).await }
-    });
+    // Creates the application.
+    let client = Client::new();
+    let app = Router::new()
+        .route("/login", get(login::handler))
+        .route("/_assets/*path", get(assets::handler))
+        .fallback(proxy::handler)
+        .with_state(client);
 
-    // Run the server.
+    // Runs the server.
     let port = env::var("AUTH_PROXY_PORT")
         .unwrap_or("8080".to_string())
         .parse()
         .unwrap_or(8080);
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     axum::Server::bind(&addr)
-        .serve(Shared::new(service))
+        .serve(app.into_make_service())
         .await
         .unwrap();
-}
-
-
-//------------------------------------------------------------------------------
-/// Proxies the request to the frontend.
-//------------------------------------------------------------------------------
-async fn proxy( req: Request<Body> ) -> Result<Response<Body>, hyper::Error>
-{
-    if true
-    {
-        return Ok(login::handler().await);
-    }
-
-    // Proxy the request to the frontend.
-    let path = match req.uri().path_and_query()
-    {
-        Some(path) => path,
-        None => return Ok(Response::new(Body::empty())),
-    };
-    let proxy_url = env::var("PROXY_URL")
-        .unwrap_or("http://frontend:9000".to_string());
-    let to_req = Request::builder()
-        .uri(proxy_url + path.as_str())
-        .method(req.method())
-        .version(req.version())
-        .body(req.into_body())
-        .unwrap();
-
-    let client = hyper::Client::new();
-    client.request(to_req).await
 }

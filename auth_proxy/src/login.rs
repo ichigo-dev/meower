@@ -7,10 +7,18 @@ use axum::response::Response;
 use axum::http::StatusCode;
 use axum::body::Body;
 
+
+//------------------------------------------------------------------------------
+/// Template.
+//------------------------------------------------------------------------------
 #[derive(Template)]
 #[template(path = "login.html")]
 struct LoginTemplate {}
 
+
+//------------------------------------------------------------------------------
+/// Handler.
+//------------------------------------------------------------------------------
 pub async fn handler() -> Response<Body>
 {
     let template = LoginTemplate {};
