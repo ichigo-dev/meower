@@ -2,6 +2,8 @@
 //! Authentication server.
 //------------------------------------------------------------------------------
 
+mod login;
+
 use std::net::SocketAddr;
 use std::env;
 
@@ -40,6 +42,12 @@ async fn main()
 //------------------------------------------------------------------------------
 async fn proxy( req: Request<Body> ) -> Result<Response<Body>, hyper::Error>
 {
+    if true
+    {
+        return Ok(login::handler().await);
+    }
+
+    // Proxy the request to the frontend.
     let path = match req.uri().path_and_query()
     {
         Some(path) => path,
