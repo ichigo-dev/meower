@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Handles static assets.
+//! Handlers for static asset contents such as CSS.
 //------------------------------------------------------------------------------
 
 use axum::response::IntoResponse;
@@ -10,7 +10,7 @@ static STYLE_CSS: &str = include_str!("../assets/style.css");
 
 
 //------------------------------------------------------------------------------
-/// Handles static assets.
+/// Handles static asset contents.
 //------------------------------------------------------------------------------
 pub(crate) async fn handler( Path(path): Path<String> ) -> impl IntoResponse
 {

@@ -1,5 +1,9 @@
 //------------------------------------------------------------------------------
-//! Authentication server.
+//! Reverse proxy server for authentication for Meower app.
+//!
+//! If the user is already logged in, the request is proxied to the server that
+//! responds with Meower's SPA, otherwise the user is redirected to the login
+//! page.
 //------------------------------------------------------------------------------
 
 mod auth;

@@ -1,10 +1,14 @@
+//------------------------------------------------------------------------------
+//! Proxies requests to the frontend.
+//------------------------------------------------------------------------------
+
 use crate::auth;
 use crate::Client;
 
 use std::env;
 
 use axum::http::Request;
-use axum::response::Response;
+use axum::response::{ Redirect, IntoResponse };
 use axum::body::Body;
 use axum::extract::State;
 use hyper::Uri;
@@ -17,13 +21,15 @@ pub(crate) async fn handler
 (
     State(client): State<Client>,
     mut req: Request<Body>,
-) -> Response<Body>
+) -> Result<impl IntoResponse, impl IntoResponse>
 {
-    if auth::is_logined().await
+    // If the user is not logged in, redirects to the login page.
+    if auth::is_logined().await == false
     {
-        return crate::login::handler().await;
+        return Err(Redirect::to("/login"));
     }
 
+    // Proxies the request to the frontend.
     let path = req.uri().path();
     let path_query = req
         .uri()
@@ -37,5 +43,5 @@ pub(crate) async fn handler
 
     *req.uri_mut() = Uri::try_from(uri).unwrap();
 
-    client.request(req).await.unwrap()
+    Ok(client.request(req).await.unwrap())
 }
