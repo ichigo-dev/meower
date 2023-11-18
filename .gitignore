@@ -6,5 +6,6 @@ dist/
 target/
 Cargo.lock
 
-# Postgre Data
-pgdata/
+# Data files
+docker/postgres/data/
+docker/redis/data/

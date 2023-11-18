@@ -6,18 +6,25 @@
 //! page.
 //------------------------------------------------------------------------------
 
+mod pages;
+mod layers;
 mod auth;
-mod login;
 mod assets;
 mod proxy;
+
+use pages::login;
+use layers::session;
 
 use std::net::SocketAddr;
 use std::env;
 
-use axum::Router;
+use axum::{ Router, BoxError };
 use axum::routing::get;
 use axum::body::Body;
+use axum::http::StatusCode;
+use axum::error_handling::HandleErrorLayer;
 use hyper::client::HttpConnector;
+use tower::ServiceBuilder;
 
 pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
 
@@ -28,12 +35,27 @@ pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
 #[tokio::main]
 async fn main()
 {
-    // Creates the application.
-    let client = Client::new();
-    let app = Router::new()
+    // Creates the application routes.
+    let routes = Router::new()
         .route("/login", get(login::handler))
         .route("/_assets/*path", get(assets::handler))
-        .fallback(proxy::handler)
+        .fallback(proxy::handler);
+
+    // Adds layers and shared state.
+    let client = Client::new();
+    let session_service = ServiceBuilder::new()
+        .layer
+        (
+            HandleErrorLayer::new(|_: BoxError| async
+            {
+                StatusCode::BAD_REQUEST
+            })
+        )
+        .layer(session::layer().await);
+
+    // Creates the application.
+    let app = routes
+        .layer(session_service)
         .with_state(client);
 
     // Runs the server.

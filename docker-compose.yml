@@ -41,7 +41,8 @@ services:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}
     command: "cargo watch -x run"
     depends_on:
-      - migration
+      - postgres
+      - redis
     tty: true
 
   ##############################################################################
@@ -61,10 +62,11 @@ services:
     working_dir: /app
     environment:
       AUTH_PROXY_PORT: ${AUTH_PROXY_PORT}
-      PROXY_URL: ${PROXY_URL}
+      PROXY_URL: ${PROXY_URL}:${FRONTEND_PORT}
+      REDIS_URL: ${REDIS_URL}:${REDIS_PORT}
     command: "cargo watch -x run"
     depends_on:
-      - migration
+      - postgres
       - frontend
     tty: true
 
@@ -79,7 +81,7 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
-      - ./docker/postgres/pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -108,3 +110,16 @@ services:
     depends_on:
       - postgres
     tty: true
+
+  ##############################################################################
+  # Redis
+  ##############################################################################
+  redis:
+    container_name: meower_redis
+    build:
+      context: .
+      dockerfile: ./docker/redis/Dockerfile
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - ./docker/redis/data:/data
