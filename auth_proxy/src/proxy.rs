@@ -37,9 +37,9 @@ pub(crate) async fn handler
         .map(|v| v.as_str())
         .unwrap_or(path);
 
-    let proxy_url = env::var("PROXY_URL")
+    let proxy_uri = env::var("PROXY_URL")
         .unwrap_or("http://frontend:9000".to_string());
-    let uri = format!("{}{}", proxy_url, path_query);
+    let uri = format!("{}{}", proxy_uri, path_query);
 
     *req.uri_mut() = Uri::try_from(uri).unwrap();
 
