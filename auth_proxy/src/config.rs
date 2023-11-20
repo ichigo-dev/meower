@@ -8,6 +8,7 @@ use std::env;
 #[derive(Debug, Clone)]
 pub struct Config
 {
+    debug_mode: bool,
     port: u16,
     proxy_url: String,
     jwt_issue: String,
@@ -24,6 +25,10 @@ impl Config
     //--------------------------------------------------------------------------
     pub(crate) fn init() -> Self
     {
+        let debug_mode = env::var("DEBUG_MODE")
+            .unwrap_or("false".to_string())
+            .parse()
+            .unwrap_or(false);
         let port = env::var("AUTH_PROXY_PORT")
             .unwrap_or("8080".to_string())
             .parse()
@@ -50,6 +55,7 @@ impl Config
 
         Self
         {
+            debug_mode,
             port,
             proxy_url,
             jwt_issue,
@@ -58,6 +64,14 @@ impl Config
             jwt_secret,
             jwt_expires,
         }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Returns the debug mode.
+    //--------------------------------------------------------------------------
+    pub(crate) fn debug_mode(&self) -> bool
+    {
+        self.debug_mode
     }
 
     //--------------------------------------------------------------------------

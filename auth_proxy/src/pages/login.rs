@@ -2,15 +2,15 @@
 //! Login page.
 //------------------------------------------------------------------------------
 
-use crate::Auth;
-use crate::Client;
-use crate::Config;
+use crate::AppState;
 
 use askama::Template;
 use axum::response::{ Redirect, Response, IntoResponse };
-use axum::http::StatusCode;
+use axum::http::{ header, StatusCode };
 use axum::body::Body;
 use axum::extract::{ State, Form };
+use axum_extra::extract::cookie::{ Cookie, SameSite };
+use time::Duration;
 use serde::Deserialize;
 
 
@@ -52,12 +52,14 @@ pub(crate) struct LoginForm
 //------------------------------------------------------------------------------
 pub(crate) async fn post_handler
 (
-    State(client): State<Client>,
-    State(config): State<Config>,
-    State(auth): State<Auth>,
+    State(state): State<AppState>,
     Form(input): Form<LoginForm>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
+    let client = state.client();
+    let auth = state.auth();
+    let config = state.config();
+
     // Try to login.
     if auth.login(&input.email, &input.password).await == false
     {
@@ -66,12 +68,19 @@ pub(crate) async fn post_handler
 
     // Makes JWT token.
     let jwt = auth.make_jwt(&config);
+    let cookie = Cookie::build("jwt_token", jwt.to_owned())
+        .path("/")
+        .same_site(SameSite::Lax)
+        .http_only(true)
+        .max_age(Duration::seconds(config.jwt_expires()))
+        .secure(config.debug_mode() == false)
+        .finish();
 
     // Proxies to the frontend.
     let uri = config.proxy_url().parse().unwrap();
     let mut response = client.get(uri).await.unwrap();
     response
         .headers_mut()
-        .insert("Set-Cookie", format!("jwt={}", jwt).parse().unwrap());
+        .insert(header::SET_COOKIE, cookie.to_string().parse().unwrap());
     Ok(response)
 }
