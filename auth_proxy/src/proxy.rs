@@ -2,10 +2,9 @@
 //! Proxies requests to the frontend.
 //------------------------------------------------------------------------------
 
-use crate::auth;
+use crate::Auth;
 use crate::Client;
-
-use std::env;
+use crate::Config;
 
 use axum::http::Request;
 use axum::response::{ Redirect, IntoResponse };
@@ -20,11 +19,13 @@ use hyper::Uri;
 pub(crate) async fn handler
 (
     State(client): State<Client>,
+    State(config): State<Config>,
+    State(auth): State<Auth>,
     mut req: Request<Body>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     // If the user is not logged in, redirects to the login page.
-    if auth::is_logined().await == false
+    if auth.is_logined().await == false
     {
         return Err(Redirect::to("/login"));
     }
@@ -36,10 +37,7 @@ pub(crate) async fn handler
         .path_and_query()
         .map(|v| v.as_str())
         .unwrap_or(path);
-
-    let proxy_uri = env::var("PROXY_URL")
-        .unwrap_or("http://frontend:9000".to_string());
-    let uri = format!("{}{}", proxy_uri, path_query);
+    let uri = format!("{}{}", config.proxy_url(), path_query);
 
     *req.uri_mut() = Uri::try_from(uri).unwrap();
 

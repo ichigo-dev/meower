@@ -2,10 +2,9 @@
 //! Login page.
 //------------------------------------------------------------------------------
 
-use crate::auth;
+use crate::Auth;
 use crate::Client;
-
-use std::env;
+use crate::Config;
 
 use askama::Template;
 use axum::response::{ Redirect, Response, IntoResponse };
@@ -54,24 +53,23 @@ pub(crate) struct LoginForm
 pub(crate) async fn post_handler
 (
     State(client): State<Client>,
+    State(config): State<Config>,
+    State(auth): State<Auth>,
     Form(input): Form<LoginForm>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     // Try to login.
-    if auth::login(&input.email, &input.password).await == false
+    if auth.login(&input.email, &input.password).await == false
     {
         return Err(Redirect::to("/login"));
     }
 
     // Makes JWT token.
-    let jwt = auth::make_jwt("secret", "1");
+    let jwt = auth.make_jwt(&config);
 
     // Proxies to the frontend.
-    let proxy_uri = env::var("PROXY_URL")
-        .unwrap_or("http://frontend:9000".to_string())
-        .parse()
-        .unwrap();
-    let mut response = client.get(proxy_uri).await.unwrap();
+    let uri = config.proxy_url().parse().unwrap();
+    let mut response = client.get(uri).await.unwrap();
     response
         .headers_mut()
         .insert("Set-Cookie", format!("jwt={}", jwt).parse().unwrap());
