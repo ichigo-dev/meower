@@ -2,6 +2,8 @@
 
 Task management application
 
+![Architecture](./architecture.png)
+
 
 ## Application Components
 

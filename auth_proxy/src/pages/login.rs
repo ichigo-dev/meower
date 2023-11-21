@@ -26,14 +26,23 @@ struct LoginTemplate {}
 //------------------------------------------------------------------------------
 /// Handles login page.
 //------------------------------------------------------------------------------
-pub(crate) async fn get_handler() -> impl IntoResponse
+pub(crate) async fn get_handler
+(
+    Extension(auth): Extension<Auth>,
+) -> Result<impl IntoResponse, impl IntoResponse>
 {
+    if auth.is_logined().await
+    {
+        return Err(Redirect::to("/"));
+    }
+
     let template = LoginTemplate {};
     let body = template.render().unwrap();
-    Response::builder()
+    let response = Response::builder()
         .status(StatusCode::OK)
         .body(Body::from(body))
-        .unwrap()
+        .unwrap();
+    Ok(response)
 }
 
 
@@ -58,7 +67,6 @@ pub(crate) async fn post_handler
     Form(input): Form<LoginForm>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
-    let client = state.client();
     let config = state.config();
 
     // Try to login.

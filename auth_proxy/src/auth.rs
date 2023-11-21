@@ -33,7 +33,7 @@ pub(crate) struct Claims
     jti: String,
     iss: String,
     sub: String,
-    //aud: Vec<String>,
+    aud: Vec<String>,
     iat: i64,
     nbf: i64,
     exp: i64,
@@ -65,26 +65,17 @@ impl Auth
         }
 
         // Decodes the JWT token.
+        let mut validation = Validation::new(Algorithm::HS256);
+        validation.set_audience(&config.jwt_audience());
         match decode::<Claims>
         (
             jwt,
             &DecodingKey::from_secret(config.jwt_secret().as_ref()),
-            &Validation::new(Algorithm::HS256),
+            &validation,
         )
         {
             Ok(token) =>
             {
-                println!("token");
-                // Checks if the token is expired.
-                if token.claims.exp < Utc::now().timestamp()
-                {
-                println!("expire");
-                    return Self
-                    {
-                        claims: None,
-                    };
-                }
-
                 return Self
                 {
                     claims: Some(token.claims),
@@ -134,7 +125,7 @@ impl Auth
             jti: Uuid::new_v4().to_string(),
             iss: config.jwt_issue().to_string(),
             sub: config.jwt_subject().to_string(),
-            //aud: config.jwt_audience().clone(),
+            aud: config.jwt_audience().clone(),
             iat,
             nbf: iat,
             exp,
