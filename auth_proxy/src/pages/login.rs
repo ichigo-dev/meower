@@ -2,8 +2,7 @@
 //! Login page.
 //------------------------------------------------------------------------------
 
-use crate::AppState;
-use crate::Auth;
+use crate::{ AppState, Auth, JWT_COOKIE_KEY };
 
 use askama::Template;
 use axum::Extension;
@@ -70,7 +69,7 @@ pub(crate) async fn post_handler
 
     // Makes JWT token.
     let jwt = auth.make_jwt(&config);
-    let cookie = Cookie::build("jwt_token", jwt.to_owned())
+    let cookie = Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
         .path("/")
         .same_site(SameSite::Lax)
         .http_only(true)
@@ -79,10 +78,11 @@ pub(crate) async fn post_handler
         .finish();
 
     // Proxies to the frontend.
-    let uri = config.proxy_url().parse().unwrap();
-    let mut response = client.get(uri).await.unwrap();
-    response
-        .headers_mut()
-        .insert(header::SET_COOKIE, cookie.to_string().parse().unwrap());
+    let response = Response::builder()
+        .status(StatusCode::SEE_OTHER)
+        .header(header::LOCATION, "/")
+        .header(header::SET_COOKIE, cookie.to_string())
+        .body(Body::empty())
+        .unwrap();
     Ok(response)
 }

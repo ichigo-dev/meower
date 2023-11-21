@@ -18,13 +18,12 @@ use pages::login;
 
 use std::net::SocketAddr;
 
-use axum::Router;
-use axum::routing::{ get, post };
+use axum::{ Router, middleware };
 use axum::body::Body;
-use axum::http::Request;
-use axum::response::IntoResponse;
-use axum::middleware::{ self, Next };
+use axum::routing::{ get, post };
 use hyper::client::HttpConnector;
+
+static JWT_COOKIE_KEY: &str = "token";
 
 pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
 
@@ -84,7 +83,14 @@ async fn main()
         .route("/login", post(login::post_handler))
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
-        .route_layer(middleware::from_fn(auth_layer))
+        .layer
+        (
+            middleware::from_fn_with_state
+            (
+                app_state.clone(),
+                auth::auth_layer
+            )
+        )
         .with_state(app_state);
 
     // Runs the server.
@@ -94,18 +100,4 @@ async fn main()
         .serve(app.into_make_service())
         .await
         .unwrap();
-}
-
-pub(crate) async fn auth_layer
-(
-    mut req: Request<Body>,
-    next: Next<Body>,
-) -> Result<impl IntoResponse, impl IntoResponse>
-{
-    if false
-    {
-        return Err(());
-    }
-    req.extensions_mut().insert(Auth::new());
-    Ok(next.run(req).await)
 }
