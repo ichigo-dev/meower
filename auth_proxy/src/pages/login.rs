@@ -3,8 +3,10 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
+use crate::Auth;
 
 use askama::Template;
+use axum::Extension;
 use axum::response::{ Redirect, Response, IntoResponse };
 use axum::http::{ header, StatusCode };
 use axum::body::Body;
@@ -53,11 +55,11 @@ pub(crate) struct LoginForm
 pub(crate) async fn post_handler
 (
     State(state): State<AppState>,
+    Extension(auth): Extension<Auth>,
     Form(input): Form<LoginForm>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let client = state.client();
-    let auth = state.auth();
     let config = state.config();
 
     // Try to login.

@@ -3,7 +3,9 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
+use crate::Auth;
 
+use axum::Extension;
 use axum::http::Request;
 use axum::response::{ Redirect, IntoResponse };
 use axum::body::Body;
@@ -17,10 +19,10 @@ use hyper::Uri;
 pub(crate) async fn handler
 (
     State(state): State<AppState>,
+    Extension(auth): Extension<Auth>,
     mut req: Request<Body>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
-    let auth = state.auth();
     let config = state.config();
     let client = state.client();
 

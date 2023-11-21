@@ -21,6 +21,9 @@ use std::net::SocketAddr;
 use axum::Router;
 use axum::routing::{ get, post };
 use axum::body::Body;
+use axum::http::Request;
+use axum::response::IntoResponse;
+use axum::middleware::{ self, Next };
 use hyper::client::HttpConnector;
 
 pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
@@ -34,7 +37,6 @@ pub(crate) struct AppState
 {
     client: Client,
     config: Config,
-    auth: Auth,
 }
 
 impl AppState
@@ -42,9 +44,9 @@ impl AppState
     //--------------------------------------------------------------------------
     /// Creates a new application state.
     //--------------------------------------------------------------------------
-    pub(crate) fn new( client: Client, config: Config, auth: Auth ) -> Self
+    pub(crate) fn new( client: Client, config: Config ) -> Self
     {
-        Self { client, config, auth }
+        Self { client, config }
     }
 
     //--------------------------------------------------------------------------
@@ -62,14 +64,6 @@ impl AppState
     {
         &self.config
     }
-
-    //--------------------------------------------------------------------------
-    /// Returns the auth.
-    //--------------------------------------------------------------------------
-    pub(crate) fn auth( &self ) -> &Auth
-    {
-        &self.auth
-    }
 }
 
 
@@ -82,8 +76,7 @@ async fn main()
     // Initializes the application state.
     let client = Client::new();
     let config = Config::init();
-    let auth = Auth::init();
-    let app_state = AppState::new(client, config.clone(), auth);
+    let app_state = AppState::new(client, config.clone());
 
     // Creates the application.
     let app = Router::new()
@@ -91,6 +84,7 @@ async fn main()
         .route("/login", post(login::post_handler))
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
+        .route_layer(middleware::from_fn(auth_layer))
         .with_state(app_state);
 
     // Runs the server.
@@ -100,4 +94,18 @@ async fn main()
         .serve(app.into_make_service())
         .await
         .unwrap();
+}
+
+pub(crate) async fn auth_layer
+(
+    mut req: Request<Body>,
+    next: Next<Body>,
+) -> Result<impl IntoResponse, impl IntoResponse>
+{
+    if false
+    {
+        return Err(());
+    }
+    req.extensions_mut().insert(Auth::new());
+    Ok(next.run(req).await)
 }
