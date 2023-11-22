@@ -8,14 +8,20 @@ use std::env;
 #[derive(Debug, Clone)]
 pub struct Config
 {
+    // Application configuration.
     debug_mode: bool,
     port: u16,
     proxy_url: String,
+
+    // JWT configuration.
     jwt_issue: String,
     jwt_subject: String,
     jwt_audience: Vec<String>,
     jwt_secret: String,
     jwt_expires: i64,
+
+    // Argon2 configuration.
+    argon2_phc_salt: String,
 }
 
 impl Config
@@ -53,6 +59,10 @@ impl Config
             .parse()
             .unwrap_or(3600);
 
+        // Argon2 configuration.
+        let argon2_phc_salt = env::var("ARGON2_PHC_SALT")
+            .unwrap_or("salt".to_string());
+
         Self
         {
             debug_mode,
@@ -63,6 +73,7 @@ impl Config
             jwt_audience,
             jwt_secret,
             jwt_expires,
+            argon2_phc_salt,
         }
     }
 
@@ -128,5 +139,13 @@ impl Config
     pub(crate) fn jwt_expires(&self) -> i64
     {
         self.jwt_expires
+    }
+
+    //--------------------------------------------------------------------------
+    /// Returns the Argon2 PHC salt.
+    //--------------------------------------------------------------------------
+    pub(crate) fn argon2_phc_salt(&self) -> &str
+    {
+        &self.argon2_phc_salt
     }
 }

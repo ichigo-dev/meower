@@ -68,6 +68,7 @@ services:
       JWT_AUDIENCE: ${JWT_AUDIENCE}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRES: ${JWT_EXPIRES}
+      ARGON2_PHC_SALT: ${ARGON2_PHC_SALT}
     command: "cargo watch -x run"
     depends_on:
       - postgres
@@ -111,6 +112,7 @@ services:
     working_dir: /
     environment:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}
+      ARGON2_PHC_SALT: ${ARGON2_PHC_SALT}
     depends_on:
       - postgres
     tty: true

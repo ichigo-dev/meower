@@ -2,6 +2,8 @@
 //! Module for user authentication.
 //------------------------------------------------------------------------------
 
+use meower_entity::user::Entity as User;
+
 use crate::{ AppState, Config, JWT_COOKIE_KEY };
 
 use axum::response::IntoResponse;
@@ -10,6 +12,8 @@ use axum::http::{ header, Request };
 use axum::middleware::Next;
 use axum::extract::State;
 use axum_extra::extract::cookie::CookieJar;
+use argon2::{ self, Argon2, PasswordHash, PasswordHasher, PasswordVerifier };
+use argon2::password_hash::SaltString;
 use jsonwebtoken::{
     encode,
     decode,
@@ -133,6 +137,36 @@ impl Auth
 
         let key = EncodingKey::from_secret(config.jwt_secret().as_ref());
         encode(&header, &claims, &key).unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Hashes the password.
+    //--------------------------------------------------------------------------
+    fn password_hash( &self, password: &str, config: &Config ) -> String
+    {
+        let bin_password = password.as_bytes();
+        let salt = SaltString::from_b64(config.argon2_phc_salt().as_ref())
+            .unwrap();
+        let argon2 = Argon2::new
+        (
+            argon2::Algorithm::Argon2id,
+            argon2::Version::V0x13,
+            argon2::Params::default(),
+        );
+        argon2.hash_password(bin_password, &salt)
+            .unwrap()
+            .to_string()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Verifies the password.
+    //--------------------------------------------------------------------------
+    fn password_verify( &self, password: &str, hash: &str ) -> bool
+    {
+        let parsed_hash = PasswordHash::new(&hash).unwrap();
+        Argon2::default()
+            .verify_password(password.as_bytes(), &parsed_hash)
+            .is_ok()
     }
 }
 
