@@ -17,6 +17,6 @@ $ sudo docker-compose exec migration bash
 
 ```sh
 $ sudo docker-compose exec backend bash
-> cd entity
+> cd migration
 > cargo run --bin install_test_data
 ```

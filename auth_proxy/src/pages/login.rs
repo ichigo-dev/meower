@@ -67,10 +67,11 @@ pub(crate) async fn post_handler
     Form(input): Form<LoginForm>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
+    let hdb = state.hdb();
     let config = state.config();
 
     // Try to login.
-    if auth.login(&input.email, &input.password).await == false
+    if auth.login(hdb, &input.email, &input.password).await == false
     {
         return Err(Redirect::to("/login"));
     }

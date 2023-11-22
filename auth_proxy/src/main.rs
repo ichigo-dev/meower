@@ -22,6 +22,7 @@ use axum::{ Router, middleware };
 use axum::body::Body;
 use axum::routing::{ get, post };
 use hyper::client::HttpConnector;
+use sea_orm::{ Database, DbConn };
 
 static JWT_COOKIE_KEY: &str = "token";
 
@@ -34,6 +35,7 @@ pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
 #[derive(Clone)]
 pub(crate) struct AppState
 {
+    hdb: DbConn,
     client: Client,
     config: Config,
 }
@@ -43,9 +45,17 @@ impl AppState
     //--------------------------------------------------------------------------
     /// Creates a new application state.
     //--------------------------------------------------------------------------
-    pub(crate) fn new( client: Client, config: Config ) -> Self
+    pub(crate) fn new( hdb: DbConn, client: Client, config: Config ) -> Self
     {
-        Self { client, config }
+        Self { hdb, client, config }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Returns the db handler.
+    //--------------------------------------------------------------------------
+    pub(crate) fn hdb( &self ) -> &DbConn
+    {
+        &self.hdb
     }
 
     //--------------------------------------------------------------------------
@@ -73,9 +83,13 @@ impl AppState
 async fn main()
 {
     // Initializes the application state.
+    let database_url = std::env::var("DATABASE_URL").unwrap();
+    let hdb = Database::connect(&database_url)
+        .await
+        .expect("Failed to setup the database");
     let client = Client::new();
     let config = Config::init();
-    let app_state = AppState::new(client, config.clone());
+    let app_state = AppState::new(hdb, client, config.clone());
 
     // Creates the application.
     let app = Router::new()

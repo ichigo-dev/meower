@@ -2,7 +2,7 @@
 //! Module for user authentication.
 //------------------------------------------------------------------------------
 
-use meower_entity::user::Entity as User;
+use meower_entity::user::{ self, Entity as User };
 
 use crate::{ AppState, Config, JWT_COOKIE_KEY };
 
@@ -26,6 +26,7 @@ use jsonwebtoken::{
 use chrono::{ Utc, Duration };
 use serde::{ Serialize, Deserialize };
 use uuid::Uuid;
+use sea_orm::{ DbConn, ColumnTrait, EntityTrait, QueryFilter };
 
 
 //------------------------------------------------------------------------------
@@ -99,9 +100,29 @@ impl Auth
     //--------------------------------------------------------------------------
     /// Logs in the user.
     //--------------------------------------------------------------------------
-    pub(crate) async fn login( &self, _email: &str, _password: &str ) -> bool
+    pub(crate) async fn login
+    (
+        &self,
+        hdb: &DbConn,
+        email: &str,
+        password: &str,
+    ) -> bool
     {
-        true
+        match User::find()
+            .filter(user::Column::Email.contains(email))
+            .one(hdb)
+            .await
+            .unwrap()
+        {
+            Some(user) =>
+            {
+                return self.password_verify(password, &user.password);
+            },
+            None =>
+            {
+                return false;
+            },
+        }
     }
 
     //--------------------------------------------------------------------------

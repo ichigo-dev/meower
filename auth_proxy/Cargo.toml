@@ -20,3 +20,7 @@ tower = "0.4.13"
 tower-sessions = { version = "0.5.1", features = ["redis-store"] }
 tracing = "0.1.40"
 uuid = "1.5.0"
+sea-orm = { version = "0.12.6", features = [
+    "runtime-tokio-rustls",
+    "sqlx-postgres"
+]}
