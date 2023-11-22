@@ -20,7 +20,18 @@ use serde::Deserialize;
 //------------------------------------------------------------------------------
 #[derive(Template)]
 #[template(path = "login.html")]
-struct LoginTemplate {}
+struct LoginTemplate<'a>
+{
+    error_msg: &'a str,
+}
+
+impl<'a> Default for LoginTemplate<'a>
+{
+    fn default() -> Self
+    {
+        Self { error_msg: "" }
+    }
+}
 
 
 //------------------------------------------------------------------------------
@@ -36,13 +47,8 @@ pub(crate) async fn get_handler
         return Err(Redirect::to("/"));
     }
 
-    let template = LoginTemplate {};
-    let body = template.render().unwrap();
-    let response = Response::builder()
-        .status(StatusCode::OK)
-        .body(Body::from(body))
-        .unwrap();
-    Ok(response)
+    let template = LoginTemplate::default();
+    Ok(template.render().unwrap())
 }
 
 
@@ -73,7 +79,11 @@ pub(crate) async fn post_handler
     // Try to login.
     if auth.login(hdb, &input.email, &input.password).await == false
     {
-        return Err(Redirect::to("/login"));
+        let template = LoginTemplate
+        {
+            error_msg: "Invalid email or password.",
+        };
+        return Err(template.render().unwrap());
     }
 
     // Makes JWT token.
