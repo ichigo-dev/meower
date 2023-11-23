@@ -5,13 +5,14 @@
  </head>
 
  <body>
-  <h1>Meower Login</h1>
+  <h1>Meower Signup</h1>
   <form method="POST">
    <input type="email" name="email" placeholder="Email">
+   <input type="email" name="email_confirm" placeholder="Email (Confirm)">
    <input type="password" name="password">
+   <input type="password" name="password_confirm">
    <button type="submit">Send</button>
   </form>
-  <a href="/signup">Signup</a>
-  <div>{{ error_msg }}</div>
+  <a href="/login">Login</a>
  </body>
 </html>

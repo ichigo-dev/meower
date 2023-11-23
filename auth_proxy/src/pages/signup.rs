@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Login page.
+//! Signup page.
 //------------------------------------------------------------------------------
 
 use crate::{ AppState, Auth, JWT_COOKIE_KEY };
@@ -16,26 +16,25 @@ use serde::Deserialize;
 
 
 //------------------------------------------------------------------------------
-/// Login page template.
+/// Signup page template.
 //------------------------------------------------------------------------------
 #[derive(Template)]
-#[template(path = "login.html")]
-struct LoginTemplate<'a>
+#[template(path = "signup.html")]
+struct SignupTemplate
 {
-    error_msg: &'a str,
 }
 
-impl<'a> Default for LoginTemplate<'a>
+impl Default for SignupTemplate
 {
     fn default() -> Self
     {
-        Self { error_msg: "" }
+        Self {}
     }
 }
 
 
 //------------------------------------------------------------------------------
-/// Handles login page.
+/// Handles signup page.
 //------------------------------------------------------------------------------
 pub(crate) async fn get_handler
 (
@@ -47,7 +46,7 @@ pub(crate) async fn get_handler
         return Err(Redirect::to("/"));
     }
 
-    let template = LoginTemplate::default();
+    let template = SignupTemplate::default();
     Ok(Html(template.render().unwrap()))
 }
 
@@ -56,7 +55,7 @@ pub(crate) async fn get_handler
 /// Form data.
 //------------------------------------------------------------------------------
 #[derive(Deserialize, Debug)]
-pub(crate) struct LoginForm
+pub(crate) struct SignupForm
 {
     email: String,
     password: String,
@@ -64,44 +63,14 @@ pub(crate) struct LoginForm
 
 
 //------------------------------------------------------------------------------
-/// Handler for login form.
+/// Handler for signup form.
 //------------------------------------------------------------------------------
 pub(crate) async fn post_handler
 (
-    State(state): State<AppState>,
-    Extension(auth): Extension<Auth>,
-    Form(input): Form<LoginForm>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+    State(_state): State<AppState>,
+    Form(_input): Form<SignupForm>,
+) -> impl IntoResponse
 {
-    let hdb = state.hdb();
-    let config = state.config();
-
-    // Try to login.
-    if auth.login(hdb, &input.email, &input.password).await == false
-    {
-        let template = LoginTemplate
-        {
-            error_msg: "Invalid email or password.",
-        };
-        return Err(Html(template.render().unwrap()));
-    }
-
-    // Makes JWT token.
-    let jwt = auth.make_jwt(&config);
-    let cookie = Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
-        .path("/")
-        .same_site(SameSite::Lax)
-        .http_only(true)
-        .max_age(Duration::seconds(config.jwt_expires()))
-        .secure(config.debug_mode() == false)
-        .finish();
-
-    // Proxies to the frontend.
-    let response = Response::builder()
-        .status(StatusCode::SEE_OTHER)
-        .header(header::LOCATION, "/")
-        .header(header::SET_COOKIE, cookie.to_string())
-        .body(Body::empty())
-        .unwrap();
-    Ok(response)
+    let template = SignupTemplate::default();
+    return Html(template.render().unwrap());
 }

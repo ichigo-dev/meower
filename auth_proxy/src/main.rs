@@ -14,7 +14,7 @@ mod proxy;
 
 use auth::Auth;
 use config::Config;
-use pages::login;
+use pages::{ login, signup };
 
 use std::net::SocketAddr;
 
@@ -95,6 +95,8 @@ async fn main()
     let app = Router::new()
         .route("/login", get(login::get_handler))
         .route("/login", post(login::post_handler))
+        .route("/signup", get(signup::get_handler))
+        .route("/signup", post(signup::post_handler))
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
         .layer
