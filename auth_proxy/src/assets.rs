@@ -6,7 +6,7 @@ use axum::response::IntoResponse;
 use axum::extract::Path;
 use axum::http::{ header, HeaderMap, StatusCode };
 
-static STYLE_CSS: &str = include_str!("../assets/style.css");
+static STYLE_CSS: &str = include_str!("../assets/css/style.css");
 
 
 //------------------------------------------------------------------------------

@@ -1,0 +1,197 @@
+@import "reset";
+@import "theme";
+@import "common";
+@import "ui";
+
+//	Fonts
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto+Mono&family=Rubik&display=swap');
+
+
+//------------------------------------------------------------------------------
+//	Page base.
+//------------------------------------------------------------------------------
+html
+{
+	height: 100%;
+}
+
+body
+{
+	font-family: 'Rubik', 'Noto Sans JP', sans-serif;
+	min-height: 100vh;
+	margin: 0;
+}
+
+a
+{
+	color: var(--color-info);
+}
+
+
+//------------------------------------------------------------------------------
+//	Main contents.
+//------------------------------------------------------------------------------
+.wrapper
+{
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+
+	background-color: var(--color-bg);
+	font-size: var(--fs-md);
+	color: var(--color-text-primary);
+
+	.inner
+	{
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		overflow-y: scroll;
+
+		width: 100%;
+		max-width: var(--panel-md);
+		height: 80vh;
+		max-height: 600px;
+		margin: auto;
+		padding: var(--spacing-xl) var(--spacing-md);
+		box-sizing: border-box;
+	}
+}
+
+
+//------------------------------------------------------------------------------
+//	Common header.
+//------------------------------------------------------------------------------
+.header
+{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: var(--spacing-md);
+}
+
+.settings_popup
+{
+	.ui_label
+	{
+		display: inline-block;
+		width: 110px;
+	}
+}
+
+
+//------------------------------------------------------------------------------
+//	Application title.
+//------------------------------------------------------------------------------
+.app_name
+{
+	font-size: var(--fs-xl);
+	font-weight: bold;
+}
+
+
+//------------------------------------------------------------------------------
+//	Quiz content.
+//------------------------------------------------------------------------------
+.quiz_content
+{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing-md);
+	color: var(--color-text-primary);
+	width: 100%;
+	overflow-x: auto;
+
+	//	Code.
+	code
+	{
+		font-family: 'Roboto Mono', monospace;
+		display: inline-block;
+		padding: 0 var(--spacing-sm);
+		border-radius: var(--radius-sm);
+		background-color: #2f3437;
+		color: #fff;
+	}
+
+	pre
+	{
+		width: 100%;
+
+		code
+		{
+			display: block;
+			width: 100%;
+			padding: var(--spacing-sm) var(--spacing-md);
+			overflow: auto;
+		}
+	}
+
+	//	Table.
+	table
+	{
+		table-layout: fixed;
+
+		tr
+		{
+			th
+			{
+				background-color: var(--color-gray-600);
+				color: var(--color-common-white);
+				padding: var(--spacing-xs);
+				font-weight: bold;
+				text-align: center;
+				white-space: nowrap;
+			}
+
+			td
+			{
+				background-color: var(--color-gray-200);
+				color: var(--color-text-primary);
+				padding: var(--spacing-xs);
+				text-align: left;
+			}
+		}
+	}
+
+	//	List.
+	ul
+	{
+		list-style-type: desc;
+		padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) var(--spacing-xl);
+		border-left: 8px solid var(--color-info);
+		background-color: var(--color-gray-200);
+
+		li
+		{
+			padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) 0;
+
+			&:marker
+			{
+				color: var(--color-info);
+				font-size: 1.1em;
+			}
+		}
+	}
+
+	.mask
+	{
+		display: inline-block;
+		color: transparent;
+		background-color: var(--color-text-primary);
+		border: var(--border);
+		margin: 0 var(--spacing-sm);
+		padding: 0 var(--spacing-xs);
+	}
+
+	&.show_answer
+	{
+		.mask
+		{
+			color: var(--color-text-primary);
+			background-color: transparent;
+		}
+	}
+}
