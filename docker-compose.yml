@@ -58,6 +58,7 @@ services:
       - ./auth_proxy:/app
       - ./migration:/migration
       - ./entity:/entity
+      - ./common:/common
     working_dir: /app
     environment:
       DEBUG_MODE: ${DEBUG_MODE}
