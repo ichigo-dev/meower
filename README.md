@@ -46,17 +46,29 @@ everything.
 
 ## Usage
 
+### Initialize project
+
+```sh
+$ make init
+```
+
 ### Run application
 
 ```sh
-$ sudo docker-compose build --no-cache
-$ sudo docker-compose up
+$ make up
+$ make logs
+```
+
+### Convert SCSS to CSS
+
+```sh
+$ make sass
 ```
 
 ### Migrate database
 
 ```sh
-$ sudo docker-compose exec migration bash
+$ make migration
 > sea-orm-cli migrate generate [migration file name]
 > sea-orm-cli migrate
 > sea-orm-cli generate -o entity/src/entities
@@ -65,7 +77,7 @@ $ sudo docker-compose exec migration bash
 ### Install test data
 
 ```sh
-$ sudo docker-compose exec backend bash
+$ make migration
 > cd migration
 > cargo run --bin install_test_data
 ```
@@ -73,6 +85,6 @@ $ sudo docker-compose exec backend bash
 ### Login postgres
 
 ```sh
-$ sudo docker-compose exec postgres bash
+$ make db
 > psql meower meower
 ```

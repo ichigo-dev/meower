@@ -16,6 +16,7 @@ services:
       - ${FRONTEND_PORT}:9000
     volumes:
       - ./frontend:/app
+      - ./common:/common
     working_dir: /app
     command: "trunk serve --address 0.0.0.0 --release"
     depends_on:
