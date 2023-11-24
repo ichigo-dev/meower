@@ -12,6 +12,9 @@
    <button type="submit">Send</button>
   </form>
   <a href="/signup">Signup</a>
-  <div>{{ error_msg }}</div>
+
+  {% for error in errors %}
+   <div>{{ error }}</div>
+  {% endfor %}
  </body>
 </html>

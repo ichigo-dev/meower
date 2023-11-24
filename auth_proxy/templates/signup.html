@@ -14,5 +14,9 @@
    <button type="submit">Send</button>
   </form>
   <a href="/login">Login</a>
+
+  {% for error in errors %}
+   <div>{{ error }}</div>
+  {% endfor %}
  </body>
 </html>

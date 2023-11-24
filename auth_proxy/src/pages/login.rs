@@ -20,16 +20,16 @@ use serde::Deserialize;
 //------------------------------------------------------------------------------
 #[derive(Template)]
 #[template(path = "login.html")]
-struct LoginTemplate<'a>
+struct LoginTemplate
 {
-    error_msg: &'a str,
+    errors: Vec<String>,
 }
 
-impl<'a> Default for LoginTemplate<'a>
+impl Default for LoginTemplate
 {
     fn default() -> Self
     {
-        Self { error_msg: "" }
+        Self { errors: Vec::new() }
     }
 }
 
@@ -79,10 +79,8 @@ pub(crate) async fn post_handler
     // Try to login.
     if auth.login(hdb, &input.email, &input.password).await == false
     {
-        let template = LoginTemplate
-        {
-            error_msg: "Invalid email or password.",
-        };
+        let errors = vec!["Invalid email or password.".to_string()];
+        let template = LoginTemplate { errors };
         return Err(Html(template.render().unwrap()));
     }
 

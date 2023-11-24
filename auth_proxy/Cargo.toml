@@ -24,3 +24,4 @@ sea-orm = { version = "0.12.6", features = [
     "runtime-tokio-rustls",
     "sqlx-postgres"
 ]}
+regex = "1.10.2"
