@@ -5,8 +5,8 @@ edition = "2021"
 
 
 [dependencies]
+meower_utility = { version = "0.1.0", path = "../common" }
 meower_entity = { version = "0.1.0", path = "../entity" }
-argon2 = { version = "0.5.2", features = ["password-hash"] }
 askama = "0.12.1"
 axum = "0.6.20"
 axum-extra = { version = "0.8.0", features = ["cookie"] }
@@ -24,4 +24,4 @@ sea-orm = { version = "0.12.6", features = [
     "runtime-tokio-rustls",
     "sqlx-postgres"
 ]}
-regex = "1.10.2"
+sea-query = "0.30.3"

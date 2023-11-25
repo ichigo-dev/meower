@@ -5,6 +5,9 @@
 use std::env;
 
 
+//------------------------------------------------------------------------------
+/// Configuration.
+//------------------------------------------------------------------------------
 #[derive(Debug, Clone)]
 pub struct Config
 {
@@ -29,7 +32,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Initializes the configuration.
     //--------------------------------------------------------------------------
-    pub(crate) fn init() -> Self
+    pub fn init() -> Self
     {
         let debug_mode = env::var("DEBUG_MODE")
             .unwrap_or("false".to_string())
@@ -80,7 +83,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the debug mode.
     //--------------------------------------------------------------------------
-    pub(crate) fn debug_mode(&self) -> bool
+    pub fn debug_mode(&self) -> bool
     {
         self.debug_mode
     }
@@ -88,7 +91,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the port number.
     //--------------------------------------------------------------------------
-    pub(crate) fn port(&self) -> u16
+    pub fn port(&self) -> u16
     {
         self.port
     }
@@ -96,7 +99,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the proxy URL.
     //--------------------------------------------------------------------------
-    pub(crate) fn proxy_url(&self) -> &str
+    pub fn proxy_url(&self) -> &str
     {
         &self.proxy_url
     }
@@ -104,7 +107,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the JWT issue.
     //--------------------------------------------------------------------------
-    pub(crate) fn jwt_issue(&self) -> &str
+    pub fn jwt_issue(&self) -> &str
     {
         &self.jwt_issue
     }
@@ -112,7 +115,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the JWT subject.
     //--------------------------------------------------------------------------
-    pub(crate) fn jwt_subject(&self) -> &str
+    pub fn jwt_subject(&self) -> &str
     {
         &self.jwt_subject
     }
@@ -120,7 +123,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the JWT audience.
     //--------------------------------------------------------------------------
-    pub(crate) fn jwt_audience(&self) -> &Vec<String>
+    pub fn jwt_audience(&self) -> &Vec<String>
     {
         &self.jwt_audience
     }
@@ -128,7 +131,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the JWT secret.
     //--------------------------------------------------------------------------
-    pub(crate) fn jwt_secret(&self) -> &str
+    pub fn jwt_secret(&self) -> &str
     {
         &self.jwt_secret
     }
@@ -136,7 +139,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the JWT expiration.
     //--------------------------------------------------------------------------
-    pub(crate) fn jwt_expires(&self) -> i64
+    pub fn jwt_expires(&self) -> i64
     {
         self.jwt_expires
     }
@@ -144,7 +147,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Returns the Argon2 PHC salt.
     //--------------------------------------------------------------------------
-    pub(crate) fn argon2_phc_salt(&self) -> &str
+    pub fn argon2_phc_salt(&self) -> &str
     {
         &self.argon2_phc_salt
     }

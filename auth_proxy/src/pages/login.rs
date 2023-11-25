@@ -2,6 +2,7 @@
 //! Login page.
 //------------------------------------------------------------------------------
 
+use meower_entity::user::{ Entity as User };
 use crate::{ AppState, Auth, JWT_COOKIE_KEY };
 
 use askama::Template;
@@ -69,7 +70,6 @@ pub(crate) struct LoginForm
 pub(crate) async fn post_handler
 (
     State(state): State<AppState>,
-    Extension(auth): Extension<Auth>,
     Form(input): Form<LoginForm>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
@@ -77,7 +77,7 @@ pub(crate) async fn post_handler
     let config = state.config();
 
     // Try to login.
-    if auth.login(hdb, &input.email, &input.password).await == false
+    if User::login(hdb, &input.email, &input.password).await == false
     {
         let errors = vec!["Invalid email or password.".to_string()];
         let template = LoginTemplate { errors };
@@ -85,7 +85,7 @@ pub(crate) async fn post_handler
     }
 
     // Makes JWT token.
-    let jwt = auth.make_jwt(&config);
+    let jwt = Auth::make_jwt(&config);
     let cookie = Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
         .path("/")
         .same_site(SameSite::Lax)

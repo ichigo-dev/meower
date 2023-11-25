@@ -6,17 +6,14 @@
 //! page.
 //------------------------------------------------------------------------------
 
-mod config;
+mod auth;
 mod pages;
 mod assets;
-mod auth;
 mod proxy;
-mod validator;
 
-use auth::Auth;
-use config::Config;
+use meower_utility::Auth;
+use meower_utility::Config;
 use pages::{ login, signup };
-use validator::Validator;
 
 use std::net::SocketAddr;
 

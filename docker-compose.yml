@@ -37,6 +37,7 @@ services:
       - ./backend:/app
       - ./migration:/migration
       - ./entity:/entity
+      - ./common:/common
     working_dir: /app
     environment:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}
@@ -112,6 +113,7 @@ services:
     volumes:
       - ./migration:/migration
       - ./entity:/entity
+      - ./common:/common
     working_dir: /
     environment:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}

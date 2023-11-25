@@ -23,7 +23,6 @@ pub(crate) async fn handler
     mut req: Request<Body>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
-    let hdb = state.hdb();
     let config = state.config();
     let client = state.client();
 
