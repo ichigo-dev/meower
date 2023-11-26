@@ -15,7 +15,7 @@ use axum_extra::extract::cookie::CookieJar;
 //------------------------------------------------------------------------------
 /// Authentication layer.
 //------------------------------------------------------------------------------
-pub(crate) async fn auth_layer
+pub(crate) async fn layer
 (
     State(state): State<AppState>,
     cookie: CookieJar,

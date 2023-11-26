@@ -31,10 +31,14 @@ everything.
 ├ docker/               ... Contains Dockerfiles for containers
 │   ├ base/             ... Docker base images for service containers
 │   └ service/          ... Docker images for service containers
-├ common/               ... Contains common files for the entire application ( `auth_proxy` depends on this)
+├ common/               ... Contains common files for the entire application
 │   ├ assets/           ... Contains common asset files
-│   └ src/              ... Utility functions
-├ auth_proxy/           ... Authentication reverse proxy server (Provides login page, etc.)
+│   │   ├ css/
+│   │   └ scss/
+│   ├ src/              ... Utility functions
+│   └ Cargo.toml
+├ auth_proxy/           ... Authentication reverse proxy server
+│   └ templates/        ... Login page, Signup page, etc.
 ├ backend/              ... Application backend server
 ├ frontend/             ... Application backend server
 ├ entity/               ... Database table entities

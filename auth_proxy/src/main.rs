@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 
 mod auth;
+mod i18n;
 mod pages;
 mod assets;
 mod proxy;
@@ -98,14 +99,8 @@ async fn main()
         .route("/signup", post(signup::post_handler))
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
-        .layer
-        (
-            middleware::from_fn_with_state
-            (
-                app_state.clone(),
-                auth::auth_layer
-            )
-        )
+        .layer(middleware::from_fn_with_state(app_state.clone(), i18n::layer))
+        .layer(middleware::from_fn_with_state(app_state.clone(), auth::layer))
         .with_state(app_state);
 
     // Runs the server.

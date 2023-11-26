@@ -16,6 +16,10 @@ pub struct Config
     database_url: String,
     proxy_url: String,
 
+    // Locale configuration.
+    locale_path: String,
+    fallback_locale: String,
+
     // JWT configuration.
     jwt_issue: String,
     jwt_subject: String,
@@ -43,6 +47,12 @@ impl Config
         let proxy_url = env::var("PROXY_URL")
             .unwrap_or("http://frontend:9000".to_string());
 
+        // Locale configuration.
+        let locale_path = env::var("LOCALE_PATH")
+            .unwrap_or("./locale".to_string());
+        let fallback_locale = env::var("FALLBACK_LOCALE")
+            .unwrap_or("en".to_string());
+
         // JWT configuration.
         let jwt_issue = env::var("JWT_ISSUE")
             .unwrap_or("meower".to_string());
@@ -69,6 +79,8 @@ impl Config
             debug_mode,
             database_url,
             proxy_url,
+            locale_path,
+            fallback_locale,
             jwt_issue,
             jwt_subject,
             jwt_audience,
@@ -79,72 +91,63 @@ impl Config
     }
 
     //--------------------------------------------------------------------------
-    /// Returns the debug mode.
+    /// Returns configuration value.
     //--------------------------------------------------------------------------
+
+    // Application configuration.
     pub fn debug_mode(&self) -> bool
     {
         self.debug_mode
     }
 
-    //--------------------------------------------------------------------------
-    /// Returns the database URL.
-    //--------------------------------------------------------------------------
     pub fn database_url(&self) -> &str
     {
         &self.database_url
     }
 
-    //--------------------------------------------------------------------------
-    /// Returns the proxy URL.
-    //--------------------------------------------------------------------------
     pub fn proxy_url(&self) -> &str
     {
         &self.proxy_url
     }
 
-    //--------------------------------------------------------------------------
-    /// Returns the JWT issue.
-    //--------------------------------------------------------------------------
+    // Locale configuration.
+    pub fn locale_path(&self) -> &str
+    {
+        &self.locale_path
+    }
+
+    pub fn fallback_locale(&self) -> &str
+    {
+        &self.fallback_locale
+    }
+
+    // JWT configuration.
     pub fn jwt_issue(&self) -> &str
     {
         &self.jwt_issue
     }
 
-    //--------------------------------------------------------------------------
-    /// Returns the JWT subject.
-    //--------------------------------------------------------------------------
     pub fn jwt_subject(&self) -> &str
     {
         &self.jwt_subject
     }
 
-    //--------------------------------------------------------------------------
-    /// Returns the JWT audience.
-    //--------------------------------------------------------------------------
     pub fn jwt_audience(&self) -> &Vec<String>
     {
         &self.jwt_audience
     }
 
-    //--------------------------------------------------------------------------
-    /// Returns the JWT secret.
-    //--------------------------------------------------------------------------
     pub fn jwt_secret(&self) -> &str
     {
         &self.jwt_secret
     }
 
-    //--------------------------------------------------------------------------
-    /// Returns the JWT expiration.
-    //--------------------------------------------------------------------------
     pub fn jwt_expires(&self) -> i64
     {
         self.jwt_expires
     }
 
-    //--------------------------------------------------------------------------
-    /// Returns the Argon2 PHC salt.
-    //--------------------------------------------------------------------------
+    // Argon2 configuration.
     pub fn argon2_phc_salt(&self) -> &str
     {
         &self.argon2_phc_salt
