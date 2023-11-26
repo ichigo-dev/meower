@@ -82,12 +82,11 @@ impl AppState
 async fn main()
 {
     // Initializes the application state.
-    let database_url = std::env::var("DATABASE_URL").unwrap();
-    let hdb = Database::connect(&database_url)
-        .await
-        .expect("Failed to setup the database");
     let client = Client::new();
     let config = Config::init();
+    let hdb = Database::connect(&config.database_url())
+        .await
+        .expect("Failed to setup the database");
     let app_state = AppState::new(hdb, client, config.clone());
 
     // Creates the application.
@@ -109,7 +108,10 @@ async fn main()
         .with_state(app_state);
 
     // Runs the server.
-    let port = config.port();
+    let port = env::var("AUTH_PROXY_PORT")
+        .unwrap_or("8080".to_string())
+        .parse()
+        .unwrap_or(8080);
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     axum::Server::bind(&addr)
         .serve(app.into_make_service())

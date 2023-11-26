@@ -13,7 +13,7 @@ pub struct Config
 {
     // Application configuration.
     debug_mode: bool,
-    port: u16,
+    database_url: String,
     proxy_url: String,
 
     // JWT configuration.
@@ -38,10 +38,8 @@ impl Config
             .unwrap_or("false".to_string())
             .parse()
             .unwrap_or(false);
-        let port = env::var("AUTH_PROXY_PORT")
-            .unwrap_or("8080".to_string())
-            .parse()
-            .unwrap_or(8080);
+        let database_url = env::var("PROXY_URL")
+            .unwrap_or("".to_string());
         let proxy_url = env::var("PROXY_URL")
             .unwrap_or("http://frontend:9000".to_string());
 
@@ -69,7 +67,7 @@ impl Config
         Self
         {
             debug_mode,
-            port,
+            database_url,
             proxy_url,
             jwt_issue,
             jwt_subject,
@@ -89,11 +87,11 @@ impl Config
     }
 
     //--------------------------------------------------------------------------
-    /// Returns the port number.
+    /// Returns the database URL.
     //--------------------------------------------------------------------------
-    pub fn port(&self) -> u16
+    pub fn database_url(&self) -> &str
     {
-        self.port
+        &self.database_url
     }
 
     //--------------------------------------------------------------------------

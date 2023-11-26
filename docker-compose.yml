@@ -63,16 +63,7 @@ services:
       - ./common:/common
     working_dir: /app
     environment:
-      DEBUG_MODE: ${DEBUG_MODE}
-      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}
       AUTH_PROXY_PORT: ${AUTH_PROXY_PORT}
-      PROXY_URL: ${PROXY_URL}:${FRONTEND_PORT}
-      JWT_ISSUE: ${JWT_ISSUE}
-      JWT_SUBJECT: ${JWT_SUBJECT}
-      JWT_AUDIENCE: ${JWT_AUDIENCE}
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_EXPIRES: ${JWT_EXPIRES}
-      ARGON2_PHC_SALT: ${ARGON2_PHC_SALT}
     command: "cargo watch -x run"
     depends_on:
       - postgres

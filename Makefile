@@ -7,6 +7,7 @@
 # Initialize the project
 init:
 	cp .env.example .env
+	cp common/.env.example common/.env
 
 # Build the containers
 build:
