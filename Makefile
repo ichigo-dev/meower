@@ -54,6 +54,11 @@ migration:
 # Utilities
 ################################################################################
 
+# Install data
+install:
+	@sudo docker-compose exec migration \
+		bash -c 'cd /migration && cargo run --bin ${bin}'
+
 # Convert SCSS to CSS
 sass:
 	@echo "===== Converting SCSS to CSS ====="

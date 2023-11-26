@@ -29,8 +29,11 @@ everything.
 ```
 .
 ├ docker/               ... Contains Dockerfiles for containers
+│   ├ base/             ... Docker base images for service containers
+│   └ service/          ... Docker images for service containers
 ├ common/               ... Contains common files for the entire application ( `auth_proxy` depends on this)
-│   └ assets/           ... Contains common asset files
+│   ├ assets/           ... Contains common asset files
+│   └ src/              ... Utility functions
 ├ auth_proxy/           ... Authentication reverse proxy server (Provides login page, etc.)
 ├ backend/              ... Application backend server
 ├ frontend/             ... Application backend server
@@ -59,12 +62,6 @@ $ make up
 $ make logs
 ```
 
-### Convert SCSS to CSS
-
-```sh
-$ make sass
-```
-
 ### Migrate database
 
 ```sh
@@ -77,9 +74,13 @@ $ make migration
 ### Install test data
 
 ```sh
-$ make migration
-> cd migration
-> cargo run --bin install_test_data
+$ make install --bin install_test_data
+```
+
+### Convert SCSS to CSS
+
+```sh
+$ make sass
 ```
 
 ### Login postgres

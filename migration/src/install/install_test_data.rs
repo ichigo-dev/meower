@@ -6,7 +6,7 @@ use meower_migration::Migrator;
 use meower_entity::user;
 use meower_utility::Config;
 
-pub use sea_orm_migration::MigratorTrait;
+use sea_orm_migration::MigratorTrait;
 use sea_orm::{ Database, ActiveModelTrait, Set };
 use sea_orm::ActiveValue::NotSet;
 use argon2::{ self, Argon2, PasswordHasher };
