@@ -174,4 +174,22 @@ impl I18n
             },
         }
     }
+
+    //--------------------------------------------------------------------------
+    /// Gets the message and replace the placeholders.
+    //--------------------------------------------------------------------------
+    pub fn get_with
+    (
+        &self,
+        key: &str,
+        replace: HashMap<&str, &str>,
+    ) -> String
+    {
+        let mut message = self.get(key);
+        for (key, value) in replace
+        {
+            message = message.replace(&format!("%{}%", key), &value);
+        }
+        message
+    }
 }
