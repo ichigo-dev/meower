@@ -10,5 +10,4 @@ argon2 = { version = "0.5.2", features = ["password-hash"] }
 jsonwebtoken = "9.1.0"
 chrono = "0.4.31"
 serde = "1.0.193"
-uuid = "1.6.1"
-sea-orm = "0.12.7"
+uuid = { version = "1.6.1", features = ["v4"] }

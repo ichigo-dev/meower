@@ -1,8 +1,6 @@
 ################################################################################
-# Axum backend server.
+# Database migration.
 ################################################################################
-FROM rust:1.73.0 AS base
+FROM rust_base AS base
 
-RUN apt-get update
-
-RUN cargo install --locked cargo-watch cargo-udeps cargo-crev cargo-audit
+RUN cargo install --locked sea-orm-cli

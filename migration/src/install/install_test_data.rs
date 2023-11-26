@@ -4,8 +4,7 @@
 
 use meower_migration::Migrator;
 use meower_entity::user;
-
-use std::env;
+use meower_utility::Config;
 
 pub use sea_orm_migration::MigratorTrait;
 use sea_orm::{ Database, ActiveModelTrait, Set };
@@ -16,8 +15,8 @@ use argon2::password_hash::SaltString;
 #[tokio::main]
 async fn main()
 {
-    let database_url = std::env::var("DATABASE_URL").unwrap();
-    let hdb = Database::connect(&database_url)
+    let config = Config::init();
+    let hdb = Database::connect(config.database_url())
         .await
         .expect("Failed to setup the database");
 
@@ -25,10 +24,7 @@ async fn main()
     Migrator::refresh(&hdb).await.unwrap();
 
     // Initializes the Argon2 hasher.
-    let salt = env::var("ARGON2_PHC_SALT")
-        .unwrap_or("salt".to_string());
-    let salt_string = SaltString::from_b64(&salt)
-        .unwrap();
+    let salt_string = SaltString::from_b64(config.argon2_phc_salt()).unwrap();
     let argon2 = Argon2::new
     (
         argon2::Algorithm::Argon2id,

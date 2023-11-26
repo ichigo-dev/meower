@@ -1,8 +1,10 @@
 ################################################################################
-# Reverse proxy server for authentication.
+# Rust base image
 ################################################################################
-FROM rust:1.73.0 AS base
+FROM rust:1.73.0
 
 RUN apt-get update
 
-RUN cargo install --locked cargo-watch cargo-udeps cargo-crev cargo-audit
+RUN rustup install nightly
+RUN cargo install --locked cargo-watch cargo-udeps cargo-crev
+RUN cargo install --locked cargo-audit --features=fix

@@ -38,7 +38,7 @@ impl Config
             .unwrap_or("false".to_string())
             .parse()
             .unwrap_or(false);
-        let database_url = env::var("PROXY_URL")
+        let database_url = env::var("DATABASE_URL")
             .unwrap_or("".to_string());
         let proxy_url = env::var("PROXY_URL")
             .unwrap_or("http://frontend:9000".to_string());

@@ -15,6 +15,7 @@ use meower_utility::Auth;
 use meower_utility::Config;
 use pages::{ login, signup };
 
+use std::env;
 use std::net::SocketAddr;
 
 use axum::{ Router, middleware };
@@ -84,7 +85,7 @@ async fn main()
     // Initializes the application state.
     let client = Client::new();
     let config = Config::init();
-    let hdb = Database::connect(&config.database_url())
+    let hdb = Database::connect(config.database_url().to_string())
         .await
         .expect("Failed to setup the database");
     let app_state = AppState::new(hdb, client, config.clone());

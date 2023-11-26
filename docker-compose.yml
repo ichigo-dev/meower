@@ -5,18 +5,38 @@
 services:
 
   ##############################################################################
+  # Develop
+  ##############################################################################
+  dev:
+    container_name: meower_dev
+    build:
+      context: .
+      dockerfile: ./docker/service/frontend/Dockerfile
+    volumes:
+      - ./auth_proxy:/auth_proxy
+      - ./backend:/backend
+      - ./common:/common
+      - ./entity:/entity
+      - ./frontend:/frontend
+      - ./migration:/migration
+      - ./Cargo.toml:/Cargo.toml
+    env_file: .env
+    tty: true
+
+  ##############################################################################
   # Front-end application
   ##############################################################################
   frontend:
     container_name: meower_frontend
     build:
       context: .
-      dockerfile: ./docker/frontend/Dockerfile
+      dockerfile: ./docker/service/frontend/Dockerfile
     ports:
       - ${FRONTEND_PORT}:9000
     volumes:
       - ./frontend:/app
       - ./common:/common
+    env_file: .env
     working_dir: /app
     command: "trunk serve --address 0.0.0.0 --release"
     depends_on:
@@ -30,7 +50,7 @@ services:
     container_name: meower_backend
     build:
       context: .
-      dockerfile: ./docker/backend/Dockerfile
+      dockerfile: ./docker/service/backend/Dockerfile
     ports:
       - ${BACKEND_PORT}:9001
     volumes:
@@ -38,9 +58,8 @@ services:
       - ./migration:/migration
       - ./entity:/entity
       - ./common:/common
+    env_file: .env
     working_dir: /app
-    environment:
-      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}
     command: "cargo watch -x run"
     depends_on:
       - postgres
@@ -53,7 +72,7 @@ services:
     container_name: meower_auth_proxy
     build:
       context: .
-      dockerfile: ./docker/auth_proxy/Dockerfile
+      dockerfile: ./docker/service/auth_proxy/Dockerfile
     ports:
       - ${AUTH_PROXY_PORT}:8080
     volumes:
@@ -61,9 +80,8 @@ services:
       - ./migration:/migration
       - ./entity:/entity
       - ./common:/common
+    env_file: .env
     working_dir: /app
-    environment:
-      AUTH_PROXY_PORT: ${AUTH_PROXY_PORT}
     command: "cargo watch -x run"
     depends_on:
       - postgres
@@ -77,11 +95,12 @@ services:
     container_name: meower_postgres
     build:
       context: .
-      dockerfile: ./docker/postgres/Dockerfile
+      dockerfile: ./docker/service/postgres/Dockerfile
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
       - ./docker/postgres/data:/var/lib/postgresql/data
+    env_file: .env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -98,17 +117,15 @@ services:
     container_name: meower_migration
     build:
       context: .
-      dockerfile: ./docker/migration/Dockerfile
+      dockerfile: ./docker/service/migration/Dockerfile
     ports:
       - ${MIGRATION_PORT}:5433
     volumes:
       - ./migration:/migration
       - ./entity:/entity
       - ./common:/common
+    env_file: .env
     working_dir: /
-    environment:
-      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}
-      ARGON2_PHC_SALT: ${ARGON2_PHC_SALT}
     depends_on:
       - postgres
     tty: true
