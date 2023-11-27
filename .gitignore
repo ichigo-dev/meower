@@ -7,5 +7,4 @@ target/
 Cargo.lock
 
 # Data files
-docker/postgres/data/
-docker/redis/data/
+docker/service/postgres/data/
