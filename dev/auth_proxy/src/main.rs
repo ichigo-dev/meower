@@ -6,14 +6,14 @@
 //! page.
 //------------------------------------------------------------------------------
 
-mod auth;
-mod i18n;
+mod layers;
 mod pages;
 mod assets;
 mod proxy;
 
 use meower_utility::Auth;
 use meower_utility::Config;
+use layers::{ auth, i18n };
 use pages::{ login, signup };
 
 use std::env;
