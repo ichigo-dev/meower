@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use meower_entity::user::ActiveModel as ActiveUser;
+use meower_entity::account::ActiveModel as ActiveAccount;
 use crate::{ AppState, Auth };
 
 use askama::Template;
@@ -10,7 +11,12 @@ use axum::Extension;
 use axum::response::{ Html, Redirect, IntoResponse };
 use axum::extract::{ State, Form };
 use serde::Deserialize;
-use sea_orm::{ ActiveValue, ActiveModelTrait };
+use sea_orm::{
+    ActiveValue,
+    ActiveModelTrait,
+    ActiveModelBehavior,
+    TransactionTrait,
+};
 
 
 //------------------------------------------------------------------------------
@@ -87,23 +93,44 @@ pub(crate) async fn post_handler
         return Html(template.render().unwrap());
     }
 
-    // Creates a new user.
+    // Creates a new user and account.
+    let tsx = hdb.begin().await.unwrap();
     let user = ActiveUser
     {
-        id: ActiveValue::NotSet,
-        account_name: ActiveValue::Set(input.account_name),
+        user_id: ActiveValue::NotSet,
         email: ActiveValue::Set(input.email),
         password: ActiveValue::Set(input.password),
+        ..ActiveUser::new()
     };
-    match user.insert(hdb).await
+    match user.insert(&tsx).await
     {
-        Ok(_) => {},
-        Err(e_) =>
+        Ok(user) =>
         {
-            let template = SignupTemplate { errors: vec![e_.to_string()] };
+            let account = ActiveAccount
+            {
+                account_name: ActiveValue::Set(input.account_name),
+                user_id: ActiveValue::Set(user.user_id),
+                ..ActiveAccount::new()
+            };
+            match account.insert(&tsx).await
+            {
+                Ok(_) => {},
+                Err(e) =>
+                {
+                    tsx.rollback().await.unwrap();
+                    let template = SignupTemplate { errors: vec![e.to_string()] };
+                    return Html(template.render().unwrap());
+                },
+            }
+        },
+        Err(e) =>
+        {
+            tsx.rollback().await.unwrap();
+            let template = SignupTemplate { errors: vec![e.to_string()] };
             return Html(template.render().unwrap());
         },
     }
+    tsx.commit().await.unwrap();
 
     let template = SignupTemplate::default();
     return Html(template.render().unwrap());

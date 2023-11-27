@@ -5,7 +5,7 @@
 pub use sea_orm_migration::prelude::*;
 
 mod migration;
-use migration::m20231114_041811_create_user_table;
+use migration::*;
 
 pub struct Migrator;
 
@@ -19,7 +19,8 @@ impl MigratorTrait for Migrator
     {
         vec!
         [
-            Box::new(m20231114_041811_create_user_table::Migration)
+            Box::new(m20231127_041811_create_user_table::Migration),
+            Box::new(m20231127_044012_create_account_table::Migration),
         ]
     }
 }

@@ -1,4 +1,9 @@
+//------------------------------------------------------------------------------
+//! Creates `user` table.
+//------------------------------------------------------------------------------
+
 use sea_orm_migration::prelude::*;
+
 
 //------------------------------------------------------------------------------
 /// User table.
@@ -7,10 +12,12 @@ use sea_orm_migration::prelude::*;
 enum User
 {
     Table,
-    Id,
+    UserId,
     Email,
-    AccountName,
     Password,
+    CreatedAt,
+    UpdatedAt,
+    IsDeleted,
 }
 
 #[derive(DeriveMigrationName)]
@@ -22,7 +29,7 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     /// Creates `user` table.
     //--------------------------------------------------------------------------
-    async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr>
+    async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
             .create_table
@@ -32,28 +39,44 @@ impl MigrationTrait for Migration
                     .if_not_exists()
                     .col
                     (
-                        ColumnDef::new(User::Id)
+                        ColumnDef::new(User::UserId)
                             .integer()
                             .not_null()
                             .auto_increment()
-                            .primary_key(),
+                            .primary_key()
                     )
                     .col
                     (
                         ColumnDef::new(User::Email)
                             .string()
-                            .unique()
+                            .unique_key()
                             .not_null()
                     )
                     .col
                     (
-                        ColumnDef::new(User::AccountName)
+                        ColumnDef::new(User::Password)
                             .string()
-                            .unique()
                             .not_null()
                     )
-                    .col(ColumnDef::new(User::Password).string().not_null())
-                    .to_owned(),
+                    .col
+                    (
+                        ColumnDef::new(User::CreatedAt)
+                            .date_time()
+                            .not_null()
+                    )
+                    .col
+                    (
+                        ColumnDef::new(User::UpdatedAt)
+                            .date_time()
+                            .not_null()
+                    )
+                    .col
+                    (
+                        ColumnDef::new(User::IsDeleted)
+                            .boolean()
+                            .default(false)
+                    )
+                    .to_owned()
             )
             .await
     }
@@ -61,7 +84,7 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     /// Drops `user` table.
     //--------------------------------------------------------------------------
-    async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr>
+    async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
             .drop_table(Table::drop().table(User::Table).to_owned())

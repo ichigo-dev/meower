@@ -3,12 +3,18 @@
 //------------------------------------------------------------------------------
 
 use meower_migration::Migrator;
-use meower_entity::user;
+use meower_entity::user::ActiveModel as ActiveUser;
+use meower_entity::account::ActiveModel as ActiveAccount;
 use meower_utility::Config;
 
 use sea_orm_migration::MigratorTrait;
-use sea_orm::{ Database, ActiveModelTrait, Set };
-use sea_orm::ActiveValue::NotSet;
+use sea_orm::{
+    Database,
+    ActiveModelTrait,
+    ActiveValue,
+    ActiveModelBehavior,
+    TransactionTrait,
+};
 
 #[tokio::main]
 async fn main()
@@ -17,19 +23,31 @@ async fn main()
     let hdb = Database::connect(config.database_url())
         .await
         .expect("Failed to setup the database");
+    let tsx = hdb.begin().await.unwrap();
 
     // Refreshes the database.
-    Migrator::refresh(&hdb).await.unwrap();
+    Migrator::refresh(&tsx).await.unwrap();
 
     // Creates a test user.
-    let user = user::ActiveModel
+    let user = ActiveUser
     {
-        id: NotSet,
-        email: Set("dev.honda.ichigo@gmail.com".to_owned()),
-        account_name: Set("ichigo_dev".to_owned()),
-        password: Set("password123!".to_owned()),
+        user_id: ActiveValue::NotSet,
+        email: ActiveValue::Set("dev.honda.ichigo@gmail.com".to_owned()),
+        password: ActiveValue::Set("password123!".to_owned()),
+        ..ActiveUser::new()
     };
-    user.save(&hdb).await.unwrap();
+    if let Ok(user) = user.insert(&tsx).await
+    {
+        let account = ActiveAccount
+        {
+            account_id: ActiveValue::NotSet,
+            user_id: ActiveValue::Set(user.user_id),
+            account_name: ActiveValue::Set("ichigo_dev".to_owned()),
+            ..ActiveAccount::new()
+        };
+        account.insert(&tsx).await.unwrap();
+    }
 
+    tsx.commit().await.unwrap();
     println!("=== Test data installed ===");
 }
