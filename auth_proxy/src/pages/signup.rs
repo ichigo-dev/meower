@@ -74,8 +74,8 @@ pub(crate) async fn post_handler
 ) -> impl IntoResponse
 {
     let hdb = state.hdb();
-    let config = state.config();
 
+    // Checks if the email and password confirmations match.
     if input.email != input.email_confirm
     {
         let template = SignupTemplate { errors: vec!["Emails do not match.".to_string()] };
@@ -93,7 +93,7 @@ pub(crate) async fn post_handler
         id: ActiveValue::NotSet,
         account_name: ActiveValue::Set(input.account_name),
         email: ActiveValue::Set(input.email),
-        password: ActiveValue::Set(Auth::password_hash(&input.password, config)),
+        password: ActiveValue::Set(input.password),
     };
     match user.insert(hdb).await
     {

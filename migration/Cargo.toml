@@ -17,7 +17,6 @@ sea-orm = { version = "0.12.6", features = [
     "runtime-tokio-rustls",
     "sqlx-postgres"
 ]}
-argon2 = "0.5.2"
 
 
 [lib]

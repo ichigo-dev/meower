@@ -2,7 +2,7 @@
 //! User table model.
 //------------------------------------------------------------------------------
 
-use meower_utility::{ Auth, Validator };
+use meower_utility::{ Auth, Validator, Config };
 use sea_orm::entity::prelude::*;
 use sea_orm::{ ConnectionTrait, ActiveValue, ActiveModelTrait };
 use sea_query::Condition;
@@ -76,7 +76,7 @@ impl ActiveModelBehavior for ActiveModel
     //--------------------------------------------------------------------------
     async fn before_save<C>
     (
-        self,
+        mut self,
         hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
@@ -145,6 +145,11 @@ impl ActiveModelBehavior for ActiveModel
             let errors = account_name_validator.errors();
             return Err(DbErr::Custom(errors[0].to_string()));
         }
+
+        // Hashes the password.
+        let config = Config::init();
+        let hash = Auth::password_hash(&password, &config);
+        self.set(Column::Password, hash.into());
 
         Ok(self)
     }
