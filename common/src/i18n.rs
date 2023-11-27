@@ -1,5 +1,25 @@
 //------------------------------------------------------------------------------
 //! Internationalization.
+//!
+//! # Usage
+//!
+//! ```rust
+//! use meower_utility::{ Config, I18n };
+//!
+//! fn main()
+//! {
+//!    let config = Config::new();
+//!    let mut i18n = I18n::new();
+//!    i18n.init("en", &config);
+//!
+//!    // Gets the message.
+//!    println!("{}", i18n.get("message_key"));
+//!
+//!    // Gets the message and replace the placeholders.
+//!    let replace = HashMap::from_iter(vec![("key", "value")]);
+//!    println!("{}", i18n.get_with("message_key", replace));
+//! }
+//! ```
 //------------------------------------------------------------------------------
 
 use crate::Config;

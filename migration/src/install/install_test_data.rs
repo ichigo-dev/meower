@@ -42,7 +42,7 @@ async fn main()
     {
         id: NotSet,
         email: Set("dev.honda.ichigo@gmail.com".to_owned()),
-        account_name: Set("ichigo-dev".to_owned()),
+        account_name: Set("ichigo_dev".to_owned()),
         password: Set(hash.to_owned()),
     };
     user.save(&hdb).await.unwrap();

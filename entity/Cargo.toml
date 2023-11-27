@@ -8,3 +8,4 @@ edition = "2021"
 async-trait = "0.1.74"
 meower_utility = { version = "0.1.0", path = "../common" }
 sea-orm = { version = "0.12.6" }
+sea-query = "0.30.3"

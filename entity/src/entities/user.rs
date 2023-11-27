@@ -2,9 +2,10 @@
 //! User table model.
 //------------------------------------------------------------------------------
 
-use meower_utility::Auth;
+use meower_utility::{ Auth, Validator };
 use sea_orm::entity::prelude::*;
 use sea_orm::{ ConnectionTrait, ActiveValue, ActiveModelTrait };
+use sea_query::Condition;
 use async_trait::async_trait;
 
 
@@ -76,12 +77,75 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         self,
-        _db: &C,
-        _insert: bool,
+        hdb: &C,
+        insert: bool,
     ) -> Result<Self, DbErr>
     where
         C: ConnectionTrait,
     {
+        let account_name = self.account_name.clone().unwrap();
+        let password = self.password.clone().unwrap();
+        let email = self.email.clone().unwrap();
+
+        // Check if the account already exists
+        if insert
+        {
+            let exists_user = Entity::find()
+                .filter
+                (
+                    Condition::any()
+                        .add(Column::AccountName.eq(account_name.clone()))
+                        .add(Column::Email.eq(email.clone()))
+                )
+                .one(hdb)
+                .await
+                .unwrap();
+            if exists_user.is_some()
+            {
+                return Err(DbErr::Custom("The account already exists.".to_string()));
+            }
+        }
+
+        // Validates account name.
+        let mut account_name_validator = Validator::new(&account_name)
+            .not_empty("Account name is required.")
+            .min_len(3, "Account name is too short.")
+            .max_len(255, "Account name is too long.")
+            .regex(r"^[a-zA-Z0-9_]+$", "Account name must contain only letters, numbers, and underscores.")
+            .validate();
+        if account_name_validator.validate() == false
+        {
+            let errors = account_name_validator.errors();
+            return Err(DbErr::Custom(errors[0].to_string()));
+        }
+
+        // Validates email.
+        let mut email_validator = Validator::new(&email)
+            .not_empty("Email is empty.")
+            .max_len(255, "Email is too long.")
+            .is_email("Email is invalid.")
+            .validate();
+        if email_validator.validate() == false
+        {
+            let errors = account_name_validator.errors();
+            return Err(DbErr::Custom(errors[0].to_string()));
+        }
+
+        // Validates password.
+        let mut password_validator = Validator::new(&password)
+            .not_empty("Password is empty.")
+            .min_len(8, "Password is too short.")
+            .max_len(255, "Password is too long.")
+            .regex(r".*[a-zA-Z].*", "Password must contain at least one letter.")
+            .regex(r".*[0-9].*", "Password must contain at least one number.")
+            .regex(r".*[!@#$%^&*()].*", "Password must contain at least one special character.")
+            .validate();
+        if password_validator.validate() == false
+        {
+            let errors = account_name_validator.errors();
+            return Err(DbErr::Custom(errors[0].to_string()));
+        }
+
         Ok(self)
     }
 }

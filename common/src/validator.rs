@@ -1,5 +1,27 @@
 //------------------------------------------------------------------------------
 //! Validator.
+//!
+//! # Usage
+//!
+//! ```rust
+//! use meower_utility::Validator;
+//!
+//! fn main()
+//! {
+//!    let mut validator = Validator::new("value")
+//!        .not_empty("The value cannot be empty.")
+//!        .min_len(5, "The value must be at least 5 characters.")
+//!        .max_len(10, "The value must be at most 10 characters.")
+//!        .same("value", "The value must be the same as the other.")
+//!        .is_email("The value must be an email.")
+//!        .validate();
+//!
+//!     if validator.validate() == false
+//!     {
+//!         println!("Errors: {:?}", validator.errors());
+//!     }
+//! }
+//! ```
 //------------------------------------------------------------------------------
 
 use regex::Regex;
