@@ -1,5 +1,5 @@
 # Development
-.env
+dev/.env
 
 # Rust outputs
 dist/
@@ -7,4 +7,4 @@ target/
 Cargo.lock
 
 # Data files
-docker/service/postgres/data/
+dev/docker/service/postgres/data/

@@ -28,30 +28,35 @@ everything.
 
 ```
 .
-├ docker/               ... Contains Dockerfiles for containers
-│   ├ base/             ... Docker base images for service containers
-│   └ service/          ... Docker images for service containers
-├ common/               ... Contains common files for the entire application
-│   ├ assets/           ... Contains common asset files
-│   │   ├ css/
-│   │   └ scss/
-│   ├ src/              ... Utility functions
-│   └ Cargo.toml
-├ auth_proxy/           ... Authentication reverse proxy server
-│   └ templates/        ... Login page, Signup page, etc.
-├ backend/              ... Application backend server
-├ frontend/             ... Application backend server
-├ entity/               ... Database table entities
-├ migration/            ... Database migration
-│   └ src/
-│       ├ install/      ... Utility for installing test data and initial data
-│       └ migration/    ... Migration files
-├ .env                  ... Definition of various environment variables
-└ docker-compose.yml    ... Management docker containers
+├ dev/                     ... Source files
+│   ├ docker/              ... Contains Dockerfiles for containers
+│   │   ├ base/            ... Docker base images for service containers
+│   │   └ service/         ... Docker images for service containers
+│   ├ common/              ... Contains common files for the entire application
+│   │   ├ assets/          ... Contains common asset files
+│   │   │   ├ css/
+│   │   │   └ scss/
+│   │   ├ src/             ... Utility functions
+│   │   └ Cargo.toml
+│   ├ auth_proxy/          ... Authentication reverse proxy server
+│   │   └ templates/       ... Login page, Signup page, etc.
+│   ├ backend/             ... Application backend server
+│   ├ frontend/            ... Application backend server
+│   ├ entity/              ... Database table entities
+│   ├ migration/           ... Database migration
+│   │   └ src/
+│   │       ├ install/     ... Utility for installing test data and initial data
+│   │       └ migration/   ... Migration files
+│   ├ .env                 ... Definition of various environment variables
+│   └ docker-compose.yml   ... Management docker containers
+│
+└ spec/                    ... Specifications
 ```
 
 
 ## Usage
+
+Run these commands inside the dev directory.
 
 ### Initialize project
 
