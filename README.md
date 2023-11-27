@@ -83,7 +83,7 @@ $ make migration
 ### Install test data
 
 ```sh
-$ make install --bin install_test_data
+$ make install bin=install_test_data
 ```
 
 ### Convert SCSS to CSS
