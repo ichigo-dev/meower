@@ -56,7 +56,7 @@ everything.
 
 ## Usage
 
-Run these commands inside the dev directory.
+Run these commands inside the `/dev` directory.
 
 ### Initialize project
 
