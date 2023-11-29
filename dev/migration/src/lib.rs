@@ -2,10 +2,10 @@
 /// SeaORM Migration.
 //------------------------------------------------------------------------------
 
-pub use sea_orm_migration::prelude::*;
+mod m20231127_041811_create_user_table;
+mod m20231127_044012_create_account_table;
 
-mod migration;
-use migration::*;
+pub use sea_orm_migration::prelude::*;
 
 pub struct Migrator;
 

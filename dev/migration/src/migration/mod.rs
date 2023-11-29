@@ -1,2 +1,0 @@
-pub mod m20231127_041811_create_user_table;
-pub mod m20231127_044012_create_account_table;

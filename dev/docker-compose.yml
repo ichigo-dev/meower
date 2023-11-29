@@ -129,3 +129,22 @@ services:
     depends_on:
       - postgres
     tty: true
+
+  ##############################################################################
+  # Database installer
+  ##############################################################################
+  install:
+    container_name: meower_install
+    build:
+      context: .
+      dockerfile: ./docker/service/install/Dockerfile
+    volumes:
+      - ./install:/install
+      - ./migration:/migration
+      - ./entity:/entity
+      - ./common:/common
+    env_file: .env
+    working_dir: /
+    depends_on:
+      - postgres
+    tty: true

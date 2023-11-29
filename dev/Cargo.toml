@@ -5,5 +5,6 @@ members = [
     "frontend",
     "backend",
     "migration",
+    "install",
     "entity",
 ]

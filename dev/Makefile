@@ -1,4 +1,4 @@
-.PHONY: frontend backend migration
+.PHONY: frontend backend migration install
 
 ################################################################################
 # Service commands
@@ -56,8 +56,8 @@ migration:
 
 # Install data
 install:
-	@sudo docker-compose exec migration \
-		bash -c 'cd /migration && cargo run --bin ${bin}'
+	@sudo docker-compose exec install \
+		bash -c 'cd /install && cargo run --bin ${bin}'
 
 # Convert SCSS to CSS
 sass:
