@@ -43,6 +43,7 @@
 ### Indexes
 
 - "user_auth_pkey" PRIMARY KEY, btree (user_auth_id)
+- "user_auth_user_id_idx" btree (user_id)
 
 ### Reference
 
@@ -64,6 +65,7 @@
 
 - "user_account_pkey" PRIMARY KEY, btree (user_account_id)
 - "user_account_account_name_key" UNIQUE CONSTRAINT, btree (account_name)
+- "user_account_user_id_idx" btree (user_id)
 
 ### Reference
 
