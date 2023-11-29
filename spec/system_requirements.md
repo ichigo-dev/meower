@@ -57,8 +57,8 @@ management, but it's a good fit for anyone else.
 
 ### Organization and workspace
 
-- "Organization" is managed by "Account" and forms a team that includes
-  multiple "Accounts".
+- "Organization" is managed by multiple "Accounts" and forms a team that
+  includes multiple "Accounts".
 - "Organization" can have multiple "Workspaces".
 - "Workspace" is assigned "Accounts" belonging to the "Organization" that
   manages it.
