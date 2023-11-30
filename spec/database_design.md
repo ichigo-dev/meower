@@ -82,6 +82,7 @@
 - TABLE "organization_member" CONSTRAINT "organization_member_user_account_id_fkey" FOREIGN KEY (user_account_id) REFERENCES "user_account"(user_account_id)
 - TABLE "workspace_member" CONSTRAINT "workspace_member_user_account_id_fkey" FOREIGN KEY (user_account_id) REFERENCES "user_account"(user_account_id)
 - TABLE "project_member" CONSTRAINT "project_member_user_account_id_fkey" FOREIGN KEY (user_account_id) REFERENCES "user_account"(user_account_id)
+- TABLE "task" CONSTRAINT "task_user_account_id_fkey" FOREIGN KEY (user_account_id) REFERENCES "user_account"(user_account_id)
 
 
 ## Table: organization
@@ -189,6 +190,7 @@
 
 - "project_workspace_id_fkey" FOREIGN KEY (workspace_id) REFERENCES "workspace"(workspace_id)
 - TABLE "project_member" CONSTRAINT "project_member_project_id_fkey" FOREIGN KEY (project_id) REFERENCES "project"(project_id)
+- TABLE "task" CONSTRAINT "task_project_id_fkey" FOREIGN KEY (project_id) REFERENCES "project"(project_id)
 
 
 ## Table: project_member
@@ -209,3 +211,27 @@
 
 - "project_member_project_id_fkey" FOREIGN KEY (project_id) REFERENCES "project"(project_id)
 - "project_member_user_account_id_fkey" FOREIGN KEY (user_account_id) REFERENCES "user_account"(user_account_id)
+
+
+## Table: Task
+
+| Label                 | Name                  | Type                        | PK | FK                              | Unique | Nullable | Default                               | Comment |
+| --------------------- | --------------------- | --------------------------- | -- | ------------------------------- | ------ | -------- | ------------------------------------- | ------- |
+| Task ID               | task_id               | bigint                      | o  |                                 |        | x        | nextval('task_task_id_seq'::regclass) |         |
+| Project ID            | project_id            | bigint                      |    | o project(project_id)           |        | x        |                                       |         |
+| Owner user account ID | owner_user_account_id | bigint                      |    | o user_account(user_account_id) |        | x        |                                       |         |
+| Title                 | title                 | character varying(255)      |    |                                 |        | x        |                                       |         |
+| Content               | content               | text                        |    |                                 |        |          |                                       |         |
+| Create date           | created_at            | timestamp without time zone |    |                                 |        | x        | CURRENT_TIMESTAMP                     |         |
+| Update date           | updated_at            | timestamp without time zone |    |                                 |        | x        | CURRENT_TIMESTAMP                     |         |
+| Delete flag           | is_deleted            | boolean                     |    |                                 |        |          | false                                 |         |
+
+### Indexes
+
+- "task_project_id_idx" btree (project_id)
+- "task_owner_user_account_id_idx" btree (owner_user_account_id)
+
+### Reference
+
+- "task_project_id_fkey" FOREIGN KEY (project_id) REFERENCES "project"(project_id)
+- "task_owner_user_account_id_fkey" FOREIGN KEY (user_account_id) REFERENCES "user_account"(user_account_id)
