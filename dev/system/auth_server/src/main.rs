@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Reverse proxy server for authentication for Meower app.
+//! Authentication server for Meower app.
 //!
 //! If the user is already logged in, the request is proxied to the server that
 //! responds with Meower's SPA, otherwise the user is redirected to the login
@@ -104,7 +104,7 @@ async fn main()
         .with_state(app_state);
 
     // Runs the server.
-    let port = env::var("AUTH_PROXY_PORT")
+    let port = env::var("AUTH_SERVER_PORT")
         .unwrap_or("8080".to_string())
         .parse()
         .unwrap_or(8080);

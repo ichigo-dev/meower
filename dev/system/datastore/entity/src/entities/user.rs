@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-//! Account table model.
+//! User table model.
 //------------------------------------------------------------------------------
 
-use meower_utility::Validator;
+use meower_core::{ Auth, Validator, Config };
 use sea_orm::entity::prelude::*;
 use sea_orm::{ ConnectionTrait, ActiveValue, ActiveModelTrait };
 use sea_query::Condition;
@@ -11,19 +11,49 @@ use chrono::Utc;
 
 
 //------------------------------------------------------------------------------
-/// Account table model.
+/// User table model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "account")]
+#[sea_orm(table_name = "user")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub account_id: i32,
     pub user_id: i32,
-    pub account_name: String,
+    pub email: String,
+    pub password: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
     pub is_deleted: bool,
+}
+
+impl Entity
+{
+    //--------------------------------------------------------------------------
+    /// Logs in the user.
+    //--------------------------------------------------------------------------
+    pub async fn login
+    (
+        hdb: &DbConn,
+        email: &str,
+        password: &str,
+    ) -> bool
+    {
+        match Self::find()
+            .filter(Column::Email.contains(email))
+            .one(hdb)
+            .await
+            .unwrap()
+        {
+            Some(user) =>
+            {
+                return Auth::password_verify(password, &user.password);
+            },
+            None =>
+            {
+                return false;
+            },
+        }
+    }
 }
 
 
@@ -33,7 +63,7 @@ pub struct Model
 #[derive(Copy, Clone, Debug, EnumIter)]
 pub enum Relation
 {
-    User,
+    Account,
 }
 
 impl RelationTrait for Relation
@@ -42,22 +72,22 @@ impl RelationTrait for Relation
     {
         match self
         {
-            Self::User =>
+            Self::Account =>
             {
-                Entity::belongs_to(super::user::Entity)
+                Entity::has_many(super::account::Entity)
                     .from(Column::UserId)
-                    .to(super::user::Column::UserId)
+                    .to(super::account::Column::UserId)
                     .into()
             },
         }
     }
 }
 
-impl Related<super::user::Entity> for Entity
+impl Related<super::account::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::User.def()
+        Relation::Account.def()
     }
 }
 
@@ -76,7 +106,7 @@ impl ActiveModelBehavior for ActiveModel
         let now = Utc::now().naive_utc();
         Self
         {
-            account_id: ActiveValue::NotSet,
+            user_id: ActiveValue::NotSet,
             created_at: ActiveValue::Set(now),
             updated_at: ActiveValue::Set(now),
             ..ActiveModelTrait::default()
@@ -95,7 +125,8 @@ impl ActiveModelBehavior for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let account_name = self.account_name.clone().unwrap();
+        let password = self.password.clone().unwrap();
+        let email = self.email.clone().unwrap();
 
         // Check if the account already exists
         if insert
@@ -104,7 +135,7 @@ impl ActiveModelBehavior for ActiveModel
                 .filter
                 (
                     Condition::any()
-                        .add(Column::AccountName.eq(account_name.clone()))
+                        .add(Column::Email.eq(email.clone()))
                 )
                 .one(hdb)
                 .await
@@ -115,18 +146,37 @@ impl ActiveModelBehavior for ActiveModel
             }
         }
 
-        // Validates account name.
-        let mut account_name_validator = Validator::new(&account_name)
-            .not_empty("Account name is required.")
-            .min_len(3, "Account name is too short.")
-            .max_len(255, "Account name is too long.")
-            .regex(r"^[a-zA-Z0-9_]+$", "Account name must contain only letters, numbers, and underscores.")
+        // Validates email.
+        let mut email_validator = Validator::new(&email)
+            .not_empty("Email is empty.")
+            .max_len(255, "Email is too long.")
+            .is_email("Email is invalid.")
             .validate();
-        if account_name_validator.validate() == false
+        if email_validator.validate() == false
         {
-            let errors = account_name_validator.errors();
+            let errors = email_validator.errors();
             return Err(DbErr::Custom(errors[0].to_string()));
         }
+
+        // Validates password.
+        let mut password_validator = Validator::new(&password)
+            .not_empty("Password is empty.")
+            .min_len(8, "Password is too short.")
+            .max_len(255, "Password is too long.")
+            .regex(r".*[a-zA-Z].*", "Password must contain at least one letter.")
+            .regex(r".*[0-9].*", "Password must contain at least one number.")
+            .regex(r".*[!@#$%^&*()].*", "Password must contain at least one special character.")
+            .validate();
+        if password_validator.validate() == false
+        {
+            let errors = password_validator.errors();
+            return Err(DbErr::Custom(errors[0].to_string()));
+        }
+
+        // Hashes the password.
+        let config = Config::init();
+        let hash = Auth::password_hash(&password, &config);
+        self.set(Column::Password, hash.into());
 
         Ok(self)
     }

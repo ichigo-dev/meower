@@ -35,7 +35,7 @@ logs:
 ################################################################################
 
 auth:
-	@sudo docker-compose exec auth-proxy bash
+	@sudo docker-compose exec auth-server bash
 
 frontend:
 	@sudo docker-compose exec frontend bash
@@ -86,9 +86,9 @@ audit:
 	@sudo docker-compose exec dev \
 		bash -c 'cd /common && cargo audit fix --dry-run'
 	@echo "===== Finish ====="
-	@echo "===== Auditing auth-proxy ====="
+	@echo "===== Auditing auth-server ====="
 	@sudo docker-compose exec dev \
-		bash -c 'cd /auth_proxy && cargo audit fix --dry-run'
+		bash -c 'cd /auth_server && cargo audit fix --dry-run'
 	@echo "===== Finish ====="
 	@echo "===== Auditing backend ====="
 	@sudo docker-compose exec dev \

@@ -14,7 +14,7 @@ pub struct Config
     // Application configuration.
     debug_mode: bool,
     database_url: String,
-    proxy_url: String,
+    application_url: String,
 
     // Locale configuration.
     locale_path: String,
@@ -44,7 +44,7 @@ impl Config
             .unwrap_or(false);
         let database_url = env::var("DATABASE_URL")
             .unwrap_or("".to_string());
-        let proxy_url = env::var("PROXY_URL")
+        let application_url = env::var("APPLICATION_URL")
             .unwrap_or("http://frontend:9000".to_string());
 
         // Locale configuration.
@@ -78,7 +78,7 @@ impl Config
         {
             debug_mode,
             database_url,
-            proxy_url,
+            application_url,
             locale_path,
             fallback_locale,
             jwt_issue,
@@ -105,9 +105,9 @@ impl Config
         &self.database_url
     }
 
-    pub fn proxy_url(&self) -> &str
+    pub fn application_url(&self) -> &str
     {
-        &self.proxy_url
+        &self.application_url
     }
 
     // Locale configuration.

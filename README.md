@@ -9,9 +9,9 @@ Task management application
 
 This application is written in Rust ([1]) for many components. For the frontend,
 it uses Sycamore ([2]), a SPA (Single Page Application) framework that uses
-WebAssembly. For the backend and authentication reverse proxy server, it uses
-Axum ([3]), a web server framework based on Tokio ([4]). It also uses SeaORM
-([5]) as a tool for database migration and model generation.
+WebAssembly. For the backend and authentication server, it uses Axum ([3]), a
+web server framework based on Tokio ([4]). It also uses SeaORM ([5]) as a tool
+for database migration and model generation.
 
 - [1] [Rust](https://www.rust-lang.org)
 - [2] [Sycamore](https://sycamore-rs.netlify.app)
@@ -32,22 +32,28 @@ everything.
 │   ├ docker/              ... Contains Dockerfiles for containers
 │   │   ├ base/            ... Docker base images for service containers
 │   │   └ service/         ... Docker images for service containers
-│   ├ common/              ... Contains common files for the entire application
+│   │
+│   ├ system/              ... Contains system components
 │   │   ├ assets/          ... Contains common asset files
 │   │   │   ├ css/
-│   │   │   └ scss/
-│   │   ├ src/             ... Utility functions
-│   │   └ Cargo.toml
-│   ├ auth_proxy/          ... Authentication reverse proxy server
-│   │   └ templates/       ... Login page, Signup page, etc.
-│   ├ backend/             ... Application backend server
-│   ├ frontend/            ... Application backend server
-│   ├ entity/              ... Database table entities
-│   ├ migration/           ... Database migration
-│   │   └ src/
-│   │       ├ install/     ... Utility for installing test data and initial data
-│   │       └ migration/   ... Migration files
+│   │   │   ├ scss/
+│   │   │   └ locale/
+│   │   │
+│   │   ├ auth_server/     ... Authentication server
+│   │   │
+│   │   ├ core/            ... Contains core files for the entire application
+│   │   │
+│   │   ├ datastore/
+│   │   │   ├ entity/      ... Database table entities
+│   │   │   ├ install/     ... Utility for installing test data and initial data
+│   │   │   └ migration/   ... Migration files
+│   │   │
+│   │   └ service/
+│   │       ├ backend/     ... Application backend server
+│   │       └ frontend/    ... Application frontend server
+│   │
 │   ├ .env                 ... Definition of various environment variables
+│   ├ .env.example         ... Example of .env
 │   └ docker-compose.yml   ... Management docker containers
 │
 └ spec/                    ... Specifications

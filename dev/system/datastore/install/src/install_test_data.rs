@@ -5,7 +5,7 @@
 use meower_migration::Migrator;
 use meower_entity::user::ActiveModel as ActiveUser;
 use meower_entity::account::ActiveModel as ActiveAccount;
-use meower_utility::Config;
+use meower_core::Config;
 
 use sea_orm_migration::MigratorTrait;
 use sea_orm::{

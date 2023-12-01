@@ -7,6 +7,6 @@ edition = "2021"
 [dependencies]
 async-trait = "0.1.74"
 chrono = "0.4.31"
-meower_utility = { version = "0.1.0", path = "../common" }
+meower_core = { version = "0.1.0", path = "../../core" }
 sea-orm = { version = "0.12.6" }
 sea-query = "0.30.3"

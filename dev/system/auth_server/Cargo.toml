@@ -1,12 +1,12 @@
 [package]
-name = "meower_auth_proxy"
+name = "meower_auth_server"
 version = "0.1.0"
 edition = "2021"
 
 
 [dependencies]
-meower_utility = { version = "0.1.0", path = "../common" }
-meower_entity = { version = "0.1.0", path = "../entity" }
+meower_core = { version = "0.1.0", path = "../core" }
+meower_entity = { version = "0.1.0", path = "../datastore/entity" }
 askama = "0.12.1"
 axum = "0.6.20"
 axum-extra = { version = "0.8.0", features = ["cookie"] }
