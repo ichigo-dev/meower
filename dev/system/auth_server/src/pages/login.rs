@@ -77,7 +77,7 @@ pub(crate) async fn post_handler
     let config = state.config();
 
     // Try to login.
-    if User::login(hdb, &input.email, &input.password).await == false
+    if User::try_login(hdb, &input.email, &input.password).await == false
     {
         let errors = vec!["Invalid email or password.".to_string()];
         let template = LoginTemplate { errors };
