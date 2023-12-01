@@ -28,8 +28,8 @@ services:
     ports:
       - ${FRONTEND_PORT}:9000
     volumes:
-      - ./system/service/assets:/service/assets
-      - ./system/service/core:/service/core
+      - ./system/assets:/assets
+      - ./system/core:/core
       - ./system/service/frontend:/service/frontend
     env_file: .env
     working_dir: /service/frontend
@@ -49,8 +49,8 @@ services:
     ports:
       - ${BACKEND_PORT}:9001
     volumes:
-      - ./system/service/assets:/service/assets
-      - ./system/service/core:/service/core
+      - ./system/assets:/assets
+      - ./system/core:/core
       - ./system/service/backend:/service/backend
       - ./system/datastore:/datastore
     env_file: .env

@@ -2,7 +2,7 @@
 //! Module for user i18n.
 //------------------------------------------------------------------------------
 
-use meower_utility::I18n;
+use meower_core::I18n;
 use crate::AppState;
 
 use axum::response::IntoResponse;
