@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 meower_migration = { version = "0.1.0", path = "../migration" }
-meower_core = { version = "0.1.0", path = "../../common" }
+meower_core = { version = "0.1.0", path = "../../core" }
 meower_entity = { version = "0.1.0", path = "../entity" }
 tokio = { version = "1.34.0", features = ["full"] }
 sea-orm-migration = { version = "0.12.6", features = [
