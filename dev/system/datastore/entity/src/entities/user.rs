@@ -2,15 +2,15 @@
 //! User table model.
 //------------------------------------------------------------------------------
 
+use crate::entities::Loginable;
+
 use meower_core::{ Validator, Config };
 use sea_orm::entity::prelude::*;
 use sea_orm::{ ConnectionTrait, ActiveValue, ActiveModelTrait };
 use sea_query::Condition;
 use async_trait::async_trait;
 use chrono::Utc;
-use argon2::{ self, Argon2, PasswordHash, PasswordHasher, PasswordVerifier };
-use argon2::password_hash::SaltString;
-
+use sea_orm::DbConn;
 
 
 //------------------------------------------------------------------------------
@@ -29,20 +29,21 @@ pub struct Model
     pub is_deleted: bool,
 }
 
-impl Entity
+#[async_trait]
+impl Loginable for Model
 {
     //--------------------------------------------------------------------------
-    /// Logs in the user.
+    /// Logs in.
     //--------------------------------------------------------------------------
-    pub async fn try_login
+    async fn try_login
     (
         hdb: &DbConn,
-        email: &str,
+        identifier: &str,
         password: &str,
     ) -> bool
     {
-        match Self::find()
-            .filter(Column::Email.contains(email))
+        match Entity::find()
+            .filter(Column::Email.contains(identifier))
             .one(hdb)
             .await
             .unwrap()
@@ -56,36 +57,6 @@ impl Entity
                 return false;
             },
         }
-    }
-
-    //--------------------------------------------------------------------------
-    /// Hashes the password.
-    //--------------------------------------------------------------------------
-    pub fn password_hash( password: &str, config: &Config ) -> String
-    {
-        let bin_password = password.as_bytes();
-        let salt = SaltString::from_b64(config.argon2_phc_salt().as_ref())
-            .unwrap();
-        let argon2 = Argon2::new
-        (
-            argon2::Algorithm::Argon2id,
-            argon2::Version::V0x13,
-            argon2::Params::default(),
-        );
-        argon2.hash_password(bin_password, &salt)
-            .unwrap()
-            .to_string()
-    }
-
-    //--------------------------------------------------------------------------
-    /// Verifies the password.
-    //--------------------------------------------------------------------------
-    pub fn password_verify( password: &str, hash: &str ) -> bool
-    {
-        let parsed_hash = PasswordHash::new(&hash).unwrap();
-        Argon2::default()
-            .verify_password(password.as_bytes(), &parsed_hash)
-            .is_ok()
     }
 }
 
@@ -208,7 +179,7 @@ impl ActiveModelBehavior for ActiveModel
 
         // Hashes the password.
         let config = Config::init();
-        let hash = Entity::password_hash(&password, &config);
+        let hash = Model::password_hash(&password, &config);
         self.set(Column::Password, hash.into());
 
         Ok(self)

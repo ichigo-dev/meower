@@ -2,7 +2,8 @@
 //! Login page.
 //------------------------------------------------------------------------------
 
-use meower_entity::user::{ Entity as User };
+use meower_entity::Loginable;
+use meower_entity::user::{ Model as User };
 use crate::{ AppState, Auth, JWT_COOKIE_KEY };
 
 use askama::Template;
