@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create user table.
+//! Create organization table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
-use crate::table_def::User;
+use crate::table_def::Organization;
 
 
 //------------------------------------------------------------------------------
@@ -21,11 +21,11 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(User::Table)
+            .table(Organization::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(User::UserId)
+                ColumnDef::new(Organization::OrganizationId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -33,7 +33,7 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::Email)
+                ColumnDef::new(Organization::OrganizationName)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -41,21 +41,28 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::CreatedAt)
+                ColumnDef::new(Organization::DisplayName)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(Organization::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(User::UpdatedAt)
+                ColumnDef::new(Organization::UpdatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(User::IsDeleted)
+                ColumnDef::new(Organization::IsDeleted)
                     .boolean()
                     .default(false)
                     .not_null()
@@ -70,7 +77,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(User::Table).to_owned())
+            .drop_table(Table::drop().table(Organization::Table).to_owned())
             .await
     }
 }

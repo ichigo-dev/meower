@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create user table.
+//! Create user_auth table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
-use crate::table_def::User;
+use crate::table_def::{ User, UserAuth };
 
 
 //------------------------------------------------------------------------------
@@ -21,11 +21,11 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(User::Table)
+            .table(UserAuth::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(User::UserId)
+                ColumnDef::new(UserAuth::UserAuthId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -33,35 +33,47 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::Email)
+                ColumnDef::new(UserAuth::UserId)
+                    .big_integer()
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(UserAuth::Password)
                     .string()
                     .string_len(255)
                     .not_null()
-                    .unique_key()
             )
             .col
             (
-                ColumnDef::new(User::CreatedAt)
+                ColumnDef::new(UserAuth::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(User::UpdatedAt)
+                ColumnDef::new(UserAuth::UpdatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
             )
-            .col
+            .foreign_key
             (
-                ColumnDef::new(User::IsDeleted)
-                    .boolean()
-                    .default(false)
-                    .not_null()
+                ForeignKey::create()
+                    .name("user_auth_user_id_fkey")
+                    .from(UserAuth::Table, UserAuth::UserId)
+                    .to(User::Table, User::UserId)
             )
             .to_owned();
-        manager.create_table(table).await
+        manager.create_table(table).await?;
+
+        let index = Index::create()
+            .name("user_auth_user_id_idx")
+            .table(UserAuth::Table)
+            .col(UserAuth::UserId)
+            .to_owned();
+        manager.create_index(index).await
     }
 
     //--------------------------------------------------------------------------
@@ -70,7 +82,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(User::Table).to_owned())
+            .drop_table(Table::drop().table(UserAuth::Table).to_owned())
             .await
     }
 }

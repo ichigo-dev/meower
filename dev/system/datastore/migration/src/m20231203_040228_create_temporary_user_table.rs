@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create user table.
+//! Create temporary_user table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
-use crate::table_def::User;
+use crate::table_def::TemporaryUser;
 
 
 //------------------------------------------------------------------------------
@@ -21,11 +21,11 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(User::Table)
+            .table(TemporaryUser::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(User::UserId)
+                ColumnDef::new(TemporaryUser::TemporaryUserId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -33,7 +33,7 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::Email)
+                ColumnDef::new(TemporaryUser::Email)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -41,23 +41,16 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::CreatedAt)
-                    .timestamp()
-                    .default(Expr::current_timestamp())
+                ColumnDef::new(TemporaryUser::Password)
+                    .string()
+                    .string_len(255)
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(User::UpdatedAt)
+                ColumnDef::new(TemporaryUser::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
-                    .not_null()
-            )
-            .col
-            (
-                ColumnDef::new(User::IsDeleted)
-                    .boolean()
-                    .default(false)
                     .not_null()
             )
             .to_owned();
@@ -70,7 +63,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(User::Table).to_owned())
+            .drop_table(Table::drop().table(TemporaryUser::Table).to_owned())
             .await
     }
 }
