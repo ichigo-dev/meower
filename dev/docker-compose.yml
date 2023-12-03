@@ -116,6 +116,7 @@ services:
     ports:
       - ${MIGRATION_PORT}:5433
     volumes:
+      - ./system/core:/core
       - ./system/datastore:/datastore
     env_file: .env
     working_dir: /datastore
@@ -132,6 +133,7 @@ services:
       context: .
       dockerfile: ./docker/service/install/Dockerfile
     volumes:
+      - ./system/core:/core
       - ./system/datastore:/datastore
     env_file: .env
     working_dir: /datastore

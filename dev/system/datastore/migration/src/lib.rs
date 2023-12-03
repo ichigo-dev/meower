@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-/// SeaORM Migration.
+//! SeaORM Migration.
 //------------------------------------------------------------------------------
 
-//mod m20231127_041811_create_user_table;
+mod m20231203_024539_create_user_table;
 
 pub use sea_orm_migration::prelude::*;
 
@@ -18,7 +18,7 @@ impl MigratorTrait for Migrator
     {
         vec!
         [
-            //Box::new(m20231127_041811_create_user_table::Migration),
+            Box::new(m20231203_024539_create_user_table::Migration),
         ]
     }
 }
