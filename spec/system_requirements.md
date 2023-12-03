@@ -13,7 +13,9 @@
     1. [Organization and workspace](#organization-and-workspace)
     1. [Project](#project)
     1. [Task](#task)
-1. [Non-Functional Requirements](#non-functional-requirements)
+1. [Software Architecture](#software-architecture)
+1. [Tools](#tools)
+1. [Language and Framework](#language-and-framework)
 
 
 ## Overview
@@ -75,6 +77,24 @@ management, but it's a good fit for anyone else.
 - "Task" can have deadlines and status management.
 
 
-## Non-Functional Requirements
+## Software Architecture
 
 - The system should be easily scalable and have no single point of failure.
+
+
+## Tools
+
+- [Git](https://git-scm.com): Source code management
+- [GitHub](https://github.com): Git server hosting
+- [Docker](https://www.docker.com): Container-based virtual environment
+- [Figma](https://www.figma.com): UI design
+
+
+## Language and Framework
+
+- [Rust](https://www.rust-lang.org): Implement almost everything in this robust
+  language
+- [Axum](https://github.com/tokio-rs/axum): Rust server-side framework
+- [Sycamore](https://sycamore-rs.netlify.app): Rust framework for building SPA
+  using WebAssembly
+- [PostgreSQL](https://www.postgresql.org/): Database management system

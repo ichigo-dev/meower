@@ -85,6 +85,44 @@
 - TABLE "task" CONSTRAINT "task_user_account_id_fkey" FOREIGN KEY (user_account_id) REFERENCES "user_account"(user_account_id)
 
 
+## Table: temporary_user
+
+| Label             | Name              | Type                        | PK | FK | Unique | Nullable | Default                                                   | Comment                |
+| ----------------- | ----------------- | --------------------------- | -- | -- | ------ | -------- | --------------------------------------------------------- | ---------------------- |
+| Temporary User ID | temporary_user_id | bigint                      | o  |    |        | x        | nextval('temporary_user_temporary_user_id_seq'::regclass) |                        |
+| Email address     | email             | character varying(255)      |    |    | o      | x        |                                                           |                        |
+| Password          | password          | character varying(255)      |    |    |        | x        |                                                           | Argon2 hashed password |
+| Create date       | created_at        | timestamp without time zone |    |    |        | x        | CURRENT_TIMESTAMP                                         |                        |
+
+### Indexes
+
+- "temporary_user_pkey" PRIMARY KEY, btree (temporary_user_id)
+- "temporary_user_email_key" UNIQUE CONSTRAINT, btree (email)
+
+### Reference
+
+- TABLE "temporary_user_token" CONSTRAINT "temporary_user_token_temporary_user_id_fkey" FOREIGN KEY (temporary_user_id) REFERENCES "temporary_user"(temporary_user_id)
+
+
+## Table: temporary_user_token
+
+| Label                   | Name                    | Type                        | PK | FK                                  | Unique | Nullable | Default                                                               | Comment |
+| ----------------------- | ----------------------- | --------------------------- | -- | ----------------------------------- | ------ | -------- | --------------------------------------------------------------------- | ------- |
+| Temporary User Token ID | temporary_user_token_id | bigint                      | o  |                                     |        | x        | nextval('temporary_user_token_temporary_user_token_id_seq'::regclass) |         |
+| Temporary User ID       | temporary_user_id       | bigint                      |    | o temporary_user(temporary_user_id) | o      | x        |                                                                       |         |
+| Token                   | token                   | character varying(255)      |    |                                     |        | x        |                                                                       |         |
+| Create date             | created_at              | timestamp without time zone |    |                                     |        | x        | CURRENT_TIMESTAMP                                                     |         |
+
+### Indexes
+
+- "temporary_user_token_pkey" PRIMARY KEY, btree (temporary_user_token_id)
+- "temporary_user_token_token_key", btree (token)
+
+### Reference
+
+- "temporary_user_token_temporary_user_id_fkey" FOREIGN KEY (temporary_user_id) REFERENCES "temporary_user"(temporary_user_id)
+
+
 ## Table: organization
 
 | Label             | Name              | Type                        | PK | FK | Unique | Nullable | Default                                               | Comment                                              |
