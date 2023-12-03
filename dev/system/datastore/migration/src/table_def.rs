@@ -97,6 +97,19 @@ pub(crate) enum Organization
 
 
 //------------------------------------------------------------------------------
+/// OrganizationMemberAuthority.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum OrganizationMemberAuthority
+{
+    Table,
+    OrganizationMemberAuthorityId,
+    Symbol,
+    Value,
+}
+
+
+//------------------------------------------------------------------------------
 /// OrganizationMember.
 //------------------------------------------------------------------------------
 #[derive(DeriveIden)]
@@ -106,5 +119,49 @@ pub(crate) enum OrganizationMember
     OrganizationMemberId,
     OrganizationId,
     UserAccountId,
-    Authority,
+    OrganizationMemberAuthorityId,
+}
+
+
+//------------------------------------------------------------------------------
+/// Workspace.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum Workspace
+{
+    Table,
+    WorkspaceId,
+    WorkspaceName,
+    DisplayName,
+    OrganizationId,
+    CreatedAt,
+    UpdatedAt,
+    IsDeleted,
+}
+
+
+//------------------------------------------------------------------------------
+/// WorkspaceMemberAuthority.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum WorkspaceMemberAuthority
+{
+    Table,
+    WorkspaceMemberAuthorityId,
+    Symbol,
+    Value,
+}
+
+
+//------------------------------------------------------------------------------
+/// WorkspaceMember.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum WorkspaceMember
+{
+    Table,
+    WorkspaceMemberId,
+    WorkspaceId,
+    UserAccountId,
+    WorkspaceMemberAuthorityId,
 }

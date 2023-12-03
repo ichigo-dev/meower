@@ -3,9 +3,12 @@
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
-use crate::enum_def::OrganizationMemberAuthority;
-use crate::table_def::{ UserAccount, Organization, OrganizationMember };
-use sea_orm_migration::prelude::extension::postgres::Type;
+use crate::table_def::{
+    UserAccount,
+    Organization,
+    OrganizationMember,
+    OrganizationMemberAuthority,
+};
 
 
 //------------------------------------------------------------------------------
@@ -22,20 +25,6 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
-        manager
-            .create_type
-            (
-                Type::create()
-                    .as_enum(OrganizationMemberAuthority::Table)
-                    .values(
-                    [
-                        OrganizationMemberAuthority::Member,
-                        OrganizationMemberAuthority::Admin,
-                    ])
-                    .to_owned()
-            )
-            .await?;
-
         let table = Table::create()
             .table(OrganizationMember::Table)
             .if_not_exists()
@@ -61,15 +50,8 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(OrganizationMember::Authority)
-                    .enumeration
-                    (
-                        OrganizationMemberAuthority::Table,
-                        [
-                            OrganizationMemberAuthority::Member,
-                            OrganizationMemberAuthority::Admin,
-                        ]
-                    )
+                ColumnDef::new(OrganizationMember::OrganizationMemberAuthorityId)
+                    .big_integer()
                     .not_null()
             )
             .foreign_key
@@ -85,6 +67,13 @@ impl MigrationTrait for Migration
                     .name("organization_member_user_account_id_fkey")
                     .from(OrganizationMember::Table, OrganizationMember::UserAccountId)
                     .to(UserAccount::Table, UserAccount::UserAccountId)
+            )
+            .foreign_key
+            (
+                ForeignKey::create()
+                    .name("organization_member_organization_member_authority_fkey")
+                    .from(OrganizationMember::Table, OrganizationMember::OrganizationMemberAuthorityId)
+                    .to(OrganizationMemberAuthority::Table, OrganizationMemberAuthority::OrganizationMemberAuthorityId)
             )
             .to_owned();
         manager.create_table(table).await?;
@@ -111,9 +100,6 @@ impl MigrationTrait for Migration
     {
         manager
             .drop_table(Table::drop().table(OrganizationMember::Table).to_owned())
-            .await?;
-        manager
-            .drop_type(Type::drop().name(OrganizationMemberAuthority::Table).to_owned())
             .await
     }
 }
