@@ -4,11 +4,11 @@
 
 ## Columns
 
-| Name                        | Type         | Default                                                                       | Nullable | Children | Parents | Comment |
-| --------------------------- | ------------ | ----------------------------------------------------------------------------- | -------- | -------- | ------- | ------- |
-| project_member_authority_id | bigint       | nextval('project_member_authority_project_member_authority_id_seq'::regclass) | false    |          |         |         |
-| symbol                      | varchar(255) |                                                                               | false    |          |         |         |
-| value                       | integer      |                                                                               | false    |          |         |         |
+| Name                        | Type         | Default                                                                       | Nullable | Children                                          | Parents | Comment |
+| --------------------------- | ------------ | ----------------------------------------------------------------------------- | -------- | ------------------------------------------------- | ------- | ------- |
+| project_member_authority_id | bigint       | nextval('project_member_authority_project_member_authority_id_seq'::regclass) | false    | [public.project_member](public.project_member.md) |         |         |
+| symbol                      | varchar(255) |                                                                               | false    |                                                   |         |         |
+| value                       | integer      |                                                                               | false    |                                                   |         |         |
 
 ## Constraints
 
@@ -21,19 +21,6 @@
 | Name                          | Definition                                                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | project_member_authority_pkey | CREATE UNIQUE INDEX project_member_authority_pkey ON public.project_member_authority USING btree (project_member_authority_id) |
-
-## Relations
-
-```mermaid
-erDiagram
-
-
-"public.project_member_authority" {
-  bigint project_member_authority_id
-  varchar_255_ symbol
-  integer value
-}
-```
 
 ---
 

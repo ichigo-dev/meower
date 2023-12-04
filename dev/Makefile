@@ -68,7 +68,7 @@ install:
 tbls:
 	@sudo rm ../spec/database_design/*
 	@sudo docker-compose run --rm tbls doc \
-		--force --adjust-table --er-format mermaid
+		--force --adjust-table --without-er
 
 # Convert SCSS to CSS
 sass:
