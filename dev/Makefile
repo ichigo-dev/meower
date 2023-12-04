@@ -14,7 +14,7 @@ init:
 build:
 	@echo "===== Building ====="
 	@sudo docker build . -f ./docker/base/Dockerfile -t rust_base
-	@sudo docker-compose build --no-cache
+	@sudo docker-compose build
 	@echo "===== Finish ====="
 
 # Start the containers

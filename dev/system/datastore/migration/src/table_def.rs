@@ -165,3 +165,78 @@ pub(crate) enum WorkspaceMember
     UserAccountId,
     WorkspaceMemberAuthorityId,
 }
+
+
+//------------------------------------------------------------------------------
+/// Project.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum Project
+{
+    Table,
+    ProjectId,
+    ProjectName,
+    DisplayName,
+    WorkspaceId,
+    CreatedAt,
+    UpdatedAt,
+    IsDeleted,
+}
+
+
+//------------------------------------------------------------------------------
+/// ProjectMemberAuthority.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum ProjectMemberAuthority
+{
+    Table,
+    ProjectMemberAuthorityId,
+    Symbol,
+    Value,
+}
+
+
+//------------------------------------------------------------------------------
+/// ProjectMember.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum ProjectMember
+{
+    Table,
+    ProjectMemberId,
+    ProjectId,
+    UserAccountId,
+    ProjectMemberAuthorityId,
+}
+
+
+//------------------------------------------------------------------------------
+/// Task.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum Task
+{
+    Table,
+    TaskId,
+    ProjectId,
+    OwnerUserAccountId,
+    Title,
+    Content,
+    CreatedAt,
+    UpdatedAt,
+    IsDeleted,
+}
+
+
+//------------------------------------------------------------------------------
+/// TaskMember.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum TaskMember
+{
+    Table,
+    TaskMemberId,
+    TaskId,
+    UserAccountId,
+}

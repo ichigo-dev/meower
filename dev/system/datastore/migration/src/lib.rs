@@ -14,6 +14,11 @@ mod m20231203_231817_create_organization_member_table;
 mod m20231203_233644_create_workspace_table;
 mod m20231203_234624_create_workspace_member_authority_table;
 mod m20231203_234736_create_workspace_member_table;
+mod m20231204_034523_create_project_table;
+mod m20231204_040001_create_project_member_authority_table;
+mod m20231204_062533_create_project_member_table;
+mod m20231204_062921_create_task_table;
+mod m20231204_080345_create_task_member_table;
 
 pub use sea_orm_migration::prelude::*;
 
@@ -40,6 +45,9 @@ impl MigratorTrait for Migrator
             Box::new(m20231203_233644_create_workspace_table::Migration),
             Box::new(m20231203_234624_create_workspace_member_authority_table::Migration),
             Box::new(m20231203_234736_create_workspace_member_table::Migration),
+            Box::new(m20231204_034523_create_project_table::Migration),
+            Box::new(m20231204_040001_create_project_member_authority_table::Migration),
+            Box::new(m20231204_062921_create_task_table::Migration),
         ]
     }
 }
