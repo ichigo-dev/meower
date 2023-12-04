@@ -47,20 +47,28 @@ backend:
 	@sudo docker-compose exec backend bash
 
 db:
-	@sudo docker-compose exec postgres bash
-
-migration:
-	@sudo docker-compose exec migration bash
+	@sudo docker-compose exec postgres bash -c 'psql meower meower'
 
 
 ################################################################################
 # Utilities
 ################################################################################
 
+# Migrate database
+migrate:
+	@sudo docker-compose exec dev \
+		bash -c 'cd /system/datastore && sea-orm-cli migrate'
+
 # Install data
 install:
-	@sudo docker-compose exec install \
-		bash -c 'cd /install && cargo run --bin ${bin}'
+	@sudo docker-compose exec dev \
+		bash -c 'cd /system/datastore/install && cargo run --bin ${bin}'
+
+# Table definition
+tbls:
+	@sudo rm ../spec/database_design/*
+	@sudo docker-compose run --rm tbls doc \
+		--force --adjust-table --er-format mermaid
 
 # Convert SCSS to CSS
 sass:

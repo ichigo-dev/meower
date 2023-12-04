@@ -21,7 +21,8 @@ $ make logs
 ## Migrate database
 
 ```sh
-$ make migration
+$ make dev
+> cd /system/datastore
 > sea-orm-cli migrate generate [migration file name]
 > sea-orm-cli migrate
 > sea-orm-cli generate -o entity/src/entities

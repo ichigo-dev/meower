@@ -1,0 +1,78 @@
+# public.workspace
+
+## Description
+
+## Columns
+
+| Name            | Type                        | Default                                         | Nullable | Children                                                                                  | Parents                                       | Comment |
+| --------------- | --------------------------- | ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------- | --------------------------------------------- | ------- |
+| workspace_id    | bigint                      | nextval('workspace_workspace_id_seq'::regclass) | false    | [public.workspace_member](public.workspace_member.md) [public.project](public.project.md) |                                               |         |
+| workspace_name  | varchar(255)                |                                                 | false    |                                                                                           |                                               |         |
+| display_name    | varchar(255)                |                                                 | false    |                                                                                           |                                               |         |
+| organization_id | bigint                      |                                                 | false    |                                                                                           | [public.organization](public.organization.md) |         |
+| created_at      | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |                                                                                           |                                               |         |
+| updated_at      | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |                                                                                           |                                               |         |
+| is_deleted      | boolean                     | false                                           | false    |                                                                                           |                                               |         |
+
+## Constraints
+
+| Name                           | Type        | Definition                                                             |
+| ------------------------------ | ----------- | ---------------------------------------------------------------------- |
+| workspace_organization_id_fkey | FOREIGN KEY | FOREIGN KEY (organization_id) REFERENCES organization(organization_id) |
+| workspace_pkey                 | PRIMARY KEY | PRIMARY KEY (workspace_id)                                             |
+| workspace_workspace_name_key   | UNIQUE      | UNIQUE (workspace_name)                                                |
+
+## Indexes
+
+| Name                          | Definition                                                                                        |
+| ----------------------------- | ------------------------------------------------------------------------------------------------- |
+| workspace_pkey                | CREATE UNIQUE INDEX workspace_pkey ON public.workspace USING btree (workspace_id)                 |
+| workspace_workspace_name_key  | CREATE UNIQUE INDEX workspace_workspace_name_key ON public.workspace USING btree (workspace_name) |
+| workspace_organization_id_idx | CREATE INDEX workspace_organization_id_idx ON public.workspace USING btree (organization_id)      |
+
+## Relations
+
+```mermaid
+erDiagram
+
+"public.workspace_member" }o--|| "public.workspace" : "FOREIGN KEY (workspace_id) REFERENCES workspace(workspace_id)"
+"public.project" }o--|| "public.workspace" : "FOREIGN KEY (workspace_id) REFERENCES workspace(workspace_id)"
+"public.workspace" }o--|| "public.organization" : "FOREIGN KEY (organization_id) REFERENCES organization(organization_id)"
+
+"public.workspace" {
+  bigint workspace_id
+  varchar_255_ workspace_name
+  varchar_255_ display_name
+  bigint organization_id FK
+  timestamp_without_time_zone created_at
+  timestamp_without_time_zone updated_at
+  boolean is_deleted
+}
+"public.workspace_member" {
+  bigint workspace_member_id
+  bigint workspace_id FK
+  bigint user_account_id FK
+  bigint workspace_member_authority_id FK
+}
+"public.project" {
+  bigint project_id
+  varchar_255_ project_name
+  varchar_255_ display_name
+  bigint workspace_id FK
+  timestamp_without_time_zone created_at
+  timestamp_without_time_zone updated_at
+  boolean is_deleted
+}
+"public.organization" {
+  bigint organization_id
+  varchar_255_ organization_name
+  varchar_255_ display_name
+  timestamp_without_time_zone created_at
+  timestamp_without_time_zone updated_at
+  boolean is_deleted
+}
+```
+
+---
+
+> Generated by [tbls](https://github.com/k1LoW/tbls)

@@ -5,13 +5,13 @@
 services:
 
   ##############################################################################
-  # Develop
+  # Develop tools
   ##############################################################################
   dev:
     container_name: meower_dev
     build:
       context: .
-      dockerfile: ./docker/service/frontend/Dockerfile
+      dockerfile: ./docker/service/dev/Dockerfile
     volumes:
       - ./system:/system
     env_file: .env
@@ -106,37 +106,19 @@ services:
     tty: true
 
   ##############################################################################
-  # Database migration
+  # Table definition
   ##############################################################################
-  migration:
-    container_name: meower_migration
+  tbls:
+    container_name: meower_tbls
+    image: k1low/tbls:latest
     build:
-      context: .
-      dockerfile: ./docker/service/migration/Dockerfile
-    ports:
-      - ${MIGRATION_PORT}:5433
+      context: ..
     volumes:
-      - ./system/core:/core
-      - ./system/datastore:/datastore
-    env_file: .env
-    working_dir: /datastore
-    depends_on:
-      - postgres
-    tty: true
-
-  ##############################################################################
-  # Database installer
-  ##############################################################################
-  install:
-    container_name: meower_install
-    build:
-      context: .
-      dockerfile: ./docker/service/install/Dockerfile
-    volumes:
-      - ./system/core:/core
-      - ./system/datastore:/datastore
-    env_file: .env
-    working_dir: /datastore
+      - ../spec:/work
+    working_dir: /work
+    environment:
+      TBLS_DSN: ${DATABASE_URL}
+      TBLS_DOC_PATH: /work/database_design
     depends_on:
       - postgres
     tty: true
