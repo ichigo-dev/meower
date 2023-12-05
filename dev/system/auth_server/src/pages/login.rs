@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use meower_entity::user::Model as UserModel;
-use crate::{ AppState, Auth, JWT_COOKIE_KEY };
+use crate::{ AppState, Auth };
 
 use askama::Template;
 use axum::Extension;
@@ -11,8 +11,6 @@ use axum::response::{ Html, Redirect, Response, IntoResponse };
 use axum::http::{ header, StatusCode };
 use axum::body::Body;
 use axum::extract::{ State, Form };
-use axum_extra::extract::cookie::{ Cookie, SameSite };
-use time::Duration;
 use serde::Deserialize;
 
 
@@ -93,17 +91,8 @@ pub(crate) async fn post_handler
         return Err(Html(template.render().unwrap()));
     }
 
-    // Makes JWT token.
-    let jwt = Auth::make_jwt(&config);
-    let cookie = Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
-        .path("/")
-        .same_site(SameSite::Lax)
-        .http_only(true)
-        .max_age(Duration::seconds(config.jwt_expires()))
-        .secure(config.debug_mode() == false)
-        .finish();
-
     // Proxies to the frontend.
+    let cookie = Auth::make_jwt_cookie(&config);
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, "/")

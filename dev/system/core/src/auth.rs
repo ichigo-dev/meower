@@ -4,6 +4,9 @@
 
 use crate::Config;
 
+use axum::http::{ Request, header };
+use axum::body::Body;
+use axum_extra::extract::cookie::{ Cookie, CookieJar, SameSite };
 use jsonwebtoken::{
     encode,
     decode,
@@ -15,7 +18,10 @@ use jsonwebtoken::{
 };
 use chrono::{ Utc, Duration };
 use serde::{ Serialize, Deserialize };
+use time::Duration as TimeDuration;
 use uuid::Uuid;
+
+static JWT_COOKIE_KEY: &str = "token";
 
 
 //------------------------------------------------------------------------------
@@ -48,7 +54,53 @@ impl Auth
     //--------------------------------------------------------------------------
     /// Initializes the authentication.
     //--------------------------------------------------------------------------
-    pub fn init( jwt: &str, config: &Config ) -> Self
+    pub fn init() -> Self
+    {
+        Self
+        {
+            claims: None,
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Initializes the authentication from cookie.
+    //--------------------------------------------------------------------------
+    pub fn init_from_cookie( cookie: &CookieJar, config: &Config ) -> Self
+    {
+        let jwt = cookie
+            .get(JWT_COOKIE_KEY)
+            .map(|cookie| cookie.value().to_string())
+            .unwrap_or("".to_string());
+        Self::init_from_jwt(&jwt, config)
+    }
+
+    //--------------------------------------------------------------------------
+    /// Initializes the authentication from header.
+    //--------------------------------------------------------------------------
+    pub fn init_from_header( req: &Request<Body>, config: &Config ) -> Self
+    {
+        let jwt = req.headers()
+            .get(header::AUTHORIZATION)
+            .and_then(|auth_header| auth_header.to_str().ok())
+            .and_then(|auth_value|
+            {
+                if auth_value.starts_with("Bearer ")
+                {
+                    Some(auth_value[7..].to_owned())
+                }
+                else
+                {
+                    None
+                }
+            })
+            .unwrap_or("".to_string());
+        Self::init_from_jwt(&jwt, config)
+    }
+
+    //--------------------------------------------------------------------------
+    /// Initializes the authentication from JWT.
+    //--------------------------------------------------------------------------
+    pub fn init_from_jwt( jwt: &str, config: &Config ) -> Self
     {
         if jwt.is_empty()
         {
@@ -119,5 +171,21 @@ impl Auth
 
         let key = EncodingKey::from_secret(config.jwt_secret().as_ref());
         encode(&header, &claims, &key).unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Makes JWT token cookie.
+    //--------------------------------------------------------------------------
+    pub fn make_jwt_cookie( config: &Config ) -> String
+    {
+        let jwt = Self::make_jwt(config);
+        Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
+            .path("/")
+            .same_site(SameSite::Lax)
+            .http_only(true)
+            .max_age(TimeDuration::seconds(config.jwt_expires()))
+            .secure(config.debug_mode() == false)
+            .finish()
+            .to_string()
     }
 }

@@ -2,7 +2,6 @@
 //! Signup page.
 //------------------------------------------------------------------------------
 
-use meower_entity::user::ActiveModel as ActiveUser;
 use crate::{ AppState, Auth };
 
 use askama::Template;
@@ -78,12 +77,14 @@ pub(crate) async fn post_handler
     // Checks if the email and password confirmations match.
     if input.email != input.email_confirm
     {
-        let template = SignupTemplate { errors: vec!["Emails do not match.".to_string()] };
+        let errors = vec!["Emails do not match.".to_string()];
+        let template = SignupTemplate { errors };
         return Html(template.render().unwrap());
     }
     if input.password != input.password_confirm
     {
-        let template = SignupTemplate { errors: vec!["Passwords do not match.".to_string()] };
+        let errors = vec!["Passwords do not match.".to_string()];
+        let template = SignupTemplate { errors };
         return Html(template.render().unwrap());
     }
 

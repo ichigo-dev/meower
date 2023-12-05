@@ -25,8 +25,6 @@ use axum::routing::{ get, post };
 use hyper::client::HttpConnector;
 use sea_orm::{ Database, DbConn };
 
-static JWT_COOKIE_KEY: &str = "token";
-
 pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
 
 
