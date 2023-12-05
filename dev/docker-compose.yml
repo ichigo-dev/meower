@@ -111,8 +111,6 @@ services:
   tbls:
     container_name: meower_tbls
     image: k1low/tbls:latest
-    build:
-      context: ..
     volumes:
       - ../spec:/work
     working_dir: /work
