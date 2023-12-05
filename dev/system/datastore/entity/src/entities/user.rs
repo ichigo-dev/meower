@@ -2,6 +2,7 @@
 //! User model.
 //------------------------------------------------------------------------------
 
+use super::user_auth::Entity as UserAuthEntity;
 use sea_orm::entity::prelude::*;
 
 
@@ -21,6 +22,38 @@ pub struct Model
     pub is_deleted: bool,
 }
 
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Finds user by email.
+    //--------------------------------------------------------------------------
+    pub async fn find_by_email( hdb: &DbConn, email: &str ) -> Option<Self>
+    {
+        let user = Entity::find()
+            .filter(Column::Email.contains(email))
+            .one(hdb)
+            .await
+            .unwrap();
+        user
+    }
+
+    //--------------------------------------------------------------------------
+    /// Tries to login.
+    //--------------------------------------------------------------------------
+    pub async fn try_login( &self, hdb: &DbConn, password: &str ) -> bool
+    {
+        if let Some(user_auth) = self
+            .find_related(UserAuthEntity)
+            .one(hdb)
+            .await
+            .unwrap()
+        {
+            return user_auth.verify(password);
+        }
+        false
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// ActiveModel.
@@ -37,7 +70,7 @@ pub enum Relation
     #[sea_orm(has_many = "super::user_account::Entity")]
     UserAccount,
 
-    #[sea_orm(has_many = "super::user_auth::Entity")]
+    #[sea_orm(has_one = "super::user_auth::Entity")]
     UserAuth,
 }
 

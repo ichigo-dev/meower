@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use sea_orm::entity::prelude::*;
+use argon2::{ Argon2, PasswordHash, PasswordVerifier };
 
 
 //------------------------------------------------------------------------------
@@ -18,6 +19,20 @@ pub struct Model
     pub password: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
+}
+
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Verifies password.
+    //--------------------------------------------------------------------------
+    pub fn verify( &self, password: &str ) -> bool
+    {
+        let parsed_hash = PasswordHash::new(&password).unwrap();
+        Argon2::default()
+            .verify_password(self.password.as_bytes(), &parsed_hash)
+            .is_ok()
+    }
 }
 
 

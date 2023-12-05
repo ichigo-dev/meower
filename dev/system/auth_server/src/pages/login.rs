@@ -2,8 +2,7 @@
 //! Login page.
 //------------------------------------------------------------------------------
 
-use meower_entity::Loginable;
-use meower_entity::user::{ Model as User };
+use meower_entity::user::Model as UserModel;
 use crate::{ AppState, Auth, JWT_COOKIE_KEY };
 
 use askama::Template;
@@ -78,9 +77,18 @@ pub(crate) async fn post_handler
     let config = state.config();
 
     // Try to login.
-    if User::try_login(hdb, &input.email, &input.password).await == false
+    if let Some(user) = UserModel::find_by_email(&hdb, &input.email).await
     {
-        let errors = vec!["Invalid email or password.".to_string()];
+        if user.try_login(&hdb, &input.password).await == false
+        {
+            let errors = vec!["Invalid password.".to_string()];
+            let template = LoginTemplate { errors };
+            return Err(Html(template.render().unwrap()));
+        }
+    }
+    else
+    {
+        let errors = vec!["Not found the user".to_string()];
         let template = LoginTemplate { errors };
         return Err(Html(template.render().unwrap()));
     }
