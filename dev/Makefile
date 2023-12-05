@@ -57,7 +57,7 @@ db:
 # Migrate database
 migrate:
 	@sudo docker-compose exec dev \
-		bash -c 'cd /system/datastore && sea-orm-cli migrate'
+		bash -c 'cd /system/datastore && sea-orm-cli migrate ${cmd}'
 
 # Install data
 install:

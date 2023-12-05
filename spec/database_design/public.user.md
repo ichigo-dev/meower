@@ -2,15 +2,17 @@
 
 ## Description
 
+User table
+
 ## Columns
 
-| Name       | Type                        | Default                               | Nullable | Children                                                                              | Parents | Comment |
-| ---------- | --------------------------- | ------------------------------------- | -------- | ------------------------------------------------------------------------------------- | ------- | ------- |
-| user_id    | bigint                      | nextval('user_user_id_seq'::regclass) | false    | [public.user_auth](public.user_auth.md) [public.user_account](public.user_account.md) |         |         |
-| email      | varchar(255)                |                                       | false    |                                                                                       |         |         |
-| created_at | timestamp without time zone | CURRENT_TIMESTAMP                     | false    |                                                                                       |         |         |
-| updated_at | timestamp without time zone | CURRENT_TIMESTAMP                     | false    |                                                                                       |         |         |
-| is_deleted | boolean                     | false                                 | false    |                                                                                       |         |         |
+| Name       | Type                        | Default                               | Nullable | Children                                                                              | Parents | Comment          |
+| ---------- | --------------------------- | ------------------------------------- | -------- | ------------------------------------------------------------------------------------- | ------- | ---------------- |
+| user_id    | bigint                      | nextval('user_user_id_seq'::regclass) | false    | [public.user_auth](public.user_auth.md) [public.user_account](public.user_account.md) |         | User ID          |
+| email      | varchar(255)                |                                       | false    |                                                                                       |         | Email address    |
+| created_at | timestamp without time zone | CURRENT_TIMESTAMP                     | false    |                                                                                       |         | Create date      |
+| updated_at | timestamp without time zone | CURRENT_TIMESTAMP                     | false    |                                                                                       |         | Update date      |
+| is_deleted | boolean                     | false                                 | false    |                                                                                       |         | Soft delete flag |
 
 ## Constraints
 

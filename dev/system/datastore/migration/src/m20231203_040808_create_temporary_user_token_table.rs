@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create temporary_user_token table.
+//! Creates temporary_user_token table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
+use sea_orm::Statement;
 use crate::table_def::{ TemporaryUser, TemporaryUserToken };
 
 
@@ -20,6 +21,7 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Creates a table.
         let table = Table::create()
             .table(TemporaryUserToken::Table)
             .if_not_exists()
@@ -61,12 +63,31 @@ impl MigrationTrait for Migration
             .to_owned();
         manager.create_table(table).await?;
 
+        // Creates an index.
         let index = Index::create()
             .name("temporary_user_token_temporary_user_id_idx")
             .table(TemporaryUserToken::Table)
             .col(TemporaryUserToken::TemporaryUserId)
             .to_owned();
-        manager.create_index(index).await
+        manager.create_index(index).await?;
+
+        // Adds comments.
+        let querys = vec!
+        [
+            "COMMENT ON TABLE \"temporary_user_token\" IS 'Temporary user token';",
+            "COMMENT ON COLUMN \"temporary_user_token\".\"temporary_user_token_id\" IS 'Temporary user token ID';",
+            "COMMENT ON COLUMN \"temporary_user_token\".\"temporary_user_id\" IS 'Temporary user ID';",
+            "COMMENT ON COLUMN \"temporary_user_token\".\"token\" IS 'One time token';",
+            "COMMENT ON COLUMN \"temporary_user_token\".\"created_at\" IS 'Create date';",
+        ];
+        let hdb = manager.get_connection();
+        let backend = manager.get_database_backend();
+        for query in querys
+        {
+            hdb.execute(Statement::from_string(backend, query)).await?;
+        }
+
+        Ok(())
     }
 
     //--------------------------------------------------------------------------
@@ -74,8 +95,11 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Drops a table.
         manager
             .drop_table(Table::drop().table(TemporaryUserToken::Table).to_owned())
-            .await
+            .await?;
+
+        Ok(())
     }
 }

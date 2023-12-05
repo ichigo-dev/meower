@@ -2,15 +2,17 @@
 
 ## Description
 
+User authentication table
+
 ## Columns
 
-| Name         | Type                        | Default                                         | Nullable | Children | Parents                       | Comment |
-| ------------ | --------------------------- | ----------------------------------------------- | -------- | -------- | ----------------------------- | ------- |
-| user_auth_id | bigint                      | nextval('user_auth_user_auth_id_seq'::regclass) | false    |          |                               |         |
-| user_id      | bigint                      |                                                 | false    |          | [public.user](public.user.md) |         |
-| password     | varchar(255)                |                                                 | false    |          |                               |         |
-| created_at   | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |          |                               |         |
-| updated_at   | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |          |                               |         |
+| Name         | Type                        | Default                                         | Nullable | Children | Parents                       | Comment                |
+| ------------ | --------------------------- | ----------------------------------------------- | -------- | -------- | ----------------------------- | ---------------------- |
+| user_auth_id | bigint                      | nextval('user_auth_user_auth_id_seq'::regclass) | false    |          |                               | User authentication ID |
+| user_id      | bigint                      |                                                 | false    |          | [public.user](public.user.md) | User ID                |
+| password     | varchar(255)                |                                                 | false    |          |                               | Hashed password        |
+| created_at   | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |          |                               | Create date            |
+| updated_at   | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |          |                               | Update date            |
 
 ## Constraints
 

@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create workspace_member table.
+//! Creates workspace_member table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
+use sea_orm::Statement;
 use crate::table_def::{
     UserAccount,
     Workspace,
@@ -25,6 +26,7 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Creates a table.
         let table = Table::create()
             .table(WorkspaceMember::Table)
             .if_not_exists()
@@ -78,6 +80,7 @@ impl MigrationTrait for Migration
             .to_owned();
         manager.create_table(table).await?;
 
+        // Creates indexes.
         let index = Index::create()
             .name("workspace_member_workspace_id_idx")
             .table(WorkspaceMember::Table)
@@ -90,7 +93,25 @@ impl MigrationTrait for Migration
             .table(WorkspaceMember::Table)
             .col(WorkspaceMember::UserAccountId)
             .to_owned();
-        manager.create_index(index).await
+        manager.create_index(index).await?;
+
+        // Adds comments.
+        let querys = vec!
+        [
+            "COMMENT ON TABLE \"workspace_member\" IS 'Workspace member table'",
+            "COMMENT ON COLUMN \"workspace_member\".\"workspace_member_id\" IS 'Workspace member ID'",
+            "COMMENT ON COLUMN \"workspace_member\".\"workspace_id\" IS 'Workspace ID'",
+            "COMMENT ON COLUMN \"workspace_member\".\"user_account_id\" IS 'User account ID'",
+            "COMMENT ON COLUMN \"workspace_member\".\"workspace_member_authority_id\" IS 'Workspace member authority ID'",
+        ];
+        let hdb = manager.get_connection();
+        let backend = manager.get_database_backend();
+        for query in querys
+        {
+            hdb.execute(Statement::from_string(backend, query)).await?;
+        }
+
+        Ok(())
     }
 
     //--------------------------------------------------------------------------
@@ -98,8 +119,11 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Drops a table.
         manager
             .drop_table(Table::drop().table(WorkspaceMember::Table).to_owned())
-            .await
+            .await?;
+
+        Ok(())
     }
 }

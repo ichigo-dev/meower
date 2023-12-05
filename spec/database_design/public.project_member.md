@@ -2,14 +2,16 @@
 
 ## Description
 
+Project member table
+
 ## Columns
 
-| Name                        | Type   | Default                                                   | Nullable | Children | Parents                                                               | Comment |
-| --------------------------- | ------ | --------------------------------------------------------- | -------- | -------- | --------------------------------------------------------------------- | ------- |
-| project_member_id           | bigint | nextval('project_member_project_member_id_seq'::regclass) | false    |          |                                                                       |         |
-| project_id                  | bigint |                                                           | false    |          | [public.project](public.project.md)                                   |         |
-| user_account_id             | bigint |                                                           | false    |          | [public.user_account](public.user_account.md)                         |         |
-| project_member_authority_id | bigint |                                                           | false    |          | [public.project_member_authority](public.project_member_authority.md) |         |
+| Name                        | Type   | Default                                                   | Nullable | Children | Parents                                                               | Comment                     |
+| --------------------------- | ------ | --------------------------------------------------------- | -------- | -------- | --------------------------------------------------------------------- | --------------------------- |
+| project_member_id           | bigint | nextval('project_member_project_member_id_seq'::regclass) | false    |          |                                                                       | Project member ID           |
+| project_id                  | bigint |                                                           | false    |          | [public.project](public.project.md)                                   | Project ID                  |
+| user_account_id             | bigint |                                                           | false    |          | [public.user_account](public.user_account.md)                         | User account ID             |
+| project_member_authority_id | bigint |                                                           | false    |          | [public.project_member_authority](public.project_member_authority.md) | Project member authority ID |
 
 ## Constraints
 

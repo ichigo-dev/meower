@@ -2,13 +2,15 @@
 
 ## Description
 
+Workspace member authority
+
 ## Columns
 
-| Name                          | Type         | Default                                                                           | Nullable | Children                                              | Parents | Comment |
-| ----------------------------- | ------------ | --------------------------------------------------------------------------------- | -------- | ----------------------------------------------------- | ------- | ------- |
-| workspace_member_authority_id | bigint       | nextval('workspace_member_authority_workspace_member_authority_id_seq'::regclass) | false    | [public.workspace_member](public.workspace_member.md) |         |         |
-| symbol                        | varchar(255) |                                                                                   | false    |                                                       |         |         |
-| value                         | integer      |                                                                                   | false    |                                                       |         |         |
+| Name                          | Type         | Default                                                                           | Nullable | Children                                              | Parents | Comment                       |
+| ----------------------------- | ------------ | --------------------------------------------------------------------------------- | -------- | ----------------------------------------------------- | ------- | ----------------------------- |
+| workspace_member_authority_id | bigint       | nextval('workspace_member_authority_workspace_member_authority_id_seq'::regclass) | false    | [public.workspace_member](public.workspace_member.md) |         | Workspace member authority ID |
+| symbol                        | varchar(255) |                                                                                   | false    |                                                       |         | Symbol                        |
+| value                         | integer      |                                                                                   | false    |                                                       |         | Value                         |
 
 ## Constraints
 

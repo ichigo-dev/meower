@@ -29,10 +29,30 @@ $ make dev
 ```
 
 
+## Migrate database
+
+```sh
+$ make migrate
+```
+
+or fresh migration.
+
+```
+$ make migrate cmd=fresh
+```
+
+
 ## Install test data
 
 ```sh
 $ make install bin=install_test_data
+```
+
+
+## Output table definition
+
+```sh
+$ make tbls
 ```
 
 

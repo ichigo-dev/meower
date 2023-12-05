@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create project_member table.
+//! Creates project_member table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
+use sea_orm::Statement;
 use crate::table_def::{
     UserAccount,
     Project,
@@ -25,6 +26,7 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Creates a table.
         let table = Table::create()
             .table(ProjectMember::Table)
             .if_not_exists()
@@ -78,6 +80,7 @@ impl MigrationTrait for Migration
             .to_owned();
         manager.create_table(table).await?;
 
+        // Creates indexes.
         let index = Index::create()
             .name("project_member_project_id_idx")
             .table(ProjectMember::Table)
@@ -90,7 +93,25 @@ impl MigrationTrait for Migration
             .table(ProjectMember::Table)
             .col(ProjectMember::UserAccountId)
             .to_owned();
-        manager.create_index(index).await
+        manager.create_index(index).await?;
+
+        // Adds comments.
+        let querys = vec!
+        [
+            "COMMENT ON TABLE \"project_member\" IS 'Project member table'",
+            "COMMENT ON COLUMN \"project_member\".\"project_member_id\" IS 'Project member ID'",
+            "COMMENT ON COLUMN \"project_member\".\"project_id\" IS 'Project ID'",
+            "COMMENT ON COLUMN \"project_member\".\"user_account_id\" IS 'User account ID'",
+            "COMMENT ON COLUMN \"project_member\".\"project_member_authority_id\" IS 'Project member authority ID'",
+        ];
+        let hdb = manager.get_connection();
+        let backend = manager.get_database_backend();
+        for query in querys
+        {
+            hdb.execute(Statement::from_string(backend, query)).await?;
+        }
+
+        Ok(())
     }
 
     //--------------------------------------------------------------------------
@@ -98,8 +119,11 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Drops a table.
         manager
             .drop_table(Table::drop().table(ProjectMember::Table).to_owned())
-            .await
+            .await?;
+
+        Ok(())
     }
 }

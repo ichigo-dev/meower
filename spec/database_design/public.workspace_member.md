@@ -2,14 +2,16 @@
 
 ## Description
 
+Workspace member table
+
 ## Columns
 
-| Name                          | Type   | Default                                                       | Nullable | Children | Parents                                                                   | Comment |
-| ----------------------------- | ------ | ------------------------------------------------------------- | -------- | -------- | ------------------------------------------------------------------------- | ------- |
-| workspace_member_id           | bigint | nextval('workspace_member_workspace_member_id_seq'::regclass) | false    |          |                                                                           |         |
-| workspace_id                  | bigint |                                                               | false    |          | [public.workspace](public.workspace.md)                                   |         |
-| user_account_id               | bigint |                                                               | false    |          | [public.user_account](public.user_account.md)                             |         |
-| workspace_member_authority_id | bigint |                                                               | false    |          | [public.workspace_member_authority](public.workspace_member_authority.md) |         |
+| Name                          | Type   | Default                                                       | Nullable | Children | Parents                                                                   | Comment                       |
+| ----------------------------- | ------ | ------------------------------------------------------------- | -------- | -------- | ------------------------------------------------------------------------- | ----------------------------- |
+| workspace_member_id           | bigint | nextval('workspace_member_workspace_member_id_seq'::regclass) | false    |          |                                                                           | Workspace member ID           |
+| workspace_id                  | bigint |                                                               | false    |          | [public.workspace](public.workspace.md)                                   | Workspace ID                  |
+| user_account_id               | bigint |                                                               | false    |          | [public.user_account](public.user_account.md)                             | User account ID               |
+| workspace_member_authority_id | bigint |                                                               | false    |          | [public.workspace_member_authority](public.workspace_member_authority.md) | Workspace member authority ID |
 
 ## Constraints
 

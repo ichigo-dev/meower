@@ -2,14 +2,16 @@
 
 ## Description
 
+Temporary user
+
 ## Columns
 
-| Name              | Type                        | Default                                                   | Nullable | Children                                                      | Parents | Comment |
-| ----------------- | --------------------------- | --------------------------------------------------------- | -------- | ------------------------------------------------------------- | ------- | ------- |
-| temporary_user_id | bigint                      | nextval('temporary_user_temporary_user_id_seq'::regclass) | false    | [public.temporary_user_token](public.temporary_user_token.md) |         |         |
-| email             | varchar(255)                |                                                           | false    |                                                               |         |         |
-| password          | varchar(255)                |                                                           | false    |                                                               |         |         |
-| created_at        | timestamp without time zone | CURRENT_TIMESTAMP                                         | false    |                                                               |         |         |
+| Name              | Type                        | Default                                                   | Nullable | Children                                                      | Parents | Comment           |
+| ----------------- | --------------------------- | --------------------------------------------------------- | -------- | ------------------------------------------------------------- | ------- | ----------------- |
+| temporary_user_id | bigint                      | nextval('temporary_user_temporary_user_id_seq'::regclass) | false    | [public.temporary_user_token](public.temporary_user_token.md) |         | Temporary user ID |
+| email             | varchar(255)                |                                                           | false    |                                                               |         | Email address     |
+| password          | varchar(255)                |                                                           | false    |                                                               |         | Hashed password   |
+| created_at        | timestamp without time zone | CURRENT_TIMESTAMP                                         | false    |                                                               |         | Create date       |
 
 ## Constraints
 

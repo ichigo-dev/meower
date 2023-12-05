@@ -2,16 +2,18 @@
 
 ## Description
 
+Organization table
+
 ## Columns
 
-| Name              | Type                        | Default                                               | Nullable | Children                                                                                            | Parents | Comment |
-| ----------------- | --------------------------- | ----------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------- | ------- | ------- |
-| organization_id   | bigint                      | nextval('organization_organization_id_seq'::regclass) | false    | [public.organization_member](public.organization_member.md) [public.workspace](public.workspace.md) |         |         |
-| organization_name | varchar(255)                |                                                       | false    |                                                                                                     |         |         |
-| display_name      | varchar(255)                |                                                       | false    |                                                                                                     |         |         |
-| created_at        | timestamp without time zone | CURRENT_TIMESTAMP                                     | false    |                                                                                                     |         |         |
-| updated_at        | timestamp without time zone | CURRENT_TIMESTAMP                                     | false    |                                                                                                     |         |         |
-| is_deleted        | boolean                     | false                                                 | false    |                                                                                                     |         |         |
+| Name              | Type                        | Default                                               | Nullable | Children                                                                                            | Parents | Comment           |
+| ----------------- | --------------------------- | ----------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------- | ------- | ----------------- |
+| organization_id   | bigint                      | nextval('organization_organization_id_seq'::regclass) | false    | [public.organization_member](public.organization_member.md) [public.workspace](public.workspace.md) |         | Organization ID   |
+| organization_name | varchar(255)                |                                                       | false    |                                                                                                     |         | Organization name |
+| display_name      | varchar(255)                |                                                       | false    |                                                                                                     |         | Display name      |
+| created_at        | timestamp without time zone | CURRENT_TIMESTAMP                                     | false    |                                                                                                     |         | Create date       |
+| updated_at        | timestamp without time zone | CURRENT_TIMESTAMP                                     | false    |                                                                                                     |         | Update date       |
+| is_deleted        | boolean                     | false                                                 | false    |                                                                                                     |         | Soft delete flag  |
 
 ## Constraints
 

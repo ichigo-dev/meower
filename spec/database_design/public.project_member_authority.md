@@ -2,13 +2,15 @@
 
 ## Description
 
+Project member authority
+
 ## Columns
 
-| Name                        | Type         | Default                                                                       | Nullable | Children                                          | Parents | Comment |
-| --------------------------- | ------------ | ----------------------------------------------------------------------------- | -------- | ------------------------------------------------- | ------- | ------- |
-| project_member_authority_id | bigint       | nextval('project_member_authority_project_member_authority_id_seq'::regclass) | false    | [public.project_member](public.project_member.md) |         |         |
-| symbol                      | varchar(255) |                                                                               | false    |                                                   |         |         |
-| value                       | integer      |                                                                               | false    |                                                   |         |         |
+| Name                        | Type         | Default                                                                       | Nullable | Children                                          | Parents | Comment                     |
+| --------------------------- | ------------ | ----------------------------------------------------------------------------- | -------- | ------------------------------------------------- | ------- | --------------------------- |
+| project_member_authority_id | bigint       | nextval('project_member_authority_project_member_authority_id_seq'::regclass) | false    | [public.project_member](public.project_member.md) |         | Project member authority ID |
+| symbol                      | varchar(255) |                                                                               | false    |                                                   |         | Symbol                      |
+| value                       | integer      |                                                                               | false    |                                                   |         | Value                       |
 
 ## Constraints
 

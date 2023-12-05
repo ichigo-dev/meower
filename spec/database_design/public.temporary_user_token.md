@@ -2,14 +2,16 @@
 
 ## Description
 
+Temporary user token
+
 ## Columns
 
-| Name                    | Type                        | Default                                                               | Nullable | Children | Parents                                           | Comment |
-| ----------------------- | --------------------------- | --------------------------------------------------------------------- | -------- | -------- | ------------------------------------------------- | ------- |
-| temporary_user_token_id | bigint                      | nextval('temporary_user_token_temporary_user_token_id_seq'::regclass) | false    |          |                                                   |         |
-| temporary_user_id       | bigint                      |                                                                       | false    |          | [public.temporary_user](public.temporary_user.md) |         |
-| token                   | varchar(255)                |                                                                       | false    |          |                                                   |         |
-| created_at              | timestamp without time zone | CURRENT_TIMESTAMP                                                     | false    |          |                                                   |         |
+| Name                    | Type                        | Default                                                               | Nullable | Children | Parents                                           | Comment                 |
+| ----------------------- | --------------------------- | --------------------------------------------------------------------- | -------- | -------- | ------------------------------------------------- | ----------------------- |
+| temporary_user_token_id | bigint                      | nextval('temporary_user_token_temporary_user_token_id_seq'::regclass) | false    |          |                                                   | Temporary user token ID |
+| temporary_user_id       | bigint                      |                                                                       | false    |          | [public.temporary_user](public.temporary_user.md) | Temporary user ID       |
+| token                   | varchar(255)                |                                                                       | false    |          |                                                   | One time token          |
+| created_at              | timestamp without time zone | CURRENT_TIMESTAMP                                                     | false    |          |                                                   | Create date             |
 
 ## Constraints
 

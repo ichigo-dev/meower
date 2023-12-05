@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create organization_member table.
+//! Creates organization_member table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
+use sea_orm::Statement;
 use crate::table_def::{
     UserAccount,
     Organization,
@@ -25,6 +26,7 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Creates a table.
         let table = Table::create()
             .table(OrganizationMember::Table)
             .if_not_exists()
@@ -78,6 +80,7 @@ impl MigrationTrait for Migration
             .to_owned();
         manager.create_table(table).await?;
 
+        // Creates indexes.
         let index = Index::create()
             .name("organization_member_organization_id_idx")
             .table(OrganizationMember::Table)
@@ -90,7 +93,25 @@ impl MigrationTrait for Migration
             .table(OrganizationMember::Table)
             .col(OrganizationMember::UserAccountId)
             .to_owned();
-        manager.create_index(index).await
+        manager.create_index(index).await?;
+
+        // Adds comments.
+        let querys = vec!
+        [
+            "COMMENT ON TABLE \"organization_member\" IS 'Organization member table'",
+            "COMMENT ON COLUMN \"organization_member\".\"organization_member_id\" IS 'Organization member ID'",
+            "COMMENT ON COLUMN \"organization_member\".\"organization_id\" IS 'Organization ID'",
+            "COMMENT ON COLUMN \"organization_member\".\"user_account_id\" IS 'User account ID'",
+            "COMMENT ON COLUMN \"organization_member\".\"organization_member_authority_id\" IS 'Organization member authority ID'",
+        ];
+        let hdb = manager.get_connection();
+        let backend = manager.get_database_backend();
+        for query in querys
+        {
+            hdb.execute(Statement::from_string(backend, query)).await?;
+        }
+
+        Ok(())
     }
 
     //--------------------------------------------------------------------------
@@ -98,8 +119,11 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Drops a table.
         manager
             .drop_table(Table::drop().table(OrganizationMember::Table).to_owned())
-            .await
+            .await?;
+
+        Ok(())
     }
 }

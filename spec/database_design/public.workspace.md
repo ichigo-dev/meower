@@ -2,17 +2,19 @@
 
 ## Description
 
+Workspace table
+
 ## Columns
 
-| Name            | Type                        | Default                                         | Nullable | Children                                                                                  | Parents                                       | Comment |
-| --------------- | --------------------------- | ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------- | --------------------------------------------- | ------- |
-| workspace_id    | bigint                      | nextval('workspace_workspace_id_seq'::regclass) | false    | [public.workspace_member](public.workspace_member.md) [public.project](public.project.md) |                                               |         |
-| workspace_name  | varchar(255)                |                                                 | false    |                                                                                           |                                               |         |
-| display_name    | varchar(255)                |                                                 | false    |                                                                                           |                                               |         |
-| organization_id | bigint                      |                                                 | false    |                                                                                           | [public.organization](public.organization.md) |         |
-| created_at      | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |                                                                                           |                                               |         |
-| updated_at      | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |                                                                                           |                                               |         |
-| is_deleted      | boolean                     | false                                           | false    |                                                                                           |                                               |         |
+| Name            | Type                        | Default                                         | Nullable | Children                                                                                  | Parents                                       | Comment          |
+| --------------- | --------------------------- | ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------- | --------------------------------------------- | ---------------- |
+| workspace_id    | bigint                      | nextval('workspace_workspace_id_seq'::regclass) | false    | [public.workspace_member](public.workspace_member.md) [public.project](public.project.md) |                                               | Workspace ID     |
+| workspace_name  | varchar(255)                |                                                 | false    |                                                                                           |                                               | Workspace name   |
+| display_name    | varchar(255)                |                                                 | false    |                                                                                           |                                               | Display name     |
+| organization_id | bigint                      |                                                 | false    |                                                                                           | [public.organization](public.organization.md) | Organization ID  |
+| created_at      | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |                                                                                           |                                               | Create date      |
+| updated_at      | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |                                                                                           |                                               | Update date      |
+| is_deleted      | boolean                     | false                                           | false    |                                                                                           |                                               | Soft delete flag |
 
 ## Constraints
 

@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create organization table.
+//! Creates organization table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
+use sea_orm::Statement;
 use crate::table_def::Organization;
 
 
@@ -20,6 +21,7 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Creates a table.
         let table = Table::create()
             .table(Organization::Table)
             .if_not_exists()
@@ -68,7 +70,27 @@ impl MigrationTrait for Migration
                     .not_null()
             )
             .to_owned();
-        manager.create_table(table).await
+        manager.create_table(table).await?;
+
+        // Adds comments.
+        let querys = vec!
+        [
+            "COMMENT ON TABLE \"organization\" IS 'Organization table'",
+            "COMMENT ON COLUMN \"organization\".\"organization_id\" IS 'Organization ID'",
+            "COMMENT ON COLUMN \"organization\".\"organization_name\" IS 'Organization name'",
+            "COMMENT ON COLUMN \"organization\".\"display_name\" IS 'Display name'",
+            "COMMENT ON COLUMN \"organization\".\"created_at\" IS 'Create date'",
+            "COMMENT ON COLUMN \"organization\".\"updated_at\" IS 'Update date'",
+            "COMMENT ON COLUMN \"organization\".\"is_deleted\" IS 'Soft delete flag'",
+        ];
+        let hdb = manager.get_connection();
+        let backend = manager.get_database_backend();
+        for query in querys
+        {
+            hdb.execute(Statement::from_string(backend, query)).await?;
+        }
+
+        Ok(())
     }
 
     //--------------------------------------------------------------------------
@@ -76,8 +98,11 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Drops a table.
         manager
             .drop_table(Table::drop().table(Organization::Table).to_owned())
-            .await
+            .await?;
+
+        Ok(())
     }
 }

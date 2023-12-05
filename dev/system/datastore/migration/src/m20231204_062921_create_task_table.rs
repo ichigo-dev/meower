@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-//! Create task table.
+//! Creates task table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
+use sea_orm::Statement;
 use crate::table_def::{ UserAccount, Task, Project };
 
 
@@ -20,6 +21,7 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Creates a table.
         let table = Table::create()
             .table(Task::Table)
             .if_not_exists()
@@ -94,6 +96,7 @@ impl MigrationTrait for Migration
             .to_owned();
         manager.create_table(table).await?;
 
+        // Creates indexes.
         let index = Index::create()
             .name("task_project_id_idx")
             .table(Task::Table)
@@ -106,7 +109,29 @@ impl MigrationTrait for Migration
             .table(Task::Table)
             .col(Task::OwnerUserAccountId)
             .to_owned();
-        manager.create_index(index).await
+        manager.create_index(index).await?;
+
+        // Adds comments.
+        let querys = vec!
+        [
+            "COMMENT ON TABLE \"task\" IS 'Task table'",
+            "COMMENT ON COLUMN \"task\".\"task_id\" IS 'Task ID'",
+            "COMMENT ON COLUMN \"task\".\"project_id\" IS 'Project ID'",
+            "COMMENT ON COLUMN \"task\".\"owner_user_account_id\" IS 'Owner user account ID'",
+            "COMMENT ON COLUMN \"task\".\"title\" IS 'Title'",
+            "COMMENT ON COLUMN \"task\".\"content\" IS 'Content'",
+            "COMMENT ON COLUMN \"task\".\"created_at\" IS 'Create date'",
+            "COMMENT ON COLUMN \"task\".\"updated_at\" IS 'Update date'",
+            "COMMENT ON COLUMN \"task\".\"is_deleted\" IS 'Soft delete flag'",
+        ];
+        let hdb = manager.get_connection();
+        let backend = manager.get_database_backend();
+        for query in querys
+        {
+            hdb.execute(Statement::from_string(backend, query)).await?;
+        }
+
+        Ok(())
     }
 
     //--------------------------------------------------------------------------
@@ -114,8 +139,11 @@ impl MigrationTrait for Migration
     //--------------------------------------------------------------------------
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
+        // Drops a table.
         manager
             .drop_table(Table::drop().table(Task::Table).to_owned())
-            .await
+            .await?;
+
+        Ok(())
     }
 }

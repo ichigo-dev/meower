@@ -2,13 +2,15 @@
 
 ## Description
 
+Organization member authority
+
 ## Columns
 
-| Name                             | Type         | Default                                                                              | Nullable | Children                                                    | Parents | Comment |
-| -------------------------------- | ------------ | ------------------------------------------------------------------------------------ | -------- | ----------------------------------------------------------- | ------- | ------- |
-| organization_member_authority_id | bigint       | nextval('organization_member_authority_organization_member_authority_seq'::regclass) | false    | [public.organization_member](public.organization_member.md) |         |         |
-| symbol                           | varchar(255) |                                                                                      | false    |                                                             |         |         |
-| value                            | integer      |                                                                                      | false    |                                                             |         |         |
+| Name                             | Type         | Default                                                                              | Nullable | Children                                                    | Parents | Comment                          |
+| -------------------------------- | ------------ | ------------------------------------------------------------------------------------ | -------- | ----------------------------------------------------------- | ------- | -------------------------------- |
+| organization_member_authority_id | bigint       | nextval('organization_member_authority_organization_member_authority_seq'::regclass) | false    | [public.organization_member](public.organization_member.md) |         | Organization member authority ID |
+| symbol                           | varchar(255) |                                                                                      | false    |                                                             |         | Symbol                           |
+| value                            | integer      |                                                                                      | false    |                                                             |         | Value                            |
 
 ## Constraints
 

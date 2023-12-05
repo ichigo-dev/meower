@@ -2,14 +2,16 @@
 
 ## Description
 
+Organization member table
+
 ## Columns
 
-| Name                             | Type   | Default                                                             | Nullable | Children | Parents                                                                         | Comment |
-| -------------------------------- | ------ | ------------------------------------------------------------------- | -------- | -------- | ------------------------------------------------------------------------------- | ------- |
-| organization_member_id           | bigint | nextval('organization_member_organization_member_id_seq'::regclass) | false    |          |                                                                                 |         |
-| organization_id                  | bigint |                                                                     | false    |          | [public.organization](public.organization.md)                                   |         |
-| user_account_id                  | bigint |                                                                     | false    |          | [public.user_account](public.user_account.md)                                   |         |
-| organization_member_authority_id | bigint |                                                                     | false    |          | [public.organization_member_authority](public.organization_member_authority.md) |         |
+| Name                             | Type   | Default                                                             | Nullable | Children | Parents                                                                         | Comment                          |
+| -------------------------------- | ------ | ------------------------------------------------------------------- | -------- | -------- | ------------------------------------------------------------------------------- | -------------------------------- |
+| organization_member_id           | bigint | nextval('organization_member_organization_member_id_seq'::regclass) | false    |          |                                                                                 | Organization member ID           |
+| organization_id                  | bigint |                                                                     | false    |          | [public.organization](public.organization.md)                                   | Organization ID                  |
+| user_account_id                  | bigint |                                                                     | false    |          | [public.user_account](public.user_account.md)                                   | User account ID                  |
+| organization_member_authority_id | bigint |                                                                     | false    |          | [public.organization_member_authority](public.organization_member_authority.md) | Organization member authority ID |
 
 ## Constraints
 

@@ -2,17 +2,19 @@
 
 ## Description
 
+Project table
+
 ## Columns
 
-| Name         | Type                        | Default                                     | Nullable | Children                                                                        | Parents                                 | Comment |
-| ------------ | --------------------------- | ------------------------------------------- | -------- | ------------------------------------------------------------------------------- | --------------------------------------- | ------- |
-| project_id   | bigint                      | nextval('project_project_id_seq'::regclass) | false    | [public.project_member](public.project_member.md) [public.task](public.task.md) |                                         |         |
-| project_name | varchar(255)                |                                             | false    |                                                                                 |                                         |         |
-| display_name | varchar(255)                |                                             | false    |                                                                                 |                                         |         |
-| workspace_id | bigint                      |                                             | false    |                                                                                 | [public.workspace](public.workspace.md) |         |
-| created_at   | timestamp without time zone | CURRENT_TIMESTAMP                           | false    |                                                                                 |                                         |         |
-| updated_at   | timestamp without time zone | CURRENT_TIMESTAMP                           | false    |                                                                                 |                                         |         |
-| is_deleted   | boolean                     | false                                       | false    |                                                                                 |                                         |         |
+| Name         | Type                        | Default                                     | Nullable | Children                                                                        | Parents                                 | Comment          |
+| ------------ | --------------------------- | ------------------------------------------- | -------- | ------------------------------------------------------------------------------- | --------------------------------------- | ---------------- |
+| project_id   | bigint                      | nextval('project_project_id_seq'::regclass) | false    | [public.project_member](public.project_member.md) [public.task](public.task.md) |                                         | Project ID       |
+| project_name | varchar(255)                |                                             | false    |                                                                                 |                                         | Project name     |
+| display_name | varchar(255)                |                                             | false    |                                                                                 |                                         | Display name     |
+| workspace_id | bigint                      |                                             | false    |                                                                                 | [public.workspace](public.workspace.md) | Workspace ID     |
+| created_at   | timestamp without time zone | CURRENT_TIMESTAMP                           | false    |                                                                                 |                                         | Created date     |
+| updated_at   | timestamp without time zone | CURRENT_TIMESTAMP                           | false    |                                                                                 |                                         | Updated date     |
+| is_deleted   | boolean                     | false                                       | false    |                                                                                 |                                         | Soft delete flag |
 
 ## Constraints
 
