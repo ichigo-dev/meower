@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! User model.
+//! Organization model.
 //------------------------------------------------------------------------------
 
 use sea_orm::entity::prelude::*;
@@ -9,13 +9,14 @@ use sea_orm::entity::prelude::*;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "user")]
+#[sea_orm(table_name = "organization")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub user_id: i64,
+    pub organization_id: i64,
     #[sea_orm(unique)]
-    pub email: String,
+    pub organization_name: String,
+    pub display_name: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
     pub is_deleted: bool,
@@ -34,25 +35,25 @@ impl ActiveModelBehavior for ActiveModel {}
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(has_many = "super::user_account::Entity")]
-    UserAccount,
+    #[sea_orm(has_many = "super::organization_member::Entity")]
+    OrganizationMember,
 
-    #[sea_orm(has_many = "super::user_auth::Entity")]
-    UserAuth,
+    #[sea_orm(has_many = "super::workspace::Entity")]
+    Workspace,
 }
 
-impl Related<super::user_account::Entity> for Entity
+impl Related<super::organization_member::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::UserAccount.def()
+        Relation::OrganizationMember.def()
     }
 }
 
-impl Related<super::user_auth::Entity> for Entity
+impl Related<super::workspace::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::UserAuth.def()
+        Relation::Workspace.def()
     }
 }

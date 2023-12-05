@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! User model.
+//! TemporaryUserToken model.
 //------------------------------------------------------------------------------
 
 use sea_orm::entity::prelude::*;
@@ -9,16 +9,14 @@ use sea_orm::entity::prelude::*;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "user")]
+#[sea_orm(table_name = "temporary_user_token")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub user_id: i64,
-    #[sea_orm(unique)]
-    pub email: String,
+    pub temporary_user_token_id: i64,
+    pub temporary_user_id: i64,
+    pub token: String,
     pub created_at: DateTime,
-    pub updated_at: DateTime,
-    pub is_deleted: bool,
 }
 
 
@@ -34,25 +32,20 @@ impl ActiveModelBehavior for ActiveModel {}
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(has_many = "super::user_account::Entity")]
-    UserAccount,
-
-    #[sea_orm(has_many = "super::user_auth::Entity")]
-    UserAuth,
+    #[sea_orm(
+        belongs_to = "super::temporary_user::Entity",
+        from = "Column::TemporaryUserId",
+        to = "super::temporary_user::Column::TemporaryUserId",
+        on_update = "NoAction",
+        on_delete = "NoAction"
+    )]
+    TemporaryUser,
 }
 
-impl Related<super::user_account::Entity> for Entity
+impl Related<super::temporary_user::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::UserAccount.def()
-    }
-}
-
-impl Related<super::user_auth::Entity> for Entity
-{
-    fn to() -> RelationDef
-    {
-        Relation::UserAuth.def()
+        Relation::TemporaryUser.def()
     }
 }

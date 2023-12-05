@@ -25,7 +25,7 @@ $ make dev
 > cd /system/datastore
 > sea-orm-cli migrate generate [migration file name]
 > sea-orm-cli migrate
-> sea-orm-cli generate -o entity/src/entities
+> sea-orm-cli generate entity -o entity/src/entities
 ```
 
 
