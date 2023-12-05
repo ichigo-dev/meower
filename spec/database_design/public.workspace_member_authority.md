@@ -24,23 +24,7 @@
 
 ## Relations
 
-```mermaid
-erDiagram
-
-"public.workspace_member" }o--|| "public.workspace_member_authority" : "FOREIGN KEY (workspace_member_authority_id) REFERENCES workspace_member_authority(workspace_member_authority_id)"
-
-"public.workspace_member_authority" {
-  bigint workspace_member_authority_id
-  varchar_255_ symbol
-  integer value
-}
-"public.workspace_member" {
-  bigint workspace_member_id
-  bigint workspace_id FK
-  bigint user_account_id FK
-  bigint workspace_member_authority_id FK
-}
-```
+![er](public.workspace_member_authority.svg)
 
 ---
 

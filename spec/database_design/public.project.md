@@ -31,48 +31,7 @@
 
 ## Relations
 
-```mermaid
-erDiagram
-
-"public.project_member" }o--|| "public.project" : "FOREIGN KEY (project_id) REFERENCES project(project_id)"
-"public.task" }o--|| "public.project" : "FOREIGN KEY (project_id) REFERENCES project(project_id)"
-"public.project" }o--|| "public.workspace" : "FOREIGN KEY (workspace_id) REFERENCES workspace(workspace_id)"
-
-"public.project" {
-  bigint project_id
-  varchar_255_ project_name
-  varchar_255_ display_name
-  bigint workspace_id FK
-  timestamp_without_time_zone created_at
-  timestamp_without_time_zone updated_at
-  boolean is_deleted
-}
-"public.project_member" {
-  bigint project_member_id
-  bigint project_id FK
-  bigint user_account_id FK
-  bigint project_member_authority_id FK
-}
-"public.task" {
-  bigint task_id
-  bigint project_id FK
-  bigint owner_user_account_id FK
-  varchar_255_ title
-  text content
-  timestamp_without_time_zone created_at
-  timestamp_without_time_zone updated_at
-  boolean is_deleted
-}
-"public.workspace" {
-  bigint workspace_id
-  varchar_255_ workspace_name
-  varchar_255_ display_name
-  bigint organization_id FK
-  timestamp_without_time_zone created_at
-  timestamp_without_time_zone updated_at
-  boolean is_deleted
-}
-```
+![er](public.project.svg)
 
 ---
 

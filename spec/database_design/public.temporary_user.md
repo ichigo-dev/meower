@@ -27,24 +27,7 @@
 
 ## Relations
 
-```mermaid
-erDiagram
-
-"public.temporary_user_token" }o--|| "public.temporary_user" : "FOREIGN KEY (temporary_user_id) REFERENCES temporary_user(temporary_user_id)"
-
-"public.temporary_user" {
-  bigint temporary_user_id
-  varchar_255_ email
-  varchar_255_ password
-  timestamp_without_time_zone created_at
-}
-"public.temporary_user_token" {
-  bigint temporary_user_token_id
-  bigint temporary_user_id FK
-  varchar_255_ token
-  timestamp_without_time_zone created_at
-}
-```
+![er](public.temporary_user.svg)
 
 ---
 

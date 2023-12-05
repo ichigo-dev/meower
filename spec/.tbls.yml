@@ -1,0 +1,20 @@
+format:
+  adjust: true
+  sort: false
+  number: false
+  showOnlyFirstParagraph: false
+  hideColumnsWithoutValues: false
+
+er:
+  skip: false
+  format: svg
+  comment: false
+  hideDef: true
+  showColumnTypes:
+    related: true
+    primary: true
+  distance: 1
+  font: ""
+
+exclude:
+  - seaql_migrations

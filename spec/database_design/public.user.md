@@ -28,36 +28,7 @@
 
 ## Relations
 
-```mermaid
-erDiagram
-
-"public.user_auth" }o--|| "public.user" : "FOREIGN KEY (user_id) REFERENCES "user"(user_id)"
-"public.user_account" }o--|| "public.user" : "FOREIGN KEY (user_id) REFERENCES "user"(user_id)"
-
-"public.user" {
-  bigint user_id
-  varchar_255_ email
-  timestamp_without_time_zone created_at
-  timestamp_without_time_zone updated_at
-  boolean is_deleted
-}
-"public.user_auth" {
-  bigint user_auth_id
-  bigint user_id FK
-  varchar_255_ password
-  timestamp_without_time_zone created_at
-  timestamp_without_time_zone updated_at
-}
-"public.user_account" {
-  bigint user_account_id
-  bigint user_id FK
-  varchar_255_ user_account_name
-  varchar_255_ display_name
-  timestamp_without_time_zone created_at
-  timestamp_without_time_zone updated_at
-  boolean is_deleted
-}
-```
+![er](public.user.svg)
 
 ---
 

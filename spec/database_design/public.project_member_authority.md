@@ -24,23 +24,7 @@
 
 ## Relations
 
-```mermaid
-erDiagram
-
-"public.project_member" }o--|| "public.project_member_authority" : "FOREIGN KEY (project_member_authority_id) REFERENCES project_member_authority(project_member_authority_id)"
-
-"public.project_member_authority" {
-  bigint project_member_authority_id
-  varchar_255_ symbol
-  integer value
-}
-"public.project_member" {
-  bigint project_member_id
-  bigint project_id FK
-  bigint user_account_id FK
-  bigint project_member_authority_id FK
-}
-```
+![er](public.project_member_authority.svg)
 
 ---
 

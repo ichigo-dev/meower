@@ -28,26 +28,7 @@
 
 ## Relations
 
-```mermaid
-erDiagram
-
-"public.user_auth" }o--|| "public.user" : "FOREIGN KEY (user_id) REFERENCES "user"(user_id)"
-
-"public.user_auth" {
-  bigint user_auth_id
-  bigint user_id FK
-  varchar_255_ password
-  timestamp_without_time_zone created_at
-  timestamp_without_time_zone updated_at
-}
-"public.user" {
-  bigint user_id
-  varchar_255_ email
-  timestamp_without_time_zone created_at
-  timestamp_without_time_zone updated_at
-  boolean is_deleted
-}
-```
+![er](public.user_auth.svg)
 
 ---
 
