@@ -16,7 +16,7 @@
 //!        .is_email("The value must be an email.")
 //!        .validate();
 //!
-//!     if validator.validate() == false
+//!     if validator.has_err()
 //!     {
 //!         println!("Errors: {:?}", validator.errors());
 //!     }
@@ -54,11 +54,27 @@ impl Validator
     }
 
     //--------------------------------------------------------------------------
+    /// Returns the first error.
+    //--------------------------------------------------------------------------
+    pub fn get_first_error( &mut self ) -> String
+    {
+        self.errors.first().unwrap_or(&"".to_string()).to_string()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Returns the last error.
+    //--------------------------------------------------------------------------
+    pub fn get_last_error( &mut self ) -> String
+    {
+        self.errors.last().unwrap_or(&"".to_string()).to_string()
+    }
+
+    //--------------------------------------------------------------------------
     /// Validate.
     //--------------------------------------------------------------------------
-    pub fn validate( &mut self ) -> bool
+    pub fn has_err( &mut self ) -> bool
     {
-        self.errors.is_empty()
+        !self.errors.is_empty()
     }
 }
 

@@ -2,7 +2,11 @@
 //! User model.
 //------------------------------------------------------------------------------
 
+use meower_core::Validator;
 use super::user_auth::Entity as UserAuthEntity;
+
+use async_trait::async_trait;
+use chrono::Utc;
 use sea_orm::entity::prelude::*;
 
 
@@ -27,13 +31,15 @@ impl Model
     //--------------------------------------------------------------------------
     /// Finds user by email.
     //--------------------------------------------------------------------------
-    pub async fn find_by_email( hdb: &DbConn, email: &str ) -> Option<Self>
+    pub async fn find_by_email<C>( hdb: &C, email: &str ) -> Option<Self>
+    where
+        C: ConnectionTrait,
     {
         let user = Entity::find()
             .filter(Column::Email.contains(email))
             .one(hdb)
             .await
-            .unwrap();
+            .unwrap_or(None);
         user
     }
 
@@ -46,7 +52,7 @@ impl Model
             .find_related(UserAuthEntity)
             .one(hdb)
             .await
-            .unwrap()
+            .unwrap_or(None)
         {
             return user_auth.verify(password);
         }
@@ -58,7 +64,56 @@ impl Model
 //------------------------------------------------------------------------------
 /// ActiveModel.
 //------------------------------------------------------------------------------
-impl ActiveModelBehavior for ActiveModel {}
+#[async_trait]
+impl ActiveModelBehavior for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Before save.
+    //--------------------------------------------------------------------------
+    async fn before_save<C>
+    (
+        mut self,
+        hdb: &C,
+        insert: bool,
+    ) -> Result<Self, DbErr>
+    where
+        C: ConnectionTrait,
+    {
+        let email = self.email.clone().unwrap();
+
+        // Checks if the account already exists.
+        if insert
+        {
+            if Model::find_by_email(hdb, &email).await.is_some()
+            {
+                let error = "error.user.email.already_exists".to_string();
+                return Err(DbErr::Custom(error));
+            }
+        }
+
+        // Validates fields.
+        let mut email_validator = Validator::new(&email)
+            .not_empty("error.user.email.not_empty")
+            .max_len(255, "error.user.email.max_len")
+            .is_email("error.user.email.invalid")
+            .validate();
+        if email_validator.has_err()
+        {
+            return Err(DbErr::Custom(email_validator.get_first_error()));
+        }
+
+        // Sets the default values.
+        let now = Utc::now().naive_utc();
+        if insert
+        {
+            self.set(Column::CreatedAt, now.into());
+            self.set(Column::IsDeleted, false.into());
+        }
+        self.set(Column::UpdatedAt, now.into());
+
+        Ok(self)
+    }
+}
 
 
 //------------------------------------------------------------------------------

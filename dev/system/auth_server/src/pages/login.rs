@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use meower_entity::user::Model as UserModel;
-use crate::{ AppState, Auth };
+use crate::{ AppState, Auth, I18n };
 
 use askama::Template;
 use axum::Extension;
@@ -15,20 +15,39 @@ use serde::Deserialize;
 
 
 //------------------------------------------------------------------------------
+/// Form data.
+//------------------------------------------------------------------------------
+#[derive(Deserialize, Debug, Default)]
+pub(crate) struct LoginForm
+{
+    email: String,
+    password: String,
+}
+
+
+//------------------------------------------------------------------------------
 /// Login page template.
 //------------------------------------------------------------------------------
+#[allow(dead_code)]
 #[derive(Template)]
 #[template(path = "login.html")]
-struct LoginTemplate
+pub(crate) struct LoginTemplate
 {
-    errors: Vec<String>,
+    pub(crate) i18n: I18n,
+    pub(crate) input: LoginForm,
+    pub(crate) errors: Vec<String>,
 }
 
 impl Default for LoginTemplate
 {
     fn default() -> Self
     {
-        Self { errors: Vec::new() }
+        Self
+        {
+            i18n: I18n::new(),
+            input: LoginForm::default(),
+            errors: Vec::new(),
+        }
     }
 }
 
@@ -39,6 +58,7 @@ impl Default for LoginTemplate
 pub(crate) async fn get_handler
 (
     Extension(auth): Extension<Auth>,
+    Extension(i18n): Extension<I18n>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     if auth.is_logined().await
@@ -46,19 +66,12 @@ pub(crate) async fn get_handler
         return Err(Redirect::to("/"));
     }
 
-    let template = LoginTemplate::default();
+    let template = LoginTemplate
+    {
+        i18n,
+        ..Default::default()
+    };
     Ok(Html(template.render().unwrap()))
-}
-
-
-//------------------------------------------------------------------------------
-/// Form data.
-//------------------------------------------------------------------------------
-#[derive(Deserialize, Debug)]
-pub(crate) struct LoginForm
-{
-    email: String,
-    password: String,
 }
 
 
@@ -68,6 +81,7 @@ pub(crate) struct LoginForm
 pub(crate) async fn post_handler
 (
     State(state): State<AppState>,
+    Extension(i18n): Extension<I18n>,
     Form(input): Form<LoginForm>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
@@ -75,19 +89,19 @@ pub(crate) async fn post_handler
     let config = state.config();
 
     // Try to login.
-    if let Some(user) = UserModel::find_by_email(&hdb, &input.email).await
+    if let Some(user) = UserModel::find_by_email(hdb, &input.email).await
     {
         if user.try_login(&hdb, &input.password).await == false
         {
             let errors = vec!["Invalid password.".to_string()];
-            let template = LoginTemplate { errors };
+            let template = LoginTemplate { i18n, input, errors };
             return Err(Html(template.render().unwrap()));
         }
     }
     else
     {
         let errors = vec!["Not found the user".to_string()];
-        let template = LoginTemplate { errors };
+        let template = LoginTemplate { i18n, input, errors };
         return Err(Html(template.render().unwrap()));
     }
 
