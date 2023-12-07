@@ -2,6 +2,7 @@
 //! Configuration module.
 //------------------------------------------------------------------------------
 
+use crate::LoadToStringMap;
 use std::env;
 use std::cell::OnceCell;
 
@@ -164,3 +165,5 @@ impl Config
         &self.argon2_phc_salt
     }
 }
+
+impl LoadToStringMap for Config {}

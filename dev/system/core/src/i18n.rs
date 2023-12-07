@@ -22,11 +22,9 @@
 //! ```
 //------------------------------------------------------------------------------
 
-use crate::Config;
+use crate::{ Config, LoadToStringMap };
 
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::Read;
 use std::path::PathBuf;
 
 
@@ -67,8 +65,14 @@ impl I18n
             return false;
         }
         self.locale = locale.to_string();
-        self.map = self.load(&self.locale, config);
-        self.fallback = self.load(config.fallback_locale(), config);
+
+        let mut locale_path = PathBuf::from(&config.locale_path());
+        locale_path.push(&self.locale);
+        self.map = self.load(&locale_path);
+
+        let mut locale_path = PathBuf::from(&config.locale_path());
+        locale_path.push(&config.fallback_locale());
+        self.fallback = self.load(&locale_path);
         true
     }
 
@@ -90,79 +94,6 @@ impl I18n
             self.locale = config.fallback_locale().to_string();
         }
         true
-    }
-
-    //--------------------------------------------------------------------------
-    /// Loads the i18n map.
-    //--------------------------------------------------------------------------
-    fn load( &self, locale: &str, config: &Config ) -> HashMap<String, String>
-    {
-        let mut locale_path = PathBuf::from(&config.locale_path());
-        locale_path.push(locale);
-        let path = format!
-        (
-            "{}/**/*.{{yml,yaml,json,toml,txt}}",
-            locale_path.to_str().unwrap()
-        );
-
-        let glob = globwalk::glob(&path).unwrap();
-        let mut map = HashMap::new();
-        for entry in glob
-        {
-            let path = entry.unwrap().into_path();
-            if path.is_dir() { continue; }
-            let ext = path
-                .extension()
-                .and_then(|s| s.to_str())
-                .unwrap();
-            let path = path.to_str().unwrap();
-            map.extend(self.load_from_file(path, ext));
-        }
-        map
-    }
-
-    //--------------------------------------------------------------------------
-    /// Loads the i18n map.
-    //--------------------------------------------------------------------------
-    fn load_from_file( &self, path: &str, ext: &str ) -> HashMap<String, String>
-    {
-        let mut file = File::open(path).unwrap();
-        let mut content = String::new();
-        file.read_to_string(&mut content).unwrap();
-
-        match ext
-        {
-            "yml" | "yaml" =>
-            {
-                serde_yaml::from_str(&content).unwrap()
-            },
-            "json" =>
-            {
-                serde_json::from_str(&content).unwrap()
-            },
-            "toml" =>
-            {
-                toml::from_str(&content).unwrap()
-            },
-            "txt" =>
-            {
-                let mut map = HashMap::new();
-                for line in content.lines()
-                {
-                    if line.contains("=") == false || line.starts_with("#")
-                    {
-                        continue;
-                    }
-
-                    let mut iter = line.splitn(2, "=");
-                    let key = iter.next().unwrap().trim().to_string();
-                    let value = iter.next().unwrap().trim().to_string();
-                    map.insert(key, value);
-                }
-                map
-            },
-            _ => HashMap::new(),
-        }
     }
 
     //--------------------------------------------------------------------------
@@ -231,3 +162,5 @@ impl I18n
         message
     }
 }
+
+impl LoadToStringMap for I18n {}
