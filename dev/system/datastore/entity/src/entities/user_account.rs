@@ -2,6 +2,10 @@
 //! UserAccount model.
 //------------------------------------------------------------------------------
 
+use meower_core::Validator;
+
+use async_trait::async_trait;
+use chrono::Utc;
 use sea_orm::entity::prelude::*;
 
 
@@ -27,7 +31,49 @@ pub struct Model
 //------------------------------------------------------------------------------
 /// ActiveModel.
 //------------------------------------------------------------------------------
-impl ActiveModelBehavior for ActiveModel {}
+#[async_trait]
+impl ActiveModelBehavior for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Before save.
+    //--------------------------------------------------------------------------
+    async fn before_save<C>
+    (
+        mut self,
+        _hdb: &C,
+        insert: bool,
+    ) -> Result<Self, DbErr>
+    where
+        C: ConnectionTrait,
+    {
+        let user_account_name = self.user_account_name.clone().unwrap();
+
+        // Validates fields.
+        let mut user_account_name_validator = Validator::new(&user_account_name)
+            .not_empty("model_user_account.error.user_account_name.not_empty")
+            .min_len(8, "model_user_account.error.user_account_name.min_len")
+            .max_len(32, "model_user_account.error.user_account_name.max_len")
+            .validate();
+        if user_account_name_validator.has_err()
+        {
+            return Err
+            (
+                DbErr::Custom(user_account_name_validator.get_first_error())
+            );
+        }
+
+        // Sets the default values.
+        let now = Utc::now().naive_utc();
+        if insert
+        {
+            self.set(Column::CreatedAt, now.into());
+        }
+        self.set(Column::UpdatedAt, now.into());
+
+        Ok(self)
+    }
+
+}
 
 
 //------------------------------------------------------------------------------

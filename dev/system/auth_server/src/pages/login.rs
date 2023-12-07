@@ -31,7 +31,7 @@ pub(crate) struct LoginForm
 #[allow(dead_code)]
 #[derive(Template)]
 #[template(path = "login.html")]
-pub(crate) struct LoginTemplate
+struct LoginTemplate
 {
     pub(crate) i18n: I18n,
     pub(crate) input: LoginForm,
@@ -93,14 +93,14 @@ pub(crate) async fn post_handler
     {
         if user.try_login(&hdb, &input.password).await == false
         {
-            let errors = vec!["Invalid password.".to_string()];
+            let errors = vec![i18n.get("auth_server.login.error.invalid_password")];
             let template = LoginTemplate { i18n, input, errors };
             return Err(Html(template.render().unwrap()));
         }
     }
     else
     {
-        let errors = vec!["Not found the user".to_string()];
+        let errors = vec![i18n.get("auth_server.login.error.user_not_found")];
         let template = LoginTemplate { i18n, input, errors };
         return Err(Html(template.render().unwrap()));
     }

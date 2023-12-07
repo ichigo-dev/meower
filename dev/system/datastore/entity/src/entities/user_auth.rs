@@ -2,8 +2,13 @@
 //! UserAuth model.
 //------------------------------------------------------------------------------
 
+use meower_core::{ Config, Validator };
+
+use argon2::{ Argon2, PasswordHash, PasswordHasher, PasswordVerifier };
+use argon2::password_hash::SaltString;
+use async_trait::async_trait;
+use chrono::Utc;
 use sea_orm::entity::prelude::*;
-use argon2::{ Argon2, PasswordHash, PasswordVerifier };
 
 
 //------------------------------------------------------------------------------
@@ -24,13 +29,33 @@ pub struct Model
 impl Model
 {
     //--------------------------------------------------------------------------
+    /// Hashes password.
+    //--------------------------------------------------------------------------
+    pub fn password_hash( password: &str ) -> String
+    {
+        let config = Config::get();
+        let bin_password = password.as_bytes();
+        let salt = SaltString::from_b64(config.argon2_phc_salt().as_ref())
+            .unwrap();
+        let argon2 = Argon2::new
+        (
+            argon2::Algorithm::Argon2id,
+            argon2::Version::V0x13,
+            argon2::Params::default(),
+        );
+        argon2.hash_password(bin_password, &salt)
+            .unwrap()
+            .to_string()
+    }
+
+    //--------------------------------------------------------------------------
     /// Verifies password.
     //--------------------------------------------------------------------------
-    pub fn verify( &self, password: &str ) -> bool
+    pub fn password_verify( &self, password: &str ) -> bool
     {
-        let parsed_hash = PasswordHash::new(&password).unwrap();
+        let parsed_hash = PasswordHash::new(&self.password).unwrap();
         Argon2::default()
-            .verify_password(self.password.as_bytes(), &parsed_hash)
+            .verify_password(password.as_bytes(), &parsed_hash)
             .is_ok()
     }
 }
@@ -39,7 +64,52 @@ impl Model
 //------------------------------------------------------------------------------
 /// ActiveModel.
 //------------------------------------------------------------------------------
-impl ActiveModelBehavior for ActiveModel {}
+#[async_trait]
+impl ActiveModelBehavior for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Before save.
+    //--------------------------------------------------------------------------
+    async fn before_save<C>
+    (
+        mut self,
+        _hdb: &C,
+        insert: bool,
+    ) -> Result<Self, DbErr>
+    where
+        C: ConnectionTrait,
+    {
+        let password = self.password.clone().unwrap();
+
+        // Validates fields.
+        let mut password_validator = Validator::new(&password)
+            .not_empty("model_user_auth.error.password.not_empty")
+            .min_len(8, "model_user_auth.error.password.min_len")
+            .max_len(255, "model_user_auth.error.password.max_len")
+            .regex(r".*[a-zA-Z].*", "model_user_auth.error.password.regex")
+            .regex(r".*[0-9].*", "model_user_auth.error.password.regex")
+            .regex(r".*[!@#$%^&*()].*", "model_user_auth.error.password.regex")
+            .validate();
+        if password_validator.has_err()
+        {
+            return Err(DbErr::Custom(password_validator.get_first_error()));
+        }
+
+        // Sets the default values.
+        let now = Utc::now().naive_utc();
+        if insert
+        {
+            self.set(Column::CreatedAt, now.into());
+        }
+        self.set(Column::UpdatedAt, now.into());
+
+        // Hashes the password.
+        let hash = Model::password_hash(&password);
+        self.set(Column::Password, hash.into());
+
+        Ok(self)
+    }
+}
 
 
 //------------------------------------------------------------------------------

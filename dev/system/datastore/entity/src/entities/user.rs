@@ -54,7 +54,7 @@ impl Model
             .await
             .unwrap_or(None)
         {
-            return user_auth.verify(password);
+            return user_auth.password_verify(password);
         }
         false
     }
@@ -86,16 +86,16 @@ impl ActiveModelBehavior for ActiveModel
         {
             if Model::find_by_email(hdb, &email).await.is_some()
             {
-                let error = "error.user.email.already_exists".to_string();
+                let error = "model_user.error.email.already_exists".to_string();
                 return Err(DbErr::Custom(error));
             }
         }
 
         // Validates fields.
         let mut email_validator = Validator::new(&email)
-            .not_empty("error.user.email.not_empty")
-            .max_len(255, "error.user.email.max_len")
-            .is_email("error.user.email.invalid")
+            .not_empty("model_user.error.email.not_empty")
+            .max_len(255, "model_user.error.email.max_len")
+            .is_email("model_user.error.email.invalid")
             .validate();
         if email_validator.has_err()
         {

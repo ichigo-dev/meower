@@ -158,12 +158,18 @@ impl Auth
         let now = Utc::now();
         let iat = now.timestamp();
         let exp = (now + Duration::seconds(config.jwt_expires())).timestamp();
+        let aud = config
+            .jwt_audience()
+            .to_vec()
+            .iter()
+            .map(|aud| aud.to_string())
+            .collect();
         let claims = Claims
         {
             jti: Uuid::new_v4().to_string(),
             iss: config.jwt_issue().to_string(),
             sub: config.jwt_subject().to_string(),
-            aud: config.jwt_audience().clone(),
+            aud,
             iat,
             nbf: iat,
             exp,

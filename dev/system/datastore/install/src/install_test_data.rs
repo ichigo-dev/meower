@@ -19,7 +19,7 @@ use sea_orm::{
 #[tokio::main]
 async fn main()
 {
-    let config = Config::init();
+    let config = Config::get();
     let hdb = Database::connect(config.database_url())
         .await
         .expect("Failed to setup the database");

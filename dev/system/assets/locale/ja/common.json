@@ -1,7 +1,0 @@
-{
-	"hello": "こんにちは、%user%さん",
-	"error.user.email.already_exists": "そのメールアドレスは既に登録されています",
-	"error.user.email.not_empty": "メールアドレスを入力してください",
-	"error.user.email.max_len": "メールアドレスは255文字以内で入力してください",
-	"error.user.email.is_email": "メールアドレスが正しくありません"
-}

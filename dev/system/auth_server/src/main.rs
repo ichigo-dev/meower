@@ -82,7 +82,7 @@ async fn main()
 {
     // Initializes the application state.
     let client = Client::new();
-    let config = Config::init();
+    let config = Config::get();
     let hdb = Database::connect(config.database_url().to_string())
         .await
         .expect("Failed to setup the database");

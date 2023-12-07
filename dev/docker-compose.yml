@@ -28,11 +28,11 @@ services:
     ports:
       - ${FRONTEND_PORT}:9000
     volumes:
-      - ./system/assets:/assets
-      - ./system/core:/core
-      - ./system/service/frontend:/service/frontend
+      - ./system/assets:/system/assets
+      - ./system/core:/system/core
+      - ./system/service/frontend:/system/service/frontend
     env_file: .env
-    working_dir: /service/frontend
+    working_dir: /system/service/frontend
     command: "trunk serve --address 0.0.0.0 --release"
     depends_on:
       - backend
@@ -49,12 +49,12 @@ services:
     ports:
       - ${BACKEND_PORT}:9001
     volumes:
-      - ./system/assets:/assets
-      - ./system/core:/core
-      - ./system/service/backend:/service/backend
-      - ./system/datastore:/datastore
+      - ./system/assets:/system/assets
+      - ./system/core:/system/core
+      - ./system/service/backend:/system/service/backend
+      - ./system/datastore:/system/datastore
     env_file: .env
-    working_dir: /service/backend
+    working_dir: /system/service/backend
     command: "cargo watch -x run"
     depends_on:
       - postgres
@@ -71,12 +71,12 @@ services:
     ports:
       - ${AUTH_SERVER_PORT}:8080
     volumes:
-      - ./system/assets:/assets
-      - ./system/auth_server:/auth_server
-      - ./system/core:/core
-      - ./system/datastore:/datastore
+      - ./system/assets:/system/assets
+      - ./system/auth_server:/system/auth_server
+      - ./system/core:/system/core
+      - ./system/datastore:/system/datastore
     env_file: .env
-    working_dir: /auth_server
+    working_dir: /system/auth_server
     command: "cargo watch -x run"
     depends_on:
       - postgres

@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 use crate::{ AppState, Auth, I18n };
-use super::login::LoginTemplate;
 use meower_entity::user::ActiveModel as ActiveUser;
 use meower_entity::user_auth::ActiveModel as ActiveUserAuth;
 use meower_entity::user_account::ActiveModel as ActiveUserAccount;
@@ -110,15 +109,7 @@ pub(crate) async fn post_handler
     // Creates a new user and account.
     match create_user(&hdb, &input).await
     {
-        Ok(_) =>
-        {
-            let template = LoginTemplate
-            {
-                i18n,
-                ..Default::default()
-            };
-            return Ok(Html(template.render().unwrap()));
-        },
+        Ok(_) => { return Ok(Redirect::to("/login")); },
         Err(e) =>
         {
             let error = match e

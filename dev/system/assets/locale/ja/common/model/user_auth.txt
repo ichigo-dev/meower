@@ -1,0 +1,8 @@
+################################################################################
+# UserAuth
+################################################################################
+
+model_user_auth.error.password.not_empty = パスワードを入力してください
+model_user_auth.error.password.min_len = パスワードは8文字以上で入力してください
+model_user_auth.error.password.max_len = パスワードは255文字以下で入力してください
+model_user_auth.error.password.regex = パスワードには半角英字、数字、記号をそれぞれ1種類以上含めてください
