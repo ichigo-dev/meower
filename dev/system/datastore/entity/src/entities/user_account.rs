@@ -2,7 +2,8 @@
 //! UserAccount model.
 //------------------------------------------------------------------------------
 
-use meower_core::Validator;
+use meower_core::{ Validator, I18n };
+use crate::Validate;
 
 use async_trait::async_trait;
 use chrono::Utc;
@@ -46,22 +47,6 @@ impl ActiveModelBehavior for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let user_account_name = self.user_account_name.clone().unwrap();
-
-        // Validates fields.
-        let mut user_account_name_validator = Validator::new(&user_account_name)
-            .not_empty("model_user_account.error.user_account_name.not_empty")
-            .min_len(8, "model_user_account.error.user_account_name.min_len")
-            .max_len(32, "model_user_account.error.user_account_name.max_len")
-            .validate();
-        if user_account_name_validator.has_err()
-        {
-            return Err
-            (
-                DbErr::Custom(user_account_name_validator.get_first_error())
-            );
-        }
-
         // Sets the default values.
         let now = Utc::now().naive_utc();
         if insert
@@ -73,6 +58,60 @@ impl ActiveModelBehavior for ActiveModel
         Ok(self)
     }
 
+}
+
+#[async_trait]
+impl Validate for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Validates the data.
+    //--------------------------------------------------------------------------
+    async fn validate<C>
+    (
+        &self,
+        _hdb: &C,
+        i18n: &I18n,
+    ) -> Result<(), String>
+    where
+        C: ConnectionTrait,
+    {
+        let user_account_name = self.user_account_name.clone().unwrap();
+
+        // Validates fields.
+        let mut user_account_name_validator = Validator::new(&user_account_name)
+            .not_empty
+            (
+                &i18n.get
+                (
+                    "model_user_account.error.user_account_name.not_empty"
+                )
+            )
+            .min_len
+            (
+                3,
+                &i18n.get_with
+                (
+                    "model_user_account.error.user_account_name.min_len",
+                    [("min_len", "3")].into()
+                )
+            )
+            .max_len
+            (
+                32,
+                &i18n.get_with
+                (
+                    "model_user_account.error.user_account_name.max_len",
+                    [("max_len", "32")].into()
+                )
+            )
+            .validate();
+        if user_account_name_validator.has_err()
+        {
+            return Err(user_account_name_validator.get_first_error());
+        }
+
+        Ok(())
+    }
 }
 
 

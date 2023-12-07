@@ -2,6 +2,14 @@
 # Login page
 ################################################################################
 
-auth_server.login.heading = Meower Login
-auth_server.login.error.invalid_password = パスワードが間違っています
-auth_server.login.error.user_not_found = ユーザが見つかりません
+auth_server.login.heading = ログイン
+
+# Form
+auth_server.login.form.email.label = メールアドレス
+auth_server.login.form.email.placeholder = meower@example.com
+auth_server.login.form.password.label = パスワード
+auth_server.login.form.button.send = ログイン
+auth_server.login.form.error.invalid_password = パスワードが間違っています
+auth_server.login.form.error.user_not_found = ユーザが見つかりません
+
+auth_server.login.button.signup = サインアップ

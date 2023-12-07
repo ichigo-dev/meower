@@ -1,0 +1,20 @@
+################################################################################
+# Signup page
+################################################################################
+
+auth_server.signup.heading = サインアップ
+
+# Form
+auth_server.signup.form.user_account_name.label = アカウント名
+auth_server.signup.form.user_account_name.placeholder = meower_cat
+auth_server.signup.form.email.label = メールアドレス
+auth_server.signup.form.email.placeholder = meower@example.com
+auth_server.signup.form.email_confirm.label = メールアドレス（確認用）
+auth_server.signup.form.email_confirm.placeholder = meower@example.com
+auth_server.signup.form.password.label = パスワード
+auth_server.signup.form.password_confirm.label = パスワード（確認用）
+auth_server.signup.form.button.send = サインアップ
+auth_server.signup.form.error.email_not_match = メールアドレスが一致しません
+auth_server.signup.form.error.password_not_match = パスワードが一致しません
+
+auth_server.signup.button.login = ログイン

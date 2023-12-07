@@ -2,7 +2,8 @@
 //! User model.
 //------------------------------------------------------------------------------
 
-use meower_core::Validator;
+use meower_core::{ Validator, I18n };
+use crate::Validate;
 use super::user_auth::Entity as UserAuthEntity;
 
 use async_trait::async_trait;
@@ -73,35 +74,12 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         mut self,
-        hdb: &C,
+        _hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
     where
         C: ConnectionTrait,
     {
-        let email = self.email.clone().unwrap();
-
-        // Checks if the account already exists.
-        if insert
-        {
-            if Model::find_by_email(hdb, &email).await.is_some()
-            {
-                let error = "model_user.error.email.already_exists".to_string();
-                return Err(DbErr::Custom(error));
-            }
-        }
-
-        // Validates fields.
-        let mut email_validator = Validator::new(&email)
-            .not_empty("model_user.error.email.not_empty")
-            .max_len(255, "model_user.error.email.max_len")
-            .is_email("model_user.error.email.invalid")
-            .validate();
-        if email_validator.has_err()
-        {
-            return Err(DbErr::Custom(email_validator.get_first_error()));
-        }
-
         // Sets the default values.
         let now = Utc::now().naive_utc();
         if insert
@@ -112,6 +90,55 @@ impl ActiveModelBehavior for ActiveModel
         self.set(Column::UpdatedAt, now.into());
 
         Ok(self)
+    }
+}
+
+#[async_trait]
+impl Validate for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Validates the data.
+    //--------------------------------------------------------------------------
+    async fn validate<C>
+    (
+        &self,
+        hdb: &C,
+        i18n: &I18n,
+    ) -> Result<(), String>
+    where
+        C: ConnectionTrait,
+    {
+        let email = self.email.clone().unwrap();
+
+        // Checks if the account already exists.
+        if self.user_id.is_set() == false
+        {
+            if Model::find_by_email(hdb, &email).await.is_some()
+            {
+                return Err(i18n.get("model_user.error.email.already_exists"));
+            }
+        }
+
+        // Validates fields.
+        let mut email_validator = Validator::new(&email)
+            .not_empty(&i18n.get("model_user.error.email.not_empty"))
+            .max_len
+            (
+                255,
+                &i18n.get_with
+                (
+                    "model_user.error.email.max_len",
+                    [("max_len", "255")].into()
+                )
+            )
+            .is_email(&i18n.get("model_user.error.email.invalid"))
+            .validate();
+        if email_validator.has_err()
+        {
+            return Err(email_validator.get_first_error());
+        }
+
+        Ok(())
     }
 }
 

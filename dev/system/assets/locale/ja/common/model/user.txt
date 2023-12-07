@@ -4,5 +4,5 @@
 
 model_user.error.email.already_exists = そのメールアドレスは既に登録されています
 model_user.error.email.not_empty = メールアドレスを入力してください
-model_user.error.email.max_len = メールアドレスは255文字以下で入力してください
+model_user.error.email.max_len = メールアドレスは%max_len%文字以下で入力してください
 model_user.error.email.is_email = メールアドレスが正しくありません

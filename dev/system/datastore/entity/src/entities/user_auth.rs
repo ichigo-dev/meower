@@ -2,7 +2,8 @@
 //! UserAuth model.
 //------------------------------------------------------------------------------
 
-use meower_core::{ Config, Validator };
+use meower_core::{ Config, Validator, I18n };
+use crate::Validate;
 
 use argon2::{ Argon2, PasswordHash, PasswordHasher, PasswordVerifier };
 use argon2::password_hash::SaltString;
@@ -79,22 +80,6 @@ impl ActiveModelBehavior for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let password = self.password.clone().unwrap();
-
-        // Validates fields.
-        let mut password_validator = Validator::new(&password)
-            .not_empty("model_user_auth.error.password.not_empty")
-            .min_len(8, "model_user_auth.error.password.min_len")
-            .max_len(255, "model_user_auth.error.password.max_len")
-            .regex(r".*[a-zA-Z].*", "model_user_auth.error.password.regex")
-            .regex(r".*[0-9].*", "model_user_auth.error.password.regex")
-            .regex(r".*[!@#$%^&*()].*", "model_user_auth.error.password.regex")
-            .validate();
-        if password_validator.has_err()
-        {
-            return Err(DbErr::Custom(password_validator.get_first_error()));
-        }
-
         // Sets the default values.
         let now = Utc::now().naive_utc();
         if insert
@@ -104,10 +89,74 @@ impl ActiveModelBehavior for ActiveModel
         self.set(Column::UpdatedAt, now.into());
 
         // Hashes the password.
+        let password = self.password.clone().unwrap();
         let hash = Model::password_hash(&password);
         self.set(Column::Password, hash.into());
 
         Ok(self)
+    }
+}
+
+#[async_trait]
+impl Validate for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Validates the data.
+    //--------------------------------------------------------------------------
+    async fn validate<C>
+    (
+        &self,
+        _hdb: &C,
+        i18n: &I18n,
+    ) -> Result<(), String>
+    where
+        C: ConnectionTrait,
+    {
+        let password = self.password.clone().unwrap();
+
+        // Validates fields.
+        let mut password_validator = Validator::new(&password)
+            .not_empty(&i18n.get("model_user_auth.error.password.not_empty"))
+            .min_len
+            (
+                8,
+                &i18n.get_with
+                (
+                    "model_user_auth.error.password.min_len",
+                    [("min_len", "8")].into()
+                )
+            )
+            .max_len
+            (
+                255,
+                &i18n.get_with
+                (
+                    "model_user_auth.error.password.max_len",
+                    [("max_len", "255")].into()
+                )
+            )
+            .regex
+            (
+                r".*[a-zA-Z].*",
+                &i18n.get("model_user_auth.error.password.regex")
+            )
+            .regex
+            (
+                r".*[0-9].*",
+                &i18n.get("model_user_auth.error.password.regex")
+            )
+            .regex
+            (
+                r".*[!@#$%^&*()].*",
+                &i18n.get("model_user_auth.error.password.regex")
+            )
+            .validate();
+        if password_validator.has_err()
+        {
+            return Err(password_validator.get_first_error());
+        }
+
+        Ok(())
     }
 }
 

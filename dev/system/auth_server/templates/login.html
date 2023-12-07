@@ -7,11 +7,17 @@
  <body>
   <h1>{{ i18n.get("auth_server.login.heading") }}</h1>
   <form method="POST">
-   <input type="email" name="email" placeholder="Email" value="{{ input.email }}">
-   <input type="password" name="password">
-   <button type="submit">Send</button>
+   <label>
+    <span>{{ i18n.get("auth_server.login.form.email.label") }}</span>
+    <input type="email" name="email" placeholder="{{ i18n.get("auth_server.login.form.email.placeholder") }}" value="{{ input.email }}">
+   </label>
+   <label>
+    <span>{{ i18n.get("auth_server.login.form.password.label") }}</span>
+    <input type="password" name="password">
+   </label>
+   <button type="submit">{{ i18n.get("auth_server.login.form.button.send") }}</button>
   </form>
-  <a href="/signup">Signup</a>
+  <a href="/signup">{{ i18n.get("auth_server.login.button.signup") }}</a>
 
   {% for error in errors %}
    <div>{{ error }}</div>

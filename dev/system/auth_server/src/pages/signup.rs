@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::{ AppState, Auth, I18n };
+use meower_entity::Validate;
 use meower_entity::user::ActiveModel as ActiveUser;
 use meower_entity::user_auth::ActiveModel as ActiveUserAuth;
 use meower_entity::user_account::ActiveModel as ActiveUserAccount;
@@ -95,29 +96,30 @@ pub(crate) async fn post_handler
     // Checks if the email and password confirmations match.
     if input.email != input.email_confirm
     {
-        let errors = vec!["Emails do not match.".to_string()];
+        let errors = vec!
+        [
+            i18n.get("auth_server.signup.form.error.email_not_match")
+        ];
         let template = SignupTemplate { i18n, input, errors };
         return Err(Html(template.render().unwrap()));
     }
     if input.password != input.password_confirm
     {
-        let errors = vec!["Passwords do not match.".to_string()];
+        let errors = vec!
+        [
+            i18n.get("auth_server.signup.form.error.password_not_match")
+        ];
         let template = SignupTemplate { i18n, input, errors };
         return Err(Html(template.render().unwrap()));
     }
 
     // Creates a new user and account.
-    match create_user(&hdb, &input).await
+    match create_user(&hdb, &input, &i18n).await
     {
         Ok(_) => { return Ok(Redirect::to("/login")); },
         Err(e) =>
         {
-            let error = match e
-            {
-                DbErr::Custom(e) => i18n.get(&e),
-                _ => e.to_string(),
-            };
-            let template = SignupTemplate { i18n, input, errors: vec![error] };
+            let template = SignupTemplate { i18n, input, errors: vec![e] };
             return Err(Html(template.render().unwrap()));
         }
     };
@@ -127,7 +129,12 @@ pub(crate) async fn post_handler
 //------------------------------------------------------------------------------
 /// Creates a new user and account.
 //------------------------------------------------------------------------------
-async fn create_user( hdb: &DbConn, input: &SignupForm ) -> Result<(), DbErr>
+async fn create_user
+(
+    hdb: &DbConn,
+    input: &SignupForm,
+    i18n: &I18n,
+) -> Result<(), String>
 {
     let tsx = hdb.begin().await.unwrap();
 
@@ -137,7 +144,7 @@ async fn create_user( hdb: &DbConn, input: &SignupForm ) -> Result<(), DbErr>
         email: ActiveValue::Set(input.email.clone()),
         ..Default::default()
     };
-    let user = match user.save(&tsx).await
+    let user = match user.validate_and_save(&tsx, &i18n).await
     {
         Ok(user) => user,
         Err(e) =>
@@ -154,10 +161,10 @@ async fn create_user( hdb: &DbConn, input: &SignupForm ) -> Result<(), DbErr>
         password: ActiveValue::Set(input.password.clone()),
         ..Default::default()
     };
-    if let Err(e) = user_auth.save(&tsx).await
+    if let Err(e) = user_auth.validate_and_save(&tsx, &i18n).await
     {
         tsx.rollback().await.unwrap();
-        return Err(e);
+        return Err(e.to_string());
     }
 
     // Creates a user_account.
@@ -168,10 +175,10 @@ async fn create_user( hdb: &DbConn, input: &SignupForm ) -> Result<(), DbErr>
         display_name: ActiveValue::Set(input.user_account_name.clone()),
         ..Default::default()
     };
-    if let Err(e) = user_account.save(&tsx).await
+    if let Err(e) = user_account.validate_and_save(&tsx, &i18n).await
     {
         tsx.rollback().await.unwrap();
-        return Err(e);
+        return Err(e.to_string());
     };
 
     tsx.commit().await.unwrap();

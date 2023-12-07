@@ -1,9 +1,7 @@
 //------------------------------------------------------------------------------
-//! Data model entities.
+//! Data model traits.
 //------------------------------------------------------------------------------
 
-mod entities;
-mod traits;
+mod validate;
 
-pub use entities::*;
-pub use traits::*;
+pub use validate::*;

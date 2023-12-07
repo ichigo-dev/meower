@@ -8,7 +8,7 @@
 init:
 	@echo "===== Initializing ====="
 	@cp .env.example .env
-	@cp .env system/config/config.txt
+	@cp .env system/config/env.txt
 	@echo "===== Finish ====="
 
 # Build the containers
