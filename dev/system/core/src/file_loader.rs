@@ -20,7 +20,7 @@ pub(crate) trait LoadToStringMap
     {
         let path = format!
         (
-            "{}/**/*.{{yml,yaml,json,toml,txt,env}}",
+            "{}/**/*.{{yml,yaml,json,toml,txt}}",
             path.to_str().unwrap()
         );
 
@@ -63,7 +63,7 @@ pub(crate) trait LoadToStringMap
             {
                 toml::from_str(&content).unwrap()
             },
-            _ =>
+            "txt" =>
             {
                 let mut map = HashMap::new();
                 for line in content.lines()
@@ -74,11 +74,20 @@ pub(crate) trait LoadToStringMap
                     }
 
                     let mut iter = line.splitn(2, "=");
-                    let key = iter.next().unwrap().trim().to_string();
+                    let key = iter
+                        .next()
+                        .unwrap()
+                        .trim()
+                        .to_string()
+                        .to_lowercase();
                     let value = iter.next().unwrap().trim().to_string();
                     map.insert(key, value);
                 }
                 map
+            },
+            _ =>
+            {
+                HashMap::new()
             },
         }
     }

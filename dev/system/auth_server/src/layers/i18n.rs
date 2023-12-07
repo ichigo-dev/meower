@@ -25,10 +25,11 @@ pub(crate) async fn layer
     let config = &state.config;
 
     // Gets the user language.
+    let fallback_locale = config.get("fallback_locale");
     let language = req.headers()
         .get(header::ACCEPT_LANGUAGE)
         .and_then(|value| value.to_str().ok())
-        .unwrap_or(config.fallback_locale());
+        .unwrap_or(&fallback_locale);
     let user_language = accept_language::parse(language);
 
     // Initializes the i18n.

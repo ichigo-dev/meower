@@ -39,7 +39,7 @@ pub(crate) async fn handler
         .path_and_query()
         .map(|v| v.as_str())
         .unwrap_or(path);
-    let uri = format!("{}{}", config.application_url(), path_query);
+    let uri = format!("{}{}", config.get("application_url"), path_query);
     *req.uri_mut() = Uri::try_from(uri).unwrap();
 
     Ok(client.request(req).await.unwrap())

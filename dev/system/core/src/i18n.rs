@@ -66,12 +66,12 @@ impl I18n
         }
         self.locale = locale.to_string();
 
-        let mut locale_path = PathBuf::from(&config.locale_path());
+        let mut locale_path = PathBuf::from(&config.get("locale_path"));
         locale_path.push(&self.locale);
         self.map = self.load(&locale_path);
 
-        let mut locale_path = PathBuf::from(&config.locale_path());
-        locale_path.push(&config.fallback_locale());
+        let mut locale_path = PathBuf::from(&config.get("locale_path"));
+        locale_path.push(&config.get("fallback_locale"));
         self.fallback = self.load(&locale_path);
         true
     }
@@ -81,17 +81,17 @@ impl I18n
     //--------------------------------------------------------------------------
     fn find_locale_path( &mut self, config: &Config ) -> bool
     {
-        let mut locale_path = PathBuf::from(&config.locale_path());
+        let mut locale_path = PathBuf::from(&config.get("locale_path"));
         locale_path.push(&self.locale);
         if locale_path.exists() == false
         {
-            let mut fallback_path = PathBuf::from(&config.locale_path());
-            fallback_path.push(config.fallback_locale());
+            let mut fallback_path = PathBuf::from(&config.get("locale_path"));
+            fallback_path.push(&config.get("fallback_locale"));
             if fallback_path.exists() == false
             {
                 return false;
             }
-            self.locale = config.fallback_locale().to_string();
+            self.locale = config.get("fallback_locale").to_string();
         }
         true
     }

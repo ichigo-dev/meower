@@ -112,11 +112,11 @@ impl Auth
 
         // Decodes the JWT token.
         let mut validation = Validation::new(Algorithm::HS256);
-        validation.set_audience(&config.jwt_audience());
+        validation.set_audience(&config.get_as_vec("jwt_audience"));
         match decode::<Claims>
         (
             jwt,
-            &DecodingKey::from_secret(config.jwt_secret().as_ref()),
+            &DecodingKey::from_secret(config.get("jwt_secret").as_ref()),
             &validation,
         )
         {
@@ -157,25 +157,25 @@ impl Auth
 
         let now = Utc::now();
         let iat = now.timestamp();
-        let exp = (now + Duration::seconds(config.jwt_expires())).timestamp();
+        let jwt_expires = config.get_as_i64("jwt_expires");
+        let exp = (now + Duration::seconds(jwt_expires)).timestamp();
         let aud = config
-            .jwt_audience()
-            .to_vec()
+            .get_as_vec("jwt_audience")
             .iter()
             .map(|aud| aud.to_string())
             .collect();
         let claims = Claims
         {
             jti: Uuid::new_v4().to_string(),
-            iss: config.jwt_issue().to_string(),
-            sub: config.jwt_subject().to_string(),
+            iss: config.get("jwt_issue"),
+            sub: config.get("jwt_subject"),
             aud,
             iat,
             nbf: iat,
             exp,
         };
 
-        let key = EncodingKey::from_secret(config.jwt_secret().as_ref());
+        let key = EncodingKey::from_secret(config.get("jwt_secret").as_ref());
         encode(&header, &claims, &key).unwrap()
     }
 
@@ -189,8 +189,8 @@ impl Auth
             .path("/")
             .same_site(SameSite::Lax)
             .http_only(true)
-            .max_age(TimeDuration::seconds(config.jwt_expires()))
-            .secure(config.debug_mode() == false)
+            .max_age(TimeDuration::seconds(config.get_as_i64("jwt_expires")))
+            .secure(config.get_as_bool("debug_mode") == false)
             .finish()
             .to_string()
     }
