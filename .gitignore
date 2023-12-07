@@ -6,8 +6,5 @@ dist/
 target/
 Cargo.lock
 
-# Data files
-dev/docker/service/postgres/data/
-
 # IDE files
 .obsidian

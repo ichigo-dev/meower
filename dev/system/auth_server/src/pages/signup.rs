@@ -2,7 +2,7 @@
 //! Signup page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, Auth, Config, I18n };
+use crate::{ AppState, Auth, Config, I18n, Mailer };
 use meower_entity::Validate;
 use meower_entity::user::ActiveModel as ActiveUser;
 use meower_entity::user_auth::ActiveModel as ActiveUserAuth;
@@ -12,8 +12,6 @@ use askama::Template;
 use axum::Extension;
 use axum::response::{ Html, Redirect, IntoResponse };
 use axum::extract::{ State, Form };
-use lettre::{ Message, SmtpTransport, Transport };
-use lettre::transport::smtp::authentication::Credentials;
 use serde::Deserialize;
 use sea_orm::prelude::*;
 use sea_orm::{ ActiveValue, TransactionTrait };
@@ -168,23 +166,13 @@ async fn create_user
 {
     let tsx = hdb.begin().await.unwrap();
 
-    let email = Message::builder()
-        .from(config.get("email_from").parse().unwrap())
-        .sender(config.get("email_sender").parse().unwrap())
-        .to(input.email.clone().parse().unwrap())
-        .subject("Welcome to Meower!".to_string())
-        .body("Welcome to Meower!".to_string())
-        .unwrap();
-    let creds = Credentials::new
-    (
-        config.get("smtp_user"),
-        config.get("smtp_password"),
-    );
-    let mailer = SmtpTransport::relay(&config.get("smtp_host"))
-        .unwrap()
-        .credentials(creds)
+    let email = Mailer::new()
+        .from(&config.get("email_from"))
+        .to(&config.get("email_from"))
+        .subject("Welcome to Meower!")
+        .body("Welcome to Meower!")
         .build();
-    match mailer.send(&email)
+    match email.send(&config)
     {
         Ok(_) => {},
         Err(e) =>
