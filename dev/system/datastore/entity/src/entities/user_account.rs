@@ -104,6 +104,11 @@ impl Validate for ActiveModel
                     [("max_len", "32")].into()
                 )
             )
+            .regex
+            (
+                r"^[a-zA-Z0-9_]+$",
+                &i18n.get("model_user_account.error.user_account_name.regex")
+            )
             .validate();
         if user_account_name_validator.has_err()
         {

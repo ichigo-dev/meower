@@ -55,6 +55,8 @@ impl Default for LoginTemplate
 //------------------------------------------------------------------------------
 /// Handles login page.
 //------------------------------------------------------------------------------
+
+// GET
 pub(crate) async fn get_handler
 (
     Extension(auth): Extension<Auth>,
@@ -74,10 +76,7 @@ pub(crate) async fn get_handler
     Ok(Html(template.render().unwrap()))
 }
 
-
-//------------------------------------------------------------------------------
-/// Handler for login form.
-//------------------------------------------------------------------------------
+// POST
 pub(crate) async fn post_handler
 (
     State(state): State<AppState>,

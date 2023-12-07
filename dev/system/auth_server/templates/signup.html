@@ -1,38 +1,33 @@
-<!DOCTYPE html>
-<html>
- <head>
-  <link rel="stylesheet" href="/_assets/style.css" />
- </head>
+{% extends "common/base.html" %}
 
- <body>
-  <h1>{{ i18n.get("auth_server.signup.heading") }}</h1>
-  <form method="POST">
-   <label>
-    <span>{{ i18n.get("auth_server.signup.form.user_account_name.label") }}</span>
-    <input type="text" name="user_account_name" placeholder="{{ i18n.get("auth_server.signup.form.user_account_name.placeholder") }}" value="{{ input.user_account_name }}">
-   </label>
-   <label>
-    <span>{{ i18n.get("auth_server.signup.form.email.label") }}</span>
-    <input type="email" name="email" placeholder="{{ i18n.get("auth_server.signup.form.email.placeholder") }}" value="{{ input.email }}">
-   </label>
-   <label>
-    <span>{{ i18n.get("auth_server.signup.form.email_confirm.label") }}</span>
-    <input type="email" name="email_confirm" placeholder="{{ i18n.get("auth_server.signup.form.email_confirm.placeholder") }}">
-   </label>
-   <label>
-    <span>{{ i18n.get("auth_server.signup.form.password.label") }}</span>
-    <input type="password" name="password">
-   </label>
-   <label>
-    <span>{{ i18n.get("auth_server.signup.form.password_confirm.label") }}</span>
-    <input type="password" name="password_confirm">
-   </label>
-   <button type="submit">{{ i18n.get("auth_server.signup.form.button.send") }}</button>
-  </form>
-  <a href="/login">{{ i18n.get("auth_server.signup.button.login") }}</a>
+{% block content %}
+ <h1>{{ i18n.get("auth_server.signup.heading") }}</h1>
+ <form method="POST">
+  <label>
+   <span>{{ i18n.get("auth_server.signup.form.user_account_name.label") }}</span>
+   <input type="text" name="user_account_name" placeholder="{{ i18n.get("auth_server.signup.form.user_account_name.placeholder") }}" value="{{ input.user_account_name }}">
+  </label>
+  <label>
+   <span>{{ i18n.get("auth_server.signup.form.email.label") }}</span>
+   <input type="email" name="email" placeholder="{{ i18n.get("auth_server.signup.form.email.placeholder") }}" value="{{ input.email }}">
+  </label>
+  <label>
+   <span>{{ i18n.get("auth_server.signup.form.email_confirm.label") }}</span>
+   <input type="email" name="email_confirm" placeholder="{{ i18n.get("auth_server.signup.form.email_confirm.placeholder") }}">
+  </label>
+  <label>
+   <span>{{ i18n.get("auth_server.signup.form.password.label") }}</span>
+   <input type="password" name="password">
+  </label>
+  <label>
+   <span>{{ i18n.get("auth_server.signup.form.password_confirm.label") }}</span>
+   <input type="password" name="password_confirm">
+  </label>
+  <button type="submit">{{ i18n.get("auth_server.signup.form.button.send") }}</button>
+ </form>
+ <a href="/auth/login">{{ i18n.get("auth_server.signup.button.login") }}</a>
 
-  {% for error in errors %}
-   <div>{{ error }}</div>
-  {% endfor %}
- </body>
-</html>
+ {% for error in errors %}
+  <div>{{ error }}</div>
+ {% endfor %}
+{% endblock %}

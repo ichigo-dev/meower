@@ -1,0 +1,17 @@
+{% import "header.html" as header %}
+{% import "footer.html" as footer %}
+
+<!DOCTYPE html>
+<html>
+ <head>
+  <link rel="stylesheet" href="/_assets/style.css" />
+ </head>
+
+ <body>
+  {% call header::render() %}
+  <main>
+   {% block content %}{% endblock %}
+  </main>
+  {% call footer::render() %}
+ </body>
+</html>

@@ -59,8 +59,33 @@ impl Default for SignupTemplate
 
 
 //------------------------------------------------------------------------------
+/// Signup success page template.
+//------------------------------------------------------------------------------
+#[allow(dead_code)]
+#[derive(Template)]
+#[template(path = "signup_success.html")]
+pub(crate) struct SignupSuccessTemplate
+{
+    i18n: I18n,
+}
+
+impl Default for SignupSuccessTemplate
+{
+    fn default() -> Self
+    {
+        Self
+        {
+            i18n: I18n::new(),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
 /// Handles signup page.
 //------------------------------------------------------------------------------
+
+// GET
 pub(crate) async fn get_handler
 (
     Extension(auth): Extension<Auth>,
@@ -80,10 +105,7 @@ pub(crate) async fn get_handler
     Ok(Html(template.render().unwrap()))
 }
 
-
-//------------------------------------------------------------------------------
-/// Handler for signup form.
-//------------------------------------------------------------------------------
+// POST
 pub(crate) async fn post_handler
 (
     State(state): State<AppState>,
@@ -116,12 +138,16 @@ pub(crate) async fn post_handler
     // Creates a new user and account.
     match create_user(&hdb, &input, &i18n).await
     {
-        Ok(_) => { return Ok(Redirect::to("/login")); },
+        Ok(_) =>
+        {
+            let template = SignupSuccessTemplate { i18n };
+            return Ok(Html(template.render().unwrap()));
+        },
         Err(e) =>
         {
             let template = SignupTemplate { i18n, input, errors: vec![e] };
             return Err(Html(template.render().unwrap()));
-        }
+        },
     };
 }
 

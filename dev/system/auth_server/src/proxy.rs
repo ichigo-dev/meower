@@ -29,7 +29,7 @@ pub(crate) async fn handler
     // If the user is not logged in, redirects to the login page.
     if auth.is_logined().await == false
     {
-        return Err(Redirect::to("/login"));
+        return Err(Redirect::to("/auth/login"));
     }
 
     // Proxies the request to the frontend.
