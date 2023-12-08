@@ -2,7 +2,7 @@
 //! Verify code page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, I18n };
+use crate::{ AppState, I18n, Config };
 use crate::pages::signup_success::SignupSuccessTemplate;
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 use meower_entity::temporary_user_code::Model as TemporaryUserCodeModel;
@@ -67,10 +67,11 @@ pub(crate) async fn post_handler
 ) -> impl IntoResponse
 {
     let hdb = state.hdb();
+    let config = state.config();
     let tsx = hdb.begin().await.unwrap();
 
     // Create a user.
-    if let Err(e) = create_user(&tsx, &input, &i18n).await
+    if let Err(e) = create_user(&tsx, &input, &i18n, &config).await
     {
         tsx.rollback().await.unwrap();
         let template = VerifyCodeTemplate
@@ -96,6 +97,7 @@ async fn create_user<C>
     hdb: &C,
     input: &VerifyCodeForm,
     i18n: &I18n,
+    config: &Config,
 ) -> Result<(), String>
 where
     C: ConnectionTrait,
@@ -111,10 +113,10 @@ where
     };
 
     // Verifies a code.
-    if temporary_user_code.verify_code(&input.code) == false
+    if let Err(e) = temporary_user_code.verify_code(&input.code, &config, &i18n)
     {
-        return Err(i18n.get("auth_server.verify_code.error.code_not_match"));
-    }
+        return Err(e);
+    };
 
     // Finds a temporary_user.
     let temporary_user = match temporary_user_code

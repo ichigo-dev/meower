@@ -10,5 +10,4 @@ auth_server.verify_code.form.code.label = 認証コード
 auth_server.verify_code.form.button.send = 送信
 
 auth_server.verify_code.error.invalid_url = 無効なURLです
-auth_server.verify_code.error.code_not_match = コードが一致しません
 auth_server.verify_code.error.not_found = ユーザが見つかりません。管理者にお問い合わせください。

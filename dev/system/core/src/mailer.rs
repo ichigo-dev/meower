@@ -36,14 +36,14 @@ impl Mailer
         {
             AsyncSmtpTransport::<Tokio1Executor>::relay(host)
                 .unwrap()
-                .port(config.get_as_i64("smtp_port") as u16)
+                .port(config.get_as_isize("smtp_port") as u16)
                 .credentials(creds)
                 .build()
         }
         else
         {
             AsyncSmtpTransport::<Tokio1Executor>::builder_dangerous(host)
-                .port(config.get_as_i64("smtp_port") as u16)
+                .port(config.get_as_isize("smtp_port") as u16)
                 .credentials(creds)
                 .build()
         };

@@ -157,8 +157,8 @@ impl Auth
 
         let now = Utc::now();
         let iat = now.timestamp();
-        let jwt_expires = config.get_as_i64("jwt_expires");
-        let exp = (now + Duration::seconds(jwt_expires)).timestamp();
+        let jwt_expires = config.get_as_isize("jwt_expires");
+        let exp = (now + Duration::seconds(jwt_expires as i64)).timestamp();
         let aud = config
             .get_as_vec("jwt_audience")
             .iter()
@@ -185,11 +185,12 @@ impl Auth
     pub fn make_jwt_cookie( config: &Config ) -> String
     {
         let jwt = Self::make_jwt(config);
+        let jwt_expire = config.get_as_isize("jwt_expires") as i64;
         Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
             .path("/")
             .same_site(SameSite::Lax)
             .http_only(true)
-            .max_age(TimeDuration::seconds(config.get_as_i64("jwt_expires")))
+            .max_age(TimeDuration::seconds(jwt_expire))
             .secure(config.get_as_bool("debug_mode") == false)
             .finish()
             .to_string()

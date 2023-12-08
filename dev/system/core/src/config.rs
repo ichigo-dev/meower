@@ -54,9 +54,14 @@ impl Config
     //--------------------------------------------------------------------------
     /// Gets a configuration value as a number.
     //--------------------------------------------------------------------------
-    pub fn get_as_i64( &self, key: &str ) -> i64
+    pub fn get_as_isize( &self, key: &str ) -> isize
     {
-        self.get(key).parse::<i64>().unwrap_or(0)
+        self.get(key).parse::<isize>().unwrap_or(0)
+    }
+
+    pub fn get_as_usize( &self, key: &str ) -> usize
+    {
+        self.get(key).parse::<usize>().unwrap_or(0)
     }
 
     //--------------------------------------------------------------------------

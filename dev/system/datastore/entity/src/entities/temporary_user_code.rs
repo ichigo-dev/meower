@@ -2,8 +2,10 @@
 //! TemporaryUserCode model.
 //------------------------------------------------------------------------------
 
+use meower_core::{ Config, I18n };
+
 use async_trait::async_trait;
-use chrono::Utc;
+use chrono::{ Utc, Duration };
 use rand::{ Rng, thread_rng };
 use rand::distributions::{ DistString, Alphanumeric };
 use sea_orm::entity::prelude::*;
@@ -57,9 +59,31 @@ impl Model
     //--------------------------------------------------------------------------
     /// Verifies a code.
     //--------------------------------------------------------------------------
-    pub fn verify_code( &self, code: &str ) -> bool
+    pub fn verify_code
+    (
+        &self,
+        code: &str,
+        config: &Config,
+        i18n: &I18n,
+    ) -> Result<(), String>
     {
-        self.code == code
+        let expire = config.get_as_isize("temporary_user_code.expire_sec");
+        let expire_date = self.created_at + Duration::seconds(expire as i64);
+        if Utc::now().naive_utc() > expire_date
+        {
+            return Err
+            (
+                i18n.get("model_temporary_user_code.error.code.expired")
+            );
+        }
+        if self.code != code
+        {
+            return Err
+            (
+                i18n.get("model_temporary_user_code.error.code.not_match")
+            );
+        }
+        Ok(())
     }
 }
 
