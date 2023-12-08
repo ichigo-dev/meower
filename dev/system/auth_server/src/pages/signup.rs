@@ -166,13 +166,13 @@ async fn create_user
 {
     let tsx = hdb.begin().await.unwrap();
 
-    let email = Mailer::new()
-        .from(&config.get("email_from"))
-        .to(&config.get("email_from"))
-        .subject("Welcome to Meower!")
-        .body("Welcome to Meower!")
-        .build();
-    match email.send(&config)
+    let mail = Mailer::message()
+        .from(config.get("email_from").parse().unwrap())
+        .to(input.email.clone().parse().unwrap())
+        .subject("Welcome to Meower!".to_string())
+        .body("Welcome to Meower!".to_string())
+        .unwrap();
+    match Mailer::new(&config).send(mail).await
     {
         Ok(_) => {},
         Err(e) =>

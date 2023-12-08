@@ -18,4 +18,9 @@ serde_yaml = "0.9.27"
 time = "0.3.30"
 toml = "0.8.8"
 globwalk = "0.8.1"
-lettre = { version = "0.11.2", feature = ["builder"] }
+lettre = { version = "0.11.2", features = [
+    "builder",
+    "tokio1",
+    "tokio1-native-tls",
+    "smtp-transport",
+]}
