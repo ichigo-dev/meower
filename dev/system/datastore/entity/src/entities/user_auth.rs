@@ -36,7 +36,7 @@ impl Model
     {
         let config = Config::new();
         let bin_password = password.as_bytes();
-        let salt = SaltString::from_b64(config.get("argon2_phc_salt").as_ref())
+        let salt = SaltString::from_b64(config.get("argon2.phc_salt").as_ref())
             .unwrap();
         let argon2 = Argon2::new
         (

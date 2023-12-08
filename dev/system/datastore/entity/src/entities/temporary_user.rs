@@ -78,7 +78,7 @@ impl Model
             },
         };
         let message = Mailer::message()
-            .from(config.get("email_from").parse().unwrap())
+            .from(config.get("email.from").parse().unwrap())
             .to(self.email.clone().parse().unwrap())
             .subject("Signup")
             .body(format!("Signup: {}", temporary_user_code.code))

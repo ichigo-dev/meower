@@ -27,23 +27,23 @@ impl Mailer
     {
         let creds = Credentials::new
         (
-            config.get("smtp_user"),
-            config.get("smtp_password"),
+            config.get("smtp.user"),
+            config.get("smtp.password"),
         );
 
-        let host = &config.get("smtp_host");
-        let inner = if config.get_as_bool("smtp_ssl")
+        let host = &config.get("smtp.host");
+        let inner = if config.get_as_bool("smtp.ssl")
         {
             AsyncSmtpTransport::<Tokio1Executor>::relay(host)
                 .unwrap()
-                .port(config.get_as_isize("smtp_port") as u16)
+                .port(config.get_as_isize("smtp.port") as u16)
                 .credentials(creds)
                 .build()
         }
         else
         {
             AsyncSmtpTransport::<Tokio1Executor>::builder_dangerous(host)
-                .port(config.get_as_isize("smtp_port") as u16)
+                .port(config.get_as_isize("smtp.port") as u16)
                 .credentials(creds)
                 .build()
         };

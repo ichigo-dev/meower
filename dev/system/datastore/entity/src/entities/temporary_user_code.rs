@@ -67,7 +67,7 @@ impl Model
         i18n: &I18n,
     ) -> Result<(), String>
     {
-        let expire = config.get_as_isize("temporary_user_code.expire_sec");
+        let expire = config.get_as_isize("verify_code.expire_sec");
         let expire_date = self.created_at + Duration::seconds(expire as i64);
         if Utc::now().naive_utc() > expire_date
         {

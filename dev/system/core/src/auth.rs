@@ -112,11 +112,11 @@ impl Auth
 
         // Decodes the JWT token.
         let mut validation = Validation::new(Algorithm::HS256);
-        validation.set_audience(&config.get_as_vec("jwt_audience"));
+        validation.set_audience(&config.get_as_vec("jwt.audience"));
         match decode::<Claims>
         (
             jwt,
-            &DecodingKey::from_secret(config.get("jwt_secret").as_ref()),
+            &DecodingKey::from_secret(config.get("jwt.secret").as_ref()),
             &validation,
         )
         {
@@ -157,25 +157,25 @@ impl Auth
 
         let now = Utc::now();
         let iat = now.timestamp();
-        let jwt_expires = config.get_as_isize("jwt_expires");
-        let exp = (now + Duration::seconds(jwt_expires as i64)).timestamp();
+        let jwt_expire_sec = config.get_as_isize("jwt.expire_sec");
+        let exp = (now + Duration::seconds(jwt_expire_sec as i64)).timestamp();
         let aud = config
-            .get_as_vec("jwt_audience")
+            .get_as_vec("jwt.audience")
             .iter()
             .map(|aud| aud.to_string())
             .collect();
         let claims = Claims
         {
             jti: Uuid::new_v4().to_string(),
-            iss: config.get("jwt_issue"),
-            sub: config.get("jwt_subject"),
+            iss: config.get("jwt.issue"),
+            sub: config.get("jwt.subject"),
             aud,
             iat,
             nbf: iat,
             exp,
         };
 
-        let key = EncodingKey::from_secret(config.get("jwt_secret").as_ref());
+        let key = EncodingKey::from_secret(config.get("jwt.secret").as_ref());
         encode(&header, &claims, &key).unwrap()
     }
 
@@ -191,7 +191,7 @@ impl Auth
             .same_site(SameSite::Lax)
             .http_only(true)
             .max_age(TimeDuration::seconds(jwt_expire))
-            .secure(config.get_as_bool("debug_mode") == false)
+            .secure(config.get_as_bool("system.debug_mode") == false)
             .finish()
             .to_string()
     }

@@ -22,7 +22,7 @@ use axum::{ Router, middleware };
 use axum::body::Body;
 use axum::routing::{ get, post };
 use hyper::client::HttpConnector;
-use sea_orm::{ Database, DbConn };
+use sea_orm::{ Database, DbConn, ConnectOptions };
 
 pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
 

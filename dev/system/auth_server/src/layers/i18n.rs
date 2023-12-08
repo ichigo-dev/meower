@@ -25,7 +25,7 @@ pub(crate) async fn layer
     let config = &state.config;
 
     // Gets the user language.
-    let fallback_locale = config.get("fallback_locale");
+    let fallback_locale = config.get("locale.default");
     let language = req.headers()
         .get(header::ACCEPT_LANGUAGE)
         .and_then(|value| value.to_str().ok())
