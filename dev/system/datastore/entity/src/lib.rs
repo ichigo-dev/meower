@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 mod entities;
-mod traits;
+mod common;
 
 pub use entities::*;
-pub use traits::*;
+pub use common::*;

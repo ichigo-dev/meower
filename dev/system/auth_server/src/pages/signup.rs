@@ -2,11 +2,10 @@
 //! Signup page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, Auth, Config, I18n, Mailer };
+use crate::{ AppState, Auth, I18n, Config };
 use meower_entity::Validate;
-use meower_entity::user::ActiveModel as ActiveUser;
-use meower_entity::user_auth::ActiveModel as ActiveUserAuth;
-use meower_entity::user_account::ActiveModel as ActiveUserAccount;
+use meower_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
+use meower_entity::temporary_user_token::ActiveModel as ActiveTemporaryUserToken;
 
 use askama::Template;
 use axum::Extension;
@@ -136,95 +135,68 @@ pub(crate) async fn post_handler
         return Err(Html(template.render().unwrap()));
     }
 
-    // Creates a new user and account.
-    match create_user(&hdb, &input, &i18n, &config).await
+    // Creates a temporary user.
+    let tsx = hdb.begin().await.unwrap();
+    match create_temporary_user(&tsx, &input, &i18n, &config).await
     {
         Ok(_) =>
         {
+            tsx.commit().await.unwrap();
             let template = SignupSuccessTemplate { i18n };
             return Ok(Html(template.render().unwrap()));
         },
         Err(e) =>
         {
+            tsx.rollback().await.unwrap();
             let template = SignupTemplate { i18n, input, errors: vec![e] };
             return Err(Html(template.render().unwrap()));
         },
-    };
+    }
 }
 
 
 //------------------------------------------------------------------------------
-/// Creates a new user and account.
+/// Creates a new temporary user.
 //------------------------------------------------------------------------------
-async fn create_user
+async fn create_temporary_user<C>
 (
-    hdb: &DbConn,
+    hdb: &C,
     input: &SignupForm,
     i18n: &I18n,
     config: &Config,
 ) -> Result<(), String>
+where
+    C: ConnectionTrait,
 {
-    let tsx = hdb.begin().await.unwrap();
-
-    let mail = Mailer::message()
-        .from(config.get("email_from").parse().unwrap())
-        .to(input.email.clone().parse().unwrap())
-        .subject("Welcome to Meower!".to_string())
-        .body("Welcome to Meower!".to_string())
-        .unwrap();
-    match Mailer::new(&config).send(mail).await
-    {
-        Ok(_) => {},
-        Err(e) =>
-        {
-            tsx.rollback().await.unwrap();
-            return Err(e.to_string());
-        }
-    }
-
-    // Creates a user.
-    let user: ActiveUser = ActiveUser
+    // Creates a temporary_user.
+    let temporary_user = ActiveTemporaryUser
     {
         email: ActiveValue::Set(input.email.clone()),
+        password: ActiveValue::Set(input.password.clone()),
+        user_account_name: ActiveValue::Set(input.user_account_name.clone()),
         ..Default::default()
     };
-    let user = match user.validate_and_save(&tsx, &i18n).await
+    let temporary_user = match temporary_user
+        .validate_and_insert(hdb, &i18n)
+        .await
     {
-        Ok(user) => user,
-        Err(e) =>
-        {
-            tsx.rollback().await.unwrap();
-            return Err(e);
-        }
+        Ok(temporary_user) => temporary_user,
+        Err(e) => return Err(e),
     };
 
-    // Creates a user_auth.
-    let user_auth: ActiveUserAuth = ActiveUserAuth
+    // Creates a temporary_user_token.
+    let temporary_user_token = ActiveTemporaryUserToken
     {
-        user_id: user.user_id.clone(),
-        password: ActiveValue::Set(input.password.clone()),
+        temporary_user_id: ActiveValue::Set(temporary_user.temporary_user_id),
         ..Default::default()
     };
-    if let Err(e) = user_auth.validate_and_save(&tsx, &i18n).await
+    if let Err(e) = temporary_user_token.save(hdb).await
     {
-        tsx.rollback().await.unwrap();
         return Err(e.to_string());
     }
 
-    // Creates a user_account.
-    let user_account: ActiveUserAccount = ActiveUserAccount
-    {
-        user_id: user.user_id,
-        user_account_name: ActiveValue::Set(input.user_account_name.clone()),
-        display_name: ActiveValue::Set(input.user_account_name.clone()),
-        ..Default::default()
-    };
-    if let Err(e) = user_account.validate_and_save(&tsx, &i18n).await
-    {
-        tsx.rollback().await.unwrap();
-        return Err(e.to_string());
-    };
+    // Sends a signup email.
+    temporary_user.send_signup_email(hdb, &config, &i18n).await?;
 
-    tsx.commit().await.unwrap();
     Ok(())
 }

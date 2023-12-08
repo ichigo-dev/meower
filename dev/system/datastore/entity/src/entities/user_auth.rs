@@ -65,6 +65,21 @@ impl Model
 //------------------------------------------------------------------------------
 /// ActiveModel.
 //------------------------------------------------------------------------------
+impl ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Hashes password.
+    //--------------------------------------------------------------------------
+    pub fn hash_password( mut self ) -> Self
+    {
+        // Hashes the password.
+        let password = self.password.clone().unwrap();
+        let hash = Model::password_hash(&password);
+        self.set(Column::Password, hash.into());
+        self
+    }
+}
+
 #[async_trait]
 impl ActiveModelBehavior for ActiveModel
 {
@@ -90,8 +105,10 @@ impl ActiveModelBehavior for ActiveModel
 
         // Hashes the password.
         let password = self.password.clone().unwrap();
-        let hash = Model::password_hash(&password);
-        self.set(Column::Password, hash.into());
+        if let Err(_) = PasswordHash::new(&password)
+        {
+            self = self.hash_password();
+        };
 
         Ok(self)
     }

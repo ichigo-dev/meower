@@ -11,7 +11,7 @@ mod pages;
 mod assets;
 mod proxy;
 
-use meower_core::{ Auth, Config, I18n, Mailer };
+use meower_core::{ Auth, Config, I18n };
 use layers::{ auth, i18n };
 use pages::{ login, signup };
 

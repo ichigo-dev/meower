@@ -2,6 +2,9 @@
 //! TemporaryUserToken model.
 //------------------------------------------------------------------------------
 
+use async_trait::async_trait;
+use chrono::Utc;
+use rand::Rng;
 use sea_orm::entity::prelude::*;
 
 
@@ -19,11 +22,54 @@ pub struct Model
     pub created_at: DateTime,
 }
 
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Generates a token.
+    //--------------------------------------------------------------------------
+    pub fn generate_token() -> String
+    {
+        let mut rng = rand::thread_rng();
+        let token: String = (0..6)
+            .map(|_| rng.gen_range(0..10).to_string())
+            .collect();
+        token
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// ActiveModel.
 //------------------------------------------------------------------------------
-impl ActiveModelBehavior for ActiveModel {}
+#[async_trait]
+impl ActiveModelBehavior for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Before save.
+    //--------------------------------------------------------------------------
+    async fn before_save<C>
+    (
+        mut self,
+        _hdb: &C,
+        insert: bool,
+    ) -> Result<Self, DbErr>
+    where
+        C: ConnectionTrait,
+    {
+        // Generates and sets a token.
+        let token = Model::generate_token();
+        self.set(Column::Token, token.into());
+
+        // Sets the default values.
+        let now = Utc::now().naive_utc();
+        if insert
+        {
+            self.set(Column::CreatedAt, now.into());
+        }
+
+        Ok(self)
+    }
+}
 
 
 //------------------------------------------------------------------------------
