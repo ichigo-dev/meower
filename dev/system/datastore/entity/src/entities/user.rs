@@ -37,7 +37,7 @@ impl Model
         C: ConnectionTrait,
     {
         let user = Entity::find()
-            .filter(Column::Email.contains(email))
+            .filter(Column::Email.eq(email))
             .one(hdb)
             .await
             .unwrap_or(None);

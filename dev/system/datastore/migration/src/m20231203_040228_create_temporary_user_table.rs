@@ -50,13 +50,6 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(TemporaryUser::UserAccountName)
-                    .string()
-                    .string_len(255)
-                    .not_null()
-            )
-            .col
-            (
                 ColumnDef::new(TemporaryUser::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
@@ -72,7 +65,6 @@ impl MigrationTrait for Migration
             "COMMENT ON COLUMN \"temporary_user\".\"temporary_user_id\" IS 'Temporary user ID';",
             "COMMENT ON COLUMN \"temporary_user\".\"email\" IS 'Email address';",
             "COMMENT ON COLUMN \"temporary_user\".\"password\" IS 'Hashed password';",
-            "COMMENT ON COLUMN \"temporary_user\".\"user_account_name\" IS 'User account name';",
             "COMMENT ON COLUMN \"temporary_user\".\"created_at\" IS 'Create date';",
         ];
         let hdb = manager.get_connection();

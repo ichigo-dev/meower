@@ -1,0 +1,17 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+ <h1>{{ i18n.get("auth_server.verify_code.heading") }}</h1>
+ <form method="POST" action="/auth/verify_code">
+		<input type="hidden" name="token" value="{{ token }}">
+  <label>
+   <span>{{ i18n.get("auth_server.verify_code.form.code.label") }}</span>
+   <input type="text" name="code">
+  </label>
+  <button type="submit">{{ i18n.get("auth_server.verify_code.form.button.send") }}</button>
+ </form>
+
+ {% for error in errors %}
+  <div>{{ error }}</div>
+ {% endfor %}
+{% endblock %}

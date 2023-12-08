@@ -62,21 +62,21 @@ pub(crate) enum TemporaryUser
     TemporaryUserId,
     Email,
     Password,
-    UserAccountName,
     CreatedAt,
 }
 
 
 //------------------------------------------------------------------------------
-/// TemporaryUserToken.
+/// TemporaryUserCode.
 //------------------------------------------------------------------------------
 #[derive(DeriveIden)]
-pub(crate) enum TemporaryUserToken
+pub(crate) enum TemporaryUserCode
 {
     Table,
-    TemporaryUserTokenId,
+    TemporaryUserCodeId,
     TemporaryUserId,
     Token,
+    Code,
     CreatedAt,
 }
 

@@ -13,7 +13,7 @@ mod proxy;
 
 use meower_core::{ Auth, Config, I18n };
 use layers::{ auth, i18n };
-use pages::{ login, signup };
+use pages::{ login, signup, verify_code };
 
 use std::env;
 use std::net::SocketAddr;
@@ -94,6 +94,7 @@ async fn main()
         .route("/auth/login", post(login::post_handler))
         .route("/auth/signup", get(signup::get_handler))
         .route("/auth/signup", post(signup::post_handler))
+        .route("/auth/verify_code", post(verify_code::post_handler))
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
         .layer(middleware::from_fn_with_state(app_state.clone(), i18n::layer))

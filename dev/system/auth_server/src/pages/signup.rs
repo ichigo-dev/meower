@@ -3,9 +3,10 @@
 //------------------------------------------------------------------------------
 
 use crate::{ AppState, Auth, I18n, Config };
+use crate::pages::verify_code::VerifyCodeTemplate;
 use meower_entity::Validate;
 use meower_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
-use meower_entity::temporary_user_token::ActiveModel as ActiveTemporaryUserToken;
+use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 
 use askama::Template;
 use axum::Extension;
@@ -22,7 +23,6 @@ use sea_orm::{ ActiveValue, TransactionTrait };
 #[derive(Deserialize, Debug, Default)]
 pub(crate) struct SignupForm
 {
-    user_account_name: String,
     email: String,
     email_confirm: String,
     password: String,
@@ -58,29 +58,6 @@ impl Default for SignupTemplate
 
 
 //------------------------------------------------------------------------------
-/// Signup success page template.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Template)]
-#[template(path = "signup_success.html")]
-pub(crate) struct SignupSuccessTemplate
-{
-    i18n: I18n,
-}
-
-impl Default for SignupSuccessTemplate
-{
-    fn default() -> Self
-    {
-        Self
-        {
-            i18n: I18n::new(),
-        }
-    }
-}
-
-
-//------------------------------------------------------------------------------
 /// Handles signup page.
 //------------------------------------------------------------------------------
 
@@ -110,7 +87,7 @@ pub(crate) async fn post_handler
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
     Form(input): Form<SignupForm>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+) -> impl IntoResponse
 {
     let hdb = state.hdb();
     let config = state.config();
@@ -123,7 +100,7 @@ pub(crate) async fn post_handler
             i18n.get("auth_server.signup.form.error.email_not_match")
         ];
         let template = SignupTemplate { i18n, input, errors };
-        return Err(Html(template.render().unwrap()));
+        return Html(template.render().unwrap());
     }
     if input.password != input.password_confirm
     {
@@ -132,26 +109,30 @@ pub(crate) async fn post_handler
             i18n.get("auth_server.signup.form.error.password_not_match")
         ];
         let template = SignupTemplate { i18n, input, errors };
-        return Err(Html(template.render().unwrap()));
+        return Html(template.render().unwrap());
     }
 
     // Creates a temporary user.
     let tsx = hdb.begin().await.unwrap();
-    match create_temporary_user(&tsx, &input, &i18n, &config).await
+    let token = match create_temporary_user(&tsx, &input, &i18n, &config).await
     {
-        Ok(_) =>
-        {
-            tsx.commit().await.unwrap();
-            let template = SignupSuccessTemplate { i18n };
-            return Ok(Html(template.render().unwrap()));
-        },
+        Ok(token) => token,
         Err(e) =>
         {
             tsx.rollback().await.unwrap();
             let template = SignupTemplate { i18n, input, errors: vec![e] };
-            return Err(Html(template.render().unwrap()));
-        },
-    }
+            return Html(template.render().unwrap());
+        }
+    };
+
+    tsx.commit().await.unwrap();
+    let template = VerifyCodeTemplate
+    {
+        i18n,
+        token,
+        errors: Vec::new()
+    };
+    return Html(template.render().unwrap());
 }
 
 
@@ -164,7 +145,7 @@ async fn create_temporary_user<C>
     input: &SignupForm,
     i18n: &I18n,
     config: &Config,
-) -> Result<(), String>
+) -> Result<String, String>
 where
     C: ConnectionTrait,
 {
@@ -173,7 +154,6 @@ where
     {
         email: ActiveValue::Set(input.email.clone()),
         password: ActiveValue::Set(input.password.clone()),
-        user_account_name: ActiveValue::Set(input.user_account_name.clone()),
         ..Default::default()
     };
     let temporary_user = match temporary_user
@@ -184,19 +164,21 @@ where
         Err(e) => return Err(e),
     };
 
-    // Creates a temporary_user_token.
-    let temporary_user_token = ActiveTemporaryUserToken
+    // Creates a temporary_user_code.
+    let temporary_user_code = ActiveTemporaryUserCode
     {
         temporary_user_id: ActiveValue::Set(temporary_user.temporary_user_id),
         ..Default::default()
     };
-    if let Err(e) = temporary_user_token.save(hdb).await
+    let temporary_user_code = match temporary_user_code.insert(hdb).await
     {
-        return Err(e.to_string());
-    }
+        Ok(temporary_user_code) => temporary_user_code,
+        Err(e) => return Err(e.to_string()),
+    };
 
     // Sends a signup email.
     temporary_user.send_signup_email(hdb, &config, &i18n).await?;
 
-    Ok(())
+    let token = temporary_user_code.token.clone();
+    Ok(token)
 }

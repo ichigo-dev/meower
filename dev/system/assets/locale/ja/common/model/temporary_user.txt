@@ -2,5 +2,5 @@
 # TemporaryUser
 ################################################################################
 
-model_temporary_user.error.token_not_found = 認証コードの取得に失敗しました
+model_temporary_user.error.code_not_found = 認証コードの取得に失敗しました
 model_temporary_user.error.email.already_exists = そのメールアドレスは既に登録されています

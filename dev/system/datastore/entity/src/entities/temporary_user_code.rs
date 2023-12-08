@@ -1,10 +1,11 @@
 //------------------------------------------------------------------------------
-//! TemporaryUserToken model.
+//! TemporaryUserCode model.
 //------------------------------------------------------------------------------
 
 use async_trait::async_trait;
 use chrono::Utc;
-use rand::Rng;
+use rand::{ Rng, thread_rng };
+use rand::distributions::{ DistString, Alphanumeric };
 use sea_orm::entity::prelude::*;
 
 
@@ -12,28 +13,53 @@ use sea_orm::entity::prelude::*;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "temporary_user_token")]
+#[sea_orm(table_name = "temporary_user_code")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub temporary_user_token_id: i64,
-    pub temporary_user_id: i64,
+    pub temporary_user_code_id: i64,
+    #[sea_orm(unique)]
     pub token: String,
+    pub temporary_user_id: i64,
+    pub code: String,
     pub created_at: DateTime,
 }
 
 impl Model
 {
     //--------------------------------------------------------------------------
-    /// Generates a token.
+    /// Finds temporary_user_code by token.
     //--------------------------------------------------------------------------
-    pub fn generate_token() -> String
+    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Self>
+    where
+        C: ConnectionTrait,
+    {
+        let user = Entity::find()
+            .filter(Column::Token.eq(token))
+            .one(hdb)
+            .await
+            .unwrap_or(None);
+        user
+    }
+
+    //--------------------------------------------------------------------------
+    /// Generates a code.
+    //--------------------------------------------------------------------------
+    pub fn generate_code() -> String
     {
         let mut rng = rand::thread_rng();
-        let token: String = (0..6)
+        let code: String = (0..6)
             .map(|_| rng.gen_range(0..10).to_string())
             .collect();
-        token
+        code
+    }
+
+    //--------------------------------------------------------------------------
+    /// Verifies a code.
+    //--------------------------------------------------------------------------
+    pub fn verify_code( &self, code: &str ) -> bool
+    {
+        self.code == code
     }
 }
 
@@ -50,21 +76,35 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         mut self,
-        _hdb: &C,
+        hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
     where
         C: ConnectionTrait,
     {
-        // Generates and sets a token.
-        let token = Model::generate_token();
-        self.set(Column::Token, token.into());
+        // Deletes the old codes.
+        if insert
+        {
+            let temporary_user_id = self.temporary_user_id.clone().unwrap();
+            Entity::delete_many()
+                .filter(Column::TemporaryUserId.eq(temporary_user_id))
+                .exec(hdb)
+                .await?;
+        }
+
+        // Generates and sets a code.
+        let code = Model::generate_code();
+        self.set(Column::Code, code.into());
 
         // Sets the default values.
         let now = Utc::now().naive_utc();
         if insert
         {
             self.set(Column::CreatedAt, now.into());
+
+            let mut rng = thread_rng();
+            let random_string = Alphanumeric.sample_string(&mut rng, 32);
+            self.set(Column::Token, random_string.into());
         }
 
         Ok(self)

@@ -10,7 +10,7 @@ pub use super::project_member::Entity as ProjectMember;
 pub use super::project_member_authority::Entity as ProjectMemberAuthority;
 pub use super::task::Entity as Task;
 pub use super::temporary_user::Entity as TemporaryUser;
-pub use super::temporary_user_token::Entity as TemporaryUserToken;
+pub use super::temporary_user_code::Entity as TemporaryUserCode;
 pub use super::user::Entity as User;
 pub use super::user_account::Entity as UserAccount;
 pub use super::user_auth::Entity as UserAuth;

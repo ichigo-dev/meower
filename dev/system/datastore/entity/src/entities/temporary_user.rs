@@ -4,11 +4,11 @@
 
 use meower_core::{ I18n, Config, Mailer };
 use crate::Validate;
+use super::user::Model as UserModel;
 use super::user::ActiveModel as ActiveUser;
 use super::user_auth::Model as UserAuthModel;
 use super::user_auth::ActiveModel as ActiveUserAuth;
-use super::user_account::ActiveModel as ActiveUserAccount;
-use super::temporary_user_token::Entity as TemporaryUserTokenEntity;
+use super::temporary_user_code::Entity as TemporaryUserCodeEntity;
 
 use argon2::PasswordHash;
 use async_trait::async_trait;
@@ -29,7 +29,6 @@ pub struct Model
     #[sea_orm(unique)]
     pub email: String,
     pub password: String,
-    pub user_account_name: String,
     pub created_at: DateTime,
 }
 
@@ -43,7 +42,7 @@ impl Model
         C: ConnectionTrait,
     {
         let user = Entity::find()
-            .filter(Column::Email.contains(email))
+            .filter(Column::Email.eq(email))
             .one(hdb)
             .await
             .unwrap_or(None);
@@ -63,18 +62,18 @@ impl Model
     where
         C: ConnectionTrait,
     {
-        let temporary_user_token = match self
-            .find_related(TemporaryUserTokenEntity)
+        let temporary_user_code = match self
+            .find_related(TemporaryUserCodeEntity)
             .one(hdb)
             .await
             .unwrap()
         {
-            Some(temporary_user_token) => temporary_user_token,
+            Some(temporary_user_code) => temporary_user_code,
             None =>
             {
                 return Err
                 (
-                    i18n.get("model_temporary_user.error.token_not_found")
+                    i18n.get("model_temporary_user.error.code_not_found")
                 );
             },
         };
@@ -82,7 +81,7 @@ impl Model
             .from(config.get("email_from").parse().unwrap())
             .to(self.email.clone().parse().unwrap())
             .subject("Signup")
-            .body(format!("Signup: {}", temporary_user_token.token))
+            .body(format!("Signup: {}", temporary_user_code.code))
             .unwrap();
         let mailer = Mailer::new(&config);
         match mailer.send(message).await
@@ -90,6 +89,45 @@ impl Model
             Ok(_) => Ok(()),
             Err(e) => Err(e.to_string()),
         }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Creates a new user.
+    //--------------------------------------------------------------------------
+    pub async fn create_user<C>
+    (
+        &self,
+        hdb: &C,
+        i18n: &I18n,
+    ) -> Result<UserModel, String>
+    where
+        C: ConnectionTrait,
+    {
+        // Creates a new user.
+        let user = ActiveUser
+        {
+            email: ActiveValue::Set(self.email.clone()),
+            ..Default::default()
+        };
+        let user = match user.validate_and_insert(hdb, &i18n).await
+        {
+            Ok(user) => user,
+            Err(e) => return Err(e),
+        };
+
+        // Creates a new user_auth.
+        let user_auth = ActiveUserAuth
+        {
+            user_id: ActiveValue::Set(user.user_id),
+            password: ActiveValue::Set(self.password.clone()),
+            ..Default::default()
+        };
+        if let Err(e) = user_auth.validate_and_insert(hdb, &i18n).await
+        {
+            return Err(e);
+        };
+
+        Ok(user)
     }
 }
 
@@ -162,7 +200,6 @@ impl Validate for ActiveModel
     {
         let email = self.email.clone().unwrap();
         let password = self.password.clone().unwrap();
-        let user_account_name = self.user_account_name.clone().unwrap();
 
         // Checks if the email already exists.
         if Model::find_by_email(hdb, &email).await.is_some()
@@ -195,17 +232,6 @@ impl Validate for ActiveModel
             return Err(e.to_string());
         };
 
-        // UserAccount validation.
-        let user_account = ActiveUserAccount
-        {
-            user_account_name: ActiveValue::Set(user_account_name),
-            ..Default::default()
-        };
-        if let Err(e) = user_account.validate(hdb, &i18n).await
-        {
-            return Err(e.to_string());
-        };
-
         Ok(())
     }
 }
@@ -217,14 +243,14 @@ impl Validate for ActiveModel
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(has_many = "super::temporary_user_token::Entity")]
-    TemporaryUserToken,
+    #[sea_orm(has_many = "super::temporary_user_code::Entity")]
+    TemporaryUserCode,
 }
 
-impl Related<super::temporary_user_token::Entity> for Entity
+impl Related<super::temporary_user_code::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::TemporaryUserToken.def()
+        Relation::TemporaryUserCode.def()
     }
 }

@@ -12,7 +12,7 @@ pub mod project_member;
 pub mod project_member_authority;
 pub mod task;
 pub mod temporary_user;
-pub mod temporary_user_token;
+pub mod temporary_user_code;
 pub mod user;
 pub mod user_account;
 pub mod user_auth;
