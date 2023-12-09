@@ -26,7 +26,7 @@ pub(crate) struct LoginForm
 
 
 //------------------------------------------------------------------------------
-/// Login page template.
+/// Page template.
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Template)]
@@ -38,22 +38,9 @@ struct LoginTemplate
     pub(crate) errors: Vec<String>,
 }
 
-impl Default for LoginTemplate
-{
-    fn default() -> Self
-    {
-        Self
-        {
-            i18n: I18n::new(),
-            input: LoginForm::default(),
-            errors: Vec::new(),
-        }
-    }
-}
-
 
 //------------------------------------------------------------------------------
-/// Handles login page.
+/// Handles.
 //------------------------------------------------------------------------------
 
 // GET
@@ -71,7 +58,8 @@ pub(crate) async fn get_handler
     let template = LoginTemplate
     {
         i18n,
-        ..Default::default()
+        input: LoginForm::default(),
+        errors: Vec::new(),
     };
     Ok(Html(template.render().unwrap()))
 }

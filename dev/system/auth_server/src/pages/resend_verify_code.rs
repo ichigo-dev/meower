@@ -1,32 +1,30 @@
 //------------------------------------------------------------------------------
-//! Signup page.
+//! Resend verify code page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, Auth, I18n, Config };
+use crate::{ AppState, I18n, Config };
 use crate::pages::verify_code::VerifyCodeTemplate;
-use meower_entity::Validate;
-use meower_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
+use meower_entity::FieldVerify;
+use meower_entity::temporary_user::Model as TemporaryUserModel;
 use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, Redirect, IntoResponse };
+use axum::response::{ Html, IntoResponse };
 use axum::extract::{ State, Form };
 use serde::Deserialize;
 use sea_orm::prelude::*;
-use sea_orm::{ ActiveValue, TransactionTrait };
+use sea_orm::{ TransactionTrait, ActiveValue };
 
 
 //------------------------------------------------------------------------------
 /// Form data.
 //------------------------------------------------------------------------------
 #[derive(Deserialize, Debug, Default)]
-pub(crate) struct SignupForm
+pub(crate) struct ResendVerifyCodeForm
 {
     email: String,
-    email_confirm: String,
     password: String,
-    password_confirm: String,
 }
 
 
@@ -35,12 +33,12 @@ pub(crate) struct SignupForm
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Template)]
-#[template(path = "signup.html")]
-struct SignupTemplate
+#[template(path = "resend_verify_code.html")]
+struct ResendVerifyCodeTemplate
 {
-    i18n: I18n,
-    input: SignupForm,
-    errors: Vec<String>,
+    pub(crate) i18n: I18n,
+    pub(crate) input: ResendVerifyCodeForm,
+    pub(crate) errors: Vec<String>,
 }
 
 
@@ -51,22 +49,16 @@ struct SignupTemplate
 // GET
 pub(crate) async fn get_handler
 (
-    Extension(auth): Extension<Auth>,
     Extension(i18n): Extension<I18n>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+) -> impl IntoResponse
 {
-    if auth.is_logined().await
-    {
-        return Err(Redirect::to("/"));
-    }
-
-    let template = SignupTemplate
+    let template = ResendVerifyCodeTemplate
     {
         i18n,
-        input: SignupForm::default(),
+        input: ResendVerifyCodeForm::default(),
         errors: Vec::new(),
     };
-    Ok(Html(template.render().unwrap()))
+    return Html(template.render().unwrap());
 }
 
 // POST
@@ -74,41 +66,26 @@ pub(crate) async fn post_handler
 (
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
-    Form(input): Form<SignupForm>,
+    Form(input): Form<ResendVerifyCodeForm>,
 ) -> impl IntoResponse
 {
     let hdb = state.hdb();
     let config = state.config();
-
-    // Checks if the email and password confirmations match.
-    if input.email != input.email_confirm
-    {
-        let errors = vec!
-        [
-            i18n.get("auth_server.signup.form.error.email_not_match")
-        ];
-        let template = SignupTemplate { i18n, input, errors };
-        return Html(template.render().unwrap());
-    }
-    if input.password != input.password_confirm
-    {
-        let errors = vec!
-        [
-            i18n.get("auth_server.signup.form.error.password_not_match")
-        ];
-        let template = SignupTemplate { i18n, input, errors };
-        return Html(template.render().unwrap());
-    }
-
-    // Creates a temporary user.
     let tsx = hdb.begin().await.unwrap();
-    let token = match create_temporary_user(&tsx, &input, &i18n, &config).await
+
+    // Resend a verify code.
+    let token = match resend_verify_code(&tsx, &input, &i18n, &config).await
     {
         Ok(token) => token,
         Err(e) =>
         {
             tsx.rollback().await.unwrap();
-            let template = SignupTemplate { i18n, input, errors: vec![e] };
+            let template = ResendVerifyCodeTemplate
+            {
+                i18n,
+                input,
+                errors: vec![e],
+            };
             return Html(template.render().unwrap());
         }
     };
@@ -118,39 +95,49 @@ pub(crate) async fn post_handler
     {
         i18n,
         token,
-        errors: Vec::new()
+        errors: Vec::new(),
     };
     return Html(template.render().unwrap());
 }
 
 
 //------------------------------------------------------------------------------
-/// Creates a new temporary user.
+/// Resends a verify code.
 //------------------------------------------------------------------------------
-pub(crate) async fn create_temporary_user<C>
+async fn resend_verify_code<C>
 (
     hdb: &C,
-    input: &SignupForm,
+    input: &ResendVerifyCodeForm,
     i18n: &I18n,
     config: &Config,
 ) -> Result<String, String>
 where
     C: ConnectionTrait,
 {
-    // Creates a temporary_user.
-    let temporary_user = ActiveTemporaryUser
+    // Finds a temporary_user.
+    let temporary_user
+        = match TemporaryUserModel::find_by_email(hdb, &input.email).await
     {
-        email: ActiveValue::Set(input.email.clone()),
-        password: ActiveValue::Set(input.password.clone()),
-        ..Default::default()
+        Some(temporary_user) => temporary_user,
+        None =>
+        {
+            let error = i18n.get
+            (
+                "auth_server.resend_verify_code.form.error.user_not_found"
+            );
+            return Err(error);
+        }
     };
-    let temporary_user = match temporary_user
-        .validate_and_insert(hdb, &i18n)
-        .await
+
+    // Verifies a password.
+    if temporary_user.verify_field(&input.password) == false
     {
-        Ok(temporary_user) => temporary_user,
-        Err(e) => return Err(e),
-    };
+        let error = i18n.get
+        (
+            "auth_server.resend_verify_code.form.error.invalid_password"
+        );
+        return Err(error);
+    }
 
     // Creates a temporary_user_code.
     let temporary_user_code = ActiveTemporaryUserCode

@@ -1,0 +1,22 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+ <h1>{{ i18n.get("auth_server.resend_verify_code.heading") }}</h1>
+ <form method="POST">
+  <label>
+   <span>{{ i18n.get("auth_server.resend_verify_code.form.email.label") }}</span>
+   <input type="email" name="email" placeholder="{{ i18n.get("auth_server.resend_verify_code.form.email.placeholder") }}" value="{{ input.email }}">
+  </label>
+  <label>
+   <span>{{ i18n.get("auth_server.resend_verify_code.form.password.label") }}</span>
+   <input type="password" name="password">
+  </label>
+  <button type="submit">{{ i18n.get("auth_server.resend_verify_code.form.button.send") }}</button>
+ </form>
+ <a href="/auth/login">{{ i18n.get("auth_server.resend_verify_code.button.login") }}</a>
+ <a href="/auth/signup">{{ i18n.get("auth_server.resend_verify_code.button.signup") }}</a>
+ 
+ {% for error in errors %}
+  <div>{{ error }}</div>
+ {% endfor %}
+{% endblock %}

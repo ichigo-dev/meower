@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use meower_core::{ Validator, I18n };
-use crate::Validate;
+use crate::{ Validate, FieldVerify };
 use super::user_auth::Entity as UserAuthEntity;
 
 use async_trait::async_trait;
@@ -55,7 +55,7 @@ impl Model
             .await
             .unwrap_or(None)
         {
-            return user_auth.password_verify(password);
+            return user_auth.verify_field(password);
         }
         false
     }

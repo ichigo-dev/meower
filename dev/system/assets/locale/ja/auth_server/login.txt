@@ -13,3 +13,4 @@ auth_server.login.form.error.invalid_password = パスワードが間違って�
 auth_server.login.form.error.user_not_found = ユーザが見つかりません
 
 auth_server.login.button.signup = サインアップ
+auth_server.login.button.resend_verify_code = 認証コードの再送

@@ -8,7 +8,7 @@ use askama::Template;
 
 
 //------------------------------------------------------------------------------
-/// Signup success page template.
+/// Page template.
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Template)]
@@ -16,15 +16,4 @@ use askama::Template;
 pub(crate) struct SignupSuccessTemplate
 {
     pub(crate) i18n: I18n,
-}
-
-impl Default for SignupSuccessTemplate
-{
-    fn default() -> Self
-    {
-        Self
-        {
-            i18n: I18n::new(),
-        }
-    }
 }

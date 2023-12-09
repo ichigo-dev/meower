@@ -3,5 +3,7 @@
 //------------------------------------------------------------------------------
 
 mod validate;
+mod hash_verify;
 
 pub use validate::*;
+pub use hash_verify::*;

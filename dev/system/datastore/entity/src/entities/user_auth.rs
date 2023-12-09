@@ -2,11 +2,10 @@
 //! UserAuth model.
 //------------------------------------------------------------------------------
 
-use meower_core::{ Config, Validator, I18n };
-use crate::Validate;
+use meower_core::{ Validator, I18n };
+use crate::{ Validate, FieldHash, FieldVerify };
 
-use argon2::{ Argon2, PasswordHash, PasswordHasher, PasswordVerifier };
-use argon2::password_hash::SaltString;
+use argon2::PasswordHash;
 use async_trait::async_trait;
 use chrono::Utc;
 use sea_orm::entity::prelude::*;
@@ -27,37 +26,14 @@ pub struct Model
     pub updated_at: DateTime,
 }
 
-impl Model
+impl FieldVerify for Model
 {
     //--------------------------------------------------------------------------
-    /// Hashes password.
+    /// Gets hashed field.
     //--------------------------------------------------------------------------
-    pub fn password_hash( password: &str ) -> String
+    fn get_hash_field( &self ) -> String
     {
-        let config = Config::new();
-        let bin_password = password.as_bytes();
-        let salt = SaltString::from_b64(config.get("argon2.phc_salt").as_ref())
-            .unwrap();
-        let argon2 = Argon2::new
-        (
-            argon2::Algorithm::Argon2id,
-            argon2::Version::V0x13,
-            argon2::Params::default(),
-        );
-        argon2.hash_password(bin_password, &salt)
-            .unwrap()
-            .to_string()
-    }
-
-    //--------------------------------------------------------------------------
-    /// Verifies password.
-    //--------------------------------------------------------------------------
-    pub fn password_verify( &self, password: &str ) -> bool
-    {
-        let parsed_hash = PasswordHash::new(&self.password).unwrap();
-        Argon2::default()
-            .verify_password(password.as_bytes(), &parsed_hash)
-            .is_ok()
+        self.password.clone()
     }
 }
 
@@ -65,18 +41,22 @@ impl Model
 //------------------------------------------------------------------------------
 /// ActiveModel.
 //------------------------------------------------------------------------------
-impl ActiveModel
+impl FieldHash for ActiveModel
 {
     //--------------------------------------------------------------------------
-    /// Hashes password.
+    /// Gets hashed field.
     //--------------------------------------------------------------------------
-    pub fn hash_password( mut self ) -> Self
+    fn get_hash_field( &self ) -> String
     {
-        // Hashes the password.
-        let password = self.password.clone().unwrap();
-        let hash = Model::password_hash(&password);
-        self.set(Column::Password, hash.into());
-        self
+        self.password.clone().unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Sets hashed field.
+    //--------------------------------------------------------------------------
+    fn set_hash_field( &mut self, hash: &str )
+    {
+        self.set(Column::Password, hash.to_string().into());
     }
 }
 
@@ -107,7 +87,7 @@ impl ActiveModelBehavior for ActiveModel
         let password = self.password.clone().unwrap();
         if let Err(_) = PasswordHash::new(&password)
         {
-            self = self.hash_password();
+            self.hash_field();
         };
 
         Ok(self)

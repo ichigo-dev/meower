@@ -11,9 +11,9 @@ mod pages;
 mod assets;
 mod proxy;
 
-use meower_core::{ Auth, Config, I18n };
-use layers::{ auth, i18n };
-use pages::{ login, signup, verify_code };
+use meower_core::*;
+use layers::*;
+use pages::*;
 
 use std::env;
 use std::net::SocketAddr;
@@ -22,7 +22,7 @@ use axum::{ Router, middleware };
 use axum::body::Body;
 use axum::routing::{ get, post };
 use hyper::client::HttpConnector;
-use sea_orm::{ Database, DbConn, ConnectOptions };
+use sea_orm::{ Database, DbConn };
 
 pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
 
@@ -83,7 +83,7 @@ async fn main()
     // Initializes the application state.
     let client = Client::new();
     let config = Config::new();
-    let hdb = Database::connect(config.get("database_url"))
+    let hdb = Database::connect(config.get("database.url"))
         .await
         .expect("Failed to setup the database");
     let app_state = AppState::new(hdb, client, config.clone());
@@ -95,6 +95,16 @@ async fn main()
         .route("/auth/signup", get(signup::get_handler))
         .route("/auth/signup", post(signup::post_handler))
         .route("/auth/verify_code", post(verify_code::post_handler))
+        .route
+        (
+            "/auth/resend_verify_code",
+            get(resend_verify_code::get_handler)
+        )
+        .route
+        (
+            "/auth/resend_verify_code",
+            post(resend_verify_code::post_handler)
+        )
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
         .layer(middleware::from_fn_with_state(app_state.clone(), i18n::layer))

@@ -28,7 +28,7 @@ pub(crate) struct VerifyCodeForm
 
 
 //------------------------------------------------------------------------------
-/// Verify code page template.
+/// Page template.
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Template)]
@@ -40,22 +40,9 @@ pub(crate) struct VerifyCodeTemplate
     pub(crate) errors: Vec<String>,
 }
 
-impl Default for VerifyCodeTemplate
-{
-    fn default() -> Self
-    {
-        Self
-        {
-            i18n: I18n::new(),
-            token: String::new(),
-            errors: Vec::new(),
-        }
-    }
-}
-
 
 //------------------------------------------------------------------------------
-/// Handles signup page.
+/// Handles.
 //------------------------------------------------------------------------------
 
 // POST

@@ -3,10 +3,9 @@
 //------------------------------------------------------------------------------
 
 use meower_core::{ I18n, Config, Mailer };
-use crate::Validate;
+use crate::{ Validate, FieldHash, FieldVerify };
 use super::user::Model as UserModel;
 use super::user::ActiveModel as ActiveUser;
-use super::user_auth::Model as UserAuthModel;
 use super::user_auth::ActiveModel as ActiveUserAuth;
 use super::temporary_user_code::Entity as TemporaryUserCodeEntity;
 
@@ -50,9 +49,9 @@ impl Model
     }
 
     //--------------------------------------------------------------------------
-    /// Sends a signup email.
+    /// Sends a verify mail.
     //--------------------------------------------------------------------------
-    pub async fn send_signup_email<C>
+    pub async fn send_verify_mail<C>
     (
         &self,
         hdb: &C,
@@ -80,7 +79,7 @@ impl Model
         let message = Mailer::message()
             .from(config.get("email.from").parse().unwrap())
             .to(self.email.clone().parse().unwrap())
-            .subject("Signup")
+            .subject(i18n.get("model_temporary_user.verify_mail.subject"))
             .body(format!("Signup: {}", temporary_user_code.code))
             .unwrap();
         let mailer = Mailer::new(&config);
@@ -131,22 +130,37 @@ impl Model
     }
 }
 
+impl FieldVerify for Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets hashed field.
+    //--------------------------------------------------------------------------
+    fn get_hash_field( &self ) -> String
+    {
+        self.password.clone()
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// ActiveModel.
 //------------------------------------------------------------------------------
-impl ActiveModel
+impl FieldHash for ActiveModel
 {
     //--------------------------------------------------------------------------
-    /// Hashes password.
+    /// Gets hashed field.
     //--------------------------------------------------------------------------
-    pub fn hash_password( mut self ) -> Self
+    fn get_hash_field( &self ) -> String
     {
-        // Hashes the password.
-        let password = self.password.clone().unwrap();
-        let hash = UserAuthModel::password_hash(&password);
-        self.set(Column::Password, hash.into());
-        self
+        self.password.clone().unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Sets hashed field.
+    //--------------------------------------------------------------------------
+    fn set_hash_field( &mut self, hash: &str )
+    {
+        self.set(Column::Password, hash.to_string().into());
     }
 }
 
@@ -176,7 +190,7 @@ impl ActiveModelBehavior for ActiveModel
         let password = self.password.clone().unwrap();
         if let Err(_) = PasswordHash::new(&password)
         {
-            self = self.hash_password();
+            self.hash_field();
         };
 
         Ok(self)

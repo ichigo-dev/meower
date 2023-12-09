@@ -3,7 +3,7 @@
 {% block content %}
  <h1>{{ i18n.get("auth_server.verify_code.heading") }}</h1>
  <form method="POST" action="/auth/verify_code">
-		<input type="hidden" name="token" value="{{ token }}">
+  <input type="hidden" name="token" value="{{ token }}">
   <label>
    <span>{{ i18n.get("auth_server.verify_code.form.code.label") }}</span>
    <input type="text" name="code">

@@ -185,7 +185,7 @@ impl Auth
     pub fn make_jwt_cookie( config: &Config ) -> String
     {
         let jwt = Self::make_jwt(config);
-        let jwt_expire = config.get_as_isize("jwt_expires") as i64;
+        let jwt_expire = config.get_as_isize("jwt.expire_sec") as i64;
         Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
             .path("/")
             .same_site(SameSite::Lax)
