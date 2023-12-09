@@ -56,6 +56,7 @@ argon2.phc_salt = vdWiJxX0iWZI2ncJ
 # MAIL
 ################################################################################
 
+email.path = /system/assets/email
 email.from = Meower <meower@meower.com>
 smtp.tls = false
 smtp.host = mail

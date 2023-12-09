@@ -2,7 +2,7 @@
 //! TemporaryUser model.
 //------------------------------------------------------------------------------
 
-use meower_core::{ I18n, Config, Mailer };
+use meower_core::{ I18n, Config, Mailer, mail_header };
 use crate::{ Validate, FieldHash, FieldVerify };
 use super::user::Model as UserModel;
 use super::user::ActiveModel as ActiveUser;
@@ -76,11 +76,21 @@ impl Model
                 );
             },
         };
+
+        let template = Mailer::get_template_with
+        (
+            "auth_server/signup.html",
+            &config,
+            &i18n,
+            [("verify_code", temporary_user_code.code.as_str())].into(),
+        );
+        println!("{}", template);
         let message = Mailer::message()
             .from(config.get("email.from").parse().unwrap())
             .to(self.email.clone().parse().unwrap())
             .subject(i18n.get("model_temporary_user.verify_mail.subject"))
-            .body(format!("Signup: {}", temporary_user_code.code))
+            .header(mail_header::ContentType::TEXT_HTML)
+            .body(template)
             .unwrap();
         let mailer = Mailer::new(&config);
         match mailer.send(message).await

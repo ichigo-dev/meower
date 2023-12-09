@@ -37,7 +37,8 @@ everything.
 │   │   ├ assets/          ... Contains common asset files
 │   │   │   ├ css/
 │   │   │   ├ scss/
-│   │   │   └ locale/
+│   │   │   ├ locale/
+│   │   │   └ email/
 │   │   │
 │   │   ├ auth_server/     ... Authentication server
 │   │   │

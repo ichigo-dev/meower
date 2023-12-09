@@ -15,3 +15,5 @@ pub use auth::Auth;
 pub use config::Config;
 pub use i18n::I18n;
 pub use mailer::Mailer;
+
+pub use lettre::message::header as mail_header;

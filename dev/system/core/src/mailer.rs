@@ -2,7 +2,10 @@
 //! Mailer.
 //------------------------------------------------------------------------------
 
-use crate::Config;
+use crate::{ Config, I18n };
+
+use std::fs;
+use std::collections::HashMap;
 
 use lettre::{ AsyncSmtpTransport, AsyncTransport, Tokio1Executor };
 use lettre::Message;
@@ -57,6 +60,50 @@ impl Mailer
     {
         Message::builder()
     }
+
+    //--------------------------------------------------------------------------
+    /// Gets template mail.
+    //--------------------------------------------------------------------------
+    pub fn get_template
+    (
+        template: &str,
+        config: &Config,
+        i18n: &I18n,
+    ) -> String
+    {
+        let email_path = config.get("email.path");
+        let template_path = format!
+        (
+            "{}/{}/{}",
+            email_path,
+            i18n.locale(),
+            template,
+        );
+        println!("{}", template_path);
+        let template = fs::read_to_string(template_path)
+            .unwrap_or("".to_string());
+        template
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets template mail.
+    //--------------------------------------------------------------------------
+    pub fn get_template_with
+    (
+        template: &str,
+        config: &Config,
+        i18n: &I18n,
+        replace: HashMap<&str, &str>,
+    ) -> String
+    {
+        let mut template = Self::get_template(template, config, i18n);
+        for (key, value) in replace
+        {
+            template = template.replace(&format!("%{}%", key), &value);
+        }
+        template
+    }
+
 
     //--------------------------------------------------------------------------
     /// Sends the mail.
