@@ -14,8 +14,8 @@ auth_server.signup.form.email_confirm.placeholder = meower@example.com
 auth_server.signup.form.password.label = パスワード
 auth_server.signup.form.password_confirm.label = パスワード（確認用）
 auth_server.signup.form.button.send = サインアップ
-auth_server.signup.form.error.email_not_match = メールアドレスが一致しません
-auth_server.signup.form.error.password_not_match = パスワードが一致しません
+auth_server.signup.form.error.email_not_match = メールアドレスが一致しません。
+auth_server.signup.form.error.password_not_match = パスワードが一致しません。
 
 auth_server.signup.button.login = ログイン
 auth_server.signup.button.resend_verify_code = 認証コードの再送

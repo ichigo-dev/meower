@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use meower_entity::user::Model as UserModel;
+use meower_entity::temporary_user::Model as TemporaryUserModel;
 use crate::{ AppState, Auth, I18n };
 
 use askama::Template;
@@ -90,6 +91,16 @@ pub(crate) async fn post_handler
     }
     else
     {
+        if TemporaryUserModel::find_by_email(hdb, &input.email).await.is_some()
+        {
+            let errors = vec!
+            [
+                i18n.get("auth_server.login.form.error.user_not_verified")
+            ];
+            let template = LoginTemplate { i18n, input, errors };
+            return Err(Html(template.render().unwrap()));
+        }
+
         let errors = vec!
         [
             i18n.get("auth_server.login.form.error.user_not_found")

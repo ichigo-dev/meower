@@ -9,8 +9,9 @@ auth_server.login.form.email.label = メールアドレス
 auth_server.login.form.email.placeholder = meower@example.com
 auth_server.login.form.password.label = パスワード
 auth_server.login.form.button.send = ログイン
-auth_server.login.form.error.invalid_password = パスワードが間違っています
-auth_server.login.form.error.user_not_found = ユーザが見つかりません
+auth_server.login.form.error.invalid_password = パスワードが間違っています。
+auth_server.login.form.error.user_not_found = ユーザが見つかりません。
+auth_server.login.form.error.user_not_verified = メールアドレスが認証されていません。認証コードの再送から再度認証を行ってください。
 
 auth_server.login.button.signup = サインアップ
 auth_server.login.button.resend_verify_code = 認証コードの再送

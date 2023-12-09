@@ -3,7 +3,7 @@
 ################################################################################
 
 auth_server.verify_code.heading = コード認証
-auth_server.verify_code.content = 登録されたメールアドレス宛に送信されたコードを入力してください
+auth_server.verify_code.content = 登録されたメールアドレス宛に送信されたコードを入力してください。
 
 # Form
 auth_server.verify_code.form.code.label = 認証コード
