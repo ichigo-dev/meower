@@ -12,6 +12,8 @@
 	border-radius: var(--radius-sm);
 	box-shadow: var(--shadow-weak);
 	text-decoration: none;
+	text-align: center;
+	max-width: 250px;
 
 	//	Color.
 	&.primary
@@ -284,6 +286,17 @@
 
 
 //------------------------------------------------------------------------------
+//	Common heading.
+//------------------------------------------------------------------------------
+.ui_heading
+{
+	font-size: var(--fs-lg);
+	font-weight: var(--fw-bold);
+	color: var(--color-text-primary);
+}
+
+
+//------------------------------------------------------------------------------
 //	Common panel.
 //------------------------------------------------------------------------------
 .ui_panel
@@ -309,6 +322,36 @@
 	&.transparent
 	{
 		background-color: transparent;
+	}
+
+	&.xs
+	{
+		width: 90%;
+		max-width: var(--panel-xs);
+	}
+
+	&.sm
+	{
+		width: 90%;
+		max-width: var(--panel-sm);
+	}
+
+	&.md
+	{
+		width: 90%;
+		max-width: var(--panel-md);
+	}
+
+	&.lg
+	{
+		width: 90%;
+		max-width: var(--panel-lg);
+	}
+
+	&.xl
+	{
+		width: 90%;
+		max-width: var(--panel-xl);
 	}
 }
 
