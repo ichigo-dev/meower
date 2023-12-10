@@ -35,6 +35,7 @@ everything.
 │   │
 │   ├ system/              ... Contains system components
 │   │   ├ assets/          ... Contains common asset files
+│   │   │   ├ js/
 │   │   │   ├ css/
 │   │   │   ├ scss/
 │   │   │   ├ locale/

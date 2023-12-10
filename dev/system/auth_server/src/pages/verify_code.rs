@@ -31,7 +31,7 @@ pub(crate) struct VerifyCodeForm
 /// Page template.
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
-#[derive(Template)]
+#[derive(Template, Default)]
 #[template(path = "verify_code.html")]
 pub(crate) struct VerifyCodeTemplate
 {
@@ -66,13 +66,14 @@ pub(crate) async fn post_handler
             i18n,
             token: input.token,
             errors: vec![e],
+            ..Default::default()
         };
         return Html(template.render().unwrap());
     }
 
     tsx.commit().await.unwrap();
     let template = SignupSuccessTemplate { i18n };
-    return Html(template.render().unwrap());
+    Html(template.render().unwrap())
 }
 
 

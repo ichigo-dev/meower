@@ -394,6 +394,9 @@
 		background-color: var(--color-panel);
 		box-shadow: var(--shadow);
 
+		display: flex;
+		flex-direction: column;
+
 		.header
 		{
 			margin-bottom: var(--spacing-md);
@@ -409,6 +412,15 @@
 
 		.body
 		{
+			height: 100%;
+			max-height: calc(100% - var(--spacing-xl));
+		}
+
+		.footer
+		{
+			display: flex;
+			justify-content: space-between;
+			margin-top: var(--spacing-md);
 		}
 	}
 }

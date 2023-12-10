@@ -60,6 +60,7 @@ pub(crate) enum TemporaryUser
 {
     Table,
     TemporaryUserId,
+    Token,
     Email,
     Password,
     CreatedAt,
@@ -240,4 +241,18 @@ pub(crate) enum TaskMember
     TaskMemberId,
     TaskId,
     UserAccountId,
+}
+
+
+//------------------------------------------------------------------------------
+/// ResetPasswordToken.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum ResetPasswordToken
+{
+    Table,
+    ResetPasswordTokenId,
+    UserId,
+    Token,
+    CreatedAt,
 }

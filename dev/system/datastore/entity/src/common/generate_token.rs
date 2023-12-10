@@ -1,19 +1,19 @@
 //------------------------------------------------------------------------------
-//! Signup success page.
+//! Generate token.
 //------------------------------------------------------------------------------
 
-use crate::I18n;
-
-use askama::Template;
+use rand::thread_rng;
+use rand::distributions::{ DistString, Alphanumeric };
 
 
 //------------------------------------------------------------------------------
-/// Page template.
+/// FieldHash.
 //------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Template, Default)]
-#[template(path = "signup_success.html")]
-pub(crate) struct SignupSuccessTemplate
+pub trait GenerateToken
 {
-    pub(crate) i18n: I18n,
+    fn generate_token(&self) -> String
+    {
+        let mut rng = thread_rng();
+        Alphanumeric.sample_string(&mut rng, 32)
+    }
 }

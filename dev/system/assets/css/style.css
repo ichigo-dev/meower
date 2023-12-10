@@ -1219,6 +1219,8 @@ progress {
   border-radius: var(--radius-md);
   background-color: var(--color-panel);
   box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
 }
 .ui_popup .content .header {
   margin-bottom: var(--spacing-md);
@@ -1229,6 +1231,16 @@ progress {
   font-size: var(--fs-lg);
   width: 100%;
 }
+.ui_popup .content .body {
+  height: 100%;
+  max-height: calc(100% - var(--spacing-xl));
+}
+.ui_popup .content .footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-md);
+}
+
 .ui_label {
   color: var(--color-text-secondary);
 }
@@ -1387,7 +1399,7 @@ a {
   color: var(--color-info);
 }
 
-.body {
+body {
   font-family: "Rubik", "Noto Sans JP", sans-serif;
   width: 100%;
   min-height: 100vh;
@@ -1404,13 +1416,6 @@ a {
   background-color: var(--color-bg);
   font-size: var(--fs-md);
   color: var(--color-text-primary);
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--spacing-md);
 }
 
 .errors {

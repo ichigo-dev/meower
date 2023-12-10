@@ -31,7 +31,7 @@ use std::path::PathBuf;
 //------------------------------------------------------------------------------
 /// Internationalization.
 //------------------------------------------------------------------------------
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct I18n
 {
     locale: String,

@@ -6,3 +6,6 @@ model_user.error.email.already_exists = そのメールアドレスは既に登�
 model_user.error.email.not_empty = メールアドレスを入力してください。
 model_user.error.email.max_len = メールアドレスは%max_len%文字以下で入力してください。
 model_user.error.email.is_email = メールアドレスが正しくありません。
+
+# Reset password mail
+model_user.reset_password_mail.subject = パスワード再設定

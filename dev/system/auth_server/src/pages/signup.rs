@@ -2,7 +2,7 @@
 //! Signup page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, Auth, I18n, Config };
+use crate::{ AppState, I18n, Config };
 use crate::pages::verify_code::VerifyCodeTemplate;
 use meower_entity::Validate;
 use meower_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
@@ -10,7 +10,7 @@ use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, Redirect, IntoResponse };
+use axum::response::{ Html, IntoResponse };
 use axum::extract::{ State, Form };
 use serde::Deserialize;
 use sea_orm::prelude::*;
@@ -34,7 +34,7 @@ pub(crate) struct SignupForm
 /// Page template.
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
-#[derive(Template)]
+#[derive(Template, Default)]
 #[template(path = "signup.html")]
 struct SignupTemplate
 {
@@ -51,22 +51,15 @@ struct SignupTemplate
 // GET
 pub(crate) async fn get_handler
 (
-    Extension(auth): Extension<Auth>,
     Extension(i18n): Extension<I18n>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+) -> impl IntoResponse
 {
-    if auth.is_logined().await
-    {
-        return Err(Redirect::to("/"));
-    }
-
     let template = SignupTemplate
     {
         i18n,
-        input: SignupForm::default(),
-        errors: Vec::new(),
+        ..Default::default()
     };
-    Ok(Html(template.render().unwrap()))
+    Html(template.render().unwrap())
 }
 
 // POST
@@ -120,7 +113,7 @@ pub(crate) async fn post_handler
         token,
         errors: Vec::new()
     };
-    return Html(template.render().unwrap());
+    Html(template.render().unwrap())
 }
 
 

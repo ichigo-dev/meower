@@ -21,7 +21,9 @@
    {% endif %}
    <button type="submit" class="ui_button primary full_horizon">{{ i18n.get("auth_server.login.form.button.send") }}</button>
   </form>
+  <hr class="ui_panel border full_horizon">
   <a href="/auth/signup" class="ui_button primary_light full_horizon">{{ i18n.get("auth_server.login.button.signup") }}</a>
   <a href="/auth/resend_verify_code" class="ui_button primary_light full_horizon">{{ i18n.get("auth_server.login.button.resend_verify_code") }}</a>
+  <a href="/auth/forgot_password" class="ui_button primary_light full_horizon">{{ i18n.get("auth_server.login.button.forgot_password") }}</a>
  </div>
 {% endblock %}

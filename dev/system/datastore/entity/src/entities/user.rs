@@ -2,13 +2,15 @@
 //! User model.
 //------------------------------------------------------------------------------
 
-use meower_core::{ Validator, I18n };
+use meower_core::{ Validator, I18n, Mailer, Config, mail_header };
 use crate::{ Validate, FieldVerify };
 use super::user_auth::Entity as UserAuthEntity;
+use super::reset_password_token::ActiveModel as ActiveResetPasswordToken;
 
 use async_trait::async_trait;
 use chrono::Utc;
 use sea_orm::entity::prelude::*;
+use sea_orm::ActiveValue;
 
 
 //------------------------------------------------------------------------------
@@ -47,7 +49,9 @@ impl Model
     //--------------------------------------------------------------------------
     /// Tries to login.
     //--------------------------------------------------------------------------
-    pub async fn try_login( &self, hdb: &DbConn, password: &str ) -> bool
+    pub async fn try_login<C>( &self, hdb: &C, password: &str ) -> bool
+    where
+        C: ConnectionTrait,
     {
         if let Some(user_auth) = self
             .find_related(UserAuthEntity)
@@ -58,6 +62,54 @@ impl Model
             return user_auth.verify_field(password);
         }
         false
+    }
+
+    //--------------------------------------------------------------------------
+    /// Sends a reset password mail.
+    //--------------------------------------------------------------------------
+    pub async fn send_reset_password_mail<C>
+    (
+        &self,
+        hdb: &C,
+        config: &Config,
+        i18n: &I18n,
+    ) -> Result<(), String>
+    where
+        C: ConnectionTrait,
+    {
+        let reset_password_token = ActiveResetPasswordToken
+        {
+            user_id: ActiveValue::Set(self.user_id),
+            ..Default::default()
+        };
+        let reset_password_token = match reset_password_token.insert(hdb).await
+        {
+            Ok(reset_password_token) => reset_password_token,
+            Err(e) => return Err(e.to_string()),
+        };
+
+        let template = Mailer::get_template_with
+        (
+            "auth_server/reset_password.html",
+            &config,
+            &i18n,
+            [
+                ("reset_password_token", reset_password_token.token.as_str())
+            ].into(),
+        );
+        let message = Mailer::message()
+            .from(config.get("email.from").parse().unwrap())
+            .to(self.email.clone().parse().unwrap())
+            .subject(i18n.get("model_user.reset_password_mail.subject"))
+            .header(mail_header::ContentType::TEXT_HTML)
+            .body(template)
+            .unwrap();
+        let mailer = Mailer::new(&config);
+        match mailer.send(message).await
+        {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
 }
 
@@ -154,6 +206,9 @@ pub enum Relation
 
     #[sea_orm(has_one = "super::user_auth::Entity")]
     UserAuth,
+
+    #[sea_orm(has_one = "super::reset_password_token::Entity")]
+    ResetPasswordToken,
 }
 
 impl Related<super::user_account::Entity> for Entity
@@ -169,5 +224,13 @@ impl Related<super::user_auth::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::UserAuth.def()
+    }
+}
+
+impl Related<super::reset_password_token::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::ResetPasswordToken.def()
     }
 }

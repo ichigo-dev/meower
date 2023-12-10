@@ -6,16 +6,16 @@ Task table
 
 ## Columns
 
-| Name                  | Type                        | Default                               | Nullable | Children | Parents                                       | Comment               |
-| --------------------- | --------------------------- | ------------------------------------- | -------- | -------- | --------------------------------------------- | --------------------- |
-| task_id               | bigint                      | nextval('task_task_id_seq'::regclass) | false    |          |                                               | Task ID               |
-| project_id            | bigint                      |                                       | false    |          | [public.project](public.project.md)           | Project ID            |
-| owner_user_account_id | bigint                      |                                       | false    |          | [public.user_account](public.user_account.md) | Owner user account ID |
-| title                 | varchar(255)                |                                       | false    |          |                                               | Title                 |
-| content               | text                        |                                       | false    |          |                                               | Content               |
-| created_at            | timestamp without time zone | CURRENT_TIMESTAMP                     | false    |          |                                               | Create date           |
-| updated_at            | timestamp without time zone | CURRENT_TIMESTAMP                     | false    |          |                                               | Update date           |
-| is_deleted            | boolean                     | false                                 | false    |          |                                               | Soft delete flag      |
+| Name                  | Type                        | Default                               | Nullable | Children                                    | Parents                                       | Comment               |
+| --------------------- | --------------------------- | ------------------------------------- | -------- | ------------------------------------------- | --------------------------------------------- | --------------------- |
+| task_id               | bigint                      | nextval('task_task_id_seq'::regclass) | false    | [public.task_member](public.task_member.md) |                                               | Task ID               |
+| project_id            | bigint                      |                                       | false    |                                             | [public.project](public.project.md)           | Project ID            |
+| owner_user_account_id | bigint                      |                                       | false    |                                             | [public.user_account](public.user_account.md) | Owner user account ID |
+| title                 | varchar(255)                |                                       | false    |                                             |                                               | Title                 |
+| content               | text                        |                                       | false    |                                             |                                               | Content               |
+| created_at            | timestamp without time zone | CURRENT_TIMESTAMP                     | false    |                                             |                                               | Create date           |
+| updated_at            | timestamp without time zone | CURRENT_TIMESTAMP                     | false    |                                             |                                               | Update date           |
+| is_deleted            | boolean                     | false                                 | false    |                                             |                                               | Soft delete flag      |
 
 ## Constraints
 

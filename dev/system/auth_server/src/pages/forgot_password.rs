@@ -1,16 +1,14 @@
 //------------------------------------------------------------------------------
-//! Login page.
+//! Forgot password page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, Auth, I18n };
+use crate::{ AppState, I18n, Config };
 use meower_entity::user::Model as UserModel;
 use meower_entity::temporary_user::Model as TemporaryUserModel;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, Response, IntoResponse };
-use axum::http::{ header, StatusCode };
-use axum::body::Body;
+use axum::response::{ Html, IntoResponse };
 use axum::extract::{ State, Form };
 use serde::Deserialize;
 use sea_orm::prelude::*;
@@ -21,10 +19,9 @@ use sea_orm::TransactionTrait;
 /// Form data.
 //------------------------------------------------------------------------------
 #[derive(Deserialize, Debug, Default)]
-pub(crate) struct LoginForm
+pub(crate) struct ForgotPasswordForm
 {
     email: String,
-    password: String,
 }
 
 
@@ -33,11 +30,13 @@ pub(crate) struct LoginForm
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Template, Default)]
-#[template(path = "login.html")]
-struct LoginTemplate
+#[template(path = "forgot_password.html")]
+pub(crate) struct ForgotPasswordTemplate
 {
     pub(crate) i18n: I18n,
-    pub(crate) input: LoginForm,
+    pub(crate) input: ForgotPasswordForm,
+    pub(crate) temporary_user_token: Option<String>,
+    pub(crate) deleted_temporary_user: bool,
     pub(crate) errors: Vec<String>,
 }
 
@@ -52,7 +51,7 @@ pub(crate) async fn get_handler
     Extension(i18n): Extension<I18n>,
 ) -> impl IntoResponse
 {
-    let template = LoginTemplate
+    let template = ForgotPasswordTemplate
     {
         i18n,
         ..Default::default()
@@ -65,73 +64,89 @@ pub(crate) async fn post_handler
 (
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
-    Form(input): Form<LoginForm>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+    Form(input): Form<ForgotPasswordForm>,
+) -> impl IntoResponse
 {
     let hdb = state.hdb();
     let config = state.config();
 
+    // Sends the reset password mail.
     let tsx = hdb.begin().await.unwrap();
-    if let Err(e) = try_login(&tsx, &input, &i18n).await
+
+    // Finds the temporary_user.
+    if let Some(temporary_user)
+        = TemporaryUserModel::find_by_email(hdb, &input.email).await
+    {
+        let error = i18n.get
+        (
+            "auth_server.forgot_password.form.error.user_not_verified"
+        );
+        tsx.rollback().await.unwrap();
+        let template = ForgotPasswordTemplate
+        {
+            i18n,
+            input,
+            temporary_user_token: Some(temporary_user.token),
+            errors: vec![error],
+            ..Default::default()
+        };
+        return Html(template.render().unwrap());
+    }
+
+    if let Err(e) = reset_password(&tsx, &input, &i18n, &config).await
     {
         tsx.rollback().await.unwrap();
-        let template = LoginTemplate
+        let template = ForgotPasswordTemplate
         {
             i18n,
             input,
             errors: vec![e],
             ..Default::default()
         };
-        return Err(Html(template.render().unwrap()));
+        return Html(template.render().unwrap());
     }
 
-    // Proxies to the frontend.
     tsx.commit().await.unwrap();
-    let cookie = Auth::make_jwt_cookie(&config);
-    let response = Response::builder()
-        .status(StatusCode::SEE_OTHER)
-        .header(header::LOCATION, "/")
-        .header(header::SET_COOKIE, cookie.to_string())
-        .body(Body::empty())
-        .unwrap();
-    Ok(response)
+    let template = ForgotPasswordTemplate
+    {
+        i18n,
+        ..Default::default()
+    };
+    Html(template.render().unwrap())
 }
 
 
 //------------------------------------------------------------------------------
-/// Tries to login.
+/// Resets the password.
 //------------------------------------------------------------------------------
-async fn try_login<C>
+pub(crate) async fn reset_password<C>
 (
     hdb: &C,
-    input: &LoginForm,
+    input: &ForgotPasswordForm,
     i18n: &I18n,
+    config: &Config,
 ) -> Result<(), String>
 where
     C: ConnectionTrait,
 {
-    // Try to login.
-    if let Some(user) = UserModel::find_by_email(hdb, &input.email).await
+    // Finds the user.
+    let user = match UserModel::find_by_email(hdb, &input.email).await
     {
-        if user.try_login(hdb, &input.password).await == false
+        Some(user) => user,
+        None =>
         {
-            return Err
+            let error = i18n.get
             (
-                i18n.get("auth_server.login.form.error.invalid_password")
+                "auth_server.forgot_password.form.error.email_not_found"
             );
-        }
-    }
-    else
-    {
-        if TemporaryUserModel::find_by_email(hdb, &input.email).await.is_some()
-        {
-            return Err
-            (
-                i18n.get("auth_server.login.form.error.user_not_verified")
-            );
-        }
+            return Err(error);
+        },
+    };
 
-        return Err(i18n.get("auth_server.login.form.error.user_not_found"));
+    // Sends the reset password mail.
+    if let Err(e) = user.send_reset_password_mail(hdb, &config, &i18n).await
+    {
+        return Err(e);
     }
 
     Ok(())

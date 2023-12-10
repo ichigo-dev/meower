@@ -32,7 +32,7 @@ pub(crate) struct ResendVerifyCodeForm
 /// Page template.
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
-#[derive(Template)]
+#[derive(Template, Default)]
 #[template(path = "resend_verify_code.html")]
 struct ResendVerifyCodeTemplate
 {
@@ -55,8 +55,7 @@ pub(crate) async fn get_handler
     let template = ResendVerifyCodeTemplate
     {
         i18n,
-        input: ResendVerifyCodeForm::default(),
-        errors: Vec::new(),
+        ..Default::default()
     };
     return Html(template.render().unwrap());
 }
@@ -85,6 +84,7 @@ pub(crate) async fn post_handler
                 i18n,
                 input,
                 errors: vec![e],
+                ..Default::default()
             };
             return Html(template.render().unwrap());
         }
@@ -95,7 +95,7 @@ pub(crate) async fn post_handler
     {
         i18n,
         token,
-        errors: Vec::new(),
+        ..Default::default()
     };
     return Html(template.render().unwrap());
 }

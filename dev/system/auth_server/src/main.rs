@@ -89,22 +89,24 @@ async fn main()
     let app_state = AppState::new(hdb, client, config.clone());
 
     // Creates the application.
+    let auth_routes = Router::new()
+        .route("/login", get(login::get_handler))
+        .route("/login", post(login::post_handler))
+        .route("/signup", get(signup::get_handler))
+        .route("/signup", post(signup::post_handler))
+        .route("/verify_code", post(verify_code::post_handler))
+        .route("/resend_verify_code", get(resend_verify_code::get_handler))
+        .route("/resend_verify_code", post(resend_verify_code::post_handler))
+        .route("/forgot_password", get(forgot_password::get_handler))
+        .route("/forgot_password", post(forgot_password::post_handler))
+        .route
+        (
+            "/delete_temporary_user/:token",
+            get(delete_temporary_user::get_handler)
+        )
+        .fallback(proxy::handler);
     let app = Router::new()
-        .route("/auth/login", get(login::get_handler))
-        .route("/auth/login", post(login::post_handler))
-        .route("/auth/signup", get(signup::get_handler))
-        .route("/auth/signup", post(signup::post_handler))
-        .route("/auth/verify_code", post(verify_code::post_handler))
-        .route
-        (
-            "/auth/resend_verify_code",
-            get(resend_verify_code::get_handler)
-        )
-        .route
-        (
-            "/auth/resend_verify_code",
-            post(resend_verify_code::post_handler)
-        )
+        .nest("/auth", auth_routes)
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
         .layer(middleware::from_fn_with_state(app_state.clone(), i18n::layer))

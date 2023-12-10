@@ -7,6 +7,7 @@ use axum::extract::Path;
 use axum::http::{ header, HeaderMap, StatusCode };
 
 static STYLE_CSS: &str = include_str!("../../assets/css/style.css");
+static SCRIPT_JS: &str = include_str!("../../assets/js/script.js");
 
 
 //------------------------------------------------------------------------------
@@ -20,6 +21,15 @@ pub(crate) async fn handler( Path(path): Path<String> ) -> impl IntoResponse
     {
         headers.insert(header::CONTENT_TYPE, "text/css".parse().unwrap());
         (StatusCode::OK, headers, STYLE_CSS)
+    }
+    else if path == "script.js"
+    {
+        headers.insert
+        (
+            header::CONTENT_TYPE,
+            "text/javascript".parse().unwrap()
+        );
+        (StatusCode::OK, headers, SCRIPT_JS)
     }
     else
     {

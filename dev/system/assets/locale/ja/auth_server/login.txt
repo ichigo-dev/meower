@@ -14,4 +14,5 @@ auth_server.login.form.error.user_not_found = ユーザが見つかりません�
 auth_server.login.form.error.user_not_verified = メールアドレスが認証されていません。認証コードの再送から再度認証を行ってください。
 
 auth_server.login.button.signup = サインアップ
+auth_server.login.button.forgot_password = パスワードを忘れた場合
 auth_server.login.button.resend_verify_code = 認証コードの再送

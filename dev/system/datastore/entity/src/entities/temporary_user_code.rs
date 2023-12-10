@@ -3,11 +3,11 @@
 //------------------------------------------------------------------------------
 
 use meower_core::{ Config, I18n };
+use crate::GenerateToken;
 
 use async_trait::async_trait;
 use chrono::{ Utc, Duration };
-use rand::{ Rng, thread_rng };
-use rand::distributions::{ DistString, Alphanumeric };
+use rand::Rng;
 use sea_orm::entity::prelude::*;
 
 
@@ -126,14 +126,15 @@ impl ActiveModelBehavior for ActiveModel
         {
             self.set(Column::CreatedAt, now.into());
 
-            let mut rng = thread_rng();
-            let random_string = Alphanumeric.sample_string(&mut rng, 32);
-            self.set(Column::Token, random_string.into());
+            let token = self.generate_token();
+            self.set(Column::Token, token.into());
         }
 
         Ok(self)
     }
 }
+
+impl GenerateToken for ActiveModel {}
 
 
 //------------------------------------------------------------------------------

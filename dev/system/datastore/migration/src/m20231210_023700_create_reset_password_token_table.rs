@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
-//! Creates temporary_user table.
+//! Creates reset_password_token table.
 //------------------------------------------------------------------------------
 
 use sea_orm_migration::prelude::*;
 use sea_orm::Statement;
-use crate::table_def::TemporaryUser;
+use crate::table_def::{ User, ResetPasswordToken };
 
 
 //------------------------------------------------------------------------------
@@ -23,11 +23,11 @@ impl MigrationTrait for Migration
     {
         // Creates a table.
         let table = Table::create()
-            .table(TemporaryUser::Table)
+            .table(ResetPasswordToken::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(TemporaryUser::TemporaryUserId)
+                ColumnDef::new(ResetPasswordToken::ResetPasswordTokenId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -35,7 +35,13 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(TemporaryUser::Token)
+                ColumnDef::new(ResetPasswordToken::UserId)
+                    .big_integer()
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(ResetPasswordToken::Token)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -43,37 +49,37 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(TemporaryUser::Email)
-                    .string()
-                    .string_len(255)
-                    .not_null()
-                    .unique_key()
-            )
-            .col
-            (
-                ColumnDef::new(TemporaryUser::Password)
-                    .string()
-                    .string_len(255)
-                    .not_null()
-            )
-            .col
-            (
-                ColumnDef::new(TemporaryUser::CreatedAt)
+                ColumnDef::new(ResetPasswordToken::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
             )
+            .foreign_key
+            (
+                ForeignKey::create()
+                    .name("reset_password_token_user_id_fkey")
+                    .from(ResetPasswordToken::Table, ResetPasswordToken::UserId)
+                    .to(User::Table, User::UserId)
+            )
             .to_owned();
         manager.create_table(table).await?;
+
+        // Creates indexes.
+        let index = Index::create()
+            .name("reset_password_token_user_id_idx")
+            .table(ResetPasswordToken::Table)
+            .col(ResetPasswordToken::UserId)
+            .to_owned();
+        manager.create_index(index).await?;
 
         // Adds comments.
         let querys = vec!
         [
-            "COMMENT ON TABLE \"temporary_user\" IS 'Temporary user';",
-            "COMMENT ON COLUMN \"temporary_user\".\"temporary_user_id\" IS 'Temporary user ID';",
-            "COMMENT ON COLUMN \"temporary_user\".\"email\" IS 'Email address';",
-            "COMMENT ON COLUMN \"temporary_user\".\"password\" IS 'Hashed password';",
-            "COMMENT ON COLUMN \"temporary_user\".\"created_at\" IS 'Create date';",
+            "COMMENT ON TABLE \"reset_password_token\" IS 'Reset passwort token table'",
+            "COMMENT ON COLUMN \"reset_password_token\".\"reset_password_token_id\" IS 'Reset password token ID'",
+            "COMMENT ON COLUMN \"reset_password_token\".\"user_id\" IS 'User ID'",
+            "COMMENT ON COLUMN \"reset_password_token\".\"token\" IS 'Token'",
+            "COMMENT ON COLUMN \"reset_password_token\".\"created_at\" IS 'Create date'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
@@ -92,7 +98,7 @@ impl MigrationTrait for Migration
     {
         // Drops a table.
         manager
-            .drop_table(Table::drop().table(TemporaryUser::Table).to_owned())
+            .drop_table(Table::drop().table(ResetPasswordToken::Table).to_owned())
             .await?;
 
         Ok(())

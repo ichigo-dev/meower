@@ -7,7 +7,7 @@
 | [public.user](public.user.md)                                                   | 5       | User table                    | BASE TABLE |
 | [public.user_auth](public.user_auth.md)                                         | 5       | User authentication table     | BASE TABLE |
 | [public.user_account](public.user_account.md)                                   | 7       | User account table            | BASE TABLE |
-| [public.temporary_user](public.temporary_user.md)                               | 4       | Temporary user                | BASE TABLE |
+| [public.temporary_user](public.temporary_user.md)                               | 5       | Temporary user                | BASE TABLE |
 | [public.temporary_user_code](public.temporary_user_code.md)                     | 5       | Temporary user code           | BASE TABLE |
 | [public.organization](public.organization.md)                                   | 6       | Organization table            | BASE TABLE |
 | [public.organization_member_authority](public.organization_member_authority.md) | 3       | Organization member authority | BASE TABLE |
@@ -19,6 +19,8 @@
 | [public.project_member_authority](public.project_member_authority.md)           | 3       | Project member authority      | BASE TABLE |
 | [public.project_member](public.project_member.md)                               | 4       | Project member table          | BASE TABLE |
 | [public.task](public.task.md)                                                   | 8       | Task table                    | BASE TABLE |
+| [public.task_member](public.task_member.md)                                     | 3       | Task member table             | BASE TABLE |
+| [public.reset_password_token](public.reset_password_token.md)                   | 4       | Reset passwort token table    | BASE TABLE |
 
 ## Relations
 

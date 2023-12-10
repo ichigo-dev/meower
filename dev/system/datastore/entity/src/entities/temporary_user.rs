@@ -3,11 +3,11 @@
 //------------------------------------------------------------------------------
 
 use meower_core::{ I18n, Config, Mailer, mail_header };
-use crate::{ Validate, FieldHash, FieldVerify };
+use crate::{ Validate, FieldHash, FieldVerify, GenerateToken };
 use super::user::Model as UserModel;
 use super::user::ActiveModel as ActiveUser;
 use super::user_auth::ActiveModel as ActiveUserAuth;
-use super::temporary_user_code::Entity as TemporaryUserCodeEntity;
+use super::temporary_user_code::{ self, Entity as TemporaryUserCodeEntity };
 
 use argon2::PasswordHash;
 use async_trait::async_trait;
@@ -26,6 +26,8 @@ pub struct Model
     #[sea_orm(primary_key)]
     pub temporary_user_id: i64,
     #[sea_orm(unique)]
+    pub token: String,
+    #[sea_orm(unique)]
     pub email: String,
     pub password: String,
     pub created_at: DateTime,
@@ -42,6 +44,21 @@ impl Model
     {
         let user = Entity::find()
             .filter(Column::Email.eq(email))
+            .one(hdb)
+            .await
+            .unwrap_or(None);
+        user
+    }
+
+    //--------------------------------------------------------------------------
+    /// Finds temporary_user by token.
+    //--------------------------------------------------------------------------
+    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Self>
+    where
+        C: ConnectionTrait,
+    {
+        let user = Entity::find()
+            .filter(Column::Token.eq(token))
             .one(hdb)
             .await
             .unwrap_or(None);
@@ -84,7 +101,6 @@ impl Model
             &i18n,
             [("verify_code", temporary_user_code.code.as_str())].into(),
         );
-        println!("{}", template);
         let message = Mailer::message()
             .from(config.get("email.from").parse().unwrap())
             .to(self.email.clone().parse().unwrap())
@@ -194,6 +210,9 @@ impl ActiveModelBehavior for ActiveModel
         if insert
         {
             self.set(Column::CreatedAt, now.into());
+
+            let token = self.generate_token();
+            self.set(Column::Token, token.into());
         }
 
         // Hashes the password.
@@ -203,6 +222,25 @@ impl ActiveModelBehavior for ActiveModel
             self.hash_field();
         };
 
+        Ok(self)
+    }
+
+    //--------------------------------------------------------------------------
+    /// Before delete.
+    //--------------------------------------------------------------------------
+    async fn before_delete<C>( mut self, hdb: &C ) -> Result<Self, DbErr>
+    where
+        C: ConnectionTrait,
+    {
+        let temporary_user_id = self.temporary_user_id.clone().unwrap();
+        TemporaryUserCodeEntity::delete_many()
+            .filter
+            (
+                temporary_user_code::Column::TemporaryUserId
+                    .eq(temporary_user_id)
+            )
+            .exec(hdb)
+            .await?;
         Ok(self)
     }
 }
@@ -259,6 +297,8 @@ impl Validate for ActiveModel
         Ok(())
     }
 }
+
+impl GenerateToken for ActiveModel {}
 
 
 //------------------------------------------------------------------------------

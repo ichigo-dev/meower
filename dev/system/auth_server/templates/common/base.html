@@ -7,11 +7,13 @@
   <link rel="stylesheet" href="/_assets/style.css" />
  </head>
 
- <body class="body">
+ <body>
   {% call header::render() %}
   <main class="wrapper theme_default">
    {% block content %}{% endblock %}
   </main>
   {% call footer::render() %}
+
+  <script src="/_assets/script.js"></script>
  </body>
 </html>

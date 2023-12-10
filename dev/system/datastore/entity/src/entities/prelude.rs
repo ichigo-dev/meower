@@ -17,3 +17,5 @@ pub use super::user_auth::Entity as UserAuth;
 pub use super::workspace::Entity as Workspace;
 pub use super::workspace_member::Entity as WorkspaceMember;
 pub use super::workspace_member_authority::Entity as WorkspaceMemberAuthority;
+pub use super::reset_password_token::Entity as ResetPasswordToken;
+pub use super::task_member::Entity as TaskMember;
