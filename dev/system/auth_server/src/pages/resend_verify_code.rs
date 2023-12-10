@@ -115,8 +115,10 @@ where
     C: ConnectionTrait,
 {
     // Finds a temporary_user.
-    let temporary_user
-        = match TemporaryUserEntity::find_by_email(hdb, &input.email).await
+    let temporary_user = match TemporaryUserEntity::find_by_email(&input.email)
+        .one(hdb)
+        .await
+        .unwrap()
     {
         Some(temporary_user) => temporary_user,
         None =>

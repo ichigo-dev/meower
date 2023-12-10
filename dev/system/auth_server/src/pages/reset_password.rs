@@ -64,7 +64,11 @@ pub(crate) async fn get_handler
 {
     // Finds the reset password token.
     let hdb = state.hdb();
-    if ResetPasswordTokenEntity::find_by_token(hdb, &token).await.is_none()
+    if ResetPasswordTokenEntity::find_by_token(&token)
+        .one(hdb)
+        .await
+        .unwrap()
+        .is_none()
     {
         return Err(Redirect::to("/login"));
     }
@@ -138,8 +142,11 @@ where
     }
 
     // Finds and deletes the reset password token.
-    let reset_password_token
-        = match ResetPasswordTokenEntity::find_by_token(hdb, token).await
+    let reset_password_token =
+        match ResetPasswordTokenEntity::find_by_token(token)
+            .one(hdb)
+            .await
+            .unwrap()
     {
         Some(reset_password_token) => reset_password_token,
         None =>

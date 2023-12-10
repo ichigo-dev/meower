@@ -38,31 +38,17 @@ impl Entity
     //--------------------------------------------------------------------------
     /// Finds temporary_user by email.
     //--------------------------------------------------------------------------
-    pub async fn find_by_email<C>( hdb: &C, email: &str ) -> Option<Model>
-    where
-        C: ConnectionTrait,
+    pub fn find_by_email(  email: &str ) -> Select<Self>
     {
-        let data = Self::find()
-            .filter(Column::Email.eq(email))
-            .one(hdb)
-            .await
-            .unwrap_or(None);
-        data
+        Self::find().filter(Column::Email.eq(email))
     }
 
     //--------------------------------------------------------------------------
     /// Finds temporary_user by token.
     //--------------------------------------------------------------------------
-    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Model>
-    where
-        C: ConnectionTrait,
+    pub fn find_by_token( token: &str ) -> Select<Self>
     {
-        let data = Self::find()
-            .filter(Column::Token.eq(token))
-            .one(hdb)
-            .await
-            .unwrap_or(None);
-        data
+        Self::find().filter(Column::Token.eq(token))
     }
 }
 
@@ -267,7 +253,7 @@ impl Validate for ActiveModel
         let password = self.password.clone().unwrap();
 
         // Checks if the email already exists.
-        if Entity::find_by_email(hdb, &email).await.is_some()
+        if Entity::find_by_email(&email).one(hdb).await.unwrap().is_some()
         {
             return Err
             (

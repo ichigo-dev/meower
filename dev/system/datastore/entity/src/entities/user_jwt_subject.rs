@@ -24,6 +24,17 @@ pub struct Model
     pub created_at: DateTime,
 }
 
+impl Entity
+{
+    //--------------------------------------------------------------------------
+    /// Finds user_jwt_subject by subject.
+    //--------------------------------------------------------------------------
+    pub fn find_by_subject( subject: &str ) -> Select<Self>
+    {
+        Self::find().filter(Column::Subject.eq(subject))
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// ActiveModel.

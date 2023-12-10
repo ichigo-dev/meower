@@ -91,7 +91,10 @@ where
     C: ConnectionTrait,
 {
     let temporary_user_code =
-        match TemporaryUserCodeEntity::find_by_token(hdb, &input.token).await
+        match TemporaryUserCodeEntity::find_by_token(&input.token)
+            .one(hdb)
+            .await
+            .unwrap()
     {
         Some(temporary_user_code) => temporary_user_code,
         None =>

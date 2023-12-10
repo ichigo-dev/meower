@@ -34,16 +34,9 @@ impl Entity
     //--------------------------------------------------------------------------
     /// Finds user by email.
     //--------------------------------------------------------------------------
-    pub async fn find_by_email<C>( hdb: &C, email: &str ) -> Option<Model>
-    where
-        C: ConnectionTrait,
+    pub fn find_by_email( email: &str ) -> Select<Self>
     {
-        let data = Self::find()
-            .filter(Column::Email.eq(email))
-            .one(hdb)
-            .await
-            .unwrap_or(None);
-        data
+        Self::find().filter(Column::Email.eq(email))
     }
 }
 
@@ -174,7 +167,7 @@ impl Validate for ActiveModel
         // Checks if the account already exists.
         if self.user_id.is_set() == false
         {
-            if Entity::find_by_email(hdb, &email).await.is_some()
+            if Entity::find_by_email(&email).one(hdb).await.unwrap().is_some()
             {
                 return Err(i18n.get("model_user.error.email.already_exists"));
             }

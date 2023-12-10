@@ -116,16 +116,18 @@ where
     C: ConnectionTrait,
 {
     // Try to login.
-    let user = match UserEntity::find_by_email(hdb, &input.email).await
+    let user = match UserEntity::find_by_email(&input.email)
+        .one(hdb)
+        .await
+        .unwrap()
     {
         Some(user) => user,
         None =>
         {
-            let error = match TemporaryUserEntity::find_by_email
-            (
-                hdb,
-                &input.email,
-            ).await
+            let error = match TemporaryUserEntity::find_by_email(&input.email)
+                .one(hdb)
+                .await
+                .unwrap()
             {
                 Some(_) =>
                 {

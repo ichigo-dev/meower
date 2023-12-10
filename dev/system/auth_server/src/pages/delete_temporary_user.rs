@@ -65,8 +65,10 @@ async fn delete_temporary_user<C>
 where
     C: ConnectionTrait,
 {
-    let temporary_user
-        = match TemporaryUserEntity::find_by_token(hdb, token).await
+    let temporary_user = match TemporaryUserEntity::find_by_token(token)
+        .one(hdb)
+        .await
+        .unwrap()
     {
         Some(temporary_user) => temporary_user,
         None =>

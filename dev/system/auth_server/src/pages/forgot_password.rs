@@ -80,8 +80,11 @@ pub(crate) async fn post_handler
 
     // Finds the temporary_user.
     let tsx = hdb.begin().await.unwrap();
-    if let Some(temporary_user)
-        = TemporaryUserEntity::find_by_email(hdb, &input.email).await
+    let email = input.email.clone();
+    if let Some(temporary_user) = TemporaryUserEntity::find_by_email(&email)
+        .one(hdb)
+        .await
+        .unwrap()
     {
         tsx.rollback().await.unwrap();
         let error = i18n.get
@@ -137,7 +140,10 @@ where
     C: ConnectionTrait,
 {
     // Finds the user.
-    let user = match UserEntity::find_by_email(hdb, &input.email).await
+    let user = match UserEntity::find_by_email(&input.email)
+        .one(hdb)
+        .await
+        .unwrap()
     {
         Some(user) => user,
         None =>

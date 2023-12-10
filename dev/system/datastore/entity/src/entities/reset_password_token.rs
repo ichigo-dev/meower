@@ -30,16 +30,9 @@ impl Entity
     //--------------------------------------------------------------------------
     /// Finds temporary_user_code by token.
     //--------------------------------------------------------------------------
-    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Model>
-    where
-        C: ConnectionTrait,
+    pub fn find_by_token( token: &str ) -> Select<Self>
     {
-        let data = Self::find()
-            .filter(Column::Token.eq(token))
-            .one(hdb)
-            .await
-            .unwrap_or(None);
-        data
+        Self::find().filter(Column::Token.eq(token))
     }
 }
 
