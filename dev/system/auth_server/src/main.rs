@@ -105,7 +105,9 @@ async fn main()
         (
             "/delete_temporary_user/:token",
             get(delete_temporary_user::get_handler)
-        );
+        )
+        .route("/create_account/:sub", get(create_account::get_handler))
+        .route("/create_account/:sub", post(create_account::post_handler));
     let app = Router::new()
         .nest("/auth", auth_routes)
         .route("/_assets/*path", get(assets::handler))

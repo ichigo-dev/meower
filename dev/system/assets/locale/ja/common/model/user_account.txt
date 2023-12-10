@@ -6,3 +6,4 @@ model_user_account.error.user_account_name.not_empty = アカウント名を入�
 model_user_account.error.user_account_name.min_len = アカウント名は%min_len%文字以上で入力してください。
 model_user_account.error.user_account_name.max_len = アカウント名は%max_len%文字以下で入力してください。
 model_user_account.error.user_account_name.regex = アカウント名には半角英数字とアンダースコア(_)のみ使用できます。
+model_user_account.error.user_account_name.already_exists = そのアカウント名は既に使用されています。

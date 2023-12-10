@@ -36,9 +36,9 @@ pub(crate) struct ResendVerifyCodeForm
 #[template(path = "resend_verify_code.html")]
 struct ResendVerifyCodeTemplate
 {
-    pub(crate) i18n: I18n,
-    pub(crate) input: ResendVerifyCodeForm,
-    pub(crate) errors: Vec<String>,
+    i18n: I18n,
+    input: ResendVerifyCodeForm,
+    errors: Vec<String>,
 }
 
 

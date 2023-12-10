@@ -34,11 +34,11 @@ pub(crate) struct ResetPasswordForm
 #[allow(dead_code)]
 #[derive(Template, Default)]
 #[template(path = "reset_password.html")]
-pub(crate) struct ResetPasswordTemplate
+struct ResetPasswordTemplate
 {
-    pub(crate) i18n: I18n,
-    pub(crate) input: ResetPasswordForm,
-    pub(crate) errors: Vec<String>,
+    i18n: I18n,
+    input: ResetPasswordForm,
+    errors: Vec<String>,
 }
 
 #[allow(dead_code)]

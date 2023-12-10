@@ -25,7 +25,19 @@ pub struct Model
     pub display_name: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
+    pub last_logined_at: DateTime,
     pub is_deleted: bool,
+}
+
+impl Entity
+{
+    //--------------------------------------------------------------------------
+    /// Finds user_account by user account name.
+    //--------------------------------------------------------------------------
+    pub fn find_by_user_account_name( user_account_name: &str ) -> Select<Self>
+    {
+        Self::find().filter(Column::UserAccountName.eq(user_account_name))
+    }
 }
 
 
@@ -52,6 +64,7 @@ impl ActiveModelBehavior for ActiveModel
         if insert
         {
             self.set(Column::CreatedAt, now.into());
+            self.set(Column::LastLoginedAt, now.into());
         }
         self.set(Column::UpdatedAt, now.into());
 
@@ -69,13 +82,26 @@ impl Validate for ActiveModel
     async fn validate<C>
     (
         &self,
-        _hdb: &C,
+        hdb: &C,
         i18n: &I18n,
     ) -> Result<(), String>
     where
         C: ConnectionTrait,
     {
         let user_account_name = self.user_account_name.clone().unwrap();
+
+        // Checks if the account already exists.
+        if self.user_id.is_set() == false
+        {
+            if Entity::find_by_user_account_name(&user_account_name)
+                .one(hdb)
+                .await
+                .unwrap()
+                .is_some()
+            {
+                return Err(i18n.get("model_user_account.error.user_account_name.already_exists"));
+            }
+        }
 
         // Validates fields.
         let mut user_account_name_validator = Validator::new(&user_account_name)

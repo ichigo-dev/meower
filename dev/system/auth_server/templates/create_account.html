@@ -1,0 +1,21 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+ <h1 class="ui_heading">{{ i18n.get("auth_server.create_account.heading") }}</h1>
+ <div class="ui_panel sm shadow radius padding_xl margin_lg flex column align_center gap_md">
+  <form method="POST" class="flex column align_center gap_md full_horizon">
+   <label class="flex column gap_sm full_horizon">
+    <span class="ui_label">{{ i18n.get("auth_server.create_account.form.user_account_name.label") }}</span>
+    <input type="text" name="user_account_name" placeholder="{{ i18n.get("auth_server.create_account.form.user_account_name.placeholder") }}" value="{{ input.user_account_name }}" class="ui_text">
+   </label>
+   {% if errors.len() > 0 %}
+    <div class="errors full_horizon">
+     {% for error in errors %}
+      <div>{{ error }}</div>
+     {% endfor %}
+    </div>
+   {% endif %}
+   <button type="submit" class="ui_button primary full_horizon">{{ i18n.get("auth_server.create_account.form.button.send") }}</button>
+  </form>
+ </div>
+{% endblock %}

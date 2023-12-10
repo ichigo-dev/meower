@@ -164,7 +164,7 @@ impl Validate for ActiveModel
     {
         let email = self.email.clone().unwrap();
 
-        // Checks if the account already exists.
+        // Checks if the user already exists.
         if self.user_id.is_set() == false
         {
             if Entity::find_by_email(&email).one(hdb).await.unwrap().is_some()

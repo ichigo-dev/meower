@@ -37,9 +37,9 @@ pub(crate) struct LoginForm
 #[template(path = "login.html")]
 struct LoginTemplate
 {
-    pub(crate) i18n: I18n,
-    pub(crate) input: LoginForm,
-    pub(crate) errors: Vec<String>,
+    i18n: I18n,
+    input: LoginForm,
+    errors: Vec<String>,
 }
 
 

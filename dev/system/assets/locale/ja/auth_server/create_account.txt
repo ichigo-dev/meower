@@ -1,0 +1,10 @@
+################################################################################
+# Create account page
+################################################################################
+
+auth_server.create_account.heading = アカウントの作成
+
+# Form
+auth_server.create_account.form.user_account_name.label = アカウント名
+auth_server.create_account.form.user_account_name.placeholder = meower_cat
+auth_server.create_account.form.button.send = 作成
