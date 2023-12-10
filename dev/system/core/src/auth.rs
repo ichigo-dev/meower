@@ -28,15 +28,15 @@ static JWT_COOKIE_KEY: &str = "token";
 /// JWT Claims.
 //------------------------------------------------------------------------------
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub(crate) struct Claims
+pub struct Claims
 {
-    jti: String,
-    iss: String,
-    sub: String,
-    aud: Vec<String>,
-    iat: i64,
-    nbf: i64,
-    exp: i64,
+    pub jti: String,
+    pub iss: String,
+    pub sub: String,
+    pub aud: Vec<String>,
+    pub iat: i64,
+    pub nbf: i64,
+    pub exp: i64,
 }
 
 
@@ -149,7 +149,7 @@ impl Auth
     //--------------------------------------------------------------------------
     /// Makes JWT token.
     //--------------------------------------------------------------------------
-    pub fn make_jwt( config: &Config ) -> String
+    pub fn make_jwt( config: &Config, sub: &str ) -> String
     {
         let mut header = Header::default();
         header.typ = Some("JWT".to_string());
@@ -168,7 +168,7 @@ impl Auth
         {
             jti: Uuid::new_v4().to_string(),
             iss: config.get("jwt.issue"),
-            sub: config.get("jwt.subject"),
+            sub: sub.to_string(),
             aud,
             iat,
             nbf: iat,
@@ -182,9 +182,9 @@ impl Auth
     //--------------------------------------------------------------------------
     /// Makes JWT token cookie.
     //--------------------------------------------------------------------------
-    pub fn make_jwt_cookie( config: &Config ) -> String
+    pub fn make_jwt_cookie( config: &Config, sub: &str ) -> String
     {
-        let jwt = Self::make_jwt(config);
+        let jwt = Self::make_jwt(config, sub);
         let jwt_expire = config.get_as_isize("jwt.expire_sec") as i64;
         Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
             .path("/")

@@ -257,3 +257,17 @@ pub(crate) enum ResetPasswordToken
     Token,
     CreatedAt,
 }
+
+
+//------------------------------------------------------------------------------
+/// UserJwtSubject.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum UserJwtSubject
+{
+    Table,
+    UserJwtSubjectId,
+    UserId,
+    Subject,
+    CreatedAt,
+}

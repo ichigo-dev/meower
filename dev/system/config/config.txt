@@ -37,7 +37,6 @@ locale.default = en
 ################################################################################
 
 jwt.issue = meower
-jwt.subject = meower_auth
 jwt.audience = meower
 jwt.expire_sec = 3600
 
@@ -70,3 +69,4 @@ smtp.port = 1025
 # Application
 ################################################################################
 verify_code.expire_sec = 600
+reset_password_code.expire_sec = 3600

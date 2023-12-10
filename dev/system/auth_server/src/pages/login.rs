@@ -5,6 +5,7 @@
 use crate::{ AppState, Auth, I18n };
 use meower_entity::user::Model as UserModel;
 use meower_entity::temporary_user::Model as TemporaryUserModel;
+use meower_entity::user_jwt_subject::ActiveModel as ActiveUserJwtSubject;
 
 use askama::Template;
 use axum::Extension;
@@ -14,7 +15,7 @@ use axum::body::Body;
 use axum::extract::{ State, Form };
 use serde::Deserialize;
 use sea_orm::prelude::*;
-use sea_orm::TransactionTrait;
+use sea_orm::{ ActiveValue, TransactionTrait };
 
 
 //------------------------------------------------------------------------------
@@ -72,22 +73,26 @@ pub(crate) async fn post_handler
     let config = state.config();
 
     let tsx = hdb.begin().await.unwrap();
-    if let Err(e) = try_login(&tsx, &input, &i18n).await
+    let subject = match try_login(&tsx, &input, &i18n).await
     {
-        tsx.rollback().await.unwrap();
-        let template = LoginTemplate
+        Ok(user) => user,
+        Err(e) =>
         {
-            i18n,
-            input,
-            errors: vec![e],
-            ..Default::default()
-        };
-        return Err(Html(template.render().unwrap()));
-    }
+            tsx.rollback().await.unwrap();
+            let template = LoginTemplate
+            {
+                i18n,
+                input,
+                errors: vec![e],
+                ..Default::default()
+            };
+            return Err(Html(template.render().unwrap()));
+        }
+    };
 
     // Proxies to the frontend.
     tsx.commit().await.unwrap();
-    let cookie = Auth::make_jwt_cookie(&config);
+    let cookie = Auth::make_jwt_cookie(&config, &subject);
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, "/")
@@ -106,33 +111,55 @@ async fn try_login<C>
     hdb: &C,
     input: &LoginForm,
     i18n: &I18n,
-) -> Result<(), String>
+) -> Result<String, String>
 where
     C: ConnectionTrait,
 {
     // Try to login.
-    if let Some(user) = UserModel::find_by_email(hdb, &input.email).await
+    let user = match UserModel::find_by_email(hdb, &input.email).await
     {
-        if user.try_login(hdb, &input.password).await == false
+        Some(user) => user,
+        None =>
         {
-            return Err
+            let error = match TemporaryUserModel::find_by_email
             (
-                i18n.get("auth_server.login.form.error.invalid_password")
-            );
+                hdb,
+                &input.email,
+            ).await
+            {
+                Some(_) =>
+                {
+                    i18n.get("auth_server.login.form.error.user_not_verified")
+                },
+                None =>
+                {
+                    i18n.get("auth_server.login.form.error.user_not_found")
+                },
+            };
+            return Err(error);
         }
-    }
-    else
+    };
+
+    if user.try_login(hdb, &input.password).await == false
     {
-        if TemporaryUserModel::find_by_email(hdb, &input.email).await.is_some()
-        {
-            return Err
-            (
-                i18n.get("auth_server.login.form.error.user_not_verified")
-            );
-        }
-
-        return Err(i18n.get("auth_server.login.form.error.user_not_found"));
+        return Err
+        (
+            i18n.get("auth_server.login.form.error.invalid_password")
+        );
     }
 
-    Ok(())
+    // Creates a JWT subject.
+    let user_jwt_subject = ActiveUserJwtSubject
+    {
+        user_id: ActiveValue::Set(user.user_id),
+        ..Default::default()
+    };
+    let user_jwt_subject = match user_jwt_subject.insert(hdb).await
+    {
+        Ok(subject) => subject,
+        Err(e) => return Err(e.to_string()),
+    };
+
+    let subject = user_jwt_subject.subject;
+    Ok(subject)
 }

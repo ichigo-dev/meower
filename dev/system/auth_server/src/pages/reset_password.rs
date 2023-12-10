@@ -2,7 +2,7 @@
 //! Reset password page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, I18n };
+use crate::{ AppState, Config, I18n };
 use meower_entity::Validate;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::user_auth::ActiveModel as ActiveUserAuth;
@@ -87,10 +87,11 @@ pub(crate) async fn post_handler
 ) -> impl IntoResponse
 {
     let hdb = state.hdb();
+    let config = state.config();
 
     // Resets the password.
     let tsx = hdb.begin().await.unwrap();
-    if let Err(e) = reset_password(&tsx, &input, &i18n, &token).await
+    if let Err(e) = reset_password(&tsx, &input, &config, &i18n, &token).await
     {
         tsx.rollback().await.unwrap();
         let template = ResetPasswordTemplate
@@ -120,6 +121,7 @@ pub(crate) async fn reset_password<C>
 (
     hdb: &C,
     input: &ResetPasswordForm,
+    config: &Config,
     i18n: &I18n,
     token: &str,
 ) -> Result<(), String>
@@ -149,6 +151,13 @@ where
             return Err(error);
         },
     };
+
+    // Checks the token.
+    if let Err(e) = reset_password_token.is_valid(&config, &i18n)
+    {
+        return Err(e);
+    }
+
     let user_id = reset_password_token.user_id;
     if let Err(e) = reset_password_token.delete(hdb).await
     {

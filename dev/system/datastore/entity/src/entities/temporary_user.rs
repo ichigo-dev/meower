@@ -206,9 +206,9 @@ impl ActiveModelBehavior for ActiveModel
         C: ConnectionTrait,
     {
         // Sets the default values.
-        let now = Utc::now().naive_utc();
         if insert
         {
+            let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
 
             let token = self.generate_token();

@@ -215,6 +215,9 @@ pub enum Relation
 
     #[sea_orm(has_one = "super::reset_password_token::Entity")]
     ResetPasswordToken,
+
+    #[sea_orm(has_one = "super::user_jwt_subject::Entity")]
+    UserJwtSubject,
 }
 
 impl Related<super::user_account::Entity> for Entity
@@ -238,5 +241,13 @@ impl Related<super::reset_password_token::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::ResetPasswordToken.def()
+    }
+}
+
+impl Related<super::user_jwt_subject::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::UserJwtSubject.def()
     }
 }

@@ -19,3 +19,4 @@ pub use super::workspace_member::Entity as WorkspaceMember;
 pub use super::workspace_member_authority::Entity as WorkspaceMemberAuthority;
 pub use super::reset_password_token::Entity as ResetPasswordToken;
 pub use super::task_member::Entity as TaskMember;
+pub use super::user_jwt_subject::Entity as UserJwtSubject;

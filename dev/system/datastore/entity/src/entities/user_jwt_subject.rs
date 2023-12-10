@@ -1,64 +1,27 @@
 //------------------------------------------------------------------------------
-//! ResetPasswordToken model.
+//! UserJwtSubject model.
 //------------------------------------------------------------------------------
 
-use meower_core::{ Config, I18n };
+use sea_orm::entity::prelude::*;
 use crate::GenerateToken;
 
 use async_trait::async_trait;
-use chrono::{ Utc, Duration };
-use sea_orm::entity::prelude::*;
+use chrono::Utc;
 
 
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "reset_password_token")]
+#[sea_orm(table_name = "user_jwt_subject")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub reset_password_token_id: i64,
+    pub user_jwt_subject_id: i64,
     pub user_id: i64,
     #[sea_orm(unique)]
-    pub token: String,
+    pub subject: String,
     pub created_at: DateTime,
-}
-
-impl Model
-{
-    //--------------------------------------------------------------------------
-    /// Finds temporary_user_code by token.
-    //--------------------------------------------------------------------------
-    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Self>
-    where
-        C: ConnectionTrait,
-    {
-        let data = Entity::find()
-            .filter(Column::Token.eq(token))
-            .one(hdb)
-            .await
-            .unwrap_or(None);
-        data
-    }
-
-    //--------------------------------------------------------------------------
-    /// Checks if the token is valid.
-    //--------------------------------------------------------------------------
-    pub fn is_valid( &self, config: &Config, i18n: &I18n ) -> Result<(), String>
-    {
-        let expire = config
-            .get_as_isize("auth.reset_password_token_expire_sec");
-        let expire_date = self.created_at + Duration::seconds(expire as i64);
-        if Utc::now().naive_utc() > expire_date
-        {
-            return Err
-            (
-                i18n.get("model_reset_password_token.error.token.expired")
-            );
-        }
-        Ok(())
-    }
 }
 
 
@@ -80,7 +43,7 @@ impl ActiveModelBehavior for ActiveModel
     where
         C: ConnectionTrait,
     {
-        // Deletes the old tokens.
+        // Deletes the old subjects.
         if insert
         {
             let user_id = self.user_id.clone().unwrap();
@@ -97,7 +60,7 @@ impl ActiveModelBehavior for ActiveModel
             self.set(Column::CreatedAt, now.into());
 
             let token = self.generate_token();
-            self.set(Column::Token, token.into());
+            self.set(Column::Subject, token.into());
         }
 
         Ok(self)
