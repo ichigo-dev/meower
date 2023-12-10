@@ -40,6 +40,14 @@ pub(crate) struct ForgotPasswordTemplate
     pub(crate) errors: Vec<String>,
 }
 
+#[allow(dead_code)]
+#[derive(Template, Default)]
+#[template(path = "send_reset_password_mail.html")]
+pub(crate) struct SendResetPasswordMailTemplate
+{
+    pub(crate) i18n: I18n,
+}
+
 
 //------------------------------------------------------------------------------
 /// Handles.
@@ -70,18 +78,16 @@ pub(crate) async fn post_handler
     let hdb = state.hdb();
     let config = state.config();
 
-    // Sends the reset password mail.
-    let tsx = hdb.begin().await.unwrap();
-
     // Finds the temporary_user.
+    let tsx = hdb.begin().await.unwrap();
     if let Some(temporary_user)
         = TemporaryUserModel::find_by_email(hdb, &input.email).await
     {
+        tsx.rollback().await.unwrap();
         let error = i18n.get
         (
             "auth_server.forgot_password.form.error.user_not_verified"
         );
-        tsx.rollback().await.unwrap();
         let template = ForgotPasswordTemplate
         {
             i18n,
@@ -93,6 +99,7 @@ pub(crate) async fn post_handler
         return Html(template.render().unwrap());
     }
 
+    // Sends the reset password mail.
     if let Err(e) = reset_password(&tsx, &input, &i18n, &config).await
     {
         tsx.rollback().await.unwrap();
@@ -107,7 +114,7 @@ pub(crate) async fn post_handler
     }
 
     tsx.commit().await.unwrap();
-    let template = ForgotPasswordTemplate
+    let template = SendResetPasswordMailTemplate
     {
         i18n,
         ..Default::default()

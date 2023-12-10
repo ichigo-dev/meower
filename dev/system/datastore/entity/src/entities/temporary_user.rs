@@ -42,12 +42,12 @@ impl Model
     where
         C: ConnectionTrait,
     {
-        let user = Entity::find()
+        let data = Entity::find()
             .filter(Column::Email.eq(email))
             .one(hdb)
             .await
             .unwrap_or(None);
-        user
+        data
     }
 
     //--------------------------------------------------------------------------
@@ -57,12 +57,12 @@ impl Model
     where
         C: ConnectionTrait,
     {
-        let user = Entity::find()
+        let data = Entity::find()
             .filter(Column::Token.eq(token))
             .one(hdb)
             .await
             .unwrap_or(None);
-        user
+        data
     }
 
     //--------------------------------------------------------------------------

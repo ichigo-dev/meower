@@ -99,6 +99,8 @@ async fn main()
         .route("/resend_verify_code", post(resend_verify_code::post_handler))
         .route("/forgot_password", get(forgot_password::get_handler))
         .route("/forgot_password", post(forgot_password::post_handler))
+        .route("/reset_password/:token", get(reset_password::get_handler))
+        .route("/reset_password/:token", post(reset_password::post_handler))
         .route
         (
             "/delete_temporary_user/:token",

@@ -69,12 +69,22 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         mut self,
-        _hdb: &C,
+        hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
     where
         C: ConnectionTrait,
     {
+        // Deletes the old datas.
+        if insert
+        {
+            let user_id = self.user_id.clone().unwrap();
+            Entity::delete_many()
+                .filter(Column::UserId.eq(user_id))
+                .exec(hdb)
+                .await?;
+        }
+
         // Sets the default values.
         let now = Utc::now().naive_utc();
         if insert

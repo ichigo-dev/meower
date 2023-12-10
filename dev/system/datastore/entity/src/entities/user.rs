@@ -38,12 +38,12 @@ impl Model
     where
         C: ConnectionTrait,
     {
-        let user = Entity::find()
+        let data = Entity::find()
             .filter(Column::Email.eq(email))
             .one(hdb)
             .await
             .unwrap_or(None);
-        user
+        data
     }
 
     //--------------------------------------------------------------------------
@@ -88,13 +88,19 @@ impl Model
             Err(e) => return Err(e.to_string()),
         };
 
+        let reset_password_url = format!
+        (
+            "{}/auth/reset_password/{}",
+            config.get("system.auth_server_url"),
+            reset_password_token.token,
+        );
         let template = Mailer::get_template_with
         (
             "auth_server/reset_password.html",
             &config,
             &i18n,
             [
-                ("reset_password_token", reset_password_token.token.as_str())
+                ("reset_password_url", reset_password_url.as_str())
             ].into(),
         );
         let message = Mailer::message()

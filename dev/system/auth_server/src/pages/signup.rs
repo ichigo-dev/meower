@@ -73,26 +73,6 @@ pub(crate) async fn post_handler
     let hdb = state.hdb();
     let config = state.config();
 
-    // Checks if the email and password confirmations match.
-    if input.email != input.email_confirm
-    {
-        let errors = vec!
-        [
-            i18n.get("auth_server.signup.form.error.email_not_match")
-        ];
-        let template = SignupTemplate { i18n, input, errors };
-        return Html(template.render().unwrap());
-    }
-    if input.password != input.password_confirm
-    {
-        let errors = vec!
-        [
-            i18n.get("auth_server.signup.form.error.password_not_match")
-        ];
-        let template = SignupTemplate { i18n, input, errors };
-        return Html(template.render().unwrap());
-    }
-
     // Creates a temporary user.
     let tsx = hdb.begin().await.unwrap();
     let token = match create_temporary_user(&tsx, &input, &i18n, &config).await
@@ -130,6 +110,19 @@ pub(crate) async fn create_temporary_user<C>
 where
     C: ConnectionTrait,
 {
+    // Checks if the email and password confirmations match.
+    if input.email != input.email_confirm
+    {
+        return Err(i18n.get("auth_server.signup.form.error.email_not_match"));
+    }
+    if input.password != input.password_confirm
+    {
+        return Err
+        (
+            i18n.get("auth_server.signup.form.error.password_not_match")
+        );
+    }
+
     // Creates a temporary_user.
     let temporary_user = ActiveTemporaryUser
     {

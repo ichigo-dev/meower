@@ -5,8 +5,6 @@
 auth_server.signup.heading = サインアップ
 
 # Form
-auth_server.signup.form.user_account_name.label = アカウント名
-auth_server.signup.form.user_account_name.placeholder = meower_cat
 auth_server.signup.form.email.label = メールアドレス
 auth_server.signup.form.email.placeholder = meower@example.com
 auth_server.signup.form.email_confirm.label = メールアドレス（確認用）
