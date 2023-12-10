@@ -6,7 +6,7 @@ use crate::{ AppState, Config, I18n };
 use meower_entity::Validate;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::user_auth::ActiveModel as ActiveUserAuth;
-use meower_entity::reset_password_token::Model as ResetPasswordTokenModel;
+use meower_entity::reset_password_token::Entity as ResetPasswordTokenEntity;
 
 use askama::Template;
 use axum::Extension;
@@ -64,7 +64,7 @@ pub(crate) async fn get_handler
 {
     // Finds the reset password token.
     let hdb = state.hdb();
-    if ResetPasswordTokenModel::find_by_token(hdb, &token).await.is_none()
+    if ResetPasswordTokenEntity::find_by_token(hdb, &token).await.is_none()
     {
         return Err(Redirect::to("/login"));
     }
@@ -139,7 +139,7 @@ where
 
     // Finds and deletes the reset password token.
     let reset_password_token
-        = match ResetPasswordTokenModel::find_by_token(hdb, token).await
+        = match ResetPasswordTokenEntity::find_by_token(hdb, token).await
     {
         Some(reset_password_token) => reset_password_token,
         None =>

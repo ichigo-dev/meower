@@ -4,7 +4,7 @@
 
 use crate::{ AppState, I18n };
 use crate::pages::forgot_password::ForgotPasswordTemplate;
-use meower_entity::temporary_user::Model as TemporaryUserModel;
+use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 
 use askama::Template;
 use axum::Extension;
@@ -66,7 +66,7 @@ where
     C: ConnectionTrait,
 {
     let temporary_user
-        = match TemporaryUserModel::find_by_token(hdb, token).await
+        = match TemporaryUserEntity::find_by_token(hdb, token).await
     {
         Some(temporary_user) => temporary_user,
         None =>

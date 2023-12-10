@@ -27,23 +27,26 @@ pub struct Model
     pub created_at: DateTime,
 }
 
-impl Model
+impl Entity
 {
     //--------------------------------------------------------------------------
     /// Finds temporary_user_code by token.
     //--------------------------------------------------------------------------
-    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Self>
+    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Model>
     where
         C: ConnectionTrait,
     {
-        let data = Entity::find()
+        let data = Self::find()
             .filter(Column::Token.eq(token))
             .one(hdb)
             .await
             .unwrap_or(None);
         data
     }
+}
 
+impl Model
+{
     //--------------------------------------------------------------------------
     /// Generates a code.
     //--------------------------------------------------------------------------

@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------
 
 use crate::{ AppState, Auth, I18n };
-use meower_entity::user::Model as UserModel;
-use meower_entity::temporary_user::Model as TemporaryUserModel;
+use meower_entity::user::Entity as UserEntity;
+use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 use meower_entity::user_jwt_subject::ActiveModel as ActiveUserJwtSubject;
 
 use askama::Template;
@@ -116,12 +116,12 @@ where
     C: ConnectionTrait,
 {
     // Try to login.
-    let user = match UserModel::find_by_email(hdb, &input.email).await
+    let user = match UserEntity::find_by_email(hdb, &input.email).await
     {
         Some(user) => user,
         None =>
         {
-            let error = match TemporaryUserModel::find_by_email
+            let error = match TemporaryUserEntity::find_by_email
             (
                 hdb,
                 &input.email,

@@ -5,7 +5,7 @@
 use crate::{ AppState, I18n, Config };
 use crate::pages::verify_code::VerifyCodeTemplate;
 use meower_entity::FieldVerify;
-use meower_entity::temporary_user::Model as TemporaryUserModel;
+use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 
 use askama::Template;
@@ -116,7 +116,7 @@ where
 {
     // Finds a temporary_user.
     let temporary_user
-        = match TemporaryUserModel::find_by_email(hdb, &input.email).await
+        = match TemporaryUserEntity::find_by_email(hdb, &input.email).await
     {
         Some(temporary_user) => temporary_user,
         None =>

@@ -5,7 +5,7 @@
 use crate::{ AppState, I18n, Config };
 use crate::pages::signup_success::SignupSuccessTemplate;
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
-use meower_entity::temporary_user_code::Model as TemporaryUserCodeModel;
+use meower_entity::temporary_user_code::Entity as TemporaryUserCodeEntity;
 
 use askama::Template;
 use axum::Extension;
@@ -91,7 +91,7 @@ where
     C: ConnectionTrait,
 {
     let temporary_user_code =
-        match TemporaryUserCodeModel::find_by_token(hdb, &input.token).await
+        match TemporaryUserCodeEntity::find_by_token(hdb, &input.token).await
     {
         Some(temporary_user_code) => temporary_user_code,
         None =>

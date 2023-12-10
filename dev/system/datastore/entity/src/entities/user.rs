@@ -29,23 +29,26 @@ pub struct Model
     pub is_deleted: bool,
 }
 
-impl Model
+impl Entity
 {
     //--------------------------------------------------------------------------
     /// Finds user by email.
     //--------------------------------------------------------------------------
-    pub async fn find_by_email<C>( hdb: &C, email: &str ) -> Option<Self>
+    pub async fn find_by_email<C>( hdb: &C, email: &str ) -> Option<Model>
     where
         C: ConnectionTrait,
     {
-        let data = Entity::find()
+        let data = Self::find()
             .filter(Column::Email.eq(email))
             .one(hdb)
             .await
             .unwrap_or(None);
         data
     }
+}
 
+impl Model
+{
     //--------------------------------------------------------------------------
     /// Tries to login.
     //--------------------------------------------------------------------------
@@ -171,7 +174,7 @@ impl Validate for ActiveModel
         // Checks if the account already exists.
         if self.user_id.is_set() == false
         {
-            if Model::find_by_email(hdb, &email).await.is_some()
+            if Entity::find_by_email(hdb, &email).await.is_some()
             {
                 return Err(i18n.get("model_user.error.email.already_exists"));
             }

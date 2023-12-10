@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------
 
 use crate::{ AppState, I18n, Config };
-use meower_entity::user::Model as UserModel;
-use meower_entity::temporary_user::Model as TemporaryUserModel;
+use meower_entity::user::Entity as UserEntity;
+use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 
 use askama::Template;
 use axum::Extension;
@@ -81,7 +81,7 @@ pub(crate) async fn post_handler
     // Finds the temporary_user.
     let tsx = hdb.begin().await.unwrap();
     if let Some(temporary_user)
-        = TemporaryUserModel::find_by_email(hdb, &input.email).await
+        = TemporaryUserEntity::find_by_email(hdb, &input.email).await
     {
         tsx.rollback().await.unwrap();
         let error = i18n.get
@@ -137,7 +137,7 @@ where
     C: ConnectionTrait,
 {
     // Finds the user.
-    let user = match UserModel::find_by_email(hdb, &input.email).await
+    let user = match UserEntity::find_by_email(hdb, &input.email).await
     {
         Some(user) => user,
         None =>

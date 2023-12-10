@@ -33,16 +33,16 @@ pub struct Model
     pub created_at: DateTime,
 }
 
-impl Model
+impl Entity
 {
     //--------------------------------------------------------------------------
     /// Finds temporary_user by email.
     //--------------------------------------------------------------------------
-    pub async fn find_by_email<C>( hdb: &C, email: &str ) -> Option<Self>
+    pub async fn find_by_email<C>( hdb: &C, email: &str ) -> Option<Model>
     where
         C: ConnectionTrait,
     {
-        let data = Entity::find()
+        let data = Self::find()
             .filter(Column::Email.eq(email))
             .one(hdb)
             .await
@@ -53,18 +53,21 @@ impl Model
     //--------------------------------------------------------------------------
     /// Finds temporary_user by token.
     //--------------------------------------------------------------------------
-    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Self>
+    pub async fn find_by_token<C>( hdb: &C, token: &str ) -> Option<Model>
     where
         C: ConnectionTrait,
     {
-        let data = Entity::find()
+        let data = Self::find()
             .filter(Column::Token.eq(token))
             .one(hdb)
             .await
             .unwrap_or(None);
         data
     }
+}
 
+impl Model
+{
     //--------------------------------------------------------------------------
     /// Sends a verify mail.
     //--------------------------------------------------------------------------
@@ -264,7 +267,7 @@ impl Validate for ActiveModel
         let password = self.password.clone().unwrap();
 
         // Checks if the email already exists.
-        if Model::find_by_email(hdb, &email).await.is_some()
+        if Entity::find_by_email(hdb, &email).await.is_some()
         {
             return Err
             (
