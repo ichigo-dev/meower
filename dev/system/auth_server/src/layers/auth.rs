@@ -4,7 +4,7 @@
 
 use crate::{ AppState, Auth };
 
-use axum::response::IntoResponse;
+use axum::response::{ IntoResponse, Redirect };
 use axum::body::Body;
 use axum::http::Request;
 use axum::middleware::Next;
@@ -19,14 +19,25 @@ pub(crate) async fn layer
 (
     State(state): State<AppState>,
     cookie: CookieJar,
-    mut req: Request<Body>,
+    req: Request<Body>,
     next: Next<Body>,
-) -> impl IntoResponse
+) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let config = state.config();
 
     // Initializes the authentication.
     let auth = Auth::init_from_cookie(&cookie, config);
-    req.extensions_mut().insert(auth);
-    next.run(req).await
+
+    let is_logined = auth.is_logined().await;
+    let is_auth_page = req.uri().path().starts_with("/auth");
+    if is_logined && is_auth_page
+    {
+        return Err(Redirect::to("/"));
+    }
+    if !is_logined && !is_auth_page
+    {
+        return Err(Redirect::to("/auth/login"));
+    }
+
+    Ok(next.run(req).await)
 }

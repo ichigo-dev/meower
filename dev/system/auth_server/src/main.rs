@@ -105,14 +105,13 @@ async fn main()
         (
             "/delete_temporary_user/:token",
             get(delete_temporary_user::get_handler)
-        )
-        .fallback(proxy::handler);
+        );
     let app = Router::new()
         .nest("/auth", auth_routes)
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
-        .layer(middleware::from_fn_with_state(app_state.clone(), i18n::layer))
         .layer(middleware::from_fn_with_state(app_state.clone(), auth::layer))
+        .layer(middleware::from_fn_with_state(app_state.clone(), i18n::layer))
         .with_state(app_state);
 
     // Runs the server.

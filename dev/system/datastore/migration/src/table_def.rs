@@ -48,6 +48,7 @@ pub(crate) enum UserAccount
     DisplayName,
     CreatedAt,
     UpdatedAt,
+    LastLoginedAt,
     IsDeleted,
 }
 

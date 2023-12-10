@@ -56,6 +56,13 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(UserAccount::LastLoginedAt)
+                    .timestamp()
+                    .default(Expr::current_timestamp())
+                    .not_null()
+            )
+            .col
+            (
                 ColumnDef::new(UserAccount::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
