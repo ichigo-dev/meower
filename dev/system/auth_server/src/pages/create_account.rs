@@ -137,13 +137,9 @@ where
             );
         },
     };
-    let user_id = user_jwt_subject.user_id;
-    if let Err(e) = user_jwt_subject.delete(hdb).await
-    {
-        return Err(e.to_string());
-    }
 
     // Finds the logined user.
+    let user_id = user_jwt_subject.user_id;
     let user = match UserEntity::find_by_id(user_id)
         .one(hdb)
         .await
@@ -168,9 +164,7 @@ where
         display_name: ActiveValue::Set(user_account_name.clone()),
         ..Default::default()
     };
-    if let Err(e) = user_account
-        .validate_and_insert(hdb, &i18n)
-        .await
+    if let Err(e) = user_account.validate_and_insert(hdb, &i18n).await
     {
         return Err(e.to_string());
     }

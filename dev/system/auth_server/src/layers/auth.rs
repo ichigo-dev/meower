@@ -28,6 +28,7 @@ pub(crate) async fn layer
     next: Next<Body>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
+    let hdb = state.hdb();
     let config = state.config();
 
     // Initializes the authentication.
@@ -48,25 +49,26 @@ pub(crate) async fn layer
         return Err(Redirect::to("/auth/login"));
     }
 
-    let hdb = state.hdb();
     if is_logined
     {
         let is_create_account_page = path.starts_with("/auth/create_account");
-        if is_auth_page || is_create_account_page
+        if is_auth_page && !is_create_account_page
         {
             return Err(Redirect::to("/"));
         }
 
-        // Finds the subject of the JWT.
-        let sub = match auth.claims()
+        let claims = match auth.claims()
         {
-            Some(claims) => &claims.sub,
+            Some(claims) => claims,
             None => return Err(Redirect::to("/auth/login")),
         };
-        let user_jwt_subject = match UserJwtSubjectEntity::find_by_subject(sub)
-            .one(hdb)
-            .await
-            .unwrap()
+
+        // Finds the subject of the JWT.
+        let user_jwt_subject =
+            match UserJwtSubjectEntity::find_by_subject(&claims.sub)
+                .one(hdb)
+                .await
+                .unwrap()
         {
             Some(user_jwt_subject) => user_jwt_subject,
             None => return Err(Redirect::to("/auth/login")),
@@ -84,7 +86,6 @@ pub(crate) async fn layer
         };
 
         // Finds a last logined user account.
-        println!("user_id: {}", user.user_id);
         match UserAccountEntity::find()
             .filter(user_account::Column::UserId.eq(user.user_id))
             .order_by_desc(user_account::Column::LastLoginedAt)
@@ -94,11 +95,19 @@ pub(crate) async fn layer
         {
             Some(user_account) =>
             {
-                println!("user_account: {:?}", user_account);
             },
             None =>
             {
-                let redirect_path = format!("/auth/create_account/{}", sub);
+                if is_create_account_page
+                {
+                    return Ok(next.run(req).await);
+                }
+
+                let redirect_path = format!
+                (
+                    "/auth/create_account/{}",
+                    &claims.sub,
+                );
                 return Err(Redirect::to(&redirect_path));
             },
         };

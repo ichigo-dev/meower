@@ -5,12 +5,14 @@
 use meower_core::{ Validator, I18n, Mailer, Config, mail_header };
 use crate::{ Validate, FieldVerify };
 use super::user_auth::Entity as UserAuthEntity;
+use super::user_account::{ self, Entity as UserAccountEntity };
+use super::user_account::Model as UserAccountModel;
 use super::reset_password_token::ActiveModel as ActiveResetPasswordToken;
 
 use async_trait::async_trait;
 use chrono::Utc;
 use sea_orm::entity::prelude::*;
-use sea_orm::ActiveValue;
+use sea_orm::{ ActiveValue, QueryOrder };
 
 
 //------------------------------------------------------------------------------
@@ -42,6 +44,25 @@ impl Entity
 
 impl Model
 {
+    //--------------------------------------------------------------------------
+    /// Gets last logined user account.
+    //--------------------------------------------------------------------------
+    pub async fn get_last_logined_user_account<C>
+    (
+        &self,
+        hdb: &C,
+    ) -> Option<UserAccountModel>
+    where
+        C: ConnectionTrait,
+    {
+        UserAccountEntity::find()
+            .filter(user_account::Column::UserId.eq(self.user_id))
+            .order_by_desc(user_account::Column::LastLoginedAt)
+            .one(hdb)
+            .await
+            .unwrap()
+    }
+
     //--------------------------------------------------------------------------
     /// Tries to login.
     //--------------------------------------------------------------------------

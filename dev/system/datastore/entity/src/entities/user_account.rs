@@ -91,7 +91,7 @@ impl Validate for ActiveModel
         let user_account_name = self.user_account_name.clone().unwrap();
 
         // Checks if the account already exists.
-        if self.user_id.is_set() == false
+        if self.user_account_id.is_set() == false
         {
             if Entity::find_by_user_account_name(&user_account_name)
                 .one(hdb)
