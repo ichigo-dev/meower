@@ -19,6 +19,7 @@ use std::env;
 use std::net::SocketAddr;
 
 use axum::{ Router, middleware };
+use axum::response::Redirect;
 use axum::body::Body;
 use axum::routing::{ get, post };
 use hyper::client::HttpConnector;
@@ -89,6 +90,7 @@ async fn main()
     let app_state = AppState::new(hdb, client, config.clone());
 
     // Creates the application.
+    let redirect_login_page = get(|| async { Redirect::to("/auth/login") });
     let auth_routes = Router::new()
         .route("/login", get(login::get_handler))
         .route("/login", post(login::post_handler))
@@ -107,9 +109,12 @@ async fn main()
             get(delete_temporary_user::get_handler)
         )
         .route("/create_account/:sub", get(create_account::get_handler))
-        .route("/create_account/:sub", post(create_account::post_handler));
+        .route("/create_account/:sub", post(create_account::post_handler))
+        .fallback(redirect_login_page.clone());
+
     let app = Router::new()
         .nest("/auth", auth_routes)
+        .route("/auth/", redirect_login_page.clone())
         .route("/_assets/*path", get(assets::handler))
         .fallback(proxy::handler)
         .layer(middleware::from_fn_with_state(app_state.clone(), auth::layer))

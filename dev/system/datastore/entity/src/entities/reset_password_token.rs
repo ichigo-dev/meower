@@ -43,8 +43,7 @@ impl Model
     //--------------------------------------------------------------------------
     pub fn is_valid( &self, config: &Config, i18n: &I18n ) -> Result<(), String>
     {
-        let expire = config
-            .get_as_isize("auth.reset_password_token_expire_sec");
+        let expire = config.get_as_isize("reset_password_code.expire_sec");
         let expire_date = self.created_at + Duration::seconds(expire as i64);
         if Utc::now().naive_utc() > expire_date
         {

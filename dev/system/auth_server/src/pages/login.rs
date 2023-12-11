@@ -2,7 +2,7 @@
 //! Login page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, Auth, I18n };
+use crate::{ AppState, JwtClaims, Auth, I18n, Config };
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 use meower_entity::user_jwt_subject::ActiveModel as ActiveUserJwtSubject;
@@ -73,9 +73,9 @@ pub(crate) async fn post_handler
     let config = state.config();
 
     let tsx = hdb.begin().await.unwrap();
-    let subject = match try_login(&tsx, &input, &i18n).await
+    let jwt_cookie = match try_login(&tsx, &input, &i18n, &config).await
     {
-        Ok(user) => user,
+        Ok(jwt_cookie) => jwt_cookie,
         Err(e) =>
         {
             tsx.rollback().await.unwrap();
@@ -92,11 +92,10 @@ pub(crate) async fn post_handler
 
     // Proxies to the frontend.
     tsx.commit().await.unwrap();
-    let cookie = Auth::make_jwt_cookie(&config, &subject);
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, "/")
-        .header(header::SET_COOKIE, cookie.to_string())
+        .header(header::SET_COOKIE, jwt_cookie.to_string())
         .body(Body::empty())
         .unwrap();
     Ok(response)
@@ -111,6 +110,7 @@ async fn try_login<C>
     hdb: &C,
     input: &LoginForm,
     i18n: &I18n,
+    config: &Config,
 ) -> Result<String, String>
 where
     C: ConnectionTrait,
@@ -162,6 +162,16 @@ where
         Err(e) => return Err(e.to_string()),
     };
 
-    let subject = user_jwt_subject.subject;
-    Ok(subject)
+    // Creates a JWT claims.
+    let mut claims = JwtClaims::init_from_config(&config);
+    claims.sub = user_jwt_subject.subject;
+
+    match user.get_last_logined_user_account(hdb).await
+    {
+        Some(user_account) => claims.uan = user_account.user_account_name,
+        None => {},
+    }
+
+    let auth = Auth::init(claims);
+    Ok(auth.make_jwt_cookie(&config))
 }

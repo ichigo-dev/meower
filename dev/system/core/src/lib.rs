@@ -11,7 +11,7 @@ mod mailer;
 
 pub(crate) use file_loader::LoadToStringMap;
 pub use validator::Validator;
-pub use auth::Auth;
+pub use auth::{ Auth, JwtClaims };
 pub use config::Config;
 pub use i18n::I18n;
 pub use mailer::Mailer;

@@ -27,8 +27,8 @@ static JWT_COOKIE_KEY: &str = "token";
 //------------------------------------------------------------------------------
 /// JWT Claims.
 //------------------------------------------------------------------------------
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Claims
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct JwtClaims
 {
     pub jti: String,
     pub iss: String,
@@ -37,33 +37,42 @@ pub struct Claims
     pub iat: i64,
     pub nbf: i64,
     pub exp: i64,
+
+    /// Logined user_account_name
+    pub uan: String,
 }
 
-
-//------------------------------------------------------------------------------
-/// Authentication.
-//------------------------------------------------------------------------------
-#[derive(Clone)]
-pub struct Auth
-{
-    claims: Option<Claims>,
-}
-
-impl Auth
+impl JwtClaims
 {
     //--------------------------------------------------------------------------
-    /// Initializes the authentication.
+    /// Initializes from config
     //--------------------------------------------------------------------------
-    pub fn init() -> Self
+    pub fn init_from_config( config: &Config ) -> Self
     {
+        let now = Utc::now();
+        let iat = now.timestamp();
+        let jwt_expire_sec = config.get_as_isize("jwt.expire_sec");
+        let exp = (now + Duration::seconds(jwt_expire_sec as i64)).timestamp();
+        let aud = config
+            .get_as_vec("jwt.audience")
+            .iter()
+            .map(|aud| aud.to_string())
+            .collect();
+
         Self
         {
-            claims: None,
+            jti: Uuid::new_v4().to_string(),
+            iss: config.get("jwt.issue"),
+            aud,
+            iat,
+            nbf: iat,
+            exp,
+            ..Default::default()
         }
     }
 
     //--------------------------------------------------------------------------
-    /// Initializes the authentication from cookie.
+    /// Initializes from cookie.
     //--------------------------------------------------------------------------
     pub fn init_from_cookie( cookie: &CookieJar, config: &Config ) -> Self
     {
@@ -75,7 +84,7 @@ impl Auth
     }
 
     //--------------------------------------------------------------------------
-    /// Initializes the authentication from header.
+    /// Initializes from header.
     //--------------------------------------------------------------------------
     pub fn init_from_header( req: &Request<Body>, config: &Config ) -> Self
     {
@@ -98,93 +107,110 @@ impl Auth
     }
 
     //--------------------------------------------------------------------------
-    /// Initializes the authentication from JWT.
+    /// Initializes from JWT.
     //--------------------------------------------------------------------------
     pub fn init_from_jwt( jwt: &str, config: &Config ) -> Self
     {
         if jwt.is_empty()
         {
-            return Self
-            {
-                claims: None,
-            };
+            return Self::default();
         }
 
         // Decodes the JWT token.
         let mut validation = Validation::new(Algorithm::HS256);
         validation.set_audience(&config.get_as_vec("jwt.audience"));
-        match decode::<Claims>
+        match decode::<Self>
         (
             jwt,
             &DecodingKey::from_secret(config.get("jwt.secret").as_ref()),
             &validation,
         )
         {
-            Ok(token) =>
-            {
-                return Self
-                {
-                    claims: Some(token.claims),
-                };
-            },
-            Err(e) =>
-            {
-                println!("{:?}", e);
-                return Self
-                {
-                    claims: None,
-                };
-            },
+            Ok(token) => token.claims,
+            Err(_) => Self::default(),
         }
-    }
-
-    //--------------------------------------------------------------------------
-    /// Checks if the user is logged in.
-    //--------------------------------------------------------------------------
-    pub async fn is_logined( &self ) -> bool
-    {
-        self.claims.is_some()
     }
 
     //--------------------------------------------------------------------------
     /// Makes JWT token.
     //--------------------------------------------------------------------------
-    pub fn make_jwt( config: &Config, sub: &str ) -> String
+    pub fn encode( &self, config: &Config ) -> String
     {
         let mut header = Header::default();
         header.typ = Some("JWT".to_string());
         header.alg = Algorithm::HS256;
 
-        let now = Utc::now();
-        let iat = now.timestamp();
-        let jwt_expire_sec = config.get_as_isize("jwt.expire_sec");
-        let exp = (now + Duration::seconds(jwt_expire_sec as i64)).timestamp();
-        let aud = config
-            .get_as_vec("jwt.audience")
-            .iter()
-            .map(|aud| aud.to_string())
-            .collect();
-        let claims = Claims
-        {
-            jti: Uuid::new_v4().to_string(),
-            iss: config.get("jwt.issue"),
-            sub: sub.to_string(),
-            aud,
-            iat,
-            nbf: iat,
-            exp,
-        };
-
         let key = EncodingKey::from_secret(config.get("jwt.secret").as_ref());
-        encode(&header, &claims, &key).unwrap()
+        encode(&header, &self, &key).unwrap()
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// Authentication.
+//------------------------------------------------------------------------------
+#[derive(Clone)]
+pub struct Auth
+{
+    claims: JwtClaims,
+}
+
+impl Auth
+{
+    //--------------------------------------------------------------------------
+    /// Initializes the authentication.
+    //--------------------------------------------------------------------------
+    pub fn init( claims: JwtClaims ) -> Self
+    {
+        Self { claims }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Initializes the authentication from config.
+    //--------------------------------------------------------------------------
+    pub fn init_from_config( config: &Config ) -> Self
+    {
+        Self { claims: JwtClaims::init_from_config(config) }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Initializes the authentication from cookie.
+    //--------------------------------------------------------------------------
+    pub fn init_from_cookie( cookie: &CookieJar, config: &Config ) -> Self
+    {
+        Self { claims: JwtClaims::init_from_cookie(cookie, config) }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Initializes the authentication from header.
+    //--------------------------------------------------------------------------
+    pub fn init_from_header( req: &Request<Body>, config: &Config ) -> Self
+    {
+        Self { claims: JwtClaims::init_from_header(req, config) }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Checks if the user is logged in.
+    //--------------------------------------------------------------------------
+    pub fn is_logined( &self ) -> bool
+    {
+        self.claims.sub.len() > 0
+    }
+
+    //--------------------------------------------------------------------------
+    /// Checks if account is selected.
+    //--------------------------------------------------------------------------
+    pub fn is_account_selected( &self ) -> bool
+    {
+        self.claims.uan.len() > 0
     }
 
     //--------------------------------------------------------------------------
     /// Makes JWT token cookie.
     //--------------------------------------------------------------------------
-    pub fn make_jwt_cookie( config: &Config, sub: &str ) -> String
+    pub fn make_jwt_cookie( &self, config: &Config ) -> String
     {
-        let jwt = Self::make_jwt(config, sub);
+        let jwt = self.claims.encode(config);
         let jwt_expire = config.get_as_isize("jwt.expire_sec") as i64;
         Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
             .path("/")
@@ -199,8 +225,8 @@ impl Auth
     //--------------------------------------------------------------------------
     /// Gets the claims.
     //--------------------------------------------------------------------------
-    pub fn claims( &self ) -> Option<&Claims>
+    pub fn claims( &self ) -> &JwtClaims
     {
-        self.claims.as_ref()
+        &self.claims
     }
 }

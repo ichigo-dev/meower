@@ -2,7 +2,7 @@
 //! Create account page.
 //------------------------------------------------------------------------------
 
-use crate::{ AppState, I18n };
+use crate::{ AppState, JwtClaims, Auth, I18n, Config };
 use meower_entity::Validate;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::user_account::ActiveModel as ActiveUserAccount;
@@ -10,7 +10,9 @@ use meower_entity::user_jwt_subject::Entity as UserJwtSubjectEntity;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, Redirect, IntoResponse };
+use axum::response::{ Html, Response, Redirect, IntoResponse };
+use axum::http::{ header, StatusCode };
+use axum::body::Body;
 use axum::extract::{ State, Form, Path };
 use serde::Deserialize;
 use sea_orm::prelude::*;
@@ -63,7 +65,7 @@ pub(crate) async fn get_handler
         .unwrap()
         .is_none()
     {
-        return Err(Redirect::to("/"));
+        return Err(Redirect::to("/auth/login"));
     }
 
     let template = CreateAccountTemplate
@@ -85,27 +87,40 @@ pub(crate) async fn post_handler
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let hdb = state.hdb();
+    let config = state.config();
 
     // Finds the temporary_user.
     let tsx = hdb.begin().await.unwrap();
 
     // Resend a verify code.
-    if let Err(e) = create_user_account(&tsx, &input, &i18n, &sub).await
+    let jwt_cookie
+        = match create_user_account(&tsx, &input, &i18n, &config, &sub).await
     {
-        tsx.rollback().await.unwrap();
-        let template = CreateAccountTemplate
+        Ok(jwt_cookie) => jwt_cookie,
+        Err(e) =>
         {
-            i18n,
-            input,
-            user_jwt_subject: sub,
-            errors: vec![e],
-            ..Default::default()
-        };
-        return Err(Html(template.render().unwrap()));
+            tsx.rollback().await.unwrap();
+            let template = CreateAccountTemplate
+            {
+                i18n,
+                input,
+                user_jwt_subject: sub,
+                errors: vec![e],
+                ..Default::default()
+            };
+            return Err(Html(template.render().unwrap()));
+        },
     };
 
+    // Proxies to the frontend.
     tsx.commit().await.unwrap();
-    Ok(Redirect::to("/"))
+    let response = Response::builder()
+        .status(StatusCode::SEE_OTHER)
+        .header(header::LOCATION, "/")
+        .header(header::SET_COOKIE, jwt_cookie.to_string())
+        .body(Body::empty())
+        .unwrap();
+    Ok(response)
 }
 
 
@@ -117,8 +132,9 @@ async fn create_user_account<C>
     hdb: &C,
     input: &CreateAccountForm,
     i18n: &I18n,
+    config: &Config,
     sub: &str,
-) -> Result<(), String>
+) -> Result<String, String>
 where
     C: ConnectionTrait,
 {
@@ -164,10 +180,16 @@ where
         display_name: ActiveValue::Set(user_account_name.clone()),
         ..Default::default()
     };
-    if let Err(e) = user_account.validate_and_insert(hdb, &i18n).await
+    let user_account = match user_account.validate_and_insert(hdb, &i18n).await
     {
-        return Err(e.to_string());
-    }
+        Ok(user_account) => user_account,
+        Err(e) => return Err(e),
+    };
 
-    Ok(())
+    // Creates a JWT claims.
+    let mut claims = JwtClaims::init_from_config(&config);
+    claims.sub = user_jwt_subject.subject;
+    claims.uan = user_account.user_account_name;
+    let auth = Auth::init(claims);
+    Ok(auth.make_jwt_cookie(&config))
 }
