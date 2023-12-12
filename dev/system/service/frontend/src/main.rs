@@ -2,16 +2,36 @@
 //! Frontend for the Meower application.
 //------------------------------------------------------------------------------
 
+mod route;
+
+use route::AppRouter;
+
 use sycamore::prelude::*;
 
+
+//------------------------------------------------------------------------------
+/// Application root.
+//------------------------------------------------------------------------------
+#[component]
+pub fn App<G: Html>( cx: Scope ) -> View<G>
+{
+    view!
+    {
+        cx,
+        div
+        {
+            div { "Header" }
+            AppRouter
+            div { "Footer" }
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// Application entry point.
+//------------------------------------------------------------------------------
 fn main()
 {
-    sycamore::render(|cx|
-    {
-        view!
-        {
-            cx,
-            p { "Hello Meower!" }
-        }
-    });
+    sycamore::render(App);
 }
