@@ -18,7 +18,7 @@ use jsonwebtoken::{
 };
 use chrono::{ Utc, Duration };
 use serde::{ Serialize, Deserialize };
-use time::Duration as TimeDuration;
+use time::{ Duration as TimeDuration, OffsetDateTime };
 use uuid::Uuid;
 
 static JWT_COOKIE_KEY: &str = "token";
@@ -210,13 +210,16 @@ impl Auth
     //--------------------------------------------------------------------------
     pub fn make_jwt_cookie( &self, config: &Config ) -> String
     {
+        let now = OffsetDateTime::now_utc();
         let jwt = self.claims.encode(config);
         let jwt_expire = config.get_as_isize("jwt.expire_sec") as i64;
+        let jwt_expire_date = now + TimeDuration::seconds(jwt_expire);
         Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
             .path("/")
             .same_site(SameSite::Lax)
             .http_only(true)
             .max_age(TimeDuration::seconds(jwt_expire))
+            .expires(jwt_expire_date)
             .secure(config.get_as_bool("system.debug_mode") == false)
             .finish()
             .to_string()

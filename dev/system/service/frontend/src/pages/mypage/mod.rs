@@ -1,22 +1,23 @@
 //------------------------------------------------------------------------------
-//! Application routes.
+//! Mypage.
 //------------------------------------------------------------------------------
+
+mod index;
+
+pub use index::Index;
 
 use sycamore::prelude::*;
 use sycamore_router::{ Route, Router, HistoryIntegration };
 
 
 //------------------------------------------------------------------------------
-/// Application routes.
+/// Mypage routes.
 //------------------------------------------------------------------------------
 #[derive(Route)]
-enum AppRoutes
+pub enum MypageRoutes
 {
     #[to("/")]
-    Top,
-
-    #[to("/mypage")]
-    Mypage,
+    Index,
 
     #[not_found]
     NotFound,
@@ -24,10 +25,10 @@ enum AppRoutes
 
 
 //------------------------------------------------------------------------------
-/// Application router.
+/// Mypage router.
 //------------------------------------------------------------------------------
 #[component]
-pub fn AppRouter<G: Html>( cx: Scope ) -> View<G>
+pub fn MypageRouter<G: Html>( cx: Scope ) -> View<G>
 {
     view!
     {
@@ -35,14 +36,13 @@ pub fn AppRouter<G: Html>( cx: Scope ) -> View<G>
         Router
         (
             integration=HistoryIntegration::new(),
-            view=move |cx, route: &ReadSignal<AppRoutes>|
+            view=move |cx, route: &ReadSignal<MypageRoutes>|
             {
-                (match route.get().as_ref()
+                match route.get().as_ref()
                 {
-                    AppRoutes::Top => view! { cx, p { "Top" } },
-                    AppRoutes::Mypage => view! { cx, p { "Mypage" } },
-                    AppRoutes::NotFound => view! { cx, p { "404 Not Found" } },
-                })
+                    MypageRoutes::Index => view! { cx, Index },
+                    MypageRoutes::NotFound => view! { cx, div { "not found" } },
+                }
             }
         )
     }

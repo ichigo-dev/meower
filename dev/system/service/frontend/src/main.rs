@@ -2,9 +2,13 @@
 //! Frontend for the Meower application.
 //------------------------------------------------------------------------------
 
-mod route;
+mod routes;
+mod pages;
+mod layouts;
+mod features;
 
-use route::AppRouter;
+use routes::AppRouter;
+use layouts::Layout;
 
 use sycamore::prelude::*;
 
@@ -13,17 +17,12 @@ use sycamore::prelude::*;
 /// Application root.
 //------------------------------------------------------------------------------
 #[component]
-pub fn App<G: Html>( cx: Scope ) -> View<G>
+pub fn Root<G: Html>( cx: Scope ) -> View<G>
 {
     view!
     {
         cx,
-        div
-        {
-            div { "Header" }
-            AppRouter
-            div { "Footer" }
-        }
+        Layout(child=view!{ cx, AppRouter })
     }
 }
 
@@ -33,5 +32,5 @@ pub fn App<G: Html>( cx: Scope ) -> View<G>
 //------------------------------------------------------------------------------
 fn main()
 {
-    sycamore::render(App);
+    sycamore::render(Root);
 }
