@@ -39,13 +39,13 @@ pub fn AppRouter<G: Html>( cx: Scope ) -> View<G>
             integration=HistoryIntegration::new(),
             view=move |cx, route: &ReadSignal<AppRoutes>|
             {
-                match route.get().as_ref()
+                let route = route.get();
+                match route.as_ref()
                 {
                     AppRoutes::Home => view! { cx, Home },
                     AppRoutes::Mypage(mypage_route) =>
                     {
-                        //view!{ cx, MypageRouter(route=mypage_route.clone()) }
-                        unimplemented!();
+                        view!{ cx, MypageRouter(route=mypage_route.clone()) }
                     },
                     AppRoutes::NotFound => view! { cx, NotFound },
                 }

@@ -8,6 +8,8 @@ mod edit_profile;
 pub use index::Index;
 pub use edit_profile::EditProfile;
 
+use super::NotFound;
+
 use sycamore::prelude::*;
 use sycamore_router::Route;
 
@@ -15,7 +17,7 @@ use sycamore_router::Route;
 //------------------------------------------------------------------------------
 /// Mypage routes.
 //------------------------------------------------------------------------------
-#[derive(Route)]
+#[derive(Route, Clone)]
 pub enum MypageRoutes
 {
     #[to("/")]
@@ -36,7 +38,7 @@ pub enum MypageRoutes
 pub fn MypageRouter<'cx, G: Html>
 (
     cx: Scope<'cx>,
-    route: &'cx MypageRoutes,
+    route: MypageRoutes,
 ) -> View<G>
 {
     view!
@@ -46,7 +48,7 @@ pub fn MypageRouter<'cx, G: Html>
         {
             MypageRoutes::Index => view! { cx, Index },
             MypageRoutes::EditProfile => view! { cx, EditProfile },
-            MypageRoutes::NotFound => view! { cx, "not found" },
+            MypageRoutes::NotFound => view! { cx, NotFound },
         })
     }
 }
