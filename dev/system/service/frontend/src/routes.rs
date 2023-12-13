@@ -11,8 +11,6 @@ use sycamore_router::{ Route, Router, HistoryIntegration };
 //------------------------------------------------------------------------------
 /// Application routes.
 //------------------------------------------------------------------------------
-
-// Base routes.
 #[derive(Route)]
 enum AppRoutes
 {
@@ -25,21 +23,6 @@ enum AppRoutes
     #[not_found]
     NotFound,
 }
-
-// Mypage routes.
-#[derive(Route)]
-pub enum MypageRoutes
-{
-    #[to("/")]
-    Index,
-
-    #[to("/edit_profile")]
-    EditProfile,
-
-    #[not_found]
-    NotFound,
-}
-
 
 
 //------------------------------------------------------------------------------
@@ -61,15 +44,8 @@ pub fn AppRouter<G: Html>( cx: Scope ) -> View<G>
                     AppRoutes::Home => view! { cx, Home },
                     AppRoutes::Mypage(mypage_route) =>
                     {
-                        match mypage_route
-                        {
-                            MypageRoutes::Index => view! { cx, mypage::Index },
-                            MypageRoutes::EditProfile =>
-                            {
-                                view! { cx, mypage::EditProfile }
-                            },
-                            MypageRoutes::NotFound => view! { cx, NotFound },
-                        }
+                        //view!{ cx, MypageRouter(route=mypage_route.clone()) }
+                        unimplemented!();
                     },
                     AppRoutes::NotFound => view! { cx, NotFound },
                 }
