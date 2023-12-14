@@ -54,6 +54,25 @@ pub(crate) enum UserAccount
 
 
 //------------------------------------------------------------------------------
+/// UserAccountProfile.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum UserAccountProfile
+{
+    Table,
+    UserAccountProfileId,
+    UserAccountId,
+    Name,
+    Biography,
+    Company,
+    Title,
+    CreatedAt,
+    UpdatedAt,
+    IsDeleted,
+}
+
+
+//------------------------------------------------------------------------------
 /// TemporaryUser.
 //------------------------------------------------------------------------------
 #[derive(DeriveIden)]
