@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::{ AppState, JwtClaims, Auth, I18n, Config };
+use meower_entity::Validate;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 use meower_entity::user_jwt_subject::ActiveModel as ActiveUserJwtSubject;
@@ -156,7 +157,9 @@ where
         user_id: ActiveValue::Set(user.user_id),
         ..Default::default()
     };
-    let user_jwt_subject = match user_jwt_subject.insert(hdb).await
+    let user_jwt_subject = match user_jwt_subject
+        .validate_and_insert(hdb, &i18n)
+        .await
     {
         Ok(subject) => subject,
         Err(e) => return Err(e.to_string()),

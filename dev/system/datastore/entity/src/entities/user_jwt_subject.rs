@@ -2,11 +2,11 @@
 //! UserJwtSubject model.
 //------------------------------------------------------------------------------
 
-use sea_orm::entity::prelude::*;
-use crate::GenerateToken;
+use crate::{ Validate, GenerateToken };
 
 use async_trait::async_trait;
 use chrono::Utc;
+use sea_orm::entity::prelude::*;
 
 
 //------------------------------------------------------------------------------
@@ -79,6 +79,7 @@ impl ActiveModelBehavior for ActiveModel
 }
 
 impl GenerateToken for ActiveModel {}
+impl Validate for ActiveModel {}
 
 
 //------------------------------------------------------------------------------

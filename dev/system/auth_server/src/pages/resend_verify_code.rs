@@ -4,7 +4,7 @@
 
 use crate::{ AppState, I18n, Config };
 use crate::pages::verify_code::VerifyCodeTemplate;
-use meower_entity::FieldVerify;
+use meower_entity::{ Validate, FieldVerify };
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 
@@ -147,7 +147,9 @@ where
         temporary_user_id: ActiveValue::Set(temporary_user.temporary_user_id),
         ..Default::default()
     };
-    let temporary_user_code = match temporary_user_code.insert(hdb).await
+    let temporary_user_code = match temporary_user_code
+        .validate_and_insert(hdb, &i18n)
+        .await
     {
         Ok(temporary_user_code) => temporary_user_code,
         Err(e) => return Err(e.to_string()),

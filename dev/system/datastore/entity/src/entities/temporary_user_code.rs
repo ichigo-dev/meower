@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use meower_core::{ Config, I18n };
-use crate::GenerateToken;
+use crate::{ Validate, GenerateToken };
 
 use async_trait::async_trait;
 use chrono::{ Utc, Duration };
@@ -131,6 +131,7 @@ impl ActiveModelBehavior for ActiveModel
 }
 
 impl GenerateToken for ActiveModel {}
+impl Validate for ActiveModel {}
 
 
 //------------------------------------------------------------------------------

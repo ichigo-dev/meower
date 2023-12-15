@@ -171,7 +171,7 @@ where
         },
     };
 
-    // Finds the user account.
+    // Creates the user account.
     let user_account_name = &input.user_account_name;
     let user_account = ActiveUserAccount
     {
@@ -185,6 +185,14 @@ where
         Ok(user_account) => user_account,
         Err(e) => return Err(e),
     };
+
+    // Creates the user account profile.
+    let user_account_profile = meower_entity::user_account_profile::ActiveModel
+    {
+        user_account_id: ActiveValue::Set(user_account.user_account_id),
+        ..Default::default()
+    };
+    user_account_profile.validate_and_insert(hdb, &i18n).await.unwrap();
 
     // Creates a JWT claims.
     let mut claims = JwtClaims::init_from_config(&config);

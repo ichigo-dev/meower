@@ -13,7 +13,7 @@ use sea_orm::IntoActiveModel;
 /// Validatable.
 //------------------------------------------------------------------------------
 #[async_trait]
-pub trait Validate: ActiveModelTrait + ActiveModelBehavior
+pub trait Validate: ActiveModelTrait + ActiveModelBehavior + Sync
 {
     //--------------------------------------------------------------------------
     /// Validates the data.
@@ -21,11 +21,14 @@ pub trait Validate: ActiveModelTrait + ActiveModelBehavior
     async fn validate<C>
     (
         &self,
-        hdb: &C,
-        i18n: &I18n,
+        _hdb: &C,
+        _i18n: &I18n,
     ) -> Result<(), String>
     where
-        C: ConnectionTrait;
+        C: ConnectionTrait
+    {
+        Ok(())
+    }
 
     //--------------------------------------------------------------------------
     /// Validates and saves the data.
