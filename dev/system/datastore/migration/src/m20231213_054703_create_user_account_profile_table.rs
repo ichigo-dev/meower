@@ -64,6 +64,12 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(UserAccountProfile::Location)
+                    .string()
+                    .string_len(255)
+            )
+            .col
+            (
                 ColumnDef::new(UserAccountProfile::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())

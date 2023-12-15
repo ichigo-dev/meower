@@ -21,6 +21,7 @@ pub struct Model
     pub biography: String,
     pub company: String,
     pub title: String,
+    pub location: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
     pub is_deleted: bool,

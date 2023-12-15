@@ -66,6 +66,7 @@ pub(crate) enum UserAccountProfile
     Biography,
     Company,
     Title,
+    Location,
     CreatedAt,
     UpdatedAt,
     IsDeleted,
