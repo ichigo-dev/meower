@@ -28,26 +28,6 @@ async fn main()
     // Refreshes the database.
     Migrator::refresh(&tsx).await.unwrap();
 
-    // Creates a test user.
-    let user = ActiveUser
-    {
-        user_id: ActiveValue::NotSet,
-        email: ActiveValue::Set("dev.honda.ichigo@gmail.com".to_owned()),
-        password: ActiveValue::Set("password123!".to_owned()),
-        ..ActiveUser::new()
-    };
-    if let Ok(user) = user.insert(&tsx).await
-    {
-        let account = ActiveAccount
-        {
-            account_id: ActiveValue::NotSet,
-            user_id: ActiveValue::Set(user.user_id),
-            account_name: ActiveValue::Set("ichigo_dev".to_owned()),
-            ..ActiveAccount::new()
-        };
-        account.insert(&tsx).await.unwrap();
-    }
-
     tsx.commit().await.unwrap();
     println!("=== Test data installed ===");
 }

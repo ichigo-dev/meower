@@ -22,6 +22,7 @@
 | [public.task_member](public.task_member.md)                                     | 3       | Task member table             | BASE TABLE |
 | [public.reset_password_token](public.reset_password_token.md)                   | 4       | Reset passwort token table    | BASE TABLE |
 | [public.user_jwt_subject](public.user_jwt_subject.md)                           | 4       | User JWT subject              | BASE TABLE |
+| [public.user_account_profile](public.user_account_profile.md)                   | 9       | User account profile table    | BASE TABLE |
 
 ## Relations
 
