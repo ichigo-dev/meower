@@ -22,6 +22,8 @@ mod m20231204_080345_create_task_member_table;
 mod m20231210_023700_create_reset_password_token_table;
 mod m20231210_134129_create_user_jwt_subject_table;
 mod m20231213_054703_create_user_account_profile_table;
+mod m20231216_134816_create_user_account_workspace_table;
+mod m20231216_135419_create_organization_workspace_table;
 
 pub use sea_orm_migration::prelude::*;
 
@@ -56,6 +58,8 @@ impl MigratorTrait for Migrator
             Box::new(m20231210_023700_create_reset_password_token_table::Migration),
             Box::new(m20231210_134129_create_user_jwt_subject_table::Migration),
             Box::new(m20231213_054703_create_user_account_profile_table::Migration),
+            Box::new(m20231216_134816_create_user_account_workspace_table::Migration),
+            Box::new(m20231216_135419_create_organization_workspace_table::Migration),
         ]
     }
 }

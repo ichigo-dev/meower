@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Organization model.
+//! OrganizationWorkspace model.
 //------------------------------------------------------------------------------
 
 use sea_orm::entity::prelude::*;
@@ -9,17 +9,13 @@ use sea_orm::entity::prelude::*;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "organization")]
+#[sea_orm(table_name = "organization_workspace")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
+    pub organization_workspace_id: i64,
     pub organization_id: i64,
-    #[sea_orm(unique)]
-    pub organization_name: String,
-    pub display_name: String,
-    pub created_at: DateTime,
-    pub updated_at: DateTime,
-    pub is_deleted: bool,
+    pub workspace_id: i64,
 }
 
 
@@ -35,25 +31,37 @@ impl ActiveModelBehavior for ActiveModel {}
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(has_many = "super::organization_member::Entity")]
-    OrganizationMember,
+    #[sea_orm(
+        belongs_to = "super::organization::Entity",
+        from = "Column::OrganizationId",
+        to = "super::organization::Column::OrganizationId",
+        on_update = "NoAction",
+        on_delete = "NoAction"
+    )]
+    Organization,
 
-    #[sea_orm(has_many = "super::organization_workspace::Entity")]
-    OrganizationWorkspace,
+    #[sea_orm(
+        belongs_to = "super::workspace::Entity",
+        from = "Column::WorkspaceId",
+        to = "super::workspace::Column::WorkspaceId",
+        on_update = "NoAction",
+        on_delete = "NoAction"
+    )]
+    Workspace,
 }
 
-impl Related<super::organization_member::Entity> for Entity
+impl Related<super::organization::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::OrganizationMember.def()
+        Relation::Organization.def()
     }
 }
 
-impl Related<super::organization_workspace::Entity> for Entity
+impl Related<super::workspace::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::OrganizationWorkspace.def()
+        Relation::Workspace.def()
     }
 }

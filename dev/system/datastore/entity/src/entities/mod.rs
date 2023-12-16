@@ -23,3 +23,5 @@ pub mod workspace_member_authority;
 pub mod reset_password_token;
 pub mod user_jwt_subject;
 pub mod user_account_profile;
+pub mod user_account_workspace;
+pub mod organization_workspace;

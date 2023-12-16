@@ -17,7 +17,6 @@ pub struct Model
     #[sea_orm(unique)]
     pub workspace_name: String,
     pub display_name: String,
-    pub organization_id: i64,
     pub created_at: DateTime,
     pub updated_at: DateTime,
     pub is_deleted: bool,
@@ -36,28 +35,17 @@ impl ActiveModelBehavior for ActiveModel {}
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(
-        belongs_to = "super::organization::Entity",
-        from = "Column::OrganizationId",
-        to = "super::organization::Column::OrganizationId",
-        on_update = "NoAction",
-        on_delete = "NoAction"
-    )]
-    Organization,
-
     #[sea_orm(has_many = "super::project::Entity")]
     Project,
 
     #[sea_orm(has_many = "super::workspace_member::Entity")]
     WorkspaceMember,
-}
 
-impl Related<super::organization::Entity> for Entity
-{
-    fn to() -> RelationDef
-    {
-        Relation::Organization.def()
-    }
+    #[sea_orm(has_many = "super::user_account_workspace::Entity")]
+    UserAccountWorkspace,
+
+    #[sea_orm(has_many = "super::organization_workspace::Entity")]
+    OrganizationWorkspace,
 }
 
 impl Related<super::project::Entity> for Entity
@@ -73,5 +61,21 @@ impl Related<super::workspace_member::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::WorkspaceMember.def()
+    }
+}
+
+impl Related<super::user_account_workspace::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::UserAccountWorkspace.def()
+    }
+}
+
+impl Related<super::organization_workspace::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::OrganizationWorkspace.def()
     }
 }

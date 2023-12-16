@@ -156,7 +156,6 @@ pub(crate) enum Workspace
     WorkspaceId,
     WorkspaceName,
     DisplayName,
-    OrganizationId,
     CreatedAt,
     UpdatedAt,
     IsDeleted,
@@ -187,6 +186,32 @@ pub(crate) enum WorkspaceMember
     WorkspaceId,
     UserAccountId,
     WorkspaceMemberAuthorityId,
+}
+
+
+//------------------------------------------------------------------------------
+/// UserAccountWorkspace.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum UserAccountWorkspace
+{
+    Table,
+    UserAccountWorkspaceId,
+    UserAccountId,
+    WorkspaceId,
+}
+
+
+//------------------------------------------------------------------------------
+/// OrganizationWorkspace.
+//------------------------------------------------------------------------------
+#[derive(DeriveIden)]
+pub(crate) enum OrganizationWorkspace
+{
+    Table,
+    OrganizationWorkspaceId,
+    OrganizationId,
+    WorkspaceId,
 }
 
 

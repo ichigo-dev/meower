@@ -175,6 +175,9 @@ pub enum Relation
 
     #[sea_orm(has_one = "super::user_account_profile::Entity")]
     UserAccountProfile,
+
+    #[sea_orm(has_many = "super::user_account_workspace::Entity")]
+    UserAccountWorkspace,
 }
 
 impl Related<super::organization_member::Entity> for Entity
@@ -222,5 +225,13 @@ impl Related<super::user_account_profile::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::UserAccountProfile.def()
+    }
+}
+
+impl Related<super::user_account_workspace::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::UserAccountWorkspace.def()
     }
 }

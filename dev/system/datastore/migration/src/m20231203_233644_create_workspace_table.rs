@@ -4,7 +4,7 @@
 
 use sea_orm_migration::prelude::*;
 use sea_orm::Statement;
-use crate::table_def::{ Organization, Workspace };
+use crate::table_def::Workspace;
 
 
 //------------------------------------------------------------------------------
@@ -50,12 +50,6 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(Workspace::OrganizationId)
-                    .big_integer()
-                    .not_null()
-            )
-            .col
-            (
                 ColumnDef::new(Workspace::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
@@ -75,23 +69,8 @@ impl MigrationTrait for Migration
                     .default(false)
                     .not_null()
             )
-            .foreign_key
-            (
-                ForeignKey::create()
-                    .name("workspace_organization_id_fkey")
-                    .from(Workspace::Table, Workspace::OrganizationId)
-                    .to(Organization::Table, Organization::OrganizationId)
-            )
             .to_owned();
         manager.create_table(table).await?;
-
-        // Creates an index.
-        let index = Index::create()
-            .name("workspace_organization_id_idx")
-            .table(Workspace::Table)
-            .col(Workspace::OrganizationId)
-            .to_owned();
-        manager.create_index(index).await?;
 
         // Adds comments.
         let querys = vec!
@@ -100,7 +79,6 @@ impl MigrationTrait for Migration
             "COMMENT ON COLUMN \"workspace\".\"workspace_id\" IS 'Workspace ID'",
             "COMMENT ON COLUMN \"workspace\".\"workspace_name\" IS 'Workspace name'",
             "COMMENT ON COLUMN \"workspace\".\"display_name\" IS 'Display name'",
-            "COMMENT ON COLUMN \"workspace\".\"organization_id\" IS 'Organization ID'",
             "COMMENT ON COLUMN \"workspace\".\"created_at\" IS 'Create date'",
             "COMMENT ON COLUMN \"workspace\".\"updated_at\" IS 'Update date'",
             "COMMENT ON COLUMN \"workspace\".\"is_deleted\" IS 'Soft delete flag'",

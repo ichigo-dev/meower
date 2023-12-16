@@ -21,3 +21,5 @@ pub use super::reset_password_token::Entity as ResetPasswordToken;
 pub use super::task_member::Entity as TaskMember;
 pub use super::user_jwt_subject::Entity as UserJwtSubject;
 pub use super::user_account_profile::Entity as UserAccountProfile;
+pub use super::user_account_workspace::Entity as UserAccountWorkspace;
+pub use super::organization_workspace::Entity as OrganizationWorkspace;
