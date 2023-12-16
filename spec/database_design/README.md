@@ -23,6 +23,8 @@
 | [public.reset_password_token](public.reset_password_token.md)                   | 4       | Reset passwort token table    | BASE TABLE |
 | [public.user_jwt_subject](public.user_jwt_subject.md)                           | 4       | User JWT subject              | BASE TABLE |
 | [public.user_account_profile](public.user_account_profile.md)                   | 10      | User account profile table    | BASE TABLE |
+| [public.user_account_workspace](public.user_account_workspace.md)               | 3       | User account workspace table  | BASE TABLE |
+| [public.organization_workspace](public.organization_workspace.md)               | 3       | Organization workspace table  | BASE TABLE |
 
 ## Relations
 
