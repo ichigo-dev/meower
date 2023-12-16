@@ -2,6 +2,11 @@
 //! Workspace model.
 //------------------------------------------------------------------------------
 
+use meower_core::{ Validator, I18n };
+use crate::Validate;
+
+use async_trait::async_trait;
+use chrono::Utc;
 use sea_orm::entity::prelude::*;
 
 
@@ -22,11 +27,143 @@ pub struct Model
     pub is_deleted: bool,
 }
 
+impl Entity
+{
+    //--------------------------------------------------------------------------
+    /// Finds workspace by workspace name.
+    //--------------------------------------------------------------------------
+    pub fn find_by_workspace_name( workspace_name: &str ) -> Select<Self>
+    {
+        Self::find().filter(Column::WorkspaceName.eq(workspace_name))
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// ActiveModel.
 //------------------------------------------------------------------------------
-impl ActiveModelBehavior for ActiveModel {}
+#[async_trait]
+impl ActiveModelBehavior for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Before save.
+    //--------------------------------------------------------------------------
+    async fn before_save<C>
+    (
+        mut self,
+        _hdb: &C,
+        insert: bool,
+    ) -> Result<Self, DbErr>
+    where
+        C: ConnectionTrait,
+    {
+        // Sets the default values.
+        let now = Utc::now().naive_utc();
+        if insert
+        {
+            self.set(Column::CreatedAt, now.into());
+        }
+        self.set(Column::UpdatedAt, now.into());
+
+        Ok(self)
+    }
+}
+
+#[async_trait]
+impl Validate for ActiveModel
+{
+    //--------------------------------------------------------------------------
+    /// Validates the data.
+    //--------------------------------------------------------------------------
+    async fn validate<C>
+    (
+        &self,
+        hdb: &C,
+        i18n: &I18n,
+    ) -> Result<(), String>
+    where
+        C: ConnectionTrait,
+    {
+        let workspace_name = self.workspace_name.clone().unwrap();
+
+        // Checks if the account already exists.
+        if self.workspace_id.is_set() == false
+        {
+            if Entity::find_by_workspace_name(&workspace_name)
+                .one(hdb)
+                .await
+                .unwrap()
+                .is_some()
+            {
+                return Err(i18n.get("model_workspace.error.workspace_name.already_exists"));
+            }
+        }
+
+        // Validates fields.
+        let mut workspace_name_validator = Validator::new(&workspace_name)
+            .not_empty
+            (
+                &i18n.get
+                (
+                    "model_workspace.error.workspace_name.not_empty"
+                )
+            )
+            .min_len
+            (
+                3,
+                &i18n.get_with
+                (
+                    "model_workspace.error.workspace_name.min_len",
+                    [("min_len", "3")].into()
+                )
+            )
+            .max_len
+            (
+                32,
+                &i18n.get_with
+                (
+                    "model_workspace.error.workspace_name.max_len",
+                    [("max_len", "32")].into()
+                )
+            )
+            .regex
+            (
+                r"^[a-zA-Z0-9_]+$",
+                &i18n.get("model_workspace.error.workspace_name.regex")
+            )
+            .validate();
+        if workspace_name_validator.has_err()
+        {
+            return Err(workspace_name_validator.get_first_error());
+        }
+
+        let display_name = self.display_name.clone().unwrap();
+        let mut display_name_validator = Validator::new(&display_name)
+            .not_empty
+            (
+                &i18n.get
+                (
+                    "model_workspace.error.display_name.not_empty"
+                )
+            )
+            .max_len
+            (
+                64,
+                &i18n.get_with
+                (
+                    "model_workspace.error.display_name.max_len",
+                    [("max_len", "64")].into()
+                )
+            )
+            .validate();
+        if display_name_validator.has_err()
+        {
+            return Err(display_name_validator.get_first_error());
+        }
+
+        Ok(())
+    }
+}
 
 
 //------------------------------------------------------------------------------

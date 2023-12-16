@@ -7,6 +7,8 @@ use meower_entity::Validate;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::user_account::ActiveModel as ActiveUserAccount;
 use meower_entity::user_jwt_subject::Entity as UserJwtSubjectEntity;
+use meower_entity::workspace::ActiveModel as ActiveWorkspace;
+use meower_entity::user_account_workspace::ActiveModel as ActiveUserAccountWorkspace;
 
 use askama::Template;
 use axum::Extension;
@@ -193,6 +195,36 @@ where
         ..Default::default()
     };
     user_account_profile.validate_and_insert(hdb, &i18n).await.unwrap();
+
+    // Creates the default workspace.
+    let display_name = format!
+    (
+        "{}'s workspace",
+        user_account_name.clone()
+    );
+    let workspace = ActiveWorkspace
+    {
+        workspace_name: ActiveValue::Set(user_account_name.clone()),
+        display_name: ActiveValue::Set(display_name),
+        ..Default::default()
+    };
+    let workspace = match workspace.validate_and_insert(hdb, &i18n).await
+    {
+        Ok(workspace) => workspace,
+        Err(e) => return Err(e),
+    };
+
+    // Creates the user account workspace.
+    let user_account_workspace = ActiveUserAccountWorkspace
+    {
+        user_account_id: ActiveValue::Set(user_account.user_account_id),
+        workspace_id: ActiveValue::Set(workspace.workspace_id),
+        ..Default::default()
+    };
+    if let Err(e) = user_account_workspace.validate_and_insert(hdb, &i18n).await
+    {
+        return Err(e);
+    }
 
     // Creates a JWT claims.
     let mut claims = JwtClaims::init_from_config(&config);

@@ -12,7 +12,7 @@
 | [public.organization](public.organization.md)                                   | 6       | Organization table            | BASE TABLE |
 | [public.organization_member_authority](public.organization_member_authority.md) | 3       | Organization member authority | BASE TABLE |
 | [public.organization_member](public.organization_member.md)                     | 4       | Organization member table     | BASE TABLE |
-| [public.workspace](public.workspace.md)                                         | 7       | Workspace table               | BASE TABLE |
+| [public.workspace](public.workspace.md)                                         | 6       | Workspace table               | BASE TABLE |
 | [public.workspace_member_authority](public.workspace_member_authority.md)       | 3       | Workspace member authority    | BASE TABLE |
 | [public.workspace_member](public.workspace_member.md)                           | 4       | Workspace member table        | BASE TABLE |
 | [public.project](public.project.md)                                             | 7       | Project table                 | BASE TABLE |

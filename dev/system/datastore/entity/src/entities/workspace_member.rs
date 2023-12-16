@@ -2,6 +2,8 @@
 //! WorkspaceMember model.
 //------------------------------------------------------------------------------
 
+use crate::Validate;
+
 use sea_orm::entity::prelude::*;
 
 
@@ -24,6 +26,8 @@ pub struct Model
 /// ActiveModel.
 //------------------------------------------------------------------------------
 impl ActiveModelBehavior for ActiveModel {}
+
+impl Validate for ActiveModel {}
 
 
 //------------------------------------------------------------------------------

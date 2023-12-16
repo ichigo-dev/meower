@@ -20,5 +20,9 @@ sea-orm = { version = "0.12.6", features = [
 
 
 [[bin]]
+name = "install_master"
+path = "src/install_master.rs"
+
+[[bin]]
 name = "install_test_data"
 path = "src/install_test_data.rs"

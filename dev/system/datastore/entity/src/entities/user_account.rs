@@ -70,7 +70,6 @@ impl ActiveModelBehavior for ActiveModel
 
         Ok(self)
     }
-
 }
 
 #[async_trait]
@@ -139,6 +138,30 @@ impl Validate for ActiveModel
         if user_account_name_validator.has_err()
         {
             return Err(user_account_name_validator.get_first_error());
+        }
+
+        let display_name = self.display_name.clone().unwrap();
+        let mut display_name_validator = Validator::new(&display_name)
+            .not_empty
+            (
+                &i18n.get
+                (
+                    "model_user_account.error.display_name.not_empty"
+                )
+            )
+            .max_len
+            (
+                32,
+                &i18n.get_with
+                (
+                    "model_user_account.error.display_name.max_len",
+                    [("max_len", "32")].into()
+                )
+            )
+            .validate();
+        if display_name_validator.has_err()
+        {
+            return Err(display_name_validator.get_first_error());
         }
 
         Ok(())
