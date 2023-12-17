@@ -44,29 +44,34 @@ impl MigrationTrait for Migration
                 ColumnDef::new(UserAccountProfile::Name)
                     .string()
                     .string_len(255)
+                    .null()
             )
             .col
             (
                 ColumnDef::new(UserAccountProfile::Biography)
                     .text()
+                    .null()
             )
             .col
             (
                 ColumnDef::new(UserAccountProfile::Company)
                     .string()
                     .string_len(255)
+                    .null()
             )
             .col
             (
                 ColumnDef::new(UserAccountProfile::Title)
                     .string()
                     .string_len(255)
+                    .null()
             )
             .col
             (
                 ColumnDef::new(UserAccountProfile::Location)
                     .string()
                     .string_len(255)
+                    .null()
             )
             .col
             (

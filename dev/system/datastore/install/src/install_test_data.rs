@@ -102,11 +102,11 @@ async fn main()
         let user_account_profile = ActiveUserAccountProfile
         {
             user_account_id: ActiveValue::Set(user_account_id),
-            name: ActiveValue::set(format!("User {}", i)),
-            biography: ActiveValue::set("Hello, world!".to_string()),
-            company: ActiveValue::set("Example Inc.".to_string()),
-            title: ActiveValue::set("Software Engineer".to_string()),
-            location: ActiveValue::set("Tokyo, Japan".to_string()),
+            name: ActiveValue::set(Some(format!("User {}", i))),
+            biography: ActiveValue::set(Some("Hello, world!".to_string())),
+            company: ActiveValue::set(Some("Example Inc.".to_string())),
+            title: ActiveValue::set(Some("Software Engineer".to_string())),
+            location: ActiveValue::set(Some("Tokyo, Japan".to_string())),
             ..Default::default()
         };
         if user_account_profile.validate_and_insert(&tsx, &i18n).await.is_err()

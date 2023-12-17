@@ -9,6 +9,9 @@ use meower_entity::user_account::ActiveModel as ActiveUserAccount;
 use meower_entity::user_jwt_subject::Entity as UserJwtSubjectEntity;
 use meower_entity::workspace::ActiveModel as ActiveWorkspace;
 use meower_entity::user_account_workspace::ActiveModel as ActiveUserAccountWorkspace;
+use meower_entity::workspace_member_authority::Entity as WorkspaceMemberAuthorityEntity;
+use meower_entity::workspace_member_authority::AuthorityMap as WorkspaceMemberAuthorityMap;
+use meower_entity::workspace_member::ActiveModel as ActiveWorkspaceMember;
 
 use askama::Template;
 use axum::Extension;
@@ -194,7 +197,10 @@ where
         user_account_id: ActiveValue::Set(user_account.user_account_id),
         ..Default::default()
     };
-    user_account_profile.validate_and_insert(hdb, &i18n).await.unwrap();
+    if let Err(e) = user_account_profile.validate_and_insert(hdb, &i18n).await
+    {
+        return Err(e);
+    }
 
     // Creates the default workspace.
     let display_name = format!
@@ -222,6 +228,28 @@ where
         ..Default::default()
     };
     if let Err(e) = user_account_workspace.validate_and_insert(hdb, &i18n).await
+    {
+        return Err(e);
+    }
+
+    // Creates workspace member.
+    let authority = WorkspaceMemberAuthorityEntity::find_by_authority
+    (
+        &WorkspaceMemberAuthorityMap::Admin
+    )
+        .one(hdb)
+        .await
+        .unwrap()
+        .unwrap();
+    let authority_id = authority.workspace_member_authority_id;
+    let workspace_member = ActiveWorkspaceMember
+    {
+        workspace_id: ActiveValue::Set(workspace.workspace_id),
+        user_account_id: ActiveValue::Set(user_account.user_account_id),
+        workspace_member_authority_id: ActiveValue::Set(authority_id),
+        ..Default::default()
+    };
+    if let Err(e) = workspace_member.validate_and_insert(hdb, &i18n).await
     {
         return Err(e);
     }
