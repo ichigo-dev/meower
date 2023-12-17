@@ -7,12 +7,21 @@ use crate::Validate;
 use async_trait::async_trait;
 use chrono::Utc;
 use sea_orm::entity::prelude::*;
+use serde::{ Serialize, Deserialize };
 
 
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
+#[derive(
+    Clone,
+    Debug,
+    PartialEq,
+    DeriveEntityModel,
+    Eq,
+    Serialize,
+    Deserialize
+)]
 #[sea_orm(table_name = "user_account_profile")]
 pub struct Model
 {

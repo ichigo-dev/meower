@@ -14,9 +14,7 @@ pub fn EditProfile<G: Html>( cx: Scope ) -> View<G>
     view!
     {
         cx,
-        div
-        {
-            "edit profile"
-        }
+        h1 { "Edit profile" }
+        a(href="/mypage", rel="external") { "Mypage" }
     }
 }

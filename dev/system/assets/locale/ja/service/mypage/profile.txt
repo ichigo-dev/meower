@@ -1,0 +1,7 @@
+################################################################################
+# Mypage profile
+################################################################################
+
+# API
+mypage.profile.api.error.user_account.not_found = ユーザーアカウントが見つかりません。
+mypage.profile.api.error.user_account_profile.not_found = プロフィールが見つかりません。
