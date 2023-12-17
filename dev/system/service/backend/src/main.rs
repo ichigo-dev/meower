@@ -69,7 +69,7 @@ async fn main()
 
     // Creates the application.
     let mypage_router = Router::new()
-        .route("/profile", get(mypage::profile::get_profile));
+        .route("/get_profile", get(mypage::profile::get_profile));
 
     let app = Router::new()
         .nest("/mypage", mypage_router)

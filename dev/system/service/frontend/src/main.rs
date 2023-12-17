@@ -8,7 +8,6 @@ mod pages;
 mod layouts;
 mod features;
 
-use meower_core::*;
 use routes::AppRouter;
 use layouts::Layout;
 
@@ -23,7 +22,6 @@ use reqwest::Client;
 pub(crate) struct AppState
 {
     client: Client,
-    config: Config,
 }
 
 impl AppState
@@ -31,9 +29,9 @@ impl AppState
     //--------------------------------------------------------------------------
     /// Creates a new application state.
     //--------------------------------------------------------------------------
-    pub(crate) fn new( client: Client, config: Config ) -> Self
+    pub(crate) fn new( client: Client ) -> Self
     {
-        Self { client, config }
+        Self { client }
     }
 
     //--------------------------------------------------------------------------
@@ -42,14 +40,6 @@ impl AppState
     pub(crate) fn client( &self ) -> &Client
     {
         &self.client
-    }
-
-    //--------------------------------------------------------------------------
-    /// Returns the config.
-    //--------------------------------------------------------------------------
-    pub(crate) fn config( &self ) -> &Config
-    {
-        &self.config
     }
 }
 
@@ -60,8 +50,7 @@ impl AppState
 pub fn Root<G: Html>( cx: Scope ) -> View<G>
 {
     let client = Client::new();
-    let config = Config::new();
-    let app_state = AppState::new(client, config);
+    let app_state = AppState::new(client);
     provide_context(cx, app_state);
     view!
     {
@@ -76,5 +65,7 @@ pub fn Root<G: Html>( cx: Scope ) -> View<G>
 //------------------------------------------------------------------------------
 fn main()
 {
+    console_error_panic_hook::set_once();
+    console_log::init_with_level(log::Level::Debug).unwrap();
     sycamore::render(Root);
 }

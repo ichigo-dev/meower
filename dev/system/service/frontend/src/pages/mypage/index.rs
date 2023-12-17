@@ -20,7 +20,7 @@ pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
     {
         cx,
         h1 { "Mypage" }
-        div { (profile.name.clone().unwrap()) }
+        //div { (profile.name.clone().unwrap()) }
         a(href="/", rel="external") { "Home" }
         a(href="/mypage/edit_profile", rel="external") { "Edit profile" }
     }

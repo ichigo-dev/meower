@@ -11,6 +11,7 @@ pub use edit_profile::EditProfile;
 use super::NotFound;
 
 use sycamore::prelude::*;
+use sycamore::suspense::Suspense;
 use sycamore_router::Route;
 
 
@@ -46,7 +47,14 @@ pub fn MypageRouter<'cx, G: Html>
         cx,
         (match route
         {
-            MypageRoutes::Index => view! { cx, Index },
+            MypageRoutes::Index =>
+            {
+                view!
+                {
+                    cx,
+                    Suspense(fallback=view! { cx, "Loading..." }) { Index }
+                }
+            },
             MypageRoutes::EditProfile => view! { cx, EditProfile },
             MypageRoutes::NotFound => view! { cx, NotFound },
         })

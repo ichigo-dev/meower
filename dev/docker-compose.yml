@@ -34,7 +34,7 @@ services:
       - ./system/service/frontend:/system/service/frontend
     env_file: .env
     working_dir: /system/service/frontend
-    command: "trunk serve --address 0.0.0.0 --release"
+      #command: "trunk serve --address 0.0.0.0 --release"
     depends_on:
       - backend
     tty: true

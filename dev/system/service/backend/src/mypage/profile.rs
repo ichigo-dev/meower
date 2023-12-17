@@ -29,7 +29,10 @@ pub async fn get_profile
         Ok(user_account_profile) => user_account_profile,
         Err(e) =>
         {
-            panic!("{}", e);
+            return Json(json!(
+            {
+                "error": e,
+            }));
         },
     };
 
