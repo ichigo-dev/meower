@@ -20,7 +20,7 @@ pub(crate) async fn layer
     State(state): State<AppState>,
     cookie: CookieJar,
     req: Request<Body>,
-    next: Next<Body>,
+    next: Next,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let config = state.config();

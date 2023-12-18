@@ -214,14 +214,13 @@ impl Auth
         let jwt = self.claims.encode(config);
         let jwt_expire = config.get_as_isize("jwt.expire_sec") as i64;
         let jwt_expire_date = now + TimeDuration::seconds(jwt_expire);
-        Cookie::build(JWT_COOKIE_KEY, jwt.to_owned())
+        Cookie::build((JWT_COOKIE_KEY, jwt.to_owned()))
             .path("/")
             .same_site(SameSite::Lax)
             .http_only(true)
             .max_age(TimeDuration::seconds(jwt_expire))
             .expires(jwt_expire_date)
             .secure(config.get_as_bool("system.debug_mode") == false)
-            .finish()
             .to_string()
     }
 

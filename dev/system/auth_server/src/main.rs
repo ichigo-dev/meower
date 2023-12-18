@@ -16,16 +16,17 @@ use layers::*;
 use pages::*;
 
 use std::env;
-use std::net::SocketAddr;
 
 use axum::{ Router, middleware };
 use axum::response::Redirect;
 use axum::body::Body;
 use axum::routing::{ get, post };
-use hyper::client::HttpConnector;
+use hyper_util::rt::TokioExecutor;
+use hyper_util::client::legacy::connect::HttpConnector;
 use sea_orm::{ Database, DbConn };
+use tokio::net::TcpListener;
 
-pub(crate) type Client = hyper::client::Client<HttpConnector, Body>;
+pub(crate) type Client = hyper_util::client::legacy::Client<HttpConnector, Body>;
 
 
 //------------------------------------------------------------------------------
@@ -82,7 +83,11 @@ impl AppState
 async fn main()
 {
     // Initializes the application state.
-    let client = Client::new();
+    let client = hyper_util::client::legacy::Client::<(), ()>::builder
+    (
+        TokioExecutor::new()
+    )
+        .build(HttpConnector::new());
     let config = Config::new();
     let hdb = Database::connect(config.get("database.url"))
         .await
@@ -126,9 +131,8 @@ async fn main()
         .unwrap_or("8080".to_string())
         .parse()
         .unwrap_or(8080);
-    let addr = SocketAddr::from(([0, 0, 0, 0], port));
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
+    let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
         .await
         .unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
