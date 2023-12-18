@@ -38,6 +38,7 @@ pub async fn get_profile
     Json(ApiResponse::ok(data))
 }
 
+// Gets profile.
 async fn get_profile_inner<C>
 (
     hdb: &C,

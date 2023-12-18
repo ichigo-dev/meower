@@ -19,7 +19,7 @@ pub struct ApiResponse<T>
 impl<T> ApiResponse<T>
 {
     //--------------------------------------------------------------------------
-    /// OK response.
+    /// Creates OK response.
     //--------------------------------------------------------------------------
     pub fn ok( data: T ) -> Self
     {
@@ -30,7 +30,7 @@ impl<T> ApiResponse<T>
     }
 
     //--------------------------------------------------------------------------
-    /// NG response.
+    /// Creates NG response.
     //--------------------------------------------------------------------------
     pub fn ng( message: String ) -> Self
     {
@@ -55,28 +55,15 @@ impl<T> ApiResponse<T>
     {
         self.data.is_err()
     }
+}
 
+impl<T: Clone> ApiResponse<T>
+{
     //--------------------------------------------------------------------------
-    /// Gets the data.
+    /// Gets data.
     //--------------------------------------------------------------------------
-    pub fn get_data( &self ) -> &T
+    pub fn get_data( &self ) -> Result<T, String>
     {
-        if let Ok(d) = &self.data
-        {
-            return d;
-        }
-        panic!("ApiResponse::get_data() failed.");
-    }
-
-    //--------------------------------------------------------------------------
-    /// Gets the error message.
-    //--------------------------------------------------------------------------
-    pub fn get_error( &self ) -> String
-    {
-        if let Err(e) = &self.data
-        {
-            return e.clone();
-        }
-        "".to_string()
+        self.data.clone()
     }
 }

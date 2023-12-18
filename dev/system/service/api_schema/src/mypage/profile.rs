@@ -8,7 +8,7 @@ use serde::{ Serialize, Deserialize };
 //------------------------------------------------------------------------------
 /// GetProfile API.
 //------------------------------------------------------------------------------
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct GetProfileResponse
 {
     pub name: String,
