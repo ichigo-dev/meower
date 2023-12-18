@@ -108,7 +108,7 @@ impl Model
         let reset_password_url = format!
         (
             "{}/auth/reset_password/{}",
-            config.get("system.auth_server_url"),
+            config.get("system.url"),
             reset_password_token.token,
         );
         let template = Mailer::get_template_with

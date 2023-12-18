@@ -12,8 +12,10 @@ use std::env;
 use std::net::SocketAddr;
 
 use axum::{ Router, middleware };
+use axum::http::{ HeaderValue, Method };
 use axum::routing::get;
 use sea_orm::{ Database, DbConn };
+use tower_http::cors::CorsLayer;
 
 
 //------------------------------------------------------------------------------
@@ -66,6 +68,9 @@ async fn main()
         .await
         .expect("Failed to setup the database");
     let app_state = AppState::new(hdb, config.clone());
+    let origins = [
+        config.get("system.url").parse::<HeaderValue>().unwrap(),
+    ];
 
     // Creates the application.
     let mypage_router = Router::new()
@@ -75,6 +80,12 @@ async fn main()
         .nest("/mypage", mypage_router)
         .layer(middleware::from_fn_with_state(app_state.clone(), auth::layer))
         .layer(middleware::from_fn_with_state(app_state.clone(), i18n::layer))
+        .layer
+        (
+            CorsLayer::new()
+                .allow_origin(origins)
+                .allow_methods([Method::GET, Method::POST])
+        )
         .with_state(app_state);
 
     // Runs the server.

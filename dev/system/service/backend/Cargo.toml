@@ -17,3 +17,4 @@ sea-orm = { version = "0.12.6", features = [
     "sqlx-postgres"
 ]}
 accept-language = "3.1.0"
+tower-http = { version = "0.4.0", features = ["cors"] }
