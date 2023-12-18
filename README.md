@@ -51,6 +51,7 @@ everything.
 │   │   │   └ migration/   ... Migration files
 │   │   │
 │   │   └ service/
+│   │       ├ api_schema/  ... API schemas
 │   │       ├ backend/     ... Application backend server
 │   │       └ frontend/    ... Application frontend server
 │   │

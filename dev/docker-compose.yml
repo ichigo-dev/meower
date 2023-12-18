@@ -31,6 +31,7 @@ services:
       - ./system/assets:/system/assets
       - ./system/config:/system/config
       - ./system/core:/system/core
+      - ./system/service/api_schema:/system/service/api_schema
       - ./system/service/frontend:/system/service/frontend
     env_file: .env
     working_dir: /system/service/frontend
@@ -53,6 +54,7 @@ services:
       - ./system/assets:/system/assets
       - ./system/config:/system/config
       - ./system/core:/system/core
+      - ./system/service/api_schema:/system/service/api_schema
       - ./system/service/backend:/system/service/backend
       - ./system/datastore:/system/datastore
     env_file: .env

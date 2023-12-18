@@ -5,6 +5,7 @@ edition = "2021"
 
 
 [dependencies]
+meower_api_schema = { version = "0.1.0", path = "../api_schema" }
 meower_core = { version = "0.1.0", path = "../../core" }
 meower_entity = { version = "0.1.0", path = "../../datastore/entity" }
 axum = "0.7.2"
