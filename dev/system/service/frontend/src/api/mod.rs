@@ -4,6 +4,4 @@
 
 pub mod mypage;
 
-use std::env;
-
 pub const API_URL: &str = "http://localhost:9001";

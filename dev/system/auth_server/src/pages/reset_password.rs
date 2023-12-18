@@ -10,7 +10,7 @@ use meower_entity::reset_password_token::Entity as ResetPasswordTokenEntity;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, Redirect, IntoResponse };
+use axum::response::{ Html, Redirect };
 use axum::extract::{ State, Form, Path };
 use serde::Deserialize;
 use sea_orm::prelude::*;
@@ -60,7 +60,7 @@ pub(crate) async fn get_handler
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
     Path(token): Path<String>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+) -> Result<Html<String>, Redirect>
 {
     // Finds the reset password token.
     let hdb = state.hdb();
@@ -88,7 +88,7 @@ pub(crate) async fn post_handler
     Extension(i18n): Extension<I18n>,
     Path(token): Path<String>,
     Form(input): Form<ResetPasswordForm>,
-) -> impl IntoResponse
+) -> Html<String>
 {
     let hdb = state.hdb();
     let config = state.config();

@@ -10,7 +10,7 @@ use meower_entity::user_jwt_subject::ActiveModel as ActiveUserJwtSubject;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, Response, IntoResponse };
+use axum::response::{ Html, Response };
 use axum::http::{ header, StatusCode };
 use axum::body::Body;
 use axum::extract::{ State, Form };
@@ -52,7 +52,7 @@ struct LoginTemplate
 pub(crate) async fn get_handler
 (
     Extension(i18n): Extension<I18n>,
-) -> impl IntoResponse
+) -> Html<String>
 {
     let template = LoginTemplate
     {
@@ -68,7 +68,7 @@ pub(crate) async fn post_handler
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
     Form(input): Form<LoginForm>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+) -> Result<Response<Body>, Html<String>>
 {
     let hdb = state.hdb();
     let config = state.config();

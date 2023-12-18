@@ -4,13 +4,12 @@
 
 use crate::AppState;
 use crate::api::API_URL;
-//use meower_entity::user_account_profile::Model as UserAccountProfileModel;
 
 
 //------------------------------------------------------------------------------
 /// Gets profile.
 //------------------------------------------------------------------------------
-pub async fn get_profile( app_state: &AppState ) -> String//UserAccountProfileModel
+pub async fn get_profile( app_state: &AppState ) -> String
 {
     let client = app_state.client();
 
@@ -21,6 +20,5 @@ pub async fn get_profile( app_state: &AppState ) -> String//UserAccountProfileMo
         .await
         .unwrap();
     let body = response.text().await.unwrap_or("".to_string());
-    //let profile: UserAccountProfileModel = serde_json::from_str(&body).unwrap();
     body
 }

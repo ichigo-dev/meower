@@ -15,7 +15,7 @@ use meower_entity::workspace_member::ActiveModel as ActiveWorkspaceMember;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, Response, Redirect, IntoResponse };
+use axum::response::{ Html, Response, Redirect };
 use axum::http::{ header, StatusCode };
 use axum::body::Body;
 use axum::extract::{ State, Form, Path };
@@ -59,7 +59,7 @@ pub(crate) async fn get_handler
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
     Path(sub): Path<String>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+) -> Result<Html<String>, Redirect>
 {
     let hdb = state.hdb();
 
@@ -89,7 +89,7 @@ pub(crate) async fn post_handler
     Extension(i18n): Extension<I18n>,
     Path(sub): Path<String>,
     Form(input): Form<CreateAccountForm>,
-) -> Result<impl IntoResponse, impl IntoResponse>
+) -> Result<Response<Body>, Html<String>>
 {
     let hdb = state.hdb();
     let config = state.config();

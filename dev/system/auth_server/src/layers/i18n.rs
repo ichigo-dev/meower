@@ -4,7 +4,7 @@
 
 use crate::{ AppState, I18n };
 
-use axum::response::IntoResponse;
+use axum::response::Response;
 use axum::body::Body;
 use axum::http::header;
 use axum::http::Request;
@@ -20,7 +20,7 @@ pub(crate) async fn layer
     State(state): State<AppState>,
     mut req: Request<Body>,
     next: Next,
-) -> impl IntoResponse
+) -> Response<Body>
 {
     let config = &state.config;
 

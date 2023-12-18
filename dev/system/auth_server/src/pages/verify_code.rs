@@ -9,7 +9,7 @@ use meower_entity::temporary_user_code::Entity as TemporaryUserCodeEntity;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, IntoResponse };
+use axum::response::Html;
 use axum::extract::{ State, Form };
 use serde::Deserialize;
 use sea_orm::prelude::*;
@@ -51,7 +51,7 @@ pub(crate) async fn post_handler
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
     Form(input): Form<VerifyCodeForm>,
-) -> impl IntoResponse
+) -> Html<String>
 {
     let hdb = state.hdb();
     let config = state.config();

@@ -10,7 +10,7 @@ use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, IntoResponse };
+use axum::response::Html;
 use axum::extract::{ State, Form };
 use serde::Deserialize;
 use sea_orm::prelude::*;
@@ -52,7 +52,7 @@ struct SignupTemplate
 pub(crate) async fn get_handler
 (
     Extension(i18n): Extension<I18n>,
-) -> impl IntoResponse
+) -> Html<String>
 {
     let template = SignupTemplate
     {
@@ -68,7 +68,7 @@ pub(crate) async fn post_handler
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
     Form(input): Form<SignupForm>,
-) -> impl IntoResponse
+) -> Html<String>
 {
     let hdb = state.hdb();
     let config = state.config();

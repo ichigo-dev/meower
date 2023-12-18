@@ -4,7 +4,7 @@
 
 use crate::{ AppState, Auth };
 
-use axum::response::{ IntoResponse, Redirect };
+use axum::response::{ Response, Redirect };
 use axum::body::Body;
 use axum::http::Request;
 use axum::middleware::Next;
@@ -21,7 +21,7 @@ pub(crate) async fn layer
     cookie: CookieJar,
     req: Request<Body>,
     next: Next,
-) -> Result<impl IntoResponse, impl IntoResponse>
+) -> Result<Response<Body>, Redirect>
 {
     let config = state.config();
 

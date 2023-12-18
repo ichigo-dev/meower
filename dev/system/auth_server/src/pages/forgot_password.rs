@@ -8,7 +8,7 @@ use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, IntoResponse };
+use axum::response::Html;
 use axum::extract::{ State, Form };
 use serde::Deserialize;
 use sea_orm::prelude::*;
@@ -57,7 +57,7 @@ pub(crate) struct SendResetPasswordMailTemplate
 pub(crate) async fn get_handler
 (
     Extension(i18n): Extension<I18n>,
-) -> impl IntoResponse
+) -> Html<String>
 {
     let template = ForgotPasswordTemplate
     {
@@ -73,7 +73,7 @@ pub(crate) async fn post_handler
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
     Form(input): Form<ForgotPasswordForm>,
-) -> impl IntoResponse
+) -> Html<String>
 {
     let hdb = state.hdb();
     let config = state.config();

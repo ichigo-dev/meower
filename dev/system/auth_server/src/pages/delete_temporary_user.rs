@@ -8,7 +8,7 @@ use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 
 use askama::Template;
 use axum::Extension;
-use axum::response::{ Html, IntoResponse };
+use axum::response::Html;
 use axum::extract::{ State, Path };
 use sea_orm::prelude::*;
 use sea_orm::TransactionTrait;
@@ -24,7 +24,7 @@ pub(crate) async fn get_handler
     State(state): State<AppState>,
     Extension(i18n): Extension<I18n>,
     Path(token): Path<String>,
-) -> impl IntoResponse
+) -> Html<String>
 {
     let hdb = state.hdb();
 
