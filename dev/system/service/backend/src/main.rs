@@ -9,12 +9,12 @@ use layers::*;
 use meower_core::*;
 
 use std::env;
-use std::net::SocketAddr;
 
 use axum::{ Router, middleware };
 use axum::http::{ HeaderValue, Method };
 use axum::routing::get;
 use sea_orm::{ Database, DbConn };
+use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
 
@@ -93,9 +93,8 @@ async fn main()
         .unwrap_or("9001".to_string())
         .parse()
         .unwrap_or(9001);
-    let addr = SocketAddr::from(([0, 0, 0, 0], port));
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
+    let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
         .await
         .unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
