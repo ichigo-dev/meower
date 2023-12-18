@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::{ AppState, Auth, I18n };
-use meower_api_schema::{ ApiResponse, ApiStatusCode };
+use meower_api_schema::ApiResponse;
 use meower_api_schema::mypage::profile::GetProfileResponse;
 use meower_entity::user_account::Entity as UserAccount;
 use meower_entity::user_account_profile::Entity as UserAccountProfile;
@@ -22,32 +22,20 @@ pub async fn get_profile
     State(state): State<AppState>,
     Extension(auth): Extension<Auth>,
     Extension(i18n): Extension<I18n>,
-) -> Result<Json<ApiResponse<GetProfileResponse>>, Json<ApiResponse<String>>>
+) -> Json<ApiResponse<GetProfileResponse>>
 {
     let hdb = state.hdb();
     let user_account_profile = match get_profile_inner(hdb, &auth, &i18n).await
     {
         Ok(user_account_profile) => user_account_profile,
-        Err(e) =>
-        {
-            let response = ApiResponse
-            {
-                code: ApiStatusCode::Ng,
-                data: e,
-            };
-            return Err(Json(response));
-        },
+        Err(e) => return Json(ApiResponse::ng(e)),
     };
 
-    let response = ApiResponse
+    let data = GetProfileResponse
     {
-        code: ApiStatusCode::Ok,
-        data: GetProfileResponse
-        {
-            name: user_account_profile.name.unwrap_or("".to_string()),
-        },
+        name: user_account_profile.name.unwrap_or("".to_string()),
     };
-    Ok(Json(response))
+    Json(ApiResponse::ok(data))
 }
 
 async fn get_profile_inner<C>
