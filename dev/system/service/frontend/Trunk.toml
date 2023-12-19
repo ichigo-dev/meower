@@ -14,7 +14,7 @@ ignore = []
 address = "127.0.0.1"
 port = 9000
 open = false
-no_autoreload = false
+no_autoreload = true
 
 [clean]
 dist = "dist"
