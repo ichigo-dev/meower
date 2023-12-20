@@ -2,7 +2,7 @@
 
 Task management application
 
-![Architecture](./architecture.png)
+![Sequence - Auth](./sequence_auth.png)
 
 
 ## Description
