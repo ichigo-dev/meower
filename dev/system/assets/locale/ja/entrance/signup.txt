@@ -1,0 +1,19 @@
+################################################################################
+# Signup page
+################################################################################
+
+entrance.signup.heading = サインアップ
+
+# Form
+entrance.signup.form.email.label = メールアドレス
+entrance.signup.form.email.placeholder = meower@example.com
+entrance.signup.form.email_confirm.label = メールアドレス（確認用）
+entrance.signup.form.email_confirm.placeholder = meower@example.com
+entrance.signup.form.password.label = パスワード
+entrance.signup.form.password_confirm.label = パスワード（確認用）
+entrance.signup.form.button.send = サインアップ
+entrance.signup.form.error.email_not_match = メールアドレスが一致しません。
+entrance.signup.form.error.password_not_match = パスワードが一致しません。
+
+entrance.signup.button.login = ログイン
+entrance.signup.button.resend_verify_code = 認証コードの再送

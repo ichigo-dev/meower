@@ -1,0 +1,16 @@
+################################################################################
+# Resend verify code page
+################################################################################
+
+entrance.resend_verify_code.heading = 認証メールの再送信
+
+# Form
+entrance.resend_verify_code.form.email.label = メールアドレス
+entrance.resend_verify_code.form.email.placeholder = meower@example.com
+entrance.resend_verify_code.form.password.label = パスワード
+entrance.resend_verify_code.form.button.send = 再送信
+entrance.resend_verify_code.form.error.invalid_password = パスワードが間違っています。
+entrance.resend_verify_code.form.error.user_not_found = ユーザが見つかりません。
+
+entrance.resend_verify_code.button.login = ログイン
+entrance.resend_verify_code.button.signup = サインアップ

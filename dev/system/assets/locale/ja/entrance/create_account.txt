@@ -1,0 +1,10 @@
+################################################################################
+# Create account page
+################################################################################
+
+entrance.create_account.heading = アカウントの作成
+
+# Form
+entrance.create_account.form.user_account_name.label = アカウント名
+entrance.create_account.form.user_account_name.placeholder = meower_cat
+entrance.create_account.form.button.send = 作成

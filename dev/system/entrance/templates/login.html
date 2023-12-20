@@ -1,0 +1,29 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+ <h1 class="ui_heading">{{ i18n.get("entrance.login.heading") }}</h1>
+ <div class="ui_panel sm shadow radius padding_xl margin_lg flex column align_center gap_md">
+  <form method="POST" class="flex column align_center gap_md full_horizon">
+   <label class="flex column gap_sm full_horizon">
+    <span class="ui_label">{{ i18n.get("entrance.login.form.email.label") }}</span>
+    <input type="email" name="email" placeholder="{{ i18n.get("entrance.login.form.email.placeholder") }}" value="{{ input.email }}" class="ui_text">
+   </label>
+   <label class="flex column gap_sm full_horizon">
+    <span class="ui_label">{{ i18n.get("entrance.login.form.password.label") }}</span>
+    <input type="password" name="password" class="ui_text">
+   </label>
+   {% if errors.len() > 0 %}
+    <div class="errors full_horizon">
+     {% for error in errors %}
+      <div>{{ error }}</div>
+     {% endfor %}
+    </div>
+   {% endif %}
+   <button type="submit" class="ui_button primary full_horizon">{{ i18n.get("entrance.login.form.button.send") }}</button>
+  </form>
+  <hr class="ui_panel border full_horizon">
+  <a href="/auth/signup" class="ui_button primary_light full_horizon">{{ i18n.get("entrance.login.button.signup") }}</a>
+  <a href="/auth/resend_verify_code" class="ui_button primary_light full_horizon">{{ i18n.get("entrance.login.button.resend_verify_code") }}</a>
+  <a href="/auth/forgot_password" class="ui_button primary_light full_horizon">{{ i18n.get("entrance.login.button.forgot_password") }}</a>
+ </div>
+{% endblock %}

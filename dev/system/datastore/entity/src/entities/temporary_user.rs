@@ -85,7 +85,7 @@ impl Model
 
         let template = Mailer::get_template_with
         (
-            "auth_server/signup.html",
+            "entrance/signup.html",
             &config,
             &i18n,
             [("verify_code", temporary_user_code.code.as_str())].into(),

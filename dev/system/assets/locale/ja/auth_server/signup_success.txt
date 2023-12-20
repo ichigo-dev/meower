@@ -1,7 +1,0 @@
-################################################################################
-# Signup success page
-################################################################################
-
-auth_server.signup_success.heading = サインアップ完了
-auth_server.signup_success.next = ログインして今すぐ始めよう！
-auth_server.signup_success.button.login = ログイン

@@ -1,0 +1,13 @@
+################################################################################
+# Verify code page
+################################################################################
+
+entrance.verify_code.heading = コード認証
+entrance.verify_code.content = 登録されたメールアドレス宛に送信されたコードを入力してください。
+
+# Form
+entrance.verify_code.form.code.label = 認証コード
+entrance.verify_code.form.button.send = 送信
+
+entrance.verify_code.error.invalid_url = 無効なURLです。
+entrance.verify_code.error.not_found = ユーザが見つかりません。管理者にお問い合わせください。

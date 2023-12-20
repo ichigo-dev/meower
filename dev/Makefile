@@ -37,8 +37,8 @@ logs:
 dev:
 	@docker-compose exec dev bash
 
-auth:
-	@docker-compose exec auth-server bash
+entrance:
+	@docker-compose exec entrance bash
 
 frontend:
 	@docker-compose exec frontend bash
@@ -82,9 +82,9 @@ udeps:
 	@docker-compose exec dev \
 		bash -c 'cd /system/core && cargo +nightly udeps'
 	@echo "===== Finish ====="
-	@echo "===== Checking auth_server dependencies ====="
+	@echo "===== Checking entrance dependencies ====="
 	@docker-compose exec dev \
-		bash -c 'cd /system/auth_server && cargo +nightly udeps'
+		bash -c 'cd /system/entrance && cargo +nightly udeps'
 	@echo "===== Finish ====="
 	@echo "===== Checking datastore dependencies ====="
 	@docker-compose exec dev \
@@ -101,9 +101,9 @@ crev:
 	@docker-compose exec dev \
 		bash -c 'cd /system/core && cargo crev verify --show-all'
 	@echo "===== Finish ====="
-	@echo "===== Reviewing auth_server dependencies ====="
+	@echo "===== Reviewing entrance dependencies ====="
 	@docker-compose exec dev \
-		bash -c 'cd /system/auth_server && cargo crev verify --recursive --show-all'
+		bash -c 'cd /system/entrance && cargo crev verify --recursive --show-all'
 	@echo "===== Finish ====="
 	@echo "===== Reviewing datastore dependencies ====="
 	@docker-compose exec dev \
@@ -120,9 +120,9 @@ audit:
 	@docker-compose exec dev \
 		bash -c 'cd /system/core && cargo audit fix --dry-run'
 	@echo "===== Finish ====="
-	@echo "===== Auditing auth-server ====="
+	@echo "===== Auditing entrance ====="
 	@docker-compose exec dev \
-		bash -c 'cd /system/auth_server && cargo audit fix --dry-run'
+		bash -c 'cd /system/entrance && cargo audit fix --dry-run'
 	@echo "===== Finish ====="
 	@echo "===== Auditing backend ====="
 	@docker-compose exec dev \

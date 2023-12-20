@@ -41,7 +41,7 @@ everything.
 │   │   │   ├ locale/
 │   │   │   └ email/
 │   │   │
-│   │   ├ auth_server/     ... Authentication server
+│   │   ├ entrance/        ... Entrance server (Authentication, etc...)
 │   │   │
 │   │   ├ core/            ... Contains core files for the entire application
 │   │   │

@@ -113,7 +113,7 @@ impl Model
         );
         let template = Mailer::get_template_with
         (
-            "auth_server/reset_password.html",
+            "entrance/reset_password.html",
             &config,
             &i18n,
             [
