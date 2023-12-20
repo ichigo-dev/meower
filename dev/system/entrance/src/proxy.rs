@@ -22,7 +22,6 @@ pub(crate) async fn handler
     mut req: Request<Body>,
 ) -> impl IntoResponse
 {
-    let config = state.config();
     let client = state.client();
 
     // Proxies the request to the frontend.

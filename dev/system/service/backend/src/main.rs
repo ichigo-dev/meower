@@ -90,9 +90,9 @@ async fn main()
 
     // Runs the server.
     let port = env::var("BACKEND_PORT")
-        .unwrap_or("9001".to_string())
+        .unwrap_or("9200".to_string())
         .parse()
-        .unwrap_or(9001);
+        .unwrap_or(9200);
     let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
         .await
         .unwrap();
