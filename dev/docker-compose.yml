@@ -41,7 +41,7 @@ services:
       context: .
       dockerfile: ./docker/service/entrance/Dockerfile
     ports:
-      - ${entrance_PORT}:9000
+      - ${ENTRANCE_PORT}:9000
     volumes:
       - ./system/assets:/system/assets
       - ./system/config:/system/config

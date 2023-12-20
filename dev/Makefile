@@ -10,6 +10,15 @@ init:
 	@cp .env.example .env
 	@echo "===== Finish ====="
 
+setup:
+	@echo "===== Initializing ====="
+	@cp .env.example .env
+	@docker-compose build
+	@docker-compose up -d
+	$(MAKE) install bin=install_test_data
+	@echo "===== Finish ====="
+
+
 # Build the containers
 build:
 	@echo "===== Building ====="
@@ -36,6 +45,9 @@ logs:
 
 dev:
 	@docker-compose exec dev bash
+
+balancer:
+	@docker-compose exec balancer bash
 
 entrance:
 	@docker-compose exec entrance bash
