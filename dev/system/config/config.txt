@@ -12,7 +12,6 @@ system.debug_mode = true
 
 # Endpoints
 system.url = http://localhost:8080
-system.frontend_url = http://frontend:9000
 system.backend_url = http://backend:9001
 
 

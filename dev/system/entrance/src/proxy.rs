@@ -4,6 +4,8 @@
 
 use crate::AppState;
 
+use std::env;
+
 use axum::http::Request;
 use axum::response::IntoResponse;
 use axum::body::Body;
@@ -30,7 +32,9 @@ pub(crate) async fn handler
         .path_and_query()
         .map(|v| v.as_str())
         .unwrap_or(path);
-    let uri = format!("{}{}", config.get("system.frontend_url"), path_query);
+
+    let frontend_url = env::var("FRONTEND_URL").unwrap();
+    let uri = format!("{}{}", frontend_url, path_query);
     *req.uri_mut() = Uri::try_from(uri).unwrap();
 
     client.request(req).await.unwrap()

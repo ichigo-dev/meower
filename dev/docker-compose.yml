@@ -30,18 +30,19 @@ services:
     volumes:
       - ./docker/service/balancer/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
-      - entrance
+      - entrance1
+      - entrance2
 
   ##############################################################################
   # Entrance server
   ##############################################################################
-  entrance:
-    container_name: meower_entrance
+  entrance1:
+    container_name: meower_entrance1
     build:
       context: .
       dockerfile: ./docker/service/entrance/Dockerfile
     ports:
-      - ${ENTRANCE_PORT}:9000
+      - ${ENTRANCE1_PORT}:9000
     volumes:
       - ./system/assets:/system/assets
       - ./system/config:/system/config
@@ -49,23 +50,50 @@ services:
       - ./system/core:/system/core
       - ./system/datastore:/system/datastore
     env_file: .env
+    environment:
+      ENTRANCE_PORT: ${ENTRANCE1_PORT}
+      FRONTEND_URL: ${FRONTEND1_URL}
     working_dir: /system/entrance
     command: "cargo watch -x run"
     depends_on:
       - postgres
-      - frontend
+      - frontend1
+    tty: true
+
+  entrance2:
+    container_name: meower_entrance2
+    build:
+      context: .
+      dockerfile: ./docker/service/entrance/Dockerfile
+    ports:
+      - ${ENTRANCE2_PORT}:9001
+    volumes:
+      - ./system/assets:/system/assets
+      - ./system/config:/system/config
+      - ./system/entrance:/system/entrance
+      - ./system/core:/system/core
+      - ./system/datastore:/system/datastore
+    env_file: .env
+    environment:
+      ENTRANCE_PORT: ${ENTRANCE2_PORT}
+      FRONTEND_URL: ${FRONTEND2_URL}
+    working_dir: /system/entrance
+    command: "cargo watch -x run"
+    depends_on:
+      - postgres
+      - frontend2
     tty: true
 
   ##############################################################################
   # Front-end application
   ##############################################################################
-  frontend:
-    container_name: meower_frontend
+  frontend1:
+    container_name: meower_frontend1
     build:
       context: .
       dockerfile: ./docker/service/frontend/Dockerfile
     ports:
-      - ${FRONTEND_PORT}:9001
+      - ${FRONTEND1_PORT}:9100
     volumes:
       - ./system/assets:/system/assets
       - ./system/config:/system/config
@@ -74,7 +102,27 @@ services:
       - ./system/service/frontend:/system/service/frontend
     env_file: .env
     working_dir: /system/service/frontend
-    command: "trunk serve --address 0.0.0.0 --release"
+    command: "trunk serve --address 0.0.0.0 --release --port ${FRONTEND1_PORT}"
+    depends_on:
+      - backend
+    tty: true
+
+  frontend2:
+    container_name: meower_frontend2
+    build:
+      context: .
+      dockerfile: ./docker/service/frontend/Dockerfile
+    ports:
+      - ${FRONTEND2_PORT}:9101
+    volumes:
+      - ./system/assets:/system/assets
+      - ./system/config:/system/config
+      - ./system/core:/system/core
+      - ./system/service/api_schema:/system/service/api_schema
+      - ./system/service/frontend:/system/service/frontend
+    env_file: .env
+    working_dir: /system/service/frontend
+    command: "trunk serve --address 0.0.0.0 --release --port ${FRONTEND2_PORT}"
     depends_on:
       - backend
     tty: true

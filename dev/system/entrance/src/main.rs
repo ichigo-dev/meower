@@ -128,9 +128,9 @@ async fn main()
 
     // Runs the server.
     let port = env::var("ENTRANCE_PORT")
-        .unwrap_or("8080".to_string())
+        .unwrap_or("9000".to_string())
         .parse()
-        .unwrap_or(8080);
+        .unwrap_or(9000);
     let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
         .await
         .unwrap();
