@@ -1,9 +1,5 @@
 //------------------------------------------------------------------------------
-//! Database entities.
+//! Installer binary.
 //------------------------------------------------------------------------------
 
-mod entities;
-mod utils;
-pub mod traits;
-
-pub use entities::*;
+pub mod utils;

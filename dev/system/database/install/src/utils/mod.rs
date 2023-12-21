@@ -1,9 +1,5 @@
 //------------------------------------------------------------------------------
-//! Database entities.
+//! Install utilities.
 //------------------------------------------------------------------------------
 
-mod entities;
-mod utils;
-pub mod traits;
-
-pub use entities::*;
+pub mod install_master;

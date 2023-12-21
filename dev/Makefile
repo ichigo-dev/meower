@@ -66,6 +66,11 @@ migrate:
 	@docker compose exec dev \
 		bash -c 'cd /system/database && sea-orm-cli migrate ${cmd}'
 
+# Install data
+install:
+	@docker compose exec dev \
+		bash -c 'cd /system/database/install && cargo run --bin ${bin}'
+
 
 ################################################################################
 # Development utilities
