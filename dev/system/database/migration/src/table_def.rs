@@ -97,9 +97,9 @@ pub(crate) enum TemporaryUserCode
     Table,
     TemporaryUserCodeId,
     TemporaryUserId,
-    Token,
     Code,
     CreatedAt,
+    ExpiredAt,
 }
 
 
@@ -301,6 +301,7 @@ pub(crate) enum ResetPasswordToken
     UserId,
     Token,
     CreatedAt,
+    ExpiredAt,
 }
 
 

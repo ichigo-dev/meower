@@ -42,14 +42,6 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(TemporaryUserCode::Token)
-                    .string()
-                    .string_len(255)
-                    .not_null()
-                    .unique_key()
-            )
-            .col
-            (
                 ColumnDef::new(TemporaryUserCode::Code)
                     .string()
                     .string_len(255)
@@ -58,6 +50,13 @@ impl MigrationTrait for Migration
             .col
             (
                 ColumnDef::new(TemporaryUserCode::CreatedAt)
+                    .timestamp()
+                    .default(Expr::current_timestamp())
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(TemporaryUserCode::ExpiredAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()

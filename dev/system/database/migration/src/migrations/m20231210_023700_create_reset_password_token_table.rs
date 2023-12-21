@@ -55,6 +55,13 @@ impl MigrationTrait for Migration
                     .default(Expr::current_timestamp())
                     .not_null()
             )
+            .col
+            (
+                ColumnDef::new(ResetPasswordToken::ExpiredAt)
+                    .timestamp()
+                    .default(Expr::current_timestamp())
+                    .not_null()
+            )
             .foreign_key
             (
                 ForeignKey::create()
