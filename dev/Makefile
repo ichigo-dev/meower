@@ -9,21 +9,18 @@ include .env
 # Service commands
 ################################################################################
 
-# Initialize the project
-init:
+# Copy .env.example to .env
+env:
 	@echo "===== Initializing ====="
+	@echo "Copying .env.example to .env"
 	@cp .env.example .env
 	@echo "===== Finish ====="
 
 # Setup the project
 setup:
-	@echo "===== Initializing ====="
-	@cp .env.example .env
-	$(MAKE) build
-	@docker compose up -d
-	$(MAKE) install bin=install_test_data
-	@echo "===== Finish ====="
-
+	$(MAKE) env --no-print-directory
+	$(MAKE) build --no-print-directory
+	$(MAKE) up --no-print-directory
 
 # Build the containers
 build:
@@ -34,7 +31,7 @@ build:
 
 # Start the containers
 up:
-	@docker compose up -d
+	@docker compose up -d --remove-orphans
 
 # Stop the containers
 down:
@@ -46,11 +43,8 @@ logs:
 
 
 ################################################################################
-# Containers
+# Enter containers
 ################################################################################
-
-exec:
-	@docker compose exec dev bash
 
 balancer:
 	@docker compose exec balancer bash
@@ -59,11 +53,24 @@ postgres:
 	@docker compose exec postgres \
 		bash -c 'psql ${POSTGRES_DB} -U ${POSTGRES_USER}'
 
+dev:
+	@docker compose exec dev bash
+
 
 ################################################################################
-# Utilities
+# Database utilities
+################################################################################
+
+# Migrate database
+migrate:
+	@docker compose exec dev \
+		bash -c 'cd /system/database && sea-orm-cli migrate ${cmd}'
+
+
+################################################################################
+# Development utilities
 ################################################################################
 
 # Table definition
 tbls:
-	@docker-compose run --rm tbls doc --force --config .tbls.yml
+	@docker compose run --rm tbls doc --force --config .tbls.yml

@@ -47,6 +47,18 @@ services:
   # Development tools
   ##############################################################################
 
+  # Development tools
+  dev:
+    container_name: meower_dev
+    build:
+      context: .
+      dockerfile: ./docker/base/dev/Dockerfile
+    volumes:
+      - ./system:/system
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    tty: true
+
   # mailhog
   mailhog:
     container_name: meower_mailhog
