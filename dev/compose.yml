@@ -33,6 +33,10 @@ services:
       - ./system/auth:/system/auth
     environment:
       DATABASE_URL: ${DATABASE_URL}
+    working_dir: /system/auth
+    command: "cargo watch -x run"
+    depends_on:
+      - postgres
     tty: true
 
   # Postgres
