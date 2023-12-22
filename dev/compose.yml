@@ -23,6 +23,18 @@ services:
     volumes:
       - ./docker/system/balancer/nginx.conf:/etc/nginx/nginx.conf
 
+  # Authentication
+  auth:
+    container_name: meower_auth
+    build:
+      context: .
+      dockerfile: ./docker/system/auth/Dockerfile
+    volumes:
+      - ./system/auth:/system/auth
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    tty: true
+
   # Postgres
   postgres:
     container_name: meower_postgres
