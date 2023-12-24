@@ -1,0 +1,15 @@
+pages:
+  login:
+    heading: ログイン
+    form:
+      email:
+        label: メールアドレス
+        placeholder: meower@example.com
+      password:
+        label: パスワード
+      button:
+        send: 送信
+    button:
+      signup: サインアップ
+      resend_verify_code: 認証コード再送信
+      forgot_password: パスワードを忘れた

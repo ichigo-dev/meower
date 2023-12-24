@@ -11,8 +11,9 @@ use std::env;
 #[derive(Clone)]
 pub(crate) struct Config
 {
-    port: u16,
-    database_url: String,
+    pub(crate) port: u16,
+    pub(crate) database_url: String,
+    pub(crate) fallback_locale: String,
 }
 
 impl Config
@@ -30,26 +31,14 @@ impl Config
         let database_url = env::var("DATABASE_URL")
             .expect("DATABASE_URL must be set");
 
+        let fallback_locale = env::var("FALLBACK_LOCALE")
+            .unwrap_or_else(|_| "en".to_string());
+
         Self
         {
             port,
             database_url,
+            fallback_locale,
         }
-    }
-
-    //--------------------------------------------------------------------------
-    /// Gets the port.
-    //--------------------------------------------------------------------------
-    pub(crate) fn port(&self) -> u16
-    {
-        self.port
-    }
-
-    //--------------------------------------------------------------------------
-    /// Gets the database URL.
-    //--------------------------------------------------------------------------
-    pub(crate) fn database_url(&self) -> String
-    {
-        self.database_url.clone()
     }
 }

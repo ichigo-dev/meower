@@ -10,10 +10,15 @@ repository = "https://github.com/ichigo-dev/meower"
 
 
 [dependencies]
+meower_entity = { version = "0.1.0", path = "../../database/entity" }
+accept-language = "3.1.0"
+askama = "0.12.1"
 axum = "0.7.2"
 axum-extra = { version = "0.9.0", features = ["cookie"] }
 sea-orm = { version = "0.12.6", features = [
     "runtime-tokio-rustls",
     "sqlx-postgres"
 ]}
+serde = "1.0.192"
 tokio = { version = "1.34.0", features = ["full"] }
+rust-i18n = "2.3.0"
