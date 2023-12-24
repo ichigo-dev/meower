@@ -19,7 +19,7 @@ use thiserror::Error;
 pub enum Error
 {
     #[error("Workspace: The workspace name already exists.")]
-    AlreadyExistsWorkspaceName,
+    WorkspaceNameAlreadyExists,
 
     #[error("Workspace: {0}")]
     Validation(#[from] ValidationError),
@@ -115,7 +115,7 @@ impl ValidateExt for ActiveModel
                 .unwrap()
                 .is_some()
             {
-                return Err(Error::AlreadyExistsWorkspaceName);
+                return Err(Error::WorkspaceNameAlreadyExists);
             }
         }
 

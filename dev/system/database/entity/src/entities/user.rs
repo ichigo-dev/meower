@@ -23,7 +23,7 @@ use thiserror::Error;
 pub enum Error
 {
     #[error("User: The email already exists.")]
-    AlreadyExistsEmail,
+    EmailAlreadyExists,
 
     #[error("User: {0}")]
     Validation(#[from] ValidationError),
@@ -159,7 +159,7 @@ impl ValidateExt for ActiveModel
                 .unwrap_or(None)
                 .is_some()
             {
-                return Err(Error::AlreadyExistsEmail);
+                return Err(Error::EmailAlreadyExists);
             }
         }
 

@@ -19,7 +19,7 @@ use thiserror::Error;
 pub enum Error
 {
     #[error("UserAccount: The user account name already exists.")]
-    AlreadyExistsUserAccountName,
+    UserAccountNameAlreadyExists,
 
     #[error("UserAccount: {0}")]
     Validation(#[from] ValidationError),
@@ -118,7 +118,7 @@ impl ValidateExt for ActiveModel
                 .unwrap()
                 .is_some()
             {
-                return Err(Error::AlreadyExistsUserAccountName);
+                return Err(Error::UserAccountNameAlreadyExists);
             }
         }
 

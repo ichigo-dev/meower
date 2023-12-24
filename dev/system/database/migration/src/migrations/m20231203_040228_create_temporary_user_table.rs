@@ -44,6 +44,14 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(TemporaryUser::UserAccountName)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+                    .unique_key()
+            )
+            .col
+            (
                 ColumnDef::new(TemporaryUser::Email)
                     .string()
                     .string_len(255)

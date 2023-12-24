@@ -9,6 +9,8 @@ use super::user::ActiveModel as ActiveUser;
 use super::user::Error as UserError;
 use super::user_auth::ActiveModel as ActiveUserAuth;
 use super::user_auth::Error as UserAuthError;
+use super::user_account::ActiveModel as ActiveUserAccount;
+use super::user_account::Error as UserAccountError;
 use super::temporary_user_code::Entity as TemporaryUserCodeEntity;
 use super::temporary_user_code::Column as TemporaryUserCodeColumn;
 
@@ -27,13 +29,19 @@ use thiserror::Error;
 pub enum Error
 {
     #[error("TemporaryUser: The email already exists.")]
-    AlreadyExistsEmail,
+    EmailAlreadyExists,
+
+    #[error("TemporaryUser: The user account name already exists.")]
+    UserAccountNameAlreadyExists,
 
     #[error("TemporaryUser: {0}")]
     UserError(#[from] UserError),
 
     #[error("TemporaryUser: {0}")]
     UserAuthError(#[from] UserAuthError),
+
+    #[error("TemporaryUser: {0}")]
+    UserAccountError(#[from] UserAccountError),
 
     #[error("TemporaryUser: Database error.")]
     DbError(#[from] DbErr),
@@ -46,9 +54,17 @@ pub enum Error
 impl Entity
 {
     //--------------------------------------------------------------------------
+    /// Finds temporary_user by user account name.
+    //--------------------------------------------------------------------------
+    pub fn find_by_user_account_name( user_account_name: &str ) -> Select<Self>
+    {
+        Self::find().filter(Column::UserAccountName.eq(user_account_name))
+    }
+
+    //--------------------------------------------------------------------------
     /// Finds temporary_user by email.
     //--------------------------------------------------------------------------
-    pub fn find_by_email(  email: &str ) -> Select<Self>
+    pub fn find_by_email( email: &str ) -> Select<Self>
     {
         Self::find().filter(Column::Email.eq(email))
     }
@@ -74,6 +90,8 @@ pub struct Model
     pub temporary_user_id: i64,
     #[sea_orm(unique)]
     pub token: String,
+    #[sea_orm(unique)]
+    pub user_account_name: String,
     #[sea_orm(unique)]
     pub email: String,
     pub password: String,
@@ -109,6 +127,15 @@ impl Model
             ..Default::default()
         };
         user_auth.validate_and_insert(hdb).await?;
+
+        // Creates a new user_account
+        let user_account = ActiveUserAccount
+        {
+            user_id: ActiveValue::Set(user.user_id),
+            user_account_name: ActiveValue::Set(self.user_account_name.clone()),
+            ..Default::default()
+        };
+        user_account.validate_and_insert(hdb).await?;
 
         Ok(user)
     }
@@ -187,11 +214,20 @@ impl ValidateExt for ActiveModel
     {
         let email = self.email.clone().unwrap();
         let password = self.password.clone().unwrap();
+        let user_account_name = self.user_account_name.clone().unwrap();
 
         // Checks if the email already exists.
         if Entity::find_by_email(&email).one(hdb).await.unwrap().is_some()
         {
-            return Err(Error::AlreadyExistsEmail);
+            return Err(Error::EmailAlreadyExists);
+        }
+        if Entity::find_by_user_account_name(&user_account_name)
+            .one(hdb)
+            .await
+            .unwrap()
+            .is_some()
+        {
+            return Err(Error::UserAccountNameAlreadyExists);
         }
 
         // User validation.
@@ -209,6 +245,14 @@ impl ValidateExt for ActiveModel
             ..Default::default()
         };
         user_auth.validate(hdb).await?;
+
+        // UserAccount validation.
+        let user_account = ActiveUserAccount
+        {
+            user_account_name: ActiveValue::Set(user_account_name),
+            ..Default::default()
+        };
+        user_account.validate(hdb).await?;
 
         Ok(())
     }

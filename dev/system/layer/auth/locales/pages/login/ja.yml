@@ -13,7 +13,7 @@ pages:
         error:
           wrong: パスワードが違います
       button:
-        send: 送信
+        submit: 送信
     button:
       signup: サインアップ
       resend_verify_code: 認証コード再送信
