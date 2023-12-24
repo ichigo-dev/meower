@@ -34,21 +34,17 @@ everything.
 │   │   └ service/         ... Docker images for service containers
 │   │
 │   ├ system/              ... Contains system components
-│   │   ├ assets/          ... Contains common asset files
-│   │   │   ├ js/
-│   │   │   ├ css/
-│   │   │   ├ scss/
-│   │   │   ├ locale/
-│   │   │   └ email/
+│   │   ├ util/            ... Contains utility files for the entire application
+│   │   │   ├ type/        ... Definition of common types
+│   │   │   └ validator/   ... Validation utility
 │   │   │
-│   │   ├ entrance/        ... Entrance server (Authentication, etc...)
-│   │   │
-│   │   ├ core/            ... Contains core files for the entire application
-│   │   │
-│   │   ├ datastore/
+│   │   ├ database/
 │   │   │   ├ entity/      ... Database table entities
 │   │   │   ├ install/     ... Utility for installing test data and initial data
 │   │   │   └ migration/   ... Migration files
+│   │   │
+│   │   ├ layer/
+│   │   │   └ auth/        ... Authentication layer
 │   │   │
 │   │   └ service/
 │   │       ├ api_schema/  ... API schemas
@@ -57,7 +53,7 @@ everything.
 │   │
 │   ├ .env                 ... Definition of various environment variables
 │   ├ .env.example         ... Example of .env
-│   └ docker-compose.yml   ... Management docker containers
+│   └ compose.yml          ... Management docker containers
 │
 └ spec/                    ... Specifications
 ```

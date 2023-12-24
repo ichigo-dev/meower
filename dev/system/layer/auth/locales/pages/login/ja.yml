@@ -5,8 +5,13 @@ pages:
       email:
         label: メールアドレス
         placeholder: meower@example.com
+        error:
+          not_verified: そのユーザは認証されていません
+          not_found: ユーザが見つかりません
       password:
         label: パスワード
+        error:
+          wrong: パスワードが違います
       button:
         send: 送信
     button:

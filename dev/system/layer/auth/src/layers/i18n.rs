@@ -4,7 +4,7 @@
 
 use crate::state::AppState;
 
-use axum::response::{ Response, IntoResponse };
+use axum::response::IntoResponse;
 use axum::body::Body;
 use axum::http::header;
 use axum::http::Request;
@@ -18,7 +18,7 @@ use axum::extract::State;
 pub(crate) async fn layer
 (
     State(state): State<AppState>,
-    mut req: Request<Body>,
+    req: Request<Body>,
     next: Next,
 ) -> impl IntoResponse
 {
