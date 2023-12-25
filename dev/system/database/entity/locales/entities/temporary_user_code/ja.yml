@@ -1,0 +1,6 @@
+entities:
+  temporary_user_code:
+    code:
+      error:
+        expired: 期限切れのコードです
+        not_match: コードが間違っています

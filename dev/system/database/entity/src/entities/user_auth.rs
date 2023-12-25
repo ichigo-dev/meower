@@ -10,6 +10,7 @@ use meower_validator::{ Validator, ValidationError };
 use argon2::PasswordHash;
 use async_trait::async_trait;
 use chrono::Utc;
+use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -20,11 +21,55 @@ use thiserror::Error;
 #[derive(Debug, Error)]
 pub enum Error
 {
-    #[error("UserAuth: {0}")]
-    Validation(#[from] ValidationError),
+    #[error("UserAuth: {column:?} {error:?}")]
+    Validation { column: Column, error: ValidationError },
 
     #[error("UserAuth: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::Validation { column, error } =>
+            {
+                return
+                (
+                    Some(*column),
+                    error.get_error_message(&column.get_name())
+                );
+            },
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::UserAuthId => t!("entities.user_auth.user_auth_id.name"),
+            Self::UserId => t!("entities.user_auth.user_id.name"),
+            Self::Password => t!("entities.user_auth.password.name"),
+            Self::CreatedAt => t!("entities.user_auth.created_at.name"),
+            Self::UpdatedAt => t!("entities.user_auth.updated_at.name"),
+        }
+    }
 }
 
 
@@ -117,14 +162,17 @@ impl ValidateExt for ActiveModel
         let password = self.password.clone().unwrap();
 
         // Validates fields.
-        Validator::new()
+        if let Err(e) = Validator::new()
             .required()
             .min_length(8)
             .max_length(255)
             .regex(r".*[a-zA-Z].*")
             .regex(r".*[0-9].*")
             .regex(r".*[!@#$%^&*()].*")
-            .validate(&password)?;
+            .validate(&password)
+        {
+            return Err(Error::Validation{ column: Column::Password, error: e });
+        };
 
         Ok(())
     }

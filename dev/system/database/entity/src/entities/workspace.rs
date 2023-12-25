@@ -8,6 +8,7 @@ use meower_validator::{ Validator, ValidationError };
 
 use async_trait::async_trait;
 use chrono::Utc;
+use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -21,11 +22,64 @@ pub enum Error
     #[error("Workspace: The workspace name already exists.")]
     WorkspaceNameAlreadyExists,
 
-    #[error("Workspace: {0}")]
-    Validation(#[from] ValidationError),
+    #[error("Workspace: {column:?} {error:?}")]
+    Validation { column: Column, error: ValidationError },
 
     #[error("Workspace: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::WorkspaceNameAlreadyExists =>
+            {
+                return
+                (
+                    Some(Column::WorkspaceName),
+                    t!("entities.workspace.workspace_name.error.already_exists"),
+                );
+            },
+            Self::Validation { column, error } =>
+            {
+                return
+                (
+                    Some(*column),
+                    error.get_error_message(&column.get_name())
+                );
+            },
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::WorkspaceId => t!("entities.workspace.workspace_id.name"),
+            Self::WorkspaceName => t!("entities.workspace.workspace_name.name"),
+            Self::DisplayName => t!("entities.workspace.display_name.name"),
+            Self::CreatedAt => t!("entities.workspace.created_at.name"),
+            Self::UpdatedAt => t!("entities.workspace.updated_at.name"),
+            Self::IsDeleted => t!("entities.workspace.is_deleted.name"),
+        }
+    }
 }
 
 
@@ -120,18 +174,32 @@ impl ValidateExt for ActiveModel
         }
 
         // Validates fields.
-        Validator::new()
+        if let Err(e) = Validator::new()
             .required()
             .min_length(3)
             .max_length(32)
             .regex(r"^[a-zA-Z0-9_]+$")
-            .validate(&workspace_name)?;
+            .validate(&workspace_name)
+        {
+            return Err(Error::Validation
+            {
+                column: Column::WorkspaceName,
+                error: e,
+            });
+        };
 
         let display_name = self.display_name.clone().unwrap();
-        Validator::new()
+        if let Err(e) = Validator::new()
             .required()
             .max_length(64)
-            .validate(&display_name)?;
+            .validate(&display_name)
+        {
+            return Err(Error::Validation
+            {
+                column: Column::DisplayName,
+                error: e,
+            });
+        };
 
         Ok(())
     }

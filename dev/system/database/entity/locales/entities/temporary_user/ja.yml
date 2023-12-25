@@ -1,0 +1,8 @@
+entities:
+  temporary_user:
+    email:
+      error:
+        already_exists: そのメールアドレスは既に登録されています
+    user_account_name:
+      error:
+        already_exists: そのアカウント名は既に使用されています

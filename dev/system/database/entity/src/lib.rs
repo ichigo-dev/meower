@@ -7,3 +7,5 @@ mod utils;
 pub mod traits;
 
 pub use entities::*;
+
+rust_i18n::i18n!("locales");

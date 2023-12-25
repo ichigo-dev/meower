@@ -7,6 +7,7 @@ use crate::utils::code;
 
 use async_trait::async_trait;
 use chrono::{ Utc, Duration };
+use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -20,13 +21,43 @@ const CODE_EXPIRATION_MINUTES: i64 = 10;
 pub enum Error
 {
     #[error("TemporaryUserCode: The code is expired.")]
-    ExpiredCode,
+    CodeExpired,
 
     #[error("TemporaryUserCode: The code is not match.")]
-    NotMatchCode,
+    CodeNotMatch,
 
     #[error("TemporaryUserCode: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::CodeExpired =>
+            {
+                return
+                (
+                    Some(Column::Code),
+                    t!("entities.temporary_user_code.code.error.expired"),
+                );
+            },
+            Self::CodeNotMatch =>
+            {
+                return
+                (
+                    Some(Column::Code),
+                    t!("entities.temporary_user_code.code.error.not_match"),
+                );
+            },
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
 }
 
 
@@ -55,11 +86,11 @@ impl Model
     {
         if Utc::now().naive_utc() > self.expired_at
         {
-            return Err(Error::ExpiredCode);
+            return Err(Error::CodeExpired);
         }
         if &self.code != code
         {
-            return Err(Error::NotMatchCode);
+            return Err(Error::CodeNotMatch);
         }
 
         Ok(())

@@ -8,6 +8,7 @@ use meower_validator::{ Validator, ValidationError };
 
 use async_trait::async_trait;
 use chrono::Utc;
+use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -21,11 +22,66 @@ pub enum Error
     #[error("UserAccount: The user account name already exists.")]
     UserAccountNameAlreadyExists,
 
-    #[error("UserAccount: {0}")]
-    Validation(#[from] ValidationError),
+    #[error("UserAccount: {column:?} {error:?}")]
+    Validation { column: Column, error: ValidationError },
 
     #[error("UserAccount: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::UserAccountNameAlreadyExists =>
+            {
+                return
+                (
+                    Some(Column::UserAccountName),
+                    t!("entities.user_account.user_account_name.error.already_exists"),
+                );
+            },
+            Self::Validation { column, error } =>
+            {
+                return
+                (
+                    Some(*column),
+                    error.get_error_message(&column.get_name())
+                );
+            },
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::UserAccountId => t!("entities.user_account.user_account_id.name"),
+            Self::UserId => t!("entities.user_account.user_id.name"),
+            Self::UserAccountName => t!("entities.user_account.user_account_name.name"),
+            Self::DisplayName => t!("entities.user_account.display_name.name"),
+            Self::CreatedAt => t!("entities.user_account.created_at.name"),
+            Self::UpdatedAt => t!("entities.user_account.updated_at.name"),
+            Self::LastLoginedAt => t!("entities.user_account.last_logined_at.name"),
+            Self::IsDeleted => t!("entities.user_account.is_deleted.name"),
+        }
+    }
 }
 
 
@@ -123,18 +179,32 @@ impl ValidateExt for ActiveModel
         }
 
         // Validates fields.
-        Validator::new()
+        if let Err(e) = Validator::new()
             .required()
             .min_length(3)
             .max_length(32)
             .regex(r"^[a-zA-Z0-9_]+$")
-            .validate(&user_account_name)?;
+            .validate(&user_account_name)
+        {
+            return Err(Error::Validation
+            {
+                column: Column::UserAccountName,
+                error: e,
+            });
+        };
 
         let display_name = self.display_name.clone().unwrap();
-        Validator::new()
+        if let Err(e) = Validator::new()
             .required()
             .max_length(32)
-            .validate(&display_name)?;
+            .validate(&display_name)
+        {
+            return Err(Error::Validation
+            {
+                column: Column::DisplayName,
+                error: e,
+            });
+        };
 
         Ok(())
     }

@@ -17,6 +17,7 @@ use super::temporary_user_code::Column as TemporaryUserCodeColumn;
 use argon2::PasswordHash;
 use async_trait::async_trait;
 use chrono::Utc;
+use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use sea_orm::ActiveValue;
 use thiserror::Error;
@@ -45,6 +46,48 @@ pub enum Error
 
     #[error("TemporaryUser: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::EmailAlreadyExists =>
+            {
+                return
+                (
+                    Some(Column::Email),
+                    t!("entities.temporary_user.email.error.already_exists"),
+                );
+            },
+            Self::UserAccountNameAlreadyExists =>
+            {
+                return
+                (
+                    Some(Column::UserAccountName),
+                    t!("entities.temporary_user.user_account_name.error.already_exists"),
+                );
+            },
+            Self::UserError(e) =>
+            {
+                return (Some(Column::Email), e.get_error_message().1);
+            },
+            Self::UserAuthError(e) =>
+            {
+                return (Some(Column::Password), e.get_error_message().1);
+            },
+            Self::UserAccountError(e) =>
+            {
+                return (Some(Column::UserAccountName), e.get_error_message().1);
+            }
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
 }
 
 

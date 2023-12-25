@@ -1,0 +1,5 @@
+entities:
+  reset_password_token:
+    token:
+      error:
+        expired: 期限切れのトークンです

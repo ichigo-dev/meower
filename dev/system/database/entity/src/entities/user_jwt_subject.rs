@@ -7,6 +7,7 @@ use crate::utils::token;
 
 use async_trait::async_trait;
 use chrono::Utc;
+use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -19,6 +20,20 @@ pub enum Error
 {
     #[error("UserJwtSubject: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
 }
 
 

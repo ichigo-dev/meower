@@ -7,6 +7,7 @@ use crate::utils::token;
 
 use async_trait::async_trait;
 use chrono::{ Utc, Duration };
+use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -20,10 +21,32 @@ const TOKEN_EXPIRATION_MINUTES: i64 = 10;
 pub enum Error
 {
     #[error("ResetPasswordToken: The token is expired.")]
-    ExpiredToken,
+    TokenExpired,
 
     #[error("ResetPasswordToken: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::TokenExpired =>
+            {
+                return
+                (
+                    Some(Column::Token),
+                    t!("entities.reset_password_token.token.error.expired"),
+                );
+            },
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
 }
 
 
@@ -67,7 +90,7 @@ impl Model
     {
         if Utc::now().naive_utc() > self.expired_at
         {
-            return Err(Error::ExpiredToken);
+            return Err(Error::TokenExpired);
         }
         Ok(())
     }

@@ -5,6 +5,7 @@
 use crate::traits::validate::ValidateExt;
 
 use sea_orm::entity::prelude::*;
+use rust_i18n::t;
 use thiserror::Error;
 
 
@@ -28,6 +29,20 @@ pub enum Error
 {
     #[error("WorkspaceMemberAuthority: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
 }
 
 
