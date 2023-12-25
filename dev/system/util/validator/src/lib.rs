@@ -20,7 +20,10 @@
 //------------------------------------------------------------------------------
 
 use regex::Regex;
+use rust_i18n::t;
 use thiserror::Error;
+
+rust_i18n::i18n!("locales");
 
 
 //------------------------------------------------------------------------------
@@ -54,6 +57,74 @@ pub enum ValidationError
     InvalidFormat,
     #[error("Custom: {0}")]
     Custom(String),
+}
+
+impl ValidationError
+{
+    //--------------------------------------------------------------------------
+    /// Gets an error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self, column: &str ) -> String
+    {
+        match self
+        {
+            // Required
+            Self::Required =>
+            {
+                return t!("validator.error.required", column = column);
+            },
+
+            // Length
+            Self::TooShort(min) =>
+            {
+                return t!
+                (
+                    "validator.error.too_short",
+                    column = column, min = min
+                );
+            },
+            Self::TooLong(max) =>
+            {
+                return t!
+                (
+                    "validator.error.too_long",
+                    column = column, max = max
+                );
+            },
+
+            // Format
+            Self::InvalidAscii =>
+            {
+                return t!("validator.error.invalid_ascii", column = column);
+            },
+            Self::InvalidAlphanumeric =>
+            {
+                return t!
+                (
+                    "validator.error.invalid_alphanumeric",
+                    column = column,
+                );
+            },
+            Self::InvalidEmail =>
+            {
+                return t!("validator.error.invalid_email", column = column);
+            },
+            Self::InvalidUrl =>
+            {
+                return t!("validator.error.invalid_url", column = column);
+            },
+
+            // Custom
+            Self::InvalidFormat =>
+            {
+                return t!("validator.error.invalid_format", column = column);
+            },
+            Self::Custom(message) =>
+            {
+                return message.clone();
+            },
+        }
+    }
 }
 
 

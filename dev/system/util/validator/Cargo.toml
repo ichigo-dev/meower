@@ -11,4 +11,5 @@ repository = "https://github.com/ichigo-dev/meower"
 
 [dependencies]
 regex = "1.10.2"
+rust-i18n = "2.3.0"
 thiserror = "1.0.51"
