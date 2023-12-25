@@ -163,15 +163,18 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let user_account_name = self.user_account_name.clone().unwrap();
+        let user_account_name = self
+            .user_account_name
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
 
         // Checks if the account already exists.
         if self.user_account_id.is_set() == false
         {
             if Entity::find_by_user_account_name(&user_account_name)
                 .one(hdb)
-                .await
-                .unwrap()
+                .await?
                 .is_some()
             {
                 return Err(Error::UserAccountNameAlreadyExists);
@@ -193,7 +196,11 @@ impl ValidateExt for ActiveModel
             });
         };
 
-        let display_name = self.display_name.clone().unwrap();
+        let display_name = self
+            .display_name
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
         if let Err(e) = Validator::new()
             .required()
             .max_length(32)

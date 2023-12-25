@@ -3,30 +3,17 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use meower_type::{ JwtClaim, JWT_CLAIM_KEY };
 use meower_entity::traits::validate::ValidateExt;
-use meower_entity::user::Error as UserError;
+use meower_entity::temporary_user::Column as TemporaryUserColumn;
 use meower_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
-use meower_entity::temporary_user::Error as TemporaryUserError;
 use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 
 use askama::Template;
-use axum::response::{ Html, Response, IntoResponse };
-use axum::http::{ header, StatusCode };
-use axum::body::Body;
+use axum::response::{ Html, IntoResponse };
 use axum::extract::{ State, Form };
-use axum_extra::extract::cookie::{ Cookie, SameSite };
-use chrono::{ Utc, Duration };
-use jsonwebtoken::{
-    encode,
-    Header,
-    Algorithm,
-    EncodingKey,
-};
 use rust_i18n::t;
 use serde::Deserialize;
 use sea_orm::{ ActiveValue, TransactionTrait };
-use time::{ Duration as TimeDuration, OffsetDateTime };
 
 
 //------------------------------------------------------------------------------
@@ -94,7 +81,7 @@ pub(crate) async fn post_handler
     if input.email != input.email_confirm
     {
         let error = t!("pages.form.email_confirm.error.not_match");
-        let mut template = SignupTemplate
+        let template = SignupTemplate
         {
             input: input,
             input_error: SignupFormError
@@ -110,7 +97,7 @@ pub(crate) async fn post_handler
     if input.password != input.password_confirm
     {
         let error = t!("pages.form.password_confirm.error.not_match");
-        let mut template = SignupTemplate
+        let template = SignupTemplate
         {
             input: input,
             input_error: SignupFormError
@@ -138,7 +125,27 @@ pub(crate) async fn post_handler
         Err(e) =>
         {
             let mut signup_form_error = SignupFormError::default();
-            let mut template = SignupTemplate
+            let (column, message) = e.get_error_message();
+            match column
+            {
+                Some(TemporaryUserColumn::UserAccountName) =>
+                {
+                    signup_form_error.user_account_name = Some(message);
+                },
+                Some(TemporaryUserColumn::Email) =>
+                {
+                    signup_form_error.email = Some(message);
+                },
+                Some(TemporaryUserColumn::Password) =>
+                {
+                    signup_form_error.password = Some(message);
+                },
+                _ =>
+                {
+                    signup_form_error.other = Some(message);
+                },
+            }
+            let template = SignupTemplate
             {
                 input: input,
                 input_error: signup_form_error,
@@ -158,7 +165,21 @@ pub(crate) async fn post_handler
         .await
     {
         Ok(temporary_user_code) => temporary_user_code,
-        Err(e) => todo!(),
+        Err(e) =>
+        {
+            let mut signup_form_error = SignupFormError::default();
+            let (column, message) = e.get_error_message();
+            match column
+            {
+                _ => signup_form_error.other = Some(message),
+            }
+            let template = SignupTemplate
+            {
+                input: input,
+                input_error: signup_form_error,
+            };
+            return Err(Html(template.render().unwrap()));
+        },
     };
 
     tsx.commit().await.unwrap();

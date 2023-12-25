@@ -121,7 +121,7 @@ impl ActiveModelBehavior for ActiveModel
         // Deletes the old datas.
         if insert
         {
-            let user_id = self.user_id.clone().unwrap();
+            let user_id = self.user_id.clone().take().unwrap_or(0);
             Entity::delete_many()
                 .filter(Column::UserId.eq(user_id))
                 .exec(hdb)
@@ -137,7 +137,7 @@ impl ActiveModelBehavior for ActiveModel
         self.set(Column::UpdatedAt, now.into());
 
         // Hashes the password.
-        let password = self.password.clone().unwrap();
+        let password = self.password.clone().take().unwrap_or("".to_string());
         if let Err(_) = PasswordHash::new(&password)
         {
             self.set(Column::Password, hash::hash_field(&password).into());
@@ -159,7 +159,7 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let password = self.password.clone().unwrap();
+        let password = self.password.clone().take().unwrap_or("".to_string());
 
         // Validates fields.
         if let Err(e) = Validator::new()

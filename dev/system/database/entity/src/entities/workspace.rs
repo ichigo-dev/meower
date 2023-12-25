@@ -158,15 +158,18 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let workspace_name = self.workspace_name.clone().unwrap();
+        let workspace_name = self
+            .workspace_name
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
 
         // Checks if the account already exists.
         if self.workspace_id.is_set() == false
         {
             if Entity::find_by_workspace_name(&workspace_name)
                 .one(hdb)
-                .await
-                .unwrap()
+                .await?
                 .is_some()
             {
                 return Err(Error::WorkspaceNameAlreadyExists);
@@ -188,7 +191,11 @@ impl ValidateExt for ActiveModel
             });
         };
 
-        let display_name = self.display_name.clone().unwrap();
+        let display_name = self
+            .display_name
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
         if let Err(e) = Validator::new()
             .required()
             .max_length(64)

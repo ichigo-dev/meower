@@ -60,6 +60,7 @@ pub(crate) struct LoginFormError
 {
     email: Option<String>,
     password: Option<String>,
+    other: Option<String>,
 }
 
 

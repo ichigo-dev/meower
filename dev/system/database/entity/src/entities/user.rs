@@ -201,7 +201,7 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let email = self.email.clone().unwrap();
+        let email = self.email.clone().take().unwrap_or("".to_string());
 
         // Checks if the user already exists.
         if self.user_id.is_set() == false

@@ -140,7 +140,7 @@ impl ActiveModelBehavior for ActiveModel
         // Deletes the old tokens.
         if insert
         {
-            let user_id = self.user_id.clone().unwrap();
+            let user_id = self.user_id.clone().take().unwrap_or(0);
             Entity::delete_many()
                 .filter(Column::UserId.eq(user_id))
                 .exec(hdb)

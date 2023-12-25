@@ -18,6 +18,9 @@
      <div class="ui_error">{{ input_error.password.as_ref().unwrap() }}</div>
     {% endif %}
    </label>
+   {% if input_error.other.is_some() %}
+    <div class="ui_error">{{ input_error.other.as_ref().unwrap() }}</div>
+   {% endif %}
    <button type="submit" class="ui_button primary full_horizon">{{ t!("pages.login.form.button.submit") }}</button>
   </form>
   <hr class="ui_panel border full_horizon">

@@ -141,7 +141,11 @@ impl ActiveModelBehavior for ActiveModel
         // Deletes the old codes.
         if insert
         {
-            let temporary_user_id = self.temporary_user_id.clone().unwrap();
+            let temporary_user_id = self
+                .temporary_user_id
+                .clone()
+                .take()
+                .unwrap_or(0);
             Entity::delete_many()
                 .filter(Column::TemporaryUserId.eq(temporary_user_id))
                 .exec(hdb)

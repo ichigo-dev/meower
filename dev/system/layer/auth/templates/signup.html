@@ -6,7 +6,7 @@
   <form method="POST" class="flex column align_center gap_md full_horizon">
    <label class="flex column gap_sm full_horizon">
     <span class="ui_label">{{ t!("pages.signup.form.user_account_name.label") }}</span>
-    <input type="email" name="email" placeholder="{{ t!("pages.signup.form.user_account_name.placeholder") }}" value="{{ input.user_account_name }}" class="ui_text">
+    <input type="text" name="user_account_name" placeholder="{{ t!("pages.signup.form.user_account_name.placeholder") }}" value="{{ input.user_account_name }}" class="ui_text">
     {% if input_error.user_account_name.is_some() %}
      <div class="ui_error">{{ input_error.user_account_name.as_ref().unwrap() }}</div>
     {% endif %}

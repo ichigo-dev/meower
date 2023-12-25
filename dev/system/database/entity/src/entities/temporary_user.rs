@@ -223,7 +223,7 @@ impl ActiveModelBehavior for ActiveModel
         }
 
         // Hashes the password.
-        let password = self.password.clone().unwrap();
+        let password = self.password.clone().take().unwrap_or("".to_string());
         if let Err(_) = PasswordHash::new(&password)
         {
             self.set(Column::Password, hash::hash_field(&password).into());
@@ -239,7 +239,11 @@ impl ActiveModelBehavior for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let temporary_user_id = self.temporary_user_id.clone().unwrap();
+        let temporary_user_id = self
+            .temporary_user_id
+            .clone()
+            .take()
+            .unwrap_or(0);
         TemporaryUserCodeEntity::delete_many()
             .filter
             (
@@ -264,23 +268,43 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let email = self.email.clone().unwrap();
-        let password = self.password.clone().unwrap();
-        let user_account_name = self.user_account_name.clone().unwrap();
+        let user_account_name = self
+            .user_account_name
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
+        let email = self
+            .email
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
+        let password = self
+            .password
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
 
         // Checks if the email already exists.
-        if Entity::find_by_email(&email).one(hdb).await.unwrap().is_some()
+        if Entity::find_by_email(&email).one(hdb).await?.is_some()
         {
             return Err(Error::EmailAlreadyExists);
         }
         if Entity::find_by_user_account_name(&user_account_name)
             .one(hdb)
-            .await
-            .unwrap()
+            .await?
             .is_some()
         {
             return Err(Error::UserAccountNameAlreadyExists);
         }
+
+        // UserAccount validation.
+        let user_account = ActiveUserAccount
+        {
+            user_account_name: ActiveValue::Set(user_account_name.clone()),
+            display_name: ActiveValue::Set(user_account_name.clone()),
+            ..Default::default()
+        };
+        user_account.validate(hdb).await?;
 
         // User validation.
         let user = ActiveUser
@@ -297,14 +321,6 @@ impl ValidateExt for ActiveModel
             ..Default::default()
         };
         user_auth.validate(hdb).await?;
-
-        // UserAccount validation.
-        let user_account = ActiveUserAccount
-        {
-            user_account_name: ActiveValue::Set(user_account_name),
-            ..Default::default()
-        };
-        user_account.validate(hdb).await?;
 
         Ok(())
     }
