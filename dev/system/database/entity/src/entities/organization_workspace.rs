@@ -35,6 +35,26 @@ impl Error
 
 
 //------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::OrganizationWorkspaceId => t!("entities.organization_workspace.organization_workspace_id.name"),
+            Self::OrganizationId => t!("entities.organization_workspace.organization_id.name"),
+            Self::WorkspaceId => t!("entities.organization_workspace.workspace_id.name"),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]

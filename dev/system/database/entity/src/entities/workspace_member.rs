@@ -34,6 +34,27 @@ impl Error
 }
 
 
+//------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_column_name( &self ) -> String
+    {
+        match self
+        {
+            Self::WorkspaceMemberId => t!("entities.workspace_member.workspace_member_id.name"),
+            Self::WorkspaceId => t!("entities.workspace_member.workspace_id.name"),
+            Self::UserAccountId => t!("entities.workspace_member.user_account_id.name"),
+            Self::WorkspaceMemberAuthorityId => t!("entities.workspace_member.workspace_member_authority_id.name"),
+        }
+        .to_string()
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// Model.

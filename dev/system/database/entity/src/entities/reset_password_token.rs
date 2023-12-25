@@ -51,6 +51,28 @@ impl Error
 
 
 //------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::ResetPasswordTokenId => t!("entities.reset_password_token.reset_password_token_id.name"),
+            Self::UserId => t!("entities.reset_password_token.user_id.name"),
+            Self::Token => t!("entities.reset_password_token.token.name"),
+            Self::CreatedAt => t!("entities.reset_password_token.created_at.name"),
+            Self::ExpiredAt => t!("entities.reset_password_token.expired_at.name"),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
 /// Entity.
 //------------------------------------------------------------------------------
 impl Entity

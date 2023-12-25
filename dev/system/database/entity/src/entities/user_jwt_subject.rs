@@ -38,6 +38,28 @@ impl Error
 
 
 //------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_column_name( &self ) -> String
+    {
+        match self
+        {
+            Self::UserJwtSubjectId => t!("entities.user_jwt_subject.user_jwt_subject_id.name"),
+            Self::UserId => t!("entities.user_jwt_subject.user_id.name"),
+            Self::Subject => t!("entities.user_jwt_subject.subject.name"),
+            Self::CreatedAt => t!("entities.user_jwt_subject.created_at.name"),
+        }
+        .to_string()
+    }
+}
+
+
+//------------------------------------------------------------------------------
 /// Entity.
 //------------------------------------------------------------------------------
 impl Entity

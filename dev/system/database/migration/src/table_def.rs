@@ -81,7 +81,6 @@ pub(crate) enum TemporaryUser
 {
     Table,
     TemporaryUserId,
-    Token,
     UserAccountName,
     Email,
     Password,

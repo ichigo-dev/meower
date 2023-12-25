@@ -6,6 +6,7 @@ use crate::traits::validate::ValidateExt;
 
 use async_trait::async_trait;
 use chrono::Utc;
+use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -18,6 +19,47 @@ pub enum Error
 {
     #[error("UserAccountProfile: Database error.")]
     DbError(#[from] DbErr),
+}
+
+impl Error
+{
+    //--------------------------------------------------------------------------
+    /// Gets the error message.
+    //--------------------------------------------------------------------------
+    pub fn get_error_message( &self ) -> (Option<Column>, String)
+    {
+        match self
+        {
+            Self::DbError(_) => (None, t!("common.error.db")),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::UserAccountProfileId => t!("entities.user_account_profile.user_account_profile_id.name"),
+            Self::UserAccountId => t!("entities.user_account_profile.user_account_id.name"),
+            Self::Name => t!("entities.user_account_profile.name.name"),
+            Self::Biography => t!("entities.user_account_profile.biography.name"),
+            Self::Company => t!("entities.user_account_profile.company.name"),
+            Self::Title => t!("entities.user_account_profile.title.name"),
+            Self::Location => t!("entities.user_account_profile.location.name"),
+            Self::CreatedAt => t!("entities.user_account_profile.created_at.name"),
+            Self::UpdatedAt => t!("entities.user_account_profile.updated_at.name"),
+            Self::IsDeleted => t!("entities.user_account_profile.is_deleted.name"),
+        }
+    }
 }
 
 

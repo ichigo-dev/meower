@@ -35,6 +35,30 @@ impl Error
 
 
 //------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::ProjectId => t!("entities.project.project_id.name"),
+            Self::ProjectName => t!("entities.project.project_name.name"),
+            Self::DisplayName => t!("entities.project.display_name.name"),
+            Self::WorkspaceId => t!("entities.project.workspace_id.name"),
+            Self::CreatedAt => t!("entities.project.created_at.name"),
+            Self::UpdatedAt => t!("entities.project.updated_at.name"),
+            Self::IsDeleted => t!("entities.project.is_deleted.name"),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]

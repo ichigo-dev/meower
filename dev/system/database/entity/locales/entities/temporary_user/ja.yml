@@ -1,8 +1,16 @@
 entities:
   temporary_user:
-    email:
-      error:
-        already_exists: そのメールアドレスは既に登録されています
+    temporary_user_id:
+      name: 仮ユーザID
     user_account_name:
+      name: アカウント名
       error:
         already_exists: そのアカウント名は既に使用されています
+    email:
+      name: メールアドレス
+      error:
+        already_exists: そのメールアドレスは既に登録されています
+    password:
+      name: パスワード
+    created_at:
+      name: 登録日時

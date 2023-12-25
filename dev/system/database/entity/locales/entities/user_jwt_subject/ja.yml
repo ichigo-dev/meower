@@ -1,0 +1,10 @@
+entities:
+  user_jwt_subject:
+    user_jwt_subject_id:
+      name: JWTサブジェクトID
+    user_id:
+      name: ユーザID
+    subject:
+      name: サブジェクト
+    created_at:
+      name: 作成日時

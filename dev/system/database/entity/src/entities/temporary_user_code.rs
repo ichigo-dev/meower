@@ -62,6 +62,28 @@ impl Error
 
 
 //------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::TemporaryUserCodeId => t!("entities.temporary_user_code.temporary_user_code_id.name"),
+            Self::TemporaryUserId => t!("entities.temporary_user_code.temporary_user_id.name"),
+            Self::Code => t!("entities.temporary_user_code.code.name"),
+            Self::CreatedAt => t!("entities.temporary_user_code.created_at.name"),
+            Self::ExpiredAt => t!("entities.temporary_user_code.expired_at.name"),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]

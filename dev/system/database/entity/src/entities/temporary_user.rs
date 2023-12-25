@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::traits::validate::ValidateExt;
-use crate::utils::{ hash, token };
+use crate::utils::hash;
 use super::user::Model as UserModel;
 use super::user::ActiveModel as ActiveUser;
 use super::user::Error as UserError;
@@ -92,6 +92,28 @@ impl Error
 
 
 //------------------------------------------------------------------------------
+/// Column.
+//------------------------------------------------------------------------------
+impl Column
+{
+    //--------------------------------------------------------------------------
+    /// Gets the column name.
+    //--------------------------------------------------------------------------
+    pub fn get_name( &self ) -> String
+    {
+        match self
+        {
+            Self::TemporaryUserId => t!("entities.temporary_user.temporary_user_id.name"),
+            Self::UserAccountName => t!("entities.temporary_user.user_account_name.name"),
+            Self::Email => t!("entities.temporary_user.email.name"),
+            Self::Password => t!("entities.temporary_user.password.name"),
+            Self::CreatedAt => t!("entities.temporary_user.created_at.name"),
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------
 /// Entity.
 //------------------------------------------------------------------------------
 impl Entity
@@ -111,14 +133,6 @@ impl Entity
     {
         Self::find().filter(Column::Email.eq(email))
     }
-
-    //--------------------------------------------------------------------------
-    /// Finds temporary_user by token.
-    //--------------------------------------------------------------------------
-    pub fn find_by_token( token: &str ) -> Select<Self>
-    {
-        Self::find().filter(Column::Token.eq(token))
-    }
 }
 
 
@@ -131,8 +145,6 @@ pub struct Model
 {
     #[sea_orm(primary_key)]
     pub temporary_user_id: i64,
-    #[sea_orm(unique)]
-    pub token: String,
     #[sea_orm(unique)]
     pub user_account_name: String,
     #[sea_orm(unique)]
@@ -208,9 +220,6 @@ impl ActiveModelBehavior for ActiveModel
         {
             let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
-
-            let token = token::generate_token(None);
-            self.set(Column::Token, token.into());
         }
 
         // Hashes the password.

@@ -1,0 +1,10 @@
+entities:
+  workspace_member:
+    workspace_member_id:
+      name: ワークスペースメンバーID
+    workspace_id:
+      name: ワークスペースID
+    user_account_id:
+      name: アカウントID
+    workspace_member_authority_id:
+      name: ワークスペースメンバー権限ID
