@@ -5,6 +5,7 @@
 use crate::AppState;
 use meower_type::{ JwtClaim, JWT_CLAIM_KEY };
 use meower_entity::traits::validate::ValidateExt;
+use meower_entity::user::Error as UserError;
 use meower_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
 use meower_entity::temporary_user::Error as TemporaryUserError;
 use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
@@ -65,6 +66,7 @@ pub(crate) struct SignupFormError
     email_confirm: Option<String>,
     password: Option<String>,
     password_confirm: Option<String>,
+    other: Option<String>,
 }
 
 
@@ -136,15 +138,6 @@ pub(crate) async fn post_handler
         Err(e) =>
         {
             let mut signup_form_error = SignupFormError::default();
-            match e
-            {
-                TemporaryUserError::UserAccountNameAlreadyExists =>
-                {
-                    let error = t!("pages.form.user_account_name.error.already_exists");
-                    signup_form_error.user_account_name = Some(error);
-                },
-                _ => todo!(),
-            }
             let mut template = SignupTemplate
             {
                 input: input,
@@ -152,6 +145,20 @@ pub(crate) async fn post_handler
             };
             return Err(Html(template.render().unwrap()));
         },
+    };
+
+    // Creates a temporary user code.
+    let temporary_user_code = ActiveTemporaryUserCode
+    {
+        temporary_user_id: ActiveValue::set(temporary_user.temporary_user_id),
+        ..Default::default()
+    };
+    let temporary_user_code = match temporary_user_code
+        .validate_and_insert(&tsx)
+        .await
+    {
+        Ok(temporary_user_code) => temporary_user_code,
+        Err(e) => todo!(),
     };
 
     tsx.commit().await.unwrap();
