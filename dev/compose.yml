@@ -46,6 +46,12 @@ services:
       JWT_AUDIENCE: ${JWT_AUDIENCE}
       JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES}
       JWT_SECRET: ${JWT_SECRET}
+      SYSTEM_EMAIL_ADDRESS: ${SYSTEM_EMAIL_ADDRESS}
+      SMTP_TLS: ${SMTP_TLS}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
     working_dir: /system/layer/auth
     command: "cargo watch -x run"
     depends_on:

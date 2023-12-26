@@ -26,6 +26,14 @@ pub(crate) struct Config
     pub(crate) jwt_audience: Vec<String>,
     pub(crate) jwt_expiration_minutes: i64,
     pub(crate) jwt_secret: String,
+
+    // Email config.
+    pub(crate) system_email_address: String,
+    pub(crate) smtp_tls: bool,
+    pub(crate) smtp_host: String,
+    pub(crate) smtp_port: u16,
+    pub(crate) smtp_user: String,
+    pub(crate) smtp_password: String,
 }
 
 impl Config
@@ -68,6 +76,24 @@ impl Config
         let jwt_secret = env::var("JWT_SECRET")
             .expect("JWT_SECRET must be set");
 
+        // Email config.
+        let system_email_address = env::var("SYSTEM_EMAIL_ADDRESS")
+            .expect("SYSTEM_EMAIL_ADDRESS must be set");
+        let smtp_tls = env::var("SMTP_TLS")
+            .unwrap_or_else(|_| "false".to_string())
+            .parse::<bool>()
+            .expect("SMTP_TLS must be a boolean");
+        let smtp_host = env::var("SMTP_HOST")
+            .expect("SMTP_HOST must be set");
+        let smtp_port = env::var("SMTP_PORT")
+            .expect("SMTP_PORT must be set")
+            .parse::<u16>()
+            .expect("SMTP_PORT must be a number");
+        let smtp_user = env::var("SMTP_USER")
+            .expect("SMTP_USER must be set");
+        let smtp_password = env::var("SMTP_PASSWORD")
+            .expect("SMTP_PASSWORD must be set");
+
         Self
         {
             debug_mode,
@@ -78,6 +104,12 @@ impl Config
             jwt_audience,
             jwt_expiration_minutes,
             jwt_secret,
+            system_email_address,
+            smtp_tls,
+            smtp_host,
+            smtp_port,
+            smtp_user,
+            smtp_password,
         }
     }
 }

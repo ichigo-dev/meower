@@ -11,6 +11,11 @@ use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 use askama::Template;
 use axum::response::{ Html, IntoResponse };
 use axum::extract::{ State, Form };
+use lettre::{ AsyncSmtpTransport, AsyncTransport, Tokio1Executor };
+use lettre::Message;
+use lettre::message::MessageBuilder;
+use lettre::message::header::ContentType;
+use lettre::transport::smtp::authentication::Credentials;
 use rust_i18n::t;
 use serde::Deserialize;
 use sea_orm::{ ActiveValue, TransactionTrait };
@@ -181,6 +186,15 @@ pub(crate) async fn post_handler
             return Err(Html(template.render().unwrap()));
         },
     };
+
+    // Sends a confirmation email.
+    let email = Message::builder()
+        .from(state.config.system_email_address.parse().unwrap())
+        .to(input.email.clone().parse().unwrap())
+        .header(ContentType::TEXT_HTML)
+        .subject("")
+        .body("".to_string())
+        .unwrap();
 
     tsx.commit().await.unwrap();
     let template = SignupTemplate::default();
