@@ -1,12 +1,12 @@
 entities:
   user_auth:
     user_auth_id:
-      name: ユーザ認証ID
+      name: "ユーザ認証ID"
     user_id:
-      name: ユーザID
+      name: "ユーザID"
     password:
-      name: パスワード
+      name: "パスワード"
     created_at:
-      name: 登録日時
+      name: "登録日時"
     updated_at:
-      name: 更新日時
+      name: "更新日時"
