@@ -100,14 +100,14 @@ pub(crate) async fn post_handler
                 .unwrap()
             {
                 Some(_) => t!("pages.login.form.email.error.not_verified"),
-                None => t!("pages.login.form.email.error.not_found"),
+                None => t!("pages.login.form.error.failed"),
             };
             let template = LoginTemplate
             {
                 input: input,
                 input_error: LoginFormError
                 {
-                    email: Some(error),
+                    other: Some(error),
                     ..Default::default()
                 },
             };
@@ -124,7 +124,7 @@ pub(crate) async fn post_handler
             input: input,
             input_error: LoginFormError
             {
-                password: Some(t!("pages.login.form.password.error.wrong")),
+                other: Some(t!("pages.login.form.error.failed")),
                 ..Default::default()
             },
         };
