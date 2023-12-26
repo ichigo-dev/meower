@@ -5,8 +5,12 @@ pages:
       email:
         label: "メールアドレス"
         placeholder: "meower@example.com"
+        error:
+          required: "メールアドレスが入力されていません"
       password:
         label: "パスワード"
+        error:
+          required: "パスワードが入力されていません"
       button:
         send: "送信"
     button:

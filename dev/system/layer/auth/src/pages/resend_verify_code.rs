@@ -76,6 +76,36 @@ pub(crate) async fn post_handler
     let config = state.config;
     let tsx = state.hdb.begin().await.unwrap();
 
+    // Checks the email is not empty.
+    if input.email.is_empty()
+    {
+        let template = PageTemplate
+        {
+            input: input,
+            input_error: FormError
+            {
+                email: Some(t!("pages.resend_verify_code.form.email.error.required")),
+                ..Default::default()
+            },
+        };
+        return Ok(Html(template.render().unwrap()));
+    }
+
+    // Checks the password is not empty.
+    if input.password.is_empty()
+    {
+        let template = PageTemplate
+        {
+            input: input,
+            input_error: FormError
+            {
+                email: Some(t!("pages.resend_verify_code.form.password.error.required")),
+                ..Default::default()
+            },
+        };
+        return Ok(Html(template.render().unwrap()));
+    }
+
     // Creates a temporary user.
     let temporary_user = match TemporaryUserEntity::find_by_email(&input.email)
         .one(&tsx)

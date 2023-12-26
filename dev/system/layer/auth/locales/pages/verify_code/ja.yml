@@ -2,6 +2,7 @@ pages:
   verify_code:
     heading: "コード認証"
     form:
+      caution: "この画面を離れると、認証コードの再送が必要になります"
       code:
         label: "コード"
       button:
