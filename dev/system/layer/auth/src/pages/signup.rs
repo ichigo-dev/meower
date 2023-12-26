@@ -18,7 +18,7 @@ use lettre::Message;
 use lettre::message::header::ContentType;
 use rust_i18n::t;
 use serde::Deserialize;
-use sea_orm::{ ActiveValue, ModelTrait, TransactionTrait };
+use sea_orm::{ ActiveValue, TransactionTrait };
 
 
 //------------------------------------------------------------------------------
@@ -190,23 +190,6 @@ pub(crate) async fn post_handler
         },
     };
 
-    // Deletes the temporary user.
-    let token = temporary_user.token.clone();
-    if temporary_user.delete(&tsx).await.is_err()
-    {
-        tsx.rollback().await.unwrap();
-        let template = PageTemplate
-        {
-            input: input,
-            input_error: FormError
-            {
-                other: Some(t!("system.error")),
-                ..Default::default()
-            },
-        };
-        return Err(Html(template.render().unwrap()));
-    }
-
     // Sends a confirmation email.
     let mailer = get_mailer(&config);
     let email = Message::builder()
@@ -223,29 +206,25 @@ pub(crate) async fn post_handler
             )
         )
         .unwrap();
-    match mailer.send(email).await
+    if let Err(e) = mailer.send(email).await
     {
-        Ok(_) => {},
-        Err(e) =>
+        tsx.rollback().await.unwrap();
+        let template = PageTemplate
         {
-            tsx.rollback().await.unwrap();
-            let template = PageTemplate
+            input: input,
+            input_error: FormError
             {
-                input: input,
-                input_error: FormError
-                {
-                    other: Some(e.to_string()),
-                    ..Default::default()
-                },
-            };
-            return Err(Html(template.render().unwrap()));
-        },
-    }
+                other: Some(e.to_string()),
+                ..Default::default()
+            },
+        };
+        return Err(Html(template.render().unwrap()));
+    };
 
     tsx.commit().await.unwrap();
     let template = VerifyCodePageTemplate
     {
-        token: token,
+        token: temporary_user.token,
         ..Default::default()
     };
     Ok(Html(template.render().unwrap()))

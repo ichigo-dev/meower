@@ -214,6 +214,7 @@ impl Model
         {
             user_id: ActiveValue::Set(user.user_id),
             user_account_name: ActiveValue::Set(self.user_account_name.clone()),
+            display_name: ActiveValue::Set(self.user_account_name.clone()),
             ..Default::default()
         };
         user_account.validate_and_insert(hdb).await?;
@@ -278,6 +279,7 @@ impl ActiveModelBehavior for ActiveModel
         {
             let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
+            self.set(Column::Token, token::generate_token(None).into());
         }
 
         // Hashes the password.
@@ -285,7 +287,6 @@ impl ActiveModelBehavior for ActiveModel
         if let Err(_) = PasswordHash::new(&password)
         {
             self.set(Column::Password, hash::hash_field(&password).into());
-            self.set(Column::Token, token::generate_token(None).into());
         };
 
         Ok(self)

@@ -11,7 +11,7 @@ use axum::response::{ Html, IntoResponse };
 use axum::extract::{ State, Form };
 use rust_i18n::t;
 use serde::Deserialize;
-use sea_orm::TransactionTrait;
+use sea_orm::{ ModelTrait, TransactionTrait };
 
 
 //------------------------------------------------------------------------------
@@ -116,6 +116,23 @@ pub(crate) async fn post_handler
         };
         return Err(Html(template.render().unwrap()));
     };
+
+    // Deletes the temporary user.
+    if temporary_user.delete(&tsx).await.is_err()
+    {
+        tsx.rollback().await.unwrap();
+        let template = PageTemplate
+        {
+            input: input,
+            input_error: FormError
+            {
+                other: Some(t!("system.error")),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        return Err(Html(template.render().unwrap()));
+    }
 
     tsx.commit().await.unwrap();
     let template = SignupSuccessPageTemplate::default();

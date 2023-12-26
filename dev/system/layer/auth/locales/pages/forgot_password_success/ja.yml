@@ -1,0 +1,6 @@
+pages:
+  forgot_password_success:
+    heading: "パスワード再設定用メール送信完了"
+    body: "パスワード再設定用のメールを登録メールアドレス宛に送信しました"
+    button:
+      login: "ログイン"

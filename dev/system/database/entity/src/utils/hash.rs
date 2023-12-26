@@ -28,6 +28,6 @@ pub fn hash_field( field: &str ) -> String
 //------------------------------------------------------------------------------
 pub fn verify_field( field: &str, hash: &str ) -> bool
 {
-    let parsed_hash = PasswordHash::new(&field).unwrap();
-    Argon2::default().verify_password(hash.as_bytes(), &parsed_hash).is_ok()
+    let parsed_hash = PasswordHash::new(&hash).unwrap();
+    Argon2::default().verify_password(field.as_bytes(), &parsed_hash).is_ok()
 }

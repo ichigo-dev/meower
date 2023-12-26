@@ -1,0 +1,13 @@
+pages:
+  forgot_password:
+    heading: "パスワードを忘れた場合"
+    form:
+      email:
+        label: "メールアドレス"
+        placeholder: "meower@example.com"
+        error:
+          not_verified: "そのユーザは認証されていません"
+      button:
+        send: "送信"
+    button:
+      login: "ログイン"

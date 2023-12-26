@@ -2,6 +2,8 @@
 //! Pages.
 //------------------------------------------------------------------------------
 
+pub mod forgot_password;
+pub mod forgot_password_success;
 pub mod login;
 pub mod resend_verify_code;
 pub mod signup;

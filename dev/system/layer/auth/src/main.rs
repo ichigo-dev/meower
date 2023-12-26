@@ -47,7 +47,9 @@ async fn main()
         (
             "/resend_verify_code",
             post(pages::resend_verify_code::post_handler),
-        );
+        )
+        .route("/forgot_password", get(pages::forgot_password::get_handler))
+        .route("/forgot_password", post(pages::forgot_password::post_handler));
 
     // Creates the application routes.
     let routes = Router::new()

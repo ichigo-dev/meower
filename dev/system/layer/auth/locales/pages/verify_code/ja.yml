@@ -9,4 +9,3 @@ pages:
         submit: "送信"
     error:
       invalid_url: "無効なURLです"
-
