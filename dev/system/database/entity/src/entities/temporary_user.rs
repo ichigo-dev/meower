@@ -244,6 +244,14 @@ impl Model
         temporary_user_code.verify_code(code)?;
         Ok(())
     }
+
+    //--------------------------------------------------------------------------
+    /// Verifies the password.
+    //--------------------------------------------------------------------------
+    pub fn verify_password( &self, password: &str ) -> bool
+    {
+        hash::verify_field(password, &self.password)
+    }
 }
 
 

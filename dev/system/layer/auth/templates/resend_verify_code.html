@@ -1,0 +1,30 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+ <h1 class="ui_heading">{{ t!("pages.resend_verify_code.heading") }}</h1>
+ <div class="ui_panel sm shadow radius padding_xl margin_lg flex column align_center gap_md">
+  <form method="POST" class="flex column align_center gap_md full_horizon">
+   <label class="flex column gap_sm full_horizon">
+    <span class="ui_label">{{ t!("pages.resend_verify_code.form.email.label") }}</span>
+    <input type="email" name="email" placeholder="{{ t!("pages.resend_verify_code.form.email.placeholder") }}" value="{{ input.email }}" class="ui_text">
+    {% if input_error.email.is_some() %}
+     <div class="ui_error">{{ input_error.email.as_ref().unwrap() }}</div>
+    {% endif %}
+   </label>
+   <label class="flex column gap_sm full_horizon">
+    <span class="ui_label">{{ t!("pages.resend_verify_code.form.password.label") }}</span>
+    <input type="password" name="password" class="ui_text">
+    {% if input_error.password.is_some() %}
+     <div class="ui_error">{{ input_error.password.as_ref().unwrap() }}</div>
+    {% endif %}
+   </label>
+   {% if input_error.other.is_some() %}
+    <div class="ui_error">{{ input_error.other.as_ref().unwrap() }}</div>
+   {% endif %}
+   <button type="submit" class="ui_button primary full_horizon">{{ t!("pages.resend_verify_code.form.button.send") }}</button>
+  </form>
+  <hr class="ui_panel border full_horizon">
+  <a href="/auth/login" class="ui_button primary_light full_horizon">{{ t!("pages.resend_verify_code.button.login") }}</a>
+  <a href="/auth/signup" class="ui_button primary_light full_horizon">{{ t!("pages.resend_verify_code.button.signup") }}</a>
+ </div>
+{% endblock %}

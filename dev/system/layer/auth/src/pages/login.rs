@@ -102,6 +102,8 @@ pub(crate) async fn post_handler
                 Some(_) => t!("pages.login.form.email.error.not_verified"),
                 None => t!("pages.login.form.error.failed"),
             };
+
+            tsx.rollback().await.unwrap();
             let template = PageTemplate
             {
                 input: input,
@@ -111,7 +113,6 @@ pub(crate) async fn post_handler
                     ..Default::default()
                 },
             };
-            tsx.rollback().await.unwrap();
             return Err(Html(template.render().unwrap()));
         },
     };
@@ -119,6 +120,7 @@ pub(crate) async fn post_handler
     // Tries to login.
     if user.try_login(&tsx, &input.password).await == false
     {
+        tsx.rollback().await.unwrap();
         let template = PageTemplate
         {
             input: input,
@@ -128,7 +130,6 @@ pub(crate) async fn post_handler
                 ..Default::default()
             },
         };
-        tsx.rollback().await.unwrap();
         return Err(Html(template.render().unwrap()));
     }
 
@@ -145,6 +146,7 @@ pub(crate) async fn post_handler
         Ok(subject) => subject,
         Err(e) =>
         {
+            tsx.rollback().await.unwrap();
             let error = match e
             {
                 UserJwtSubjectError::DbError(e) => e.to_string(),
@@ -158,7 +160,6 @@ pub(crate) async fn post_handler
                     ..Default::default()
                 },
             };
-            tsx.rollback().await.unwrap();
             return Err(Html(template.render().unwrap()));
         },
     };
@@ -191,7 +192,6 @@ pub(crate) async fn post_handler
     header.alg = Algorithm::HS256;
     let key = EncodingKey::from_secret(&config.jwt_secret.as_bytes());
     let jwt = encode(&header, &jwt_claim, &key).unwrap();
-
 
     // Builds JWT claim cookie.
     let offset_date_time = OffsetDateTime::now_utc();

@@ -1,0 +1,14 @@
+pages:
+  resend_verify_code:
+    heading: "認証コードの再送信"
+    form:
+      email:
+        label: "メールアドレス"
+        placeholder: "meower@example.com"
+      password:
+        label: "パスワード"
+      button:
+        send: "送信"
+    button:
+      login: "ログイン"
+      signup: "サインアップ"
