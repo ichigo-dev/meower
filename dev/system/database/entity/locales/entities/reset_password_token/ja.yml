@@ -1,14 +1,14 @@
 entities:
   reset_password_token:
     reset_password_token_id:
-      name: パスワードリセットトークンID
+      name: "パスワードリセットトークンID"
     user_id:
-      name: ユーザID
+      name: "ユーザID"
     token:
-      name: トークン
+      name: "トークン"
       error:
-        expired: 期限切れのトークンです
+        expired: "期限切れのトークンです"
     created_at:
-      name: 作成日時
+      name: "作成日時"
     expired_at:
-      name: 期限
+      name: "期限"

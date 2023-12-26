@@ -1,0 +1,5 @@
+messages:
+  email:
+    signup:
+      subject: "サインアップ"
+      body:

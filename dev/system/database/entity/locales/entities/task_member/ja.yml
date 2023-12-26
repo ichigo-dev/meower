@@ -1,8 +1,8 @@
 entities:
   task_member:
     task_member_id:
-      name: タスクメンバーID
+      name: "タスクメンバーID"
     task_id:
-      name: タスクID
+      name: "タスクID"
     user_account_id:
-      name: アカウントID
+      name: "アカウントID"

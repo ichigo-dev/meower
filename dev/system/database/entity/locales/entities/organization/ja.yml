@@ -1,14 +1,14 @@
 entities:
   organization:
     organization_id:
-      name: 組織ID
+      name: "組織ID"
     organization_name:
-      name: 組織名
+      name: "組織名"
     display_name:
-      name: 表示名
+      name: "表示名"
     created_at:
-      name: 登録日時
+      name: "登録日時"
     updated_at:
-      name: 更新日時
+      name: "更新日時"
     is_deleted:
-      name: 削除フラグ
+      name: "削除フラグ"

@@ -1,18 +1,18 @@
 pages:
   login:
-    heading: ログイン
+    heading: "ログイン"
     form:
       email:
-        label: メールアドレス
-        placeholder: meower@example.com
-          not_verified: そのユーザは認証されていません
+        label: "メールアドレス"
+        placeholder: "meower@example.com"
+          not_verified: "そのユーザは認証されていません"
       password:
-        label: パスワード
+        label: "パスワード"
       button:
-        submit: 送信
+        submit: "送信"
       error:
-        failed: ログインに失敗しました
+        failed: "ログインに失敗しました"
     button:
-      signup: サインアップ
-      resend_verify_code: 認証コード再送信
-      forgot_password: パスワードを忘れた
+      signup: "サインアップ"
+      resend_verify_code: "認証コード再送信"
+      forgot_password: "パスワードを忘れた"

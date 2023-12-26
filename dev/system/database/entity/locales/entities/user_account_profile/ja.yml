@@ -1,22 +1,22 @@
 entities:
   user_account_profile:
     user_account_profile_id:
-      name: アカウントプロフィールID
+      name: "アカウントプロフィールID"
     user_account_id:
-      name: アカウントID
+      name: "アカウントID"
     name:
-      name: 名前
+      name: "名前"
     biography:
-      name: 自己紹介
+      name: "自己紹介"
     company:
-      name: 会社名
+      name: "会社名"
     title:
-      name: 役職
+      name: "役職"
     location:
-      name: 所在地
+      name: "所在地"
     created_at:
-      name: 作成日時
+      name: "作成日時"
     updated_at:
-      name: 更新日時
+      name: "更新日時"
     is_deleted:
-      name: 削除フラグ
+      name: "削除フラグ"
