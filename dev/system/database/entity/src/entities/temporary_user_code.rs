@@ -104,7 +104,7 @@ impl Model
     //--------------------------------------------------------------------------
     /// Checks if the code is valid.
     //--------------------------------------------------------------------------
-    pub fn is_valid_code( &self, code: &str ) -> Result<(), Error>
+    pub fn verify_code( &self, code: &str ) -> Result<(), Error>
     {
         if Utc::now().naive_utc() > self.expired_at
         {

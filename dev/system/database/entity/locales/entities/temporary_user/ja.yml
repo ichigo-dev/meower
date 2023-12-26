@@ -6,6 +6,8 @@ entities:
       name: "アカウント名"
       error:
         already_exists: "そのアカウント名は既に使用されています"
+    token:
+      name: "トークン"
     email:
       name: "メールアドレス"
       error:
@@ -14,3 +16,5 @@ entities:
       name: "パスワード"
     created_at:
       name: "登録日時"
+    error:
+      temporary_user_code_not_found: "コードが見つかりません"

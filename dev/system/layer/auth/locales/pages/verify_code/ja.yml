@@ -1,0 +1,11 @@
+pages:
+  verify_code:
+    heading: "コード認証"
+    form:
+      code:
+        label: "コード"
+      button:
+        submit: "送信"
+    error:
+      invalid_url: "無効なURLです"
+

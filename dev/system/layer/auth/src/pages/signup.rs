@@ -4,6 +4,7 @@
 
 use crate::AppState;
 use crate::utils::email::get_mailer;
+use crate::pages::verify_code::PageTemplate as VerifyCodePageTemplate;
 use meower_entity::traits::validate::ValidateExt;
 use meower_entity::temporary_user::Column as TemporaryUserColumn;
 use meower_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
@@ -26,10 +27,10 @@ use sea_orm::{ ActiveValue, TransactionTrait };
 #[allow(dead_code)]
 #[derive(Template, Default)]
 #[template(path = "signup.html")]
-struct SignupTemplate
+pub(crate) struct PageTemplate
 {
-    input: SignupForm,
-    input_error: SignupFormError,
+    pub(crate) input: FormData,
+    pub(crate) input_error: FormError,
 }
 
 
@@ -37,27 +38,27 @@ struct SignupTemplate
 /// Form data.
 //------------------------------------------------------------------------------
 
-// Form
+// FormData
 #[derive(Deserialize, Debug, Default)]
-pub(crate) struct SignupForm
+pub(crate) struct FormData
 {
-    user_account_name: String,
-    email: String,
-    email_confirm: String,
-    password: String,
-    password_confirm: String,
+    pub(crate) user_account_name: String,
+    pub(crate) email: String,
+    pub(crate) email_confirm: String,
+    pub(crate) password: String,
+    pub(crate) password_confirm: String,
 }
 
 // Error
 #[derive(Default)]
-pub(crate) struct SignupFormError
+pub(crate) struct FormError
 {
-    user_account_name: Option<String>,
-    email: Option<String>,
-    email_confirm: Option<String>,
-    password: Option<String>,
-    password_confirm: Option<String>,
-    other: Option<String>,
+    pub(crate) user_account_name: Option<String>,
+    pub(crate) email: Option<String>,
+    pub(crate) email_confirm: Option<String>,
+    pub(crate) password: Option<String>,
+    pub(crate) password_confirm: Option<String>,
+    pub(crate) other: Option<String>,
 }
 
 
@@ -68,7 +69,7 @@ pub(crate) struct SignupFormError
 // GET
 pub(crate) async fn get_handler() -> impl IntoResponse
 {
-    let template = SignupTemplate::default();
+    let template = PageTemplate::default();
     Html(template.render().unwrap())
 }
 
@@ -76,7 +77,7 @@ pub(crate) async fn get_handler() -> impl IntoResponse
 pub(crate) async fn post_handler
 (
     State(state): State<AppState>,
-    Form(input): Form<SignupForm>,
+    Form(input): Form<FormData>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let config = state.config;
@@ -86,10 +87,10 @@ pub(crate) async fn post_handler
     if input.email != input.email_confirm
     {
         let error = t!("pages.signup.form.email_confirm.error.not_match");
-        let template = SignupTemplate
+        let template = PageTemplate
         {
             input: input,
-            input_error: SignupFormError
+            input_error: FormError
             {
                 email_confirm: Some(error),
                 ..Default::default()
@@ -102,10 +103,10 @@ pub(crate) async fn post_handler
     if input.password != input.password_confirm
     {
         let error = t!("pages.signup.form.password_confirm.error.not_match");
-        let template = SignupTemplate
+        let template = PageTemplate
         {
             input: input,
-            input_error: SignupFormError
+            input_error: FormError
             {
                 password_confirm: Some(error),
                 ..Default::default()
@@ -129,31 +130,31 @@ pub(crate) async fn post_handler
         Ok(temporary_user) => temporary_user,
         Err(e) =>
         {
-            let mut signup_form_error = SignupFormError::default();
+            let mut form_error = FormError::default();
             let (column, message) = e.get_error_message();
             match column
             {
                 Some(TemporaryUserColumn::UserAccountName) =>
                 {
-                    signup_form_error.user_account_name = Some(message);
+                    form_error.user_account_name = Some(message);
                 },
                 Some(TemporaryUserColumn::Email) =>
                 {
-                    signup_form_error.email = Some(message);
+                    form_error.email = Some(message);
                 },
                 Some(TemporaryUserColumn::Password) =>
                 {
-                    signup_form_error.password = Some(message);
+                    form_error.password = Some(message);
                 },
                 _ =>
                 {
-                    signup_form_error.other = Some(message);
+                    form_error.other = Some(message);
                 },
             }
-            let template = SignupTemplate
+            let template = PageTemplate
             {
                 input: input,
-                input_error: signup_form_error,
+                input_error: form_error,
             };
             return Err(Html(template.render().unwrap()));
         },
@@ -172,16 +173,16 @@ pub(crate) async fn post_handler
         Ok(temporary_user_code) => temporary_user_code,
         Err(e) =>
         {
-            let mut signup_form_error = SignupFormError::default();
+            let mut form_error = FormError::default();
             let (column, message) = e.get_error_message();
             match column
             {
-                _ => signup_form_error.other = Some(message),
+                _ => form_error.other = Some(message),
             }
-            let template = SignupTemplate
+            let template = PageTemplate
             {
                 input: input,
-                input_error: signup_form_error,
+                input_error: form_error,
             };
             return Err(Html(template.render().unwrap()));
         },
@@ -210,10 +211,10 @@ pub(crate) async fn post_handler
         Ok(_) => {},
         Err(e) =>
         {
-            let template = SignupTemplate
+            let template = PageTemplate
             {
                 input: input,
-                input_error: SignupFormError
+                input_error: FormError
                 {
                     other: Some(e.to_string()),
                     ..Default::default()
@@ -223,6 +224,10 @@ pub(crate) async fn post_handler
         },
     }
 
-    let template = SignupTemplate::default();
+    let template = VerifyCodePageTemplate
+    {
+        token: temporary_user.token,
+        ..Default::default()
+    };
     Ok(Html(template.render().unwrap()))
 }

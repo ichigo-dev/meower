@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::traits::validate::ValidateExt;
-use crate::utils::hash;
+use crate::utils::{ hash, token };
 use super::user::Model as UserModel;
 use super::user::ActiveModel as ActiveUser;
 use super::user::Error as UserError;
@@ -13,6 +13,7 @@ use super::user_account::ActiveModel as ActiveUserAccount;
 use super::user_account::Error as UserAccountError;
 use super::temporary_user_code::Entity as TemporaryUserCodeEntity;
 use super::temporary_user_code::Column as TemporaryUserCodeColumn;
+use super::temporary_user_code::Error as TemporaryUserCodeError;
 
 use argon2::PasswordHash;
 use async_trait::async_trait;
@@ -35,6 +36,9 @@ pub enum Error
     #[error("TemporaryUser: The user account name already exists.")]
     UserAccountNameAlreadyExists,
 
+    #[error("TemporaryUser: The temporary user code not found.")]
+    TemporaryUserCodeNotFound,
+
     #[error("TemporaryUser: {0}")]
     UserError(#[from] UserError),
 
@@ -43,6 +47,9 @@ pub enum Error
 
     #[error("TemporaryUser: {0}")]
     UserAccountError(#[from] UserAccountError),
+
+    #[error("TemporaryUser: {0}")]
+    TemporaryUserCodeError(#[from] TemporaryUserCodeError),
 
     #[error("TemporaryUser: Database error.")]
     DbError(#[from] DbErr),
@@ -73,6 +80,14 @@ impl Error
                     t!("entities.temporary_user.user_account_name.error.already_exists"),
                 );
             },
+            Self::TemporaryUserCodeNotFound =>
+            {
+                return
+                (
+                    None,
+                    t!("entities.temporary_user.error.temporary_user_code_not_found"),
+                );
+            },
             Self::UserError(e) =>
             {
                 return (Some(Column::Email), e.get_error_message().1);
@@ -84,7 +99,11 @@ impl Error
             Self::UserAccountError(e) =>
             {
                 return (Some(Column::UserAccountName), e.get_error_message().1);
-            }
+            },
+            Self::TemporaryUserCodeError(e) =>
+            {
+                return (None, e.get_error_message().1);
+            },
             Self::DbError(_) => (None, t!("common.error.db")),
         }
     }
@@ -105,6 +124,7 @@ impl Column
         {
             Self::TemporaryUserId => t!("entities.temporary_user.temporary_user_id.name"),
             Self::UserAccountName => t!("entities.temporary_user.user_account_name.name"),
+            Self::Token => t!("entities.temporary_user.token.name"),
             Self::Email => t!("entities.temporary_user.email.name"),
             Self::Password => t!("entities.temporary_user.password.name"),
             Self::CreatedAt => t!("entities.temporary_user.created_at.name"),
@@ -124,6 +144,14 @@ impl Entity
     pub fn find_by_user_account_name( user_account_name: &str ) -> Select<Self>
     {
         Self::find().filter(Column::UserAccountName.eq(user_account_name))
+    }
+
+    //--------------------------------------------------------------------------
+    /// Finds temporary_user by token.
+    //--------------------------------------------------------------------------
+    pub fn find_by_token( token: &str ) -> Select<Self>
+    {
+        Self::find().filter(Column::Token.eq(token))
     }
 
     //--------------------------------------------------------------------------
@@ -148,6 +176,8 @@ pub struct Model
     #[sea_orm(unique)]
     pub user_account_name: String,
     #[sea_orm(unique)]
+    pub token: String,
+    #[sea_orm(unique)]
     pub email: String,
     pub password: String,
     pub created_at: DateTime,
@@ -158,11 +188,7 @@ impl Model
     //--------------------------------------------------------------------------
     /// Registers a new user.
     //--------------------------------------------------------------------------
-    pub async fn register<C>
-    (
-        &self,
-        hdb: &C,
-    ) -> Result<UserModel, Box<dyn std::error::Error>>
+    pub async fn register<C>( &self, hdb: &C ) -> Result<UserModel, Error>
     where
         C: ConnectionTrait,
     {
@@ -193,6 +219,30 @@ impl Model
         user_account.validate_and_insert(hdb).await?;
 
         Ok(user)
+    }
+
+    //--------------------------------------------------------------------------
+    /// Checks if the code is valid.
+    //--------------------------------------------------------------------------
+    pub async fn verify_code<C>
+    (
+        &self,
+        hdb: &C,
+        code: &str,
+    ) -> Result<(), Error>
+    where
+        C: ConnectionTrait,
+    {
+        let temporary_user_code = match self
+            .find_related(TemporaryUserCodeEntity)
+            .one(hdb)
+            .await?
+        {
+            Some(temporary_user_code) => temporary_user_code,
+            None => return Err(Error::TemporaryUserCodeNotFound),
+        };
+        temporary_user_code.verify_code(code)?;
+        Ok(())
     }
 }
 
@@ -227,6 +277,7 @@ impl ActiveModelBehavior for ActiveModel
         if let Err(_) = PasswordHash::new(&password)
         {
             self.set(Column::Password, hash::hash_field(&password).into());
+            self.set(Column::Token, token::generate_token(None).into());
         };
 
         Ok(self)

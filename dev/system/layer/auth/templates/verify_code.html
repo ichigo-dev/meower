@@ -1,0 +1,21 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+ <h1 class="ui_heading">{{ t!("pages.verify_code.heading") }}</h1>
+ <div class="ui_panel sm shadow radius padding_xl margin_lg flex column align_center gap_md">
+  <form method="POST" action="/auth/verify_code" class="flex column align_center gap_md full_horizon">
+   <input type="hidden" name="token" value="{{ token }}">
+   <label class="flex column gap_sm full_horizon">
+    <span class="ui_label">{{ t!("pages.verify_code.form.code") }}</span>
+    <input type="text" name="code" class="ui_text">
+    {% if input_error.code.is_some() %}
+     <div class="ui_error">{{ input_error.code.as_ref().unwrap() }}</div>
+    {% endif %}
+   </label>
+   {% if input_error.other.is_some() %}
+    <div class="ui_error">{{ input_error.other.as_ref().unwrap() }}</div>
+   {% endif %}
+   <button type="submit" class="ui_button primary full_horizon">{{ t!("pages.verify_code.form.button.submit") }}</button>
+  </form>
+ </div>
+{% endblock %}

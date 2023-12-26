@@ -35,10 +35,10 @@ use time::{ Duration as TimeDuration, OffsetDateTime };
 #[allow(dead_code)]
 #[derive(Template, Default)]
 #[template(path = "login.html")]
-struct LoginTemplate
+pub(crate) struct PageTemplate
 {
-    input: LoginForm,
-    input_error: LoginFormError,
+    pub(crate) input: FormData,
+    pub(crate) input_error: FormError,
 }
 
 
@@ -46,21 +46,21 @@ struct LoginTemplate
 /// Form data.
 //------------------------------------------------------------------------------
 
-// Form
+// FormData
 #[derive(Deserialize, Debug, Default)]
-pub(crate) struct LoginForm
+pub(crate) struct FormData
 {
-    email: String,
-    password: String,
+    pub(crate) email: String,
+    pub(crate) password: String,
 }
 
 // Error
 #[derive(Default)]
-pub(crate) struct LoginFormError
+pub(crate) struct FormError
 {
-    email: Option<String>,
-    password: Option<String>,
-    other: Option<String>,
+    pub(crate) email: Option<String>,
+    pub(crate) password: Option<String>,
+    pub(crate) other: Option<String>,
 }
 
 
@@ -71,7 +71,7 @@ pub(crate) struct LoginFormError
 // GET
 pub(crate) async fn get_handler() -> impl IntoResponse
 {
-    let template = LoginTemplate::default();
+    let template = PageTemplate::default();
     Html(template.render().unwrap())
 }
 
@@ -79,7 +79,7 @@ pub(crate) async fn get_handler() -> impl IntoResponse
 pub(crate) async fn post_handler
 (
     State(state): State<AppState>,
-    Form(input): Form<LoginForm>,
+    Form(input): Form<FormData>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let config = state.config;
@@ -102,10 +102,10 @@ pub(crate) async fn post_handler
                 Some(_) => t!("pages.login.form.email.error.not_verified"),
                 None => t!("pages.login.form.error.failed"),
             };
-            let template = LoginTemplate
+            let template = PageTemplate
             {
                 input: input,
-                input_error: LoginFormError
+                input_error: FormError
                 {
                     other: Some(error),
                     ..Default::default()
@@ -119,10 +119,10 @@ pub(crate) async fn post_handler
     // Tries to login.
     if user.try_login(&tsx, &input.password).await == false
     {
-        let template = LoginTemplate
+        let template = PageTemplate
         {
             input: input,
-            input_error: LoginFormError
+            input_error: FormError
             {
                 other: Some(t!("pages.login.form.error.failed")),
                 ..Default::default()
@@ -149,10 +149,10 @@ pub(crate) async fn post_handler
             {
                 UserJwtSubjectError::DbError(e) => e.to_string(),
             };
-            let template = LoginTemplate
+            let template = PageTemplate
             {
                 input: input,
-                input_error: LoginFormError
+                input_error: FormError
                 {
                     email: Some(error),
                     ..Default::default()

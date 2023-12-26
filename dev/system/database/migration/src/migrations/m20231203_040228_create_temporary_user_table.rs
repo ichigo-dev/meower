@@ -44,6 +44,14 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(TemporaryUser::Token)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+                    .unique_key()
+            )
+            .col
+            (
                 ColumnDef::new(TemporaryUser::Email)
                     .string()
                     .string_len(255)
@@ -72,6 +80,7 @@ impl MigrationTrait for Migration
         [
             "COMMENT ON TABLE \"temporary_user\" IS 'Temporary user';",
             "COMMENT ON COLUMN \"temporary_user\".\"temporary_user_id\" IS 'Temporary user ID';",
+            "COMMENT ON COLUMN \"temporary_user\".\"token\" IS 'Token';",
             "COMMENT ON COLUMN \"temporary_user\".\"email\" IS 'Email address';",
             "COMMENT ON COLUMN \"temporary_user\".\"password\" IS 'Hashed password';",
             "COMMENT ON COLUMN \"temporary_user\".\"created_at\" IS 'Create date';",

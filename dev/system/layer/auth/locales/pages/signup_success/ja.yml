@@ -1,0 +1,6 @@
+pages:
+  signup_success:
+    heading: "サインアップ完了"
+    next: "ログインしてMeowerを使い始めよう！"
+    button:
+      login: "ログイン"

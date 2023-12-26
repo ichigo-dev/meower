@@ -36,7 +36,8 @@ async fn main()
         .route("/login", get(pages::login::get_handler))
         .route("/login", post(pages::login::post_handler))
         .route("/signup", get(pages::signup::get_handler))
-        .route("/signup", post(pages::signup::post_handler));
+        .route("/signup", post(pages::signup::post_handler))
+        .route("/verify_code", post(pages::verify_code::post_handler));
 
     // Creates the application routes.
     let routes = Router::new()
