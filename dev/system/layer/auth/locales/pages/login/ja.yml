@@ -5,6 +5,7 @@ pages:
       email:
         label: "メールアドレス"
         placeholder: "meower@example.com"
+        error:
           not_verified: "そのユーザは認証されていません"
       password:
         label: "パスワード"

@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-//! Signup page.
+//! Signup page. 
 //------------------------------------------------------------------------------
 
 use crate::AppState;
+use crate::utils::email::get_mailer;
 use meower_entity::traits::validate::ValidateExt;
 use meower_entity::temporary_user::Column as TemporaryUserColumn;
 use meower_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
@@ -11,11 +12,9 @@ use meower_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
 use askama::Template;
 use axum::response::{ Html, IntoResponse };
 use axum::extract::{ State, Form };
-use lettre::{ AsyncSmtpTransport, AsyncTransport, Tokio1Executor };
+use lettre::AsyncTransport;
 use lettre::Message;
-use lettre::message::MessageBuilder;
 use lettre::message::header::ContentType;
-use lettre::transport::smtp::authentication::Credentials;
 use rust_i18n::t;
 use serde::Deserialize;
 use sea_orm::{ ActiveValue, TransactionTrait };
@@ -80,12 +79,13 @@ pub(crate) async fn post_handler
     Form(input): Form<SignupForm>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
+    let config = state.config;
     let tsx = state.hdb.begin().await.unwrap();
 
     // Checks if the email address matches the confirmation email address
     if input.email != input.email_confirm
     {
-        let error = t!("pages.form.email_confirm.error.not_match");
+        let error = t!("pages.signup.form.email_confirm.error.not_match");
         let template = SignupTemplate
         {
             input: input,
@@ -101,7 +101,7 @@ pub(crate) async fn post_handler
     // Checks if the password matches the confirmation password
     if input.password != input.password_confirm
     {
-        let error = t!("pages.form.password_confirm.error.not_match");
+        let error = t!("pages.signup.form.password_confirm.error.not_match");
         let template = SignupTemplate
         {
             input: input,
@@ -187,16 +187,42 @@ pub(crate) async fn post_handler
         },
     };
 
+    tsx.commit().await.unwrap();
+
     // Sends a confirmation email.
+    let mailer = get_mailer(&config);
     let email = Message::builder()
-        .from(state.config.system_email_address.parse().unwrap())
+        .from(config.system_email_address.parse().unwrap())
         .to(input.email.clone().parse().unwrap())
         .header(ContentType::TEXT_HTML)
-        .subject("")
-        .body("".to_string())
+        .subject(t!("messages.email.signup.subject"))
+        .body
+        (
+            t!
+            (
+                "messages.email.signup.body",
+                verify_code = temporary_user_code.code
+            )
+        )
         .unwrap();
+    match mailer.send(email).await
+    {
+        Ok(_) => {},
+        Err(e) =>
+        {
+            let template = SignupTemplate
+            {
+                input: input,
+                input_error: SignupFormError
+                {
+                    other: Some(e.to_string()),
+                    ..Default::default()
+                },
+            };
+            return Err(Html(template.render().unwrap()));
+        },
+    }
 
-    tsx.commit().await.unwrap();
     let template = SignupTemplate::default();
     Ok(Html(template.render().unwrap()))
 }

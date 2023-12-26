@@ -6,6 +6,7 @@ mod config;
 mod state;
 mod layers;
 mod pages;
+mod utils;
 
 use axum::{ Router, middleware };
 use axum::routing::{ get, post };
