@@ -66,11 +66,7 @@ async fn main()
         .nest("/auth", auth_routes)
         .layer
         (
-            middleware::from_fn_with_state
-            (
-                state.clone(),
-                layers::i18n::layer
-            )
+            middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
         .with_state(state);
 
