@@ -4,7 +4,7 @@
 
 use meower_install::utils::install_master;
 use meower_migration::Migrator;
-use meower_entity::Validate;
+use meower_entity::traits::validate::ValidateExt;
 use meower_entity::user::ActiveModel as ActiveUser;
 use meower_entity::user_auth::ActiveModel as ActiveUserAuth;
 use meower_entity::user_account::ActiveModel as ActiveUserAccount;
@@ -12,7 +12,9 @@ use meower_entity::user_account_profile::ActiveModel as ActiveUserAccountProfile
 use meower_entity::workspace::ActiveModel as ActiveWorkspace;
 use meower_entity::user_account_workspace::ActiveModel as ActiveUserAccountWorkspace;
 use meower_entity::workspace_member_authority::Entity as WorkspaceMemberAuthorityEntity;
-use meower_entity::workspace_member_authority::AuthorityMap as WorkspaceMemberAuthorityMap;
+use meower_entity::workspace_member_authority::Map as WorkspaceMemberAuthorityMap;
+
+use std::env;
 
 use sea_orm_migration::MigratorTrait;
 use sea_orm::{
@@ -41,7 +43,7 @@ async fn main()
     Migrator::refresh(&tsx).await.unwrap();
 
     // Installs master datas.
-    if let Err(_) = install_master::install_master(&tsx, &i18n).await
+    if let Err(_) = install_master::install_master(&tsx).await
     {
         tsx.rollback().await.unwrap();
         panic!("Failed to install master data");
@@ -56,7 +58,7 @@ async fn main()
             email: ActiveValue::set(format!("user{}@example.com", i)),
             ..Default::default()
         };
-        let user = match user.validate_and_insert(&tsx, &i18n).await
+        let user = match user.validate_and_insert(&tsx).await
         {
             Ok(user) => user,
             Err(_) =>
@@ -74,7 +76,7 @@ async fn main()
             password: ActiveValue::set("password123!".to_string()),
             ..Default::default()
         };
-        if user_auth.validate_and_insert(&tsx, &i18n).await.is_err()
+        if user_auth.validate_and_insert(&tsx).await.is_err()
         {
             tsx.rollback().await.unwrap();
             panic!("Failed to insert `user_auth` test data");
@@ -88,9 +90,7 @@ async fn main()
             display_name: ActiveValue::set(format!("User {}", i)),
             ..Default::default()
         };
-        let user_account = match user_account
-            .validate_and_insert(&tsx, &i18n)
-            .await
+        let user_account = match user_account.validate_and_insert(&tsx).await
         {
             Ok(user_account) => user_account,
             Err(_) =>
@@ -112,7 +112,7 @@ async fn main()
             location: ActiveValue::set(Some("Tokyo, Japan".to_string())),
             ..Default::default()
         };
-        if user_account_profile.validate_and_insert(&tsx, &i18n).await.is_err()
+        if user_account_profile.validate_and_insert(&tsx).await.is_err()
         {
             tsx.rollback().await.unwrap();
             panic!("Failed to insert `user_account_profile` test data");
@@ -131,7 +131,7 @@ async fn main()
             display_name: ActiveValue::set(display_name),
             ..Default::default()
         };
-        let workspace = match workspace.validate_and_insert(&tsx, &i18n).await
+        let workspace = match workspace.validate_and_insert(&tsx).await
         {
             Ok(workspace) => workspace,
             Err(_) =>
@@ -148,9 +148,7 @@ async fn main()
             workspace_id: ActiveValue::Set(workspace.workspace_id),
             ..Default::default()
         };
-        if let Err(_) = user_account_workspace
-            .validate_and_insert(&tsx, &i18n)
-            .await
+        if let Err(_) = user_account_workspace.validate_and_insert(&tsx).await
         {
             tsx.rollback().await.unwrap();
             panic!("Failed to insert `user_account_workspace` test data");
@@ -173,7 +171,7 @@ async fn main()
             workspace_member_authority_id: ActiveValue::Set(authority_id),
             ..Default::default()
         };
-        if let Err(_) = workspace_member.validate_and_insert(&tsx, &i18n).await
+        if let Err(_) = workspace_member.validate_and_insert(&tsx).await
         {
             tsx.rollback().await.unwrap();
             panic!("Failed to insert `workspace_member` test data");
