@@ -39,7 +39,8 @@ down:
 
 # Restart the containers
 restart:
-	@docker compose restart
+	$(MAKE) down --no-print-directory
+	$(MAKE) up --no-print-directory
 
 # Watch the logs
 logs:

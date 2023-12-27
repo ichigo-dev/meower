@@ -66,7 +66,7 @@ services:
   api_auth_layer:
     container_name: meower_api_auth_layer
     ports:
-      - ${API_AUTH_LAYER_PORT}:9000
+      - ${API_AUTH_LAYER_PORT}:9001
     build:
       context: .
       dockerfile: ./docker/system/auth/Dockerfile
@@ -122,6 +122,22 @@ services:
     volumes:
       - ./system/service/api:/system/service/api
       - ./system/service/schema:/system/service/schema
+      - ./system/database/entity:/system/database/entity
+      - ./system/util:/system/util
+    environment:
+      PORT: ${API_PORT}
+      DATABASE_URL: ${DATABASE_URL}
+      FALLBACK_LOCALE: en
+      JWT_ISSUE: ${JWT_ISSUE}
+      JWT_AUDIENCE: ${JWT_AUDIENCE}
+      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES}
+      JWT_SECRET: ${JWT_SECRET}
+      SYSTEM_EMAIL_ADDRESS: ${SYSTEM_EMAIL_ADDRESS}
+      SMTP_TLS: ${SMTP_TLS}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
     working_dir: /system/service/api
     command: "cargo watch -x run"
     tty: true

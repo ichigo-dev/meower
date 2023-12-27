@@ -6,7 +6,6 @@ use crate::layouts::Layout;
 use crate::routes::AppRouter;
 use crate::state::AppState;
 
-use reqwest::Client;
 use sycamore::prelude::*;
 
 
@@ -23,8 +22,7 @@ pub fn Root<G: Html>( cx: Scope ) -> View<G>
     rust_i18n::set_locale(language.as_str());
 
     // Initializes the application state.
-    let client = Client::new();
-    let app_state = AppState::new(client);
+    let app_state = AppState::new();
     provide_context(cx, app_state);
 
     view!

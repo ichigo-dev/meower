@@ -28,7 +28,7 @@ pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
                     view!
                     {
                         cx,
-                        div { "Name: " (profile.name) }
+                        div { "Name: " (profile.display_name) }
                     }
                 },
                 Err(e) =>

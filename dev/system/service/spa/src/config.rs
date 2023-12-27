@@ -1,31 +1,29 @@
 //------------------------------------------------------------------------------
-//! Application state.
+//! Configuration.
 //------------------------------------------------------------------------------
-
-use crate::Config;
-
-use reqwest::Client;
 
 
 //------------------------------------------------------------------------------
-/// Application state.
+/// Config.
 //------------------------------------------------------------------------------
-#[derive(Clone)]
-pub(crate) struct AppState
+#[derive(Clone, Debug)]
+pub(crate) struct Config
 {
-    pub(crate) config: Config,
-    pub(crate) client: Client,
+    pub(crate) api_url: String,
 }
 
-impl AppState
+impl Config
 {
     //--------------------------------------------------------------------------
-    /// Creates a new application state.
+    /// Initializes the configuration.
     //--------------------------------------------------------------------------
-    pub(crate) fn new() -> Self
+    pub(crate) fn init() -> Self
     {
-        let config = Config::init();
-        let client = Client::new();
-        Self { config, client }
+        let api_url = std::env!("API_URL").to_string();
+
+        Self
+        {
+            api_url,
+        }
     }
 }

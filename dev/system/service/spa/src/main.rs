@@ -8,9 +8,11 @@ mod features;
 mod layouts;
 mod pages;
 mod routes;
+mod config;
 mod state;
 
 use components::root::Root;
+pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
 // Loads the locales.

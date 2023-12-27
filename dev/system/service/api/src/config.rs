@@ -11,14 +11,8 @@ use std::env;
 #[derive(Clone, Debug)]
 pub(crate) struct Config
 {
-    // System config.
-    pub(crate) system_url: String,
-
     // Server config.
-    pub(crate) debug_mode: bool,
     pub(crate) port: u16,
-    pub(crate) proxy_url: String,
-    pub(crate) provide_pages: bool,
 
     // Database config.
     pub(crate) database_url: String,
@@ -48,27 +42,11 @@ impl Config
     //--------------------------------------------------------------------------
     pub(crate) fn init() -> Self
     {
-        // System config.
-        let system_url = env::var("SYSTEM_URL")
-            .expect("SYSTEM_URL must be set");
-
         // Server config.
-        let debug_mode = env::var("DEBUG_MODE")
-            .unwrap_or_else(|_| "false".to_string())
-            .parse::<bool>()
-            .expect("DEBUG_MODE must be a boolean");
         let port = env::var("PORT")
             .expect("PORT must be set")
             .parse::<u16>()
             .expect("PORT must be a number");
-        let proxy_url = env::var("PROXY_URL")
-            .expect("PROXY_URL must be set")
-            .trim_end_matches('/')
-            .to_string();
-        let provide_pages = env::var("PROVIDE_PAGES")
-            .unwrap_or_else(|_| "false".to_string())
-            .parse::<bool>()
-            .expect("PROVIDE_PAGES must be a boolean");
 
         // Database config.
         let database_url = env::var("DATABASE_URL")
@@ -113,14 +91,8 @@ impl Config
 
         Self
         {
-            // System config.
-            system_url,
-
             // Server config.
-            debug_mode,
             port,
-            proxy_url,
-            provide_pages,
 
             // Database config.
             database_url,

@@ -35,7 +35,8 @@ pub(crate) async fn handler
         .uri()
         .path_and_query()
         .map(|v| v.as_str())
-        .unwrap_or(path);
+        .unwrap_or(path)
+        .trim_start_matches("/");
     let uri = format!("{}/{}", state.config.proxy_url, path_query);
     *req.uri_mut() = Uri::try_from(uri).unwrap();
     client.request(req).await.unwrap()

@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use meower_schema::api::ApiResponse;
-use meower_schema::api::mypage::GetProfileResponse;
+use meower_schema::apis::ApiResponse;
+use meower_schema::apis::mypage::GetProfileResponse;
 
 use sycamore::prelude::*;
 
@@ -18,13 +18,13 @@ pub async fn get_profile<'cx>
 ) -> ApiResponse<GetProfileResponse>
 {
     let app_state = use_context::<AppState>(cx);
-    let client = app_state.client();
-    let url = "/mypage/get_profile";
-    let response = client
+    let url = app_state.config.api_url.to_owned() + "/mypage/get_profile";
+    let response = app_state.client
         .get(url)
         .send()
         .await
         .unwrap();
     let body = response.text().await.unwrap_or("".to_string());
+    log::debug!("{}", body);
     serde_json::from_str(&body).unwrap()
 }

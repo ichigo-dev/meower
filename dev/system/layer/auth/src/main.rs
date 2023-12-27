@@ -8,12 +8,11 @@ mod layers;
 mod pages;
 mod utils;
 
-use axum::{ Router, middleware };
-use axum::routing::{ get, post };
-
 pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
+use axum::{ Router, middleware };
+use axum::routing::{ get, post };
 use tokio::net::TcpListener;
 
 // Loads the locales.

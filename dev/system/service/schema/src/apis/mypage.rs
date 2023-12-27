@@ -11,5 +11,5 @@ use serde::{ Serialize, Deserialize };
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct GetProfileResponse
 {
-    pub name: String,
+    pub display_name: String,
 }

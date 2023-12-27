@@ -1,0 +1,4 @@
+apis:
+  mypage:
+    get_profile:
+      not_found: "ユーザアカウントが見つかりません"

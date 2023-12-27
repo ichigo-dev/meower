@@ -1,31 +1,34 @@
 //------------------------------------------------------------------------------
-//! Application state.
+//! Shared state.
 //------------------------------------------------------------------------------
 
 use crate::Config;
 
-use reqwest::Client;
+use sea_orm::{ Database, DbConn };
 
 
 //------------------------------------------------------------------------------
-/// Application state.
+/// AppState.
 //------------------------------------------------------------------------------
 #[derive(Clone)]
 pub(crate) struct AppState
 {
     pub(crate) config: Config,
-    pub(crate) client: Client,
+    pub(crate) hdb: DbConn,
 }
 
 impl AppState
 {
     //--------------------------------------------------------------------------
-    /// Creates a new application state.
+    /// Initializes the application state.
     //--------------------------------------------------------------------------
-    pub(crate) fn new() -> Self
+    pub(crate) async fn init( config: Config ) -> Self
     {
-        let config = Config::init();
-        let client = Client::new();
-        Self { config, client }
+        let hdb = Database::connect(&config.database_url).await.unwrap();
+        Self
+        {
+            config,
+            hdb,
+        }
     }
 }
