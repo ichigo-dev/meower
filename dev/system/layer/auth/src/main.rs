@@ -59,6 +59,14 @@ async fn main()
         (
             "/reset_password/:token",
             post(pages::reset_password::post_handler)
+        )
+        .layer
+        (
+            middleware::from_fn_with_state
+            (
+                state.clone(),
+                layers::protect_auth::layer,
+            )
         );
 
     // Creates the application routes.

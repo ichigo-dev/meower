@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Protect layer.
+//! Protect auth page layer.
 //------------------------------------------------------------------------------
 
 use crate::state::AppState;
@@ -7,7 +7,7 @@ use crate::utils::protect::is_logined;
 
 use axum::response::{ IntoResponse, Redirect };
 use axum::body::Body;
-use axum::http::{ Request, StatusCode };
+use axum::http::Request;
 use axum::middleware::Next;
 use axum::extract::State;
 use axum_extra::extract::cookie::CookieJar;
@@ -22,19 +22,12 @@ pub(crate) async fn layer
     cookie: CookieJar,
     req: Request<Body>,
     next: Next,
-) -> Result<impl IntoResponse, Result<impl IntoResponse, impl IntoResponse>>
+) -> Result<impl IntoResponse, impl IntoResponse>
 {
-    // If the user is not logined, then redirect to the login page.
-    if is_logined(&cookie, &state.config) == false
+    // If the user is logined, then redirect to the home page.
+    if is_logined(&cookie, &state.config)
     {
-        if state.config.provide_pages
-        {
-            return Err(Ok(Redirect::to("/auth/login")));
-        }
-        else
-        {
-            return Err(Err(StatusCode::UNAUTHORIZED));
-        }
+        return Err(Redirect::to("/"));
     };
 
     Ok(next.run(req).await)
