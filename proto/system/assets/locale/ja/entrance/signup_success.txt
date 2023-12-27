@@ -1,7 +1,0 @@
-################################################################################
-# Signup success page
-################################################################################
-
-entrance.signup_success.heading = サインアップ完了
-entrance.signup_success.next = ログインして今すぐ始めよう！
-entrance.signup_success.button.login = ログイン
