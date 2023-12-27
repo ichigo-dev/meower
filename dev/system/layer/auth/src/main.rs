@@ -14,6 +14,7 @@ pub(crate) use state::AppState;
 use axum::{ Router, middleware };
 use axum::routing::{ get, post };
 use tokio::net::TcpListener;
+use tower_http::services::ServeDir;
 
 // Loads the locales.
 rust_i18n::i18n!("locales");
@@ -66,7 +67,8 @@ async fn main()
                 state.clone(),
                 layers::protect_auth::layer,
             )
-        );
+        )
+        .nest_service("/assets", ServeDir::new("assets"));
 
     // Creates the application routes.
     let routes = Router::new()

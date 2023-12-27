@@ -85,6 +85,11 @@ install:
 # Development utilities
 ################################################################################
 
+scss:
+	@docker compose run --rm dev bash -c \
+		'cd /system/layer/auth/ && \
+		grass assets/scss/style.scss assets/css/style.css'
+
 # Table definition
 tbls:
 	@docker compose run --rm tbls doc --force --config .tbls.yml
