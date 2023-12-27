@@ -38,6 +38,7 @@ services:
       - ./system/database/entity:/system/database/entity
       - ./system/util:/system/util
     environment:
+      SYSTEM_URL: ${SYSTEM_URL}
       DEBUG_MODE: ${DEBUG_MODE}
       PORT: 9000
       DATABASE_URL: ${DATABASE_URL}

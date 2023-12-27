@@ -11,6 +11,9 @@ use std::env;
 #[derive(Clone)]
 pub(crate) struct Config
 {
+    // System config.
+    pub(crate) system_url: String,
+
     // Server config.
     pub(crate) debug_mode: bool,
     pub(crate) port: u16,
@@ -43,6 +46,10 @@ impl Config
     //--------------------------------------------------------------------------
     pub(crate) fn init() -> Self
     {
+        // System config.
+        let system_url = env::var("SYSTEM_URL")
+            .expect("SYSTEM_URL must be set");
+
         // Server config.
         let debug_mode = env::var("DEBUG_MODE")
             .unwrap_or_else(|_| "false".to_string())
@@ -96,6 +103,7 @@ impl Config
 
         Self
         {
+            system_url,
             debug_mode,
             port,
             database_url,

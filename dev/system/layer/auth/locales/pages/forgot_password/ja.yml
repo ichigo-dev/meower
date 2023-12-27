@@ -8,6 +8,6 @@ pages:
         error:
           not_verified: "そのユーザは認証されていません"
       button:
-        send: "送信"
+        submit: "送信"
     button:
       login: "ログイン"

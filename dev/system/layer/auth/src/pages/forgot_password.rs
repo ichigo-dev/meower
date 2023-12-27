@@ -5,18 +5,20 @@
 use crate::AppState;
 use crate::utils::email::get_mailer;
 use crate::pages::forgot_password_success::PageTemplate as PasswordForgotSuccessPageTemplate;
+use meower_entity::traits::validate::ValidateExt;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
+use meower_entity::reset_password_token::ActiveModel as ActiveResetPasswordToken;
 
 use askama::Template;
 use axum::response::{ Html, IntoResponse };
-use axum::extract::{ State, Form, Host };
+use axum::extract::{ State, Form };
 use lettre::AsyncTransport;
 use lettre::Message;
 use lettre::message::header::ContentType;
 use rust_i18n::t;
 use serde::Deserialize;
-use sea_orm::TransactionTrait;
+use sea_orm::{ ActiveValue, TransactionTrait };
 
 
 //------------------------------------------------------------------------------
@@ -66,7 +68,6 @@ pub(crate) async fn get_handler() -> impl IntoResponse
 // POST
 pub(crate) async fn post_handler
 (
-    Host(host): Host,
     State(state): State<AppState>,
     Form(input): Form<FormData>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
@@ -115,9 +116,41 @@ pub(crate) async fn post_handler
         },
     };
 
+    // Creates a reset password token.
+    let reset_password_token = ActiveResetPasswordToken
+    {
+        user_id: ActiveValue::Set(user.user_id),
+        ..Default::default()
+    };
+    let reset_password_token = match reset_password_token
+        .validate_and_insert(&tsx)
+        .await
+    {
+        Ok(reset_password_token) => reset_password_token,
+        Err(e) =>
+        {
+            tsx.rollback().await.unwrap();
+            let template = PageTemplate
+            {
+                input: input,
+                input_error: FormError
+                {
+                    other: Some(e.get_error_message().1),
+                    ..Default::default()
+                },
+            };
+            return Err(Html(template.render().unwrap()));
+        },
+    };
+
     // Sends a confirmation email.
-    println!("host: {}", host);
     let mailer = get_mailer(&config);
+    let reset_password_url = format!
+    (
+        "{}/auth/reset_password/{}",
+        config.system_url,
+        reset_password_token.token,
+    );
     let email = Message::builder()
         .from(config.system_email_address.parse().unwrap())
         .to(input.email.clone().parse().unwrap())
@@ -128,7 +161,7 @@ pub(crate) async fn post_handler
             t!
             (
                 "messages.email.reset_password.body",
-                reset_password_url = ""
+                reset_password_url = reset_password_url
             )
         )
         .unwrap();

@@ -12,7 +12,7 @@ pages:
         error:
           required: "パスワードが入力されていません"
       button:
-        send: "送信"
+        submit: "送信"
     button:
       login: "ログイン"
       signup: "サインアップ"

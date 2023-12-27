@@ -1,0 +1,12 @@
+pages:
+  reset_password:
+    heading: "パスワードリセット"
+    form:
+      password:
+        label: "パスワード"
+      password_confirm:
+        label: "パスワード（確認用）"
+        error:
+          not_match: "パスワードが一致しません"
+      button:
+        submit: "送信"
