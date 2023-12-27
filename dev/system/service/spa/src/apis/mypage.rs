@@ -25,6 +25,5 @@ pub async fn get_profile<'cx>
         .await
         .unwrap();
     let body = response.text().await.unwrap_or("".to_string());
-    log::debug!("{}", body);
     serde_json::from_str(&body).unwrap()
 }
