@@ -24,8 +24,9 @@ services:
       - ./docker/system/balancer/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - spa_auth_layer
+      - api_auth_layer
 
-  # Authentication
+  # SPA authentication
   spa_auth_layer:
     container_name: meower_spa_auth_layer
     ports:
@@ -41,7 +42,7 @@ services:
       SYSTEM_URL: ${SYSTEM_URL}
       DEBUG_MODE: ${DEBUG_MODE}
       PROVIDE_PAGES: true
-      PORT: 9000
+      PORT: ${SPA_AUTH_LAYER_PORT}
       DATABASE_URL: ${DATABASE_URL}
       FALLBACK_LOCALE: en
       JWT_ISSUE: ${JWT_ISSUE}
@@ -54,7 +55,43 @@ services:
       SMTP_PORT: ${SMTP_PORT}
       SMTP_USER: ${SMTP_USER}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
-      PROXY_URL: ${SPA_URL}
+      PROXY_URL: ${PROXY_SPA_URL}
+    working_dir: /system/layer/auth
+    command: "cargo watch -x run"
+    depends_on:
+      - postgres
+    tty: true
+
+  # API authentication
+  api_auth_layer:
+    container_name: meower_api_auth_layer
+    ports:
+      - ${API_AUTH_LAYER_PORT}:9000
+    build:
+      context: .
+      dockerfile: ./docker/system/auth/Dockerfile
+    volumes:
+      - ./system/layer/auth:/system/layer/auth
+      - ./system/database/entity:/system/database/entity
+      - ./system/util:/system/util
+    environment:
+      SYSTEM_URL: ${SYSTEM_URL}
+      DEBUG_MODE: ${DEBUG_MODE}
+      PROVIDE_PAGES: false
+      PORT: ${API_AUTH_LAYER_PORT}
+      DATABASE_URL: ${DATABASE_URL}
+      FALLBACK_LOCALE: en
+      JWT_ISSUE: ${JWT_ISSUE}
+      JWT_AUDIENCE: ${JWT_AUDIENCE}
+      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES}
+      JWT_SECRET: ${JWT_SECRET}
+      SYSTEM_EMAIL_ADDRESS: ${SYSTEM_EMAIL_ADDRESS}
+      SMTP_TLS: ${SMTP_TLS}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      PROXY_URL: ${PROXY_API_URL}
     working_dir: /system/layer/auth
     command: "cargo watch -x run"
     depends_on:
@@ -70,8 +107,23 @@ services:
     volumes:
       - ./system/service/spa:/system/service/spa
       - ./system/service/schema:/system/service/schema
+    environment:
+      API_URL: ${API_URL}
     working_dir: /system/service/spa
     command: "trunk serve --address 0.0.0.0 --release --port ${SPA_PORT}"
+    tty: true
+
+  # API
+  api:
+    container_name: meower_api
+    build:
+      context: .
+      dockerfile: ./docker/system/api/Dockerfile
+    volumes:
+      - ./system/service/api:/system/service/api
+      - ./system/service/schema:/system/service/schema
+    working_dir: /system/service/api
+    command: "cargo watch -x run"
     tty: true
 
   # Postgres
