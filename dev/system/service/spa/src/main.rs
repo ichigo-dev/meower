@@ -2,33 +2,19 @@
 //! SPA frontend for the Meower.
 //------------------------------------------------------------------------------
 
-use rust_i18n::t;
-use sycamore::prelude::*;
+mod apis;
+mod components;
+mod features;
+mod layouts;
+mod pages;
+mod routes;
+mod state;
 
-use log::debug;
+use components::root::Root;
+pub(crate) use state::AppState;
 
 // Loads the locales.
 rust_i18n::i18n!("locales");
-
-
-//------------------------------------------------------------------------------
-/// Application root.
-//------------------------------------------------------------------------------
-#[component]
-pub fn Root<G: Html>( cx: Scope ) -> View<G>
-{
-    // Sets the locale.
-    let window = web_sys::window().unwrap();
-    let navigator = window.navigator();
-    let language = navigator.language().unwrap();
-    rust_i18n::set_locale(language.as_str());
-
-    view!
-    {
-        cx,
-        (t!("hello"))
-    }
-}
 
 
 //------------------------------------------------------------------------------

@@ -69,6 +69,7 @@ services:
       dockerfile: ./docker/system/spa/Dockerfile
     volumes:
       - ./system/service/spa:/system/service/spa
+      - ./system/service/schema:/system/service/schema
     working_dir: /system/service/spa
     command: "trunk serve --address 0.0.0.0 --release --port ${SPA_PORT}"
     tty: true

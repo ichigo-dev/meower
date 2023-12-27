@@ -1,0 +1,15 @@
+[package]
+name = "meower_schema"
+version = "0.1.0"
+edition = "2021"
+authors = ["ichigo-dev <dev.honda.ichigo@gmail.com>"]
+description = "Meower schema"
+license = "MIT"
+documentation = ""
+repository = "https://github.com/ichigo-dev/meower"
+
+
+[dependencies]
+serde = "1.0.192"
+serde-wasm-bindgen = "0.6.3"
+serde_json = "1.0.108"

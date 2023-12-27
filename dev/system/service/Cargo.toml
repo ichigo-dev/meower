@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "spa",
     "api",
+    "spa",
+    "schema",
 ]
