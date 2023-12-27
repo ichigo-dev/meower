@@ -63,12 +63,20 @@ async fn main()
 
     // Creates the application routes.
     let routes = Router::new()
+        .fallback(utils::proxy::handler)
+        .layer
+        (
+            middleware::from_fn_with_state
+            (
+                state.clone(),
+                layers::protect::layer,
+            )
+        )
         .nest("/auth", auth_routes)
         .layer
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
-        .fallback(utils::proxy::handler)
         .with_state(state);
 
     // Starts the server.

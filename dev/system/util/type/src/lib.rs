@@ -4,6 +4,6 @@
 //! Types.
 //------------------------------------------------------------------------------
 
-mod jwt_claim;
+mod jwt_claims;
 
-pub use jwt_claim::*;
+pub use jwt_claims::*;

@@ -40,6 +40,7 @@ services:
     environment:
       SYSTEM_URL: ${SYSTEM_URL}
       DEBUG_MODE: ${DEBUG_MODE}
+      PROVIDE_PAGES: true
       PORT: 9000
       DATABASE_URL: ${DATABASE_URL}
       FALLBACK_LOCALE: en

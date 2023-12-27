@@ -1,17 +1,18 @@
 //------------------------------------------------------------------------------
-//! JWTClaim.
+//! JWTClaims.
 //------------------------------------------------------------------------------
 
 use serde::{ Serialize, Deserialize };
 
-pub const JWT_CLAIM_KEY: &str = "jwt_claim";
+pub const JWT_CLAIMS_KEY: &str = "token";
 
 
 //------------------------------------------------------------------------------
-/// JwtClaim.
+/// JwtClaims.
 //------------------------------------------------------------------------------
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
-pub struct JwtClaim {
+pub struct JwtClaims
+{
     pub iss: String,
     pub sub: String,
     pub aud: Vec<String>,

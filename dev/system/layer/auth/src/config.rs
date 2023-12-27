@@ -8,7 +8,7 @@ use std::env;
 //------------------------------------------------------------------------------
 /// Config.
 //------------------------------------------------------------------------------
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub(crate) struct Config
 {
     // System config.
@@ -18,6 +18,7 @@ pub(crate) struct Config
     pub(crate) debug_mode: bool,
     pub(crate) port: u16,
     pub(crate) proxy_url: String,
+    pub(crate) provide_pages: bool,
 
     // Database config.
     pub(crate) database_url: String,
@@ -62,6 +63,10 @@ impl Config
             .expect("PORT must be a number");
         let proxy_url = env::var("PROXY_URL")
             .expect("PROXY_URL must be set");
+        let provide_pages = env::var("PROVIDE_PAGES")
+            .unwrap_or_else(|_| "false".to_string())
+            .parse::<bool>()
+            .expect("PROVIDE_PAGES must be a boolean");
 
         // Database config.
         let database_url = env::var("DATABASE_URL")
@@ -106,16 +111,28 @@ impl Config
 
         Self
         {
+            // System config.
             system_url,
+
+            // Server config.
             debug_mode,
             port,
             proxy_url,
+            provide_pages,
+
+            // Database config.
             database_url,
+
+            // Locale config.
             fallback_locale,
+
+            // JWT config.
             jwt_issue,
             jwt_audience,
             jwt_expiration_minutes,
             jwt_secret,
+
+            // Email config.
             system_email_address,
             smtp_tls,
             smtp_host,

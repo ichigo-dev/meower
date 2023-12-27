@@ -22,7 +22,6 @@ pub(crate) async fn layer
     next: Next,
 ) -> impl IntoResponse
 {
-    println!("layer");
     let fallback_locale = state.config.fallback_locale;
     let language = req.headers()
         .get(header::ACCEPT_LANGUAGE)

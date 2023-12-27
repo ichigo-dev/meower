@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use meower_type::{ JwtClaim, JWT_CLAIM_KEY };
+use meower_type::{ JwtClaims, JWT_CLAIMS_KEY };
 use meower_entity::traits::validate::ValidateExt;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
@@ -164,7 +164,7 @@ pub(crate) async fn post_handler
         },
     };
 
-    // Creates JWT claim.
+    // Creates JWT claims.
     let now = Utc::now();
     let iat = now.timestamp();
     let duration = Duration::minutes(config.jwt_expiration_minutes);
@@ -174,7 +174,7 @@ pub(crate) async fn post_handler
         Some(user_account) => user_account.user_account_name,
         None => "".to_string(),
     };
-    let jwt_claim = JwtClaim
+    let jwt_claims = JwtClaims
     {
         iss: config.jwt_issue.clone(),
         sub: user_jwt_subject.subject.to_string(),
@@ -186,17 +186,17 @@ pub(crate) async fn post_handler
         uan: user_account_name,
     };
 
-    // Encodes JWT claim.
+    // Encodes JWT claims.
     let mut header = Header::default();
     header.typ = Some("JWT".to_string());
     header.alg = Algorithm::HS256;
     let key = EncodingKey::from_secret(&config.jwt_secret.as_bytes());
-    let jwt = encode(&header, &jwt_claim, &key).unwrap();
+    let jwt = encode(&header, &jwt_claims, &key).unwrap();
 
-    // Builds JWT claim cookie.
+    // Builds JWT claims cookie.
     let offset_date_time = OffsetDateTime::now_utc();
     let time_duration = TimeDuration::minutes(config.jwt_expiration_minutes);
-    let jwt_claim_cookie = Cookie::build((JWT_CLAIM_KEY, jwt.to_owned()))
+    let jwt_claims_cookie = Cookie::build((JWT_CLAIMS_KEY, jwt.to_owned()))
         .path("/")
         .same_site(SameSite::Lax)
         .http_only(true)
@@ -210,7 +210,7 @@ pub(crate) async fn post_handler
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, "/")
-        .header(header::SET_COOKIE, jwt_claim_cookie)
+        .header(header::SET_COOKIE, jwt_claims_cookie)
         .body(Body::empty())
         .unwrap();
     Ok(response)
