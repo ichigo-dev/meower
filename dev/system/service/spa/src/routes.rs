@@ -42,12 +42,12 @@ pub fn AppRouter<G: Html>( cx: Scope ) -> View<G>
                 let route = route.get();
                 match route.as_ref()
                 {
-                    AppRoutes::Home => view! { cx, home::Home },
+                    AppRoutes::Home => view! { cx, Home },
                     AppRoutes::Mypage(mypage_route) =>
                     {
                         view!{ cx, mypage::MypageRouter(route=mypage_route.clone()) }
                     },
-                    AppRoutes::NotFound => view! { cx, notfound::NotFound },
+                    AppRoutes::NotFound => view! { cx, NotFound },
                 }
             }
         )

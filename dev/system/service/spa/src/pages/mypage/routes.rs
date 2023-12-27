@@ -47,10 +47,10 @@ pub(crate) fn MypageRouter<'cx, G: Html>
                 view!
                 {
                     cx,
-                    Suspense(fallback=view! { cx, "Loading..." }) { index::Index }
+                    Suspense(fallback=view! { cx, "Loading..." }) { Index }
                 }
             },
-            MypageRoutes::EditProfile => view! { cx, edit_profile::EditProfile },
+            MypageRoutes::EditProfile => view! { cx, EditProfile },
             MypageRoutes::NotFound => view! { cx, NotFound },
         })
     }
