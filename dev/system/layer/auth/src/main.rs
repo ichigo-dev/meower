@@ -68,6 +68,7 @@ async fn main()
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
+        .fallback(utils::proxy::handler)
         .with_state(state);
 
     // Starts the server.

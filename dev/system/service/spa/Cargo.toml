@@ -1,0 +1,20 @@
+[package]
+name = "meower_spa"
+version = "0.1.0"
+edition = "2021"
+authors = ["ichigo-dev <dev.honda.ichigo@gmail.com>"]
+description = "SPA frontend for Meower"
+license = "MIT"
+documentation = ""
+repository = "https://github.com/ichigo-dev/meower"
+
+
+[dependencies]
+console_error_panic_hook = "0.1.7"
+console_log = "0.2.0"
+log = "0.4.17"
+reqwest = "0.11.22"
+sycamore = { version = "0.8.2", features = ["suspense"] }
+sycamore-router = "0.8.0"
+wasm-bindgen = { version = "0.2.89", features = ["serde-serialize"] }
+wasm-bindgen-futures = "0.4.39"

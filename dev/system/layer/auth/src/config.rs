@@ -17,6 +17,7 @@ pub(crate) struct Config
     // Server config.
     pub(crate) debug_mode: bool,
     pub(crate) port: u16,
+    pub(crate) proxy_url: String,
 
     // Database config.
     pub(crate) database_url: String,
@@ -59,6 +60,8 @@ impl Config
             .expect("PORT must be set")
             .parse::<u16>()
             .expect("PORT must be a number");
+        let proxy_url = env::var("PROXY_URL")
+            .expect("PROXY_URL must be set");
 
         // Database config.
         let database_url = env::var("DATABASE_URL")
@@ -106,6 +109,7 @@ impl Config
             system_url,
             debug_mode,
             port,
+            proxy_url,
             database_url,
             fallback_locale,
             jwt_issue,

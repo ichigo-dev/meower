@@ -1,0 +1,21 @@
+[build]
+target = "index.html"
+release = false
+dist = "dist"
+public_url = "/"
+filehash = true
+inject_scripts = true
+
+[watch]
+watch = []
+ignore = []
+
+[serve]
+address = "127.0.0.1"
+port = 9100
+open = false
+no_autoreload = true
+
+[clean]
+dist = "dist"
+cargo = false

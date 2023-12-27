@@ -37,9 +37,17 @@ up:
 down:
 	@docker compose down
 
+# Restart the containers
+restart:
+	@docker compose restart
+
 # Watch the logs
 logs:
 	@docker compose logs -f
+
+# Show the status of containers
+ps:
+	@docker compose ps
 
 
 ################################################################################
