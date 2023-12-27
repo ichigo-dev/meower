@@ -47,9 +47,9 @@ everything.
 │   │   │   └ auth/        ... Authentication layer
 │   │   │
 │   │   └ service/
-│   │       ├ api_schema/  ... API schemas
-│   │       ├ backend/     ... Application backend server
-│   │       └ frontend/    ... Application frontend server
+│   │       ├ schema/      ... API schemas
+│   │       ├ api/         ... Application backend(API) server
+│   │       └ spa/         ... Application frontend(SPA) server
 │   │
 │   ├ .env                 ... Definition of various environment variables
 │   ├ .env.example         ... Example of .env
