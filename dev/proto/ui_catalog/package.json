@@ -1,0 +1,11 @@
+{
+	"scripts": {
+		"start": "npm run sass & npm run reload",
+		"sass": "node-sass assets/scss/style.scss --output assets/css/style.css --output-style compressed --watch",
+		"reload": "browser-sync start --files 'assets/css/*.css, *.html, assets/js/*.js'"
+	},
+	"devDependencies": {
+		"browser-sync": "^2.26.7",
+		"node-sass": "^4.12.0"
+	}
+}
