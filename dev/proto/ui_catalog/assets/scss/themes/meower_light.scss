@@ -1,0 +1,48 @@
+//------------------------------------------------------------------------------
+//	Meower light theme
+//------------------------------------------------------------------------------
+
+.theme_meower_light
+{
+	//	Primary
+	--color-primary: var(--color-blue-grey);
+	--color-primary-light: var(--color-blue-grey-lighten-1);
+	--color-primary-dark: var(--color-blue-grey-darken-1);
+	--color-primary-text: var(--color-grey-lighten-5);
+
+	//	Secondary
+	--color-secondary: var(--color-deep-orange);
+	--color-secondary-light: var(--color-deep-orange-lighten-1);
+	--color-secondary-dark: var(--color-deep-orange-darken-1);
+	--color-secondary-text: var(--color-grey-lighten-5);
+
+	//	Error
+	--color-error: var(--color-red);
+	--color-error-light: var(--color-red-lighten-1);
+	--color-error-dark: var(--color-red-darken-1);
+	--color-error-text: var(--color-grey-lighten-5);
+
+	//	Warning
+	--color-warning: var(--color-orange);
+	--color-warning-light: var(--color-orange-lighten-1);
+	--color-warning-dark: var(--color-orange-darken-1);
+	--color-warning-text: var(--color-grey-lighten-5);
+
+	//	Info
+	--color-info: var(--color-blue);
+	--color-info-light: var(--color-blue-lighten-1);
+	--color-info-dark: var(--color-blue-darken-1);
+	--color-info-text: var(--color-grey-lighten-5);
+
+	//	Success
+	--color-success: var(--color-green);
+	--color-success-light: var(--color-green-lighten-1);
+	--color-success-dark: var(--color-green-darken-1);
+	--color-success-text: var(--color-grey-lighten-5);
+
+	//	Common
+	--color-background: var(--color-blue-grey-lighten-5);
+	--color-background-text: var(--color-grey-darken-4);
+	--color-surface: var(--color-blue-grey-lighten-3);
+	--color-surface-text: var(--color-grey-darken-4);
+}
