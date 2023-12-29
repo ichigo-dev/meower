@@ -1,8 +1,5 @@
 //------------------------------------------------------------------------------
-//	Style
+//	Common styles
 //------------------------------------------------------------------------------
 
-@use "common/index" as common;
-@use "components/index" as components;
-@use "themes/index" as themes;
-@use "variables/index" as variables;
+@forward 'box';

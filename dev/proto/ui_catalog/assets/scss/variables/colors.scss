@@ -4,7 +4,28 @@
 
 :root
 {
+	//--------------------------------------------------------------------------
+	//	Red
+	//--------------------------------------------------------------------------
+
+	--color-red: #F44336;
+
+	//	Lighten
 	--color-red-lighten-5: #FFEBEE;
 	--color-red-lighten-4: #FFCDD2;
 	--color-red-lighten-3: #EF9A9A;
+	--color-red-lighten-2: #E57373;
+	--color-red-lighten-1: #EF5350;
+
+	//	Darken
+	--color-red-darken-1: #E53935;
+	--color-red-darken-2: #D32F2F;
+	--color-red-darken-3: #C62828;
+	--color-red-darken-4: #B71C1C;
+
+	//	Accent
+	--color-red-accent-1: #FF8A80;
+	--color-red-accent-2: #FF5252;
+	--color-red-accent-3: #FF1744;
+	--color-red-accent-4: #D50000;
 }
