@@ -211,12 +211,14 @@ services:
     container_name: meower_ui
     build:
       context: .
-      dockerfile: ./docker/base/ui/Dockerfile
+      dockerfile: ./docker/dev/ui/Dockerfile
     ports:
       - ${UI_CATALOG_PORT}:8030
     volumes:
       - ./proto/ui_catalog:/proto/ui_catalog
+      - ui-catalog-node_modules:/proto/ui_catalog/node_modules
     working_dir: /proto/ui_catalog
+    command: "npx gulp"
     tty: true
 
 
@@ -226,3 +228,4 @@ services:
 volumes:
   pg-data:
   mailhog-data:
+  ui-catalog-node_modules:

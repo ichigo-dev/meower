@@ -1,11 +1,14 @@
 {
-	"scripts": {
-		"start": "npm run sass & npm run reload",
-		"sass": "node-sass assets/scss/style.scss --output assets/css/style.css --output-style compressed --watch",
-		"reload": "browser-sync start --files 'assets/css/*.css, *.html, assets/js/*.js'"
-	},
+	"name": "ui-catalog",
+	"version": "1.0.0",
+	"description": "Catalog of UI components",
+	"main": "index.js",
+	"author": "ichigo-dev <dev.honda.ichigo@gmail.com>",
+	"license": "MIT",
+	"scripts": {},
 	"devDependencies": {
-		"browser-sync": "^2.26.7",
-		"node-sass": "^4.12.0"
+		"browser-sync": "^3.0.2",
+		"gulp": "^4.0.2",
+		"gulp-dart-sass": "^1.1.0"
 	}
 }

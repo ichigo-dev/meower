@@ -1,6 +1,10 @@
 # Development
 .env
 
+# Node ignores
+package-lock.json
+node_modules/
+
 # Rust outputs
 dist/
 target/
