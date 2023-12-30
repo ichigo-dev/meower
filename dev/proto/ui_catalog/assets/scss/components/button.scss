@@ -1,0 +1,195 @@
+//------------------------------------------------------------------------------
+//	UI button
+//------------------------------------------------------------------------------
+
+.ui_button
+{
+	display: inline-block;
+	border-radius: var(--radius-sm);
+	padding: var(--spacing-sm) var(--spacing-lg);
+	cursor: pointer;
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		font-size: var(--fs-sm);
+		padding: var(--spacing-xs) var(--spacing-md);
+	}
+	&.large
+	{
+		font-size: var(--fs-lg);
+		padding: var(--spacing-md) var(--spacing-xl);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors and Styles
+	//--------------------------------------------------------------------------
+
+	&.primary
+	{
+		background-color: var(--color-primary);
+		color: var(--color-primary-text);
+
+		&.text
+		{
+			background-color: transparent;
+			color: var(--color-primary);
+		}
+
+		&.outlined
+		{
+			background-color: transparent;
+			color: var(--color-primary);
+			border: 1px solid var(--color-primary);
+		}
+	}
+
+	&.secondary
+	{
+		background-color: var(--color-secondary);
+		color: var(--color-secondary-text);
+
+		&.text
+		{
+			background-color: transparent;
+			color: var(--color-secondary);
+		}
+
+		&.outlined
+		{
+			background-color: transparent;
+			color: var(--color-secondary);
+			border: 1px solid var(--color-secondary);
+		}
+	}
+
+	&.error
+	{
+		background-color: var(--color-error);
+		color: var(--color-error-text);
+
+		&.text
+		{
+			background-color: transparent;
+			color: var(--color-error);
+		}
+
+		&.outlined
+		{
+			background-color: transparent;
+			color: var(--color-error);
+			border: 1px solid var(--color-error);
+		}
+	}
+
+	&.warning
+	{
+		background-color: var(--color-warning);
+		color: var(--color-warning-text);
+
+		&.text
+		{
+			background-color: transparent;
+			color: var(--color-warning);
+		}
+
+		&.outlined
+		{
+			background-color: transparent;
+			color: var(--color-warning);
+			border: 1px solid var(--color-warning);
+		}
+	}
+
+	&.info
+	{
+		background-color: var(--color-info);
+		color: var(--color-info-text);
+
+		&.text
+		{
+			background-color: transparent;
+			color: var(--color-info);
+		}
+
+		&.outlined
+		{
+			background-color: transparent;
+			color: var(--color-info);
+			border: 1px solid var(--color-info);
+		}
+	}
+
+	&.success
+	{
+		background-color: var(--color-success);
+		color: var(--color-success-text);
+
+		&.text
+		{
+			background-color: transparent;
+			color: var(--color-success);
+		}
+
+		&.outlined
+		{
+			background-color: transparent;
+			color: var(--color-success);
+			border: 1px solid var(--color-success);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Rounded
+	//--------------------------------------------------------------------------
+
+	&.full_rounded
+	{
+		border-radius: 99999px;
+	}
+
+	&.no_rounded
+	{
+		border-radius: 0;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:hover
+	{
+		opacity: 0.7;
+	}
+
+	&:disabled
+	{
+		background-color: var(--color-disabled);
+		color: var(--color-disabled-text);
+		cursor: not-allowed;
+
+		&.text
+		{
+			background-color: transparent;
+			color: var(--color-disabled-text);
+		}
+
+		&.outlined
+		{
+			color: var(--color-disabled-text);
+			border: 1px solid var(--color-disabled-text);
+		}
+
+		&:hover
+		{
+			opacity: 1;
+		}
+	}
+}

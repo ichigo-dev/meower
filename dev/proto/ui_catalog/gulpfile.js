@@ -53,6 +53,7 @@ const watch = () =>
 	gulp.watch('*.html', gulp.series(browser_sync_reload));
 	gulp.watch('assets/css/*.css', gulp.series(browser_sync_reload));
 	gulp.watch('assets/scss/**/*.scss', gulp.series(compile_sass));
+	gulp.watch('assets/js/**/*.js', gulp.series(browser_sync_reload));
 };
 
 
