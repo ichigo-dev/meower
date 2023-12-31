@@ -1,0 +1,141 @@
+//------------------------------------------------------------------------------
+//	UI button group
+//
+//
+//	# Usage
+//
+//	```html
+//	<input type="checkbox" class="ui_checkbox">
+//	```
+//------------------------------------------------------------------------------
+
+.ui_checkbox
+{
+	$small_ratio: 0.8;
+	$large_ratio: 1.2;
+	$icon_ratio: 0.7;
+
+	width: var(--size-sm);
+	height: var(--size-sm);
+	border-radius: var(--radius-2xs);
+	border: 2px solid var(--color-surface-text);
+	cursor: pointer;
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		height: calc(var(--size-sm) * $small_ratio);
+		width: calc(var(--size-sm) * $small_ratio);
+
+		&:checked:before
+		{
+			height: calc(var(--size-sm) * $small_ratio * $icon_ratio);
+			width: calc(var(--size-sm) * $small_ratio * $icon_ratio);
+		}
+	}
+
+	&.large
+	{
+		height: calc(var(--size-sm) * $large_ratio);
+		width: calc(var(--size-sm) * $large_ratio);
+
+		&:checked:before
+		{
+			height: calc(var(--size-sm) * $large_ratio * $icon_ratio);
+			width: calc(var(--size-sm) * $large_ratio * $icon_ratio);
+		}
+	}
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	&.primary:checked
+	{
+		background-color: var(--color-primary);
+		border-color: var(--color-primary);
+		color: var(--color-primary-text);
+	}
+
+	&.secondary:checked
+	{
+		background-color: var(--color-secondary);
+		border-color: var(--color-secondary);
+		color: var(--color-secondary-text);
+	}
+
+	&.error:checked
+	{
+		background-color: var(--color-error);
+		border-color: var(--color-error);
+		color: var(--color-error-text);
+	}
+
+	&.warning:checked
+	{
+		background-color: var(--color-warning);
+		border-color: var(--color-warning);
+		color: var(--color-warning-text);
+	}
+
+	&.info:checked
+	{
+		background-color: var(--color-info);
+		border-color: var(--color-info);
+		color: var(--color-info-text);
+	}
+
+	&.success:checked
+	{
+		background-color: var(--color-success);
+		border-color: var(--color-success);
+		color: var(--color-info-success);
+	}
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:disabled
+	{
+		border-color: var(--color-disabled);
+		cursor: not-allowed;
+	}
+
+	&:checked
+	{
+		position: relative;
+		background-color: var(--color-info);
+		border-color: var(--color-info);
+
+		&:disabled
+		{
+			background-color: var(--color-disabled);
+			border-color: var(--color-disabled);
+			color: var(--color-disabled-text);
+		}
+
+		&::before
+		{
+			content: "";
+			background-color: var(--color-info-text);
+			mask-image: var(--icon-svg-check);
+			mask-size: contain;
+			mask-position: center;
+			mask-repeat: no-repeat;
+			-webkit-mask-image: var(--icon-svg-check);
+			-webkit-mask-size: contain;
+			-webkit-mask-position: center;
+			-webkit-mask-repeat: no-repeat;
+			width: calc(var(--size-sm) * $icon_ratio);
+			height: calc(var(--size-sm) * $icon_ratio);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+}
