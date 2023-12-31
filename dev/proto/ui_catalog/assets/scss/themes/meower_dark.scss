@@ -1,0 +1,77 @@
+//------------------------------------------------------------------------------
+//	Meower light theme
+//------------------------------------------------------------------------------
+
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Noto+Sans+JP:wght@300;500;700&family=Noto+Sans+Mono:wght@300;500;700&family=Noto+Serif+JP:wght@300;500;700&display=swap");
+
+.theme_meower_dark
+{
+	//--------------------------------------------------------------------------
+	//	Fonts
+	//--------------------------------------------------------------------------
+
+	--font-default: "Noto sans JP", sans-serif;
+	--font-gothic: "Noto Sans JP", sans-serif;
+	--font-serif: "Noto Serif JP", serif;
+	--font-monospace: "Noto Sans Mono", monospace;
+	--font-cursive: "Caveat", sans-serif;
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	//	Primary
+	--color-primary: var(--color-blue-grey-lighten-3);
+	--color-primary-light: var(--color-blue-grey-lighten-5);
+	--color-primary-dark: var(--color-blue-grey-lighten-1);
+	--color-primary-text: var(--color-grey-darken-3);
+
+	//	Secondary
+	--color-secondary: var(--color-deep-orange);
+	--color-secondary-light: var(--color-deep-orange-lighten-2);
+	--color-secondary-dark: var(--color-deep-orange-darken-2);
+	--color-secondary-text: var(--color-grey-lighten-5);
+
+	//	Error
+	--color-error: var(--color-red);
+	--color-error-light: var(--color-red-lighten-2);
+	--color-error-dark: var(--color-red-darken-2);
+	--color-error-text: var(--color-grey-lighten-5);
+
+	//	Warning
+	--color-warning: var(--color-orange);
+	--color-warning-light: var(--color-orange-lighten-2);
+	--color-warning-dark: var(--color-orange-darken-2);
+	--color-warning-text: var(--color-grey-lighten-5);
+
+	//	Info
+	--color-info: var(--color-blue);
+	--color-info-light: var(--color-blue-lighten-2);
+	--color-info-dark: var(--color-blue-darken-2);
+	--color-info-text: var(--color-grey-lighten-5);
+
+	//	Success
+	--color-success: var(--color-green);
+	--color-success-light: var(--color-green-lighten-2);
+	--color-success-dark: var(--color-green-darken-2);
+	--color-success-text: var(--color-grey-lighten-5);
+
+	//	Common
+	--color-background: var(--color-blue-grey-darken-4);
+	--color-background-text: var(--color-grey-lighten-5);
+	--color-surface: var(--color-blue-grey-darken-4);
+	--color-surface-text: var(--color-grey-lighten-3);
+	--color-disabled: var(--color-grey-darken-1);
+	--color-disabled-text: var(--color-grey-ligten-1);
+
+
+	//--------------------------------------------------------------------------
+	//	Styles
+	//--------------------------------------------------------------------------
+
+	background-color: var(--color-background);
+	color: var(--color-background-text);
+	font-family: var(--font-default);
+	font-size: var(--fs-md);
+}
