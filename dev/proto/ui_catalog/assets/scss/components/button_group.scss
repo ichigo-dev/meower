@@ -31,6 +31,7 @@
 			border-top-left-radius: var(--radius-sm);
 			border-bottom-left-radius: var(--radius-sm);
 		}
+
 		&:last-child
 		{
 			border-top-right-radius: var(--radius-sm);
@@ -56,6 +57,7 @@
 			padding: var(--spacing-xs) var(--spacing-md);
 		}
 	}
+
 	&.large
 	{
 		> button, a
@@ -82,6 +84,7 @@
 				border-top-left-radius: var(--radius-sm);
 				border-top-right-radius: var(--radius-sm);
 			}
+
 			&:last-child
 			{
 				border-top-right-radius: 0;

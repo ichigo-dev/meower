@@ -336,9 +336,9 @@
      <div>
       <h2 class="ui_heading h3">Sizes</h2>
       <div class="flex flex_row flex_align_start flex_gap_lg">
-       <input type="checkbox" class="ui_checkbox small">
-       <input type="checkbox" class="ui_checkbox">
-       <input type="checkbox" class="ui_checkbox large">
+       <input type="checkbox" class="ui_checkbox small" checked>
+       <input type="checkbox" class="ui_checkbox" checked>
+       <input type="checkbox" class="ui_checkbox large" checked>
       </div>
      </div>
 
@@ -478,7 +478,31 @@
      <div>
       <h2 class="ui_heading h3">Basic</h2>
       <div class="flex flex_row flex_align_center flex_gap_lg">
-       <input class="ui_radio">
+       <input type="radio" class="ui_radio" name="ui_radio_basic">
+       <input type="radio" class="ui_radio" name="ui_radio_basic" checked>
+       <input type="radio" class="ui_radio" name="ui_radio_basic_disabled" disabled>
+       <input type="radio" class="ui_radio" name="ui_radio_basic_disabled" checked disabled>
+      </div>
+     </div>
+
+     <div>
+      <h2 class="ui_heading h3">Sizes</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <input type="radio" class="ui_radio small" name="ui_radio_size" checked>
+       <input type="radio" class="ui_radio" name="ui_radio_size">
+       <input type="radio" class="ui_radio large" name="ui_radio_size">
+      </div>
+     </div>
+
+     <div>
+      <h2 class="ui_heading h3">Colors</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <input type="radio" class="ui_radio primary" name="ui_radio_primary" checked>
+       <input type="radio" class="ui_radio secondary" name="ui_radio_secondary" checked>
+       <input type="radio" class="ui_radio error" name="ui_radio_error" checked>
+       <input type="radio" class="ui_radio warning" name="ui_radio_warning" checked>
+       <input type="radio" class="ui_radio info" name="ui_radio_info" checked>
+       <input type="radio" class="ui_radio success" name="ui_radio_success" checked>
       </div>
      </div>
     </section>

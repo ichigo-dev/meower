@@ -72,7 +72,7 @@ const create_color_band_spacer = () =>
 //------------------------------------------------------------------------------
 //	Creates a color band element.
 //------------------------------------------------------------------------------
-const color_band_classes = ['ui_box', 'height_lg', 'width_7xl', 'center'];
+const color_band_classes = ['ui_box', 'height_xl', 'width_8xl', 'center'];
 const create_color_band = ( color_, type_, fix_text_color_ = false ) =>
 {
 	const elm = document.createElement('div');

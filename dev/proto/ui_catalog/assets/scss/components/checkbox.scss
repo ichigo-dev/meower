@@ -11,12 +11,10 @@
 
 .ui_checkbox
 {
-	$small_ratio: 0.8;
-	$large_ratio: 1.2;
-	$icon_ratio: 0.7;
+	$icon_ratio: 0.8;
 
-	width: var(--size-sm);
-	height: var(--size-sm);
+	width: var(--size-md);
+	height: var(--size-md);
 	border-radius: var(--radius-2xs);
 	border: 2px solid var(--color-surface-text);
 	cursor: pointer;
@@ -27,27 +25,28 @@
 
 	&.small
 	{
-		height: calc(var(--size-sm) * $small_ratio);
-		width: calc(var(--size-sm) * $small_ratio);
+		height: var(--size-sm);
+		width: var(--size-sm);
 
 		&:checked:before
 		{
-			height: calc(var(--size-sm) * $small_ratio * $icon_ratio);
-			width: calc(var(--size-sm) * $small_ratio * $icon_ratio);
+			height: calc(var(--size-sm) * $icon_ratio);
+			width: calc(var(--size-sm) * $icon_ratio);
 		}
 	}
 
 	&.large
 	{
-		height: calc(var(--size-sm) * $large_ratio);
-		width: calc(var(--size-sm) * $large_ratio);
+		height: var(--size-lg);
+		width: var(--size-lg);
 
 		&:checked:before
 		{
-			height: calc(var(--size-sm) * $large_ratio * $icon_ratio);
-			width: calc(var(--size-sm) * $large_ratio * $icon_ratio);
+			height: calc(var(--size-lg) * $icon_ratio);
+			width: calc(var(--size-lg) * $icon_ratio);
 		}
 	}
+
 
 	//--------------------------------------------------------------------------
 	//	Colors
@@ -95,6 +94,7 @@
 		color: var(--color-info-success);
 	}
 
+
 	//--------------------------------------------------------------------------
 	//	States
 	//--------------------------------------------------------------------------
@@ -130,8 +130,8 @@
 			-webkit-mask-size: contain;
 			-webkit-mask-position: center;
 			-webkit-mask-repeat: no-repeat;
-			width: calc(var(--size-sm) * $icon_ratio);
-			height: calc(var(--size-sm) * $icon_ratio);
+			width: calc(var(--size-md) * $icon_ratio);
+			height: calc(var(--size-md) * $icon_ratio);
 			position: absolute;
 			top: 50%;
 			left: 50%;

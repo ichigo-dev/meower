@@ -4,4 +4,141 @@
 
 .ui_radio
 {
+	$icon_ratio: 0.55;
+
+	width: var(--size-md);
+	height: var(--size-md);
+	border-radius: var(--radius-circle);
+	border: 2px solid var(--color-background-text);
+	cursor: pointer;
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		width: var(--size-sm);
+		height: var(--size-sm);
+
+		&:checked:before
+		{
+			width: calc(var(--size-sm) * $icon_ratio);
+			height: calc(var(--size-sm) * $icon_ratio);
+		}
+	}
+
+	&.large
+	{
+		width: var(--size-lg);
+		height: var(--size-lg);
+
+		&:checked:before
+		{
+			width: calc(var(--size-lg) * $icon_ratio);
+			height: calc(var(--size-lg) * $icon_ratio);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	&.primary:checked
+	{
+		border-color: var(--color-primary);
+
+		&:before
+		{
+			background-color: var(--color-primary);
+		}
+	}
+
+	&.secondary:checked
+	{
+		border-color: var(--color-secondary);
+
+		&:before
+		{
+			background-color: var(--color-secondary);
+		}
+	}
+
+	&.error:checked
+	{
+		border-color: var(--color-error);
+
+		&:before
+		{
+			background-color: var(--color-error);
+		}
+	}
+
+	&.warning:checked
+	{
+		border-color: var(--color-warning);
+
+		&:before
+		{
+			background-color: var(--color-warning);
+		}
+	}
+
+	&.info:checked
+	{
+		border-color: var(--color-info);
+
+		&:before
+		{
+			background-color: var(--color-info);
+		}
+	}
+
+	&.success:checked
+	{
+		border-color: var(--color-success);
+
+		&:before
+		{
+			background-color: var(--color-success);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:checked
+	{
+		position: relative;
+		border-color: var(--color-info);
+
+		&:before
+		{
+			content: "";
+			display: inline-block;
+			width: calc(var(--size-md) * $icon_ratio);
+			height: calc(var(--size-md) * $icon_ratio);
+			border-radius: var(--radius-circle);
+			background-color: var(--color-info);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	&:disabled
+	{
+		border-color: var(--color-disabled);
+		cursor: not-allowed;
+
+		&:checked:before
+		{
+			background-color: var(--color-disabled);
+		}
+	}
 }
