@@ -1,0 +1,73 @@
+//------------------------------------------------------------------------------
+//	UI Icon
+//------------------------------------------------------------------------------
+
+.ui_icon
+{
+	display: inline-block;
+	width: var(--size-md);
+	height: var(--size-md);
+	background-color: var(--color-background-text);
+	mask-size: contain;
+	mask-position: center;
+	mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		width: var(--size-sm);
+		height: var(--size-sm);
+	}
+
+	&.large
+	{
+		width: var(--size-lg);
+		height: var(--size-lg);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	&.primary { background-color: var(--color-primary); }
+	&.secondary { background-color: var(--color-secondary); }
+	&.error { background-color: var(--color-error); }
+	&.warning { background-color: var(--color-warning); }
+	&.info { background-color: var(--color-info); }
+	&.success { background-color: var(--color-success); }
+
+	&.primary_text { background-color: var(--color-primary-text); }
+	&.secondary_text { background-color: var(--color-secondary-text); }
+	&.error_text { background-color: var(--color-error-text); }
+	&.warning_text { background-color: var(--color-warning-text); }
+	&.info_text { background-color: var(--color-info-text); }
+	&.success_text { background-color: var(--color-success-text); }
+
+	&.white { background-color: var(--color-white); }
+	&.black { background-color: var(--color-black); }
+
+
+	//--------------------------------------------------------------------------
+	//	Icons
+	//--------------------------------------------------------------------------
+
+	&.icon_plus
+	{
+		mask-image: var(--icon-svg-plus);
+		-webkit-mask-image: var(--icon-svg-plus);
+	}
+
+	&.icon_check
+	{
+		mask-image: var(--icon-svg-check);
+		-webkit-mask-image: var(--icon-svg-check);
+	}
+}

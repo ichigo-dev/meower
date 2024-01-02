@@ -1,0 +1,107 @@
+//------------------------------------------------------------------------------
+//	UI floating button
+//------------------------------------------------------------------------------
+
+.ui_floating_button
+{
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-md);
+	padding: var(--spacing-md);
+	border-radius: var(--radius-circle);
+	cursor: pointer;
+	box-shadow: var(--shadow-md);
+	transition: opacity 0.3s 0s ease-in-out;
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		padding: var(--spacing-sm);
+	}
+
+	&.large
+	{
+		padding: var(--spacing-lg);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	&.primary
+	{
+		background-color: var(--color-primary);
+		color: var(--color-primary-text);
+
+		.ui_icon { background-color: var(--color-primary-text); }
+	}
+
+	&.secondary
+	{
+		background-color: var(--color-secondary);
+		color: var(--color-secondary-text);
+
+		.ui_icon { background-color: var(--color-secondary-text); }
+	}
+
+	&.error
+	{
+		background-color: var(--color-error);
+		color: var(--color-error-text);
+
+		.ui_icon { background-color: var(--color-error-text); }
+	}
+
+	&.warning
+	{
+		background-color: var(--color-warning);
+		color: var(--color-warning-text);
+
+		.ui_icon { background-color: var(--color-warning-text); }
+	}
+
+	&.info
+	{
+		background-color: var(--color-info);
+		color: var(--color-info-text);
+
+		.ui_icon { background-color: var(--color-info-text); }
+	}
+
+	&.success
+	{
+		background-color: var(--color-success);
+		color: var(--color-success-text);
+
+		.ui_icon { background-color: var(--color-success-text); }
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:hover
+	{
+		opacity: var(--opacity-hover);
+	}
+
+	&:disabled
+	{
+		background-color: var(--color-disabled);
+		color: var(--color-disabled-text);
+		cursor: not-allowed;
+
+		.ui_icon { background-color: var(--color-disabled-text); }
+
+		&:hover
+		{
+			opacity: var(--opacity-100);
+		}
+	}
+}
