@@ -18,6 +18,30 @@
 	border-radius: var(--radius-2xs);
 	border: 2px solid var(--color-surface-text);
 	cursor: pointer;
+	position: relative;
+	transition: border-color 0.2s 0s ease-in-out;
+
+	&::before
+	{
+		content: "";
+		background-color: transparent;
+		mask-image: var(--icon-svg-check);
+		mask-size: contain;
+		mask-position: center;
+		mask-repeat: no-repeat;
+		-webkit-mask-image: var(--icon-svg-check);
+		-webkit-mask-size: contain;
+		-webkit-mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+		width: 0;
+		height: 0;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		transition: background-color 0.2s 0s ease-in;
+	}
+
 
 	//--------------------------------------------------------------------------
 	//	Sizes
@@ -107,7 +131,6 @@
 
 	&:checked
 	{
-		position: relative;
 		background-color: var(--color-info);
 		border-color: var(--color-info);
 
@@ -120,22 +143,9 @@
 
 		&::before
 		{
-			content: "";
 			background-color: var(--color-info-text);
-			mask-image: var(--icon-svg-check);
-			mask-size: contain;
-			mask-position: center;
-			mask-repeat: no-repeat;
-			-webkit-mask-image: var(--icon-svg-check);
-			-webkit-mask-size: contain;
-			-webkit-mask-position: center;
-			-webkit-mask-repeat: no-repeat;
 			width: calc(var(--size-md) * $icon_ratio);
 			height: calc(var(--size-md) * $icon_ratio);
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
 		}
 	}
 }

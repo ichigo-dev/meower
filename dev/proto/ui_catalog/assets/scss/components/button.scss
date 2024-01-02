@@ -15,7 +15,10 @@
 	border-radius: var(--radius-sm);
 	padding: var(--spacing-sm) var(--spacing-lg);
 	cursor: pointer;
-	transition: opacity 0.3s 0s ease-in-out;
+	transition:
+		background-color 0.3s 0s ease-in-out,
+		color 0.3s 0s ease-in-out,
+		border-color 0.3s 0s ease-in-out;
 
 
 	//--------------------------------------------------------------------------
@@ -44,10 +47,21 @@
 		background-color: var(--color-primary);
 		color: var(--color-primary-text);
 
+		&:hover:not(:disabled)
+		{
+			background-color: var(--color-primary-dark);
+		}
+
 		&.text
 		{
 			background-color: transparent;
 			color: var(--color-primary);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-primary-light);
+			}
 		}
 
 		&.outlined
@@ -55,6 +69,13 @@
 			background-color: transparent;
 			color: var(--color-primary);
 			border: 1px solid var(--color-primary);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-primary-light);
+				border-color: var(--color-primary-light);
+			}
 		}
 	}
 
@@ -63,10 +84,21 @@
 		background-color: var(--color-secondary);
 		color: var(--color-secondary-text);
 
+		&:hover:not(:disabled)
+		{
+			background-color: var(--color-secondary-dark);
+		}
+
 		&.text
 		{
 			background-color: transparent;
 			color: var(--color-secondary);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-secondary-light);
+			}
 		}
 
 		&.outlined
@@ -74,6 +106,13 @@
 			background-color: transparent;
 			color: var(--color-secondary);
 			border: 1px solid var(--color-secondary);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-secondary-light);
+				border-color: var(--color-secondary-light);
+			}
 		}
 	}
 
@@ -82,10 +121,21 @@
 		background-color: var(--color-error);
 		color: var(--color-error-text);
 
+		&:hover:not(:disabled)
+		{
+			background-color: var(--color-error-dark);
+		}
+
 		&.text
 		{
 			background-color: transparent;
 			color: var(--color-error);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-error-light);
+			}
 		}
 
 		&.outlined
@@ -93,6 +143,13 @@
 			background-color: transparent;
 			color: var(--color-error);
 			border: 1px solid var(--color-error);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-error-light);
+				border-color: var(--color-error-light);
+			}
 		}
 	}
 
@@ -101,10 +158,21 @@
 		background-color: var(--color-warning);
 		color: var(--color-warning-text);
 
+		&:hover:not(:disabled)
+		{
+			background-color: var(--color-warning-dark);
+		}
+
 		&.text
 		{
 			background-color: transparent;
 			color: var(--color-warning);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-warning-light);
+			}
 		}
 
 		&.outlined
@@ -112,6 +180,13 @@
 			background-color: transparent;
 			color: var(--color-warning);
 			border: 1px solid var(--color-warning);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-warning-light);
+				border-color: var(--color-warning-light);
+			}
 		}
 	}
 
@@ -120,10 +195,21 @@
 		background-color: var(--color-info);
 		color: var(--color-info-text);
 
+		&:hover:not(:disabled)
+		{
+			background-color: var(--color-info-dark);
+		}
+
 		&.text
 		{
 			background-color: transparent;
 			color: var(--color-info);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-info-light);
+			}
 		}
 
 		&.outlined
@@ -131,6 +217,13 @@
 			background-color: transparent;
 			color: var(--color-info);
 			border: 1px solid var(--color-info);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-info-light);
+				border-color: var(--color-info-light);
+			}
 		}
 	}
 
@@ -139,10 +232,21 @@
 		background-color: var(--color-success);
 		color: var(--color-success-text);
 
+		&:hover:not(:disabled)
+		{
+			background-color: var(--color-success-dark);
+		}
+
 		&.text
 		{
 			background-color: transparent;
 			color: var(--color-success);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-success-light);
+			}
 		}
 
 		&.outlined
@@ -150,6 +254,13 @@
 			background-color: transparent;
 			color: var(--color-success);
 			border: 1px solid var(--color-success);
+
+			&:hover:not(:disabled)
+			{
+				background-color: transparent;
+				color: var(--color-success-light);
+				border-color: var(--color-success-light);
+			}
 		}
 	}
 
@@ -173,11 +284,6 @@
 	//	States
 	//--------------------------------------------------------------------------
 
-	&:hover
-	{
-		opacity: var(--opacity-hover);
-	}
-
 	&:disabled
 	{
 		background-color: var(--color-disabled);
@@ -194,11 +300,6 @@
 		{
 			color: var(--color-disabled-text);
 			border: 1px solid var(--color-disabled-text);
-		}
-
-		&:hover
-		{
-			opacity: var(--opacity-100);
 		}
 	}
 }

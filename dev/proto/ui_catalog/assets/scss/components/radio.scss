@@ -11,6 +11,23 @@
 	border-radius: var(--radius-circle);
 	border: 2px solid var(--color-background-text);
 	cursor: pointer;
+	position: relative;
+	transition: border-color 0.2s 0s ease-in-out;
+
+	&:before
+	{
+		content: "";
+		display: inline-block;
+		width: 0px;
+		height: 0px;
+		border-radius: var(--radius-circle);
+		background-color: var(--color-info);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		transition: height 0.2s 0s ease-in, width 0.2s 0s ease-in;
+	}
 
 
 	//--------------------------------------------------------------------------
@@ -113,21 +130,12 @@
 
 	&:checked
 	{
-		position: relative;
 		border-color: var(--color-info);
 
 		&:before
 		{
-			content: "";
-			display: inline-block;
 			width: calc(var(--size-md) * $icon_ratio);
 			height: calc(var(--size-md) * $icon_ratio);
-			border-radius: var(--radius-circle);
-			background-color: var(--color-info);
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
 		}
 	}
 
