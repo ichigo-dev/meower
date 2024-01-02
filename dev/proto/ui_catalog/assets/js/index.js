@@ -24,7 +24,7 @@ const theme_colors =
 	'primary', 'secondary', 'error', 'warning', 'info', 'success',
 ];
 
-const theme_color_types = ['', 'light', 'dark'];
+const theme_color_types = ['light', '', 'dark'];
 
 
 //------------------------------------------------------------------------------
