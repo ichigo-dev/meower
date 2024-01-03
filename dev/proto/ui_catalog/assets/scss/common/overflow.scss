@@ -1,8 +1,11 @@
 //------------------------------------------------------------------------------
-//	Common styles
+//	Overflow
 //------------------------------------------------------------------------------
 
-@forward "flex";
-@forward "overflow";
-@forward "spacer";
-@forward "typography";
+.scroll
+{
+	overflow: scroll;
+
+	&_x { overflow-x: scroll; }
+	&_y { overflow-y: scroll; }
+}

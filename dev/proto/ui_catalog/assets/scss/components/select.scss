@@ -18,7 +18,7 @@
 .ui_select
 {
 	display: inline-block;
-	border: 1px solid var(--color-background-text);
+	border: 1px solid var(--color-border);
 	border-radius: var(--radius-sm);
 	cursor: pointer;
 	position: relative;
@@ -53,7 +53,7 @@
 		position: absolute;
 		top: 0;
 		right: 0;
-		background-color: var(--color-surface);
+		background-color: var(--color-filled);
 		pointer-events: none;
 	}
 
@@ -138,7 +138,7 @@
 		border: none;
 		border-bottom: 1px solid var(--color-background-text);
 		border-radius: 0;
-		background-color: var(--color-surface);
+		background-color: var(--color-filled);
 	}
 
 
@@ -146,7 +146,7 @@
 	//	Errors
 	//--------------------------------------------------------------------------
 
-	&.error
+	&.is_error
 	{
 		border-color: var(--color-error);
 		color: var(--color-error);
@@ -198,7 +198,7 @@
 
 	&:hover:not(:has(select:disabled))
 	{
-		border-color: var(--color-primary-light);
+		border-color: var(--color-border-light);
 	}
 
 	&:has(select:focus):after

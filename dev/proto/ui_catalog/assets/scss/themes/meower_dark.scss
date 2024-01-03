@@ -60,12 +60,30 @@
 	//	Common
 	--color-background: var(--color-blue-grey-darken-4);
 	--color-background-text: var(--color-grey-lighten-5);
-	--color-surface: var(--color-blue-grey-darken-2);
+	--color-surface: var(--color-blue-grey-darken-3);
 	--color-surface-text: var(--color-grey-lighten-4);
+
+	--color-filled: var(--color-blue-grey-accent-3);
+	--color-filled-light: var(--color-blue-grey-accent-2);
+	--color-filled-dark: var(--color-grey-darken-2);
+	--color-border: var(--color-blue-grey-accent-4);
+	--color-border-light: var(--color-blue-grey-accent-3);
+	--color-border-dark: var(--color-black);
+
 
 	//	States
 	--color-disabled: var(--color-grey-darken-1);
 	--color-disabled-text: var(--color-grey-lighten-1);
+
+
+	//--------------------------------------------------------------------------
+	//	Override
+	//--------------------------------------------------------------------------
+
+	--shadow-0: 0 0 0 0 rgba(255, 255, 255, 0);
+	--shadow-sm: 0 0 4px 0 rgba(255, 255, 255, 0.3);
+	--shadow-md: 0 0 8px 0 rgba(255, 255, 255, 0.3);
+	--shadow-lg: 0 0 12px 0 rgba(255, 255, 255, 0.3);
 
 
 	//--------------------------------------------------------------------------

@@ -998,4 +998,26 @@
 			color: var(--color-success-text);
 		}
 	}
+
+
+	//--------------------------------------------------------------------------
+	//	Radus
+	//--------------------------------------------------------------------------
+
+	&.radius
+	{
+		border-radius: var(--radius-md);
+
+		&_3xs { border-radius: var(--radius-3xs); }
+		&_2xs { border-radius: var(--radius-2xs); }
+		&_xs { border-radius: var(--radius-xs); }
+		&_sm { border-radius: var(--radius-sm); }
+		&_md { border-radius: var(--radius-md); }
+		&_lg { border-radius: var(--radius-lg); }
+		&_xl { border-radius: var(--radius-xl); }
+		&_2xl { border-radius: var(--radius-2xl); }
+		&_3xl { border-radius: var(--radius-3xl); }
+		&_4xl { border-radius: var(--radius-4xl); }
+		&_5xl { border-radius: var(--radius-5xl); }
+	}
 }

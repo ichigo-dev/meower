@@ -1,0 +1,194 @@
+//------------------------------------------------------------------------------
+//	UI text field
+//
+//
+//	# Usage
+//
+//	```html
+//	<input type="text" class="ui_text_field">
+//	<textarea class="ui_text_field"></textarea>
+//	```
+//------------------------------------------------------------------------------
+
+.ui_text_field
+{
+	border-bottom: 2px solid var(--color-border);
+	padding: var(--spacing-sm) 0;
+	color: var(--color-background-text);
+	resize: none;
+
+	&::placeholder
+	{
+		opacity: 0.3;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Styles
+	//--------------------------------------------------------------------------
+
+	&.filled
+	{
+		padding: var(--spacing-sm) var(--spacing-md);
+		background-color: var(--color-filled);
+	}
+
+	&.outlined
+	{
+		padding: var(--spacing-sm) var(--spacing-md);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		padding: var(--spacing-xs) 0;
+
+		&.filled,
+		&.outlined
+		{
+			padding: var(--spacing-xs) var(--spacing-sm);
+		}
+	}
+
+	&.large
+	{
+		padding: var(--spacing-md) 0;
+
+		&.filled,
+		&.outlined
+		{
+			padding: var(--spacing-md) var(--spacing-lg);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Width
+	//--------------------------------------------------------------------------
+
+	&.full
+	{
+		width: 100%;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	&.primary
+	{
+		border-color: var(--color-primary);
+
+		&.filled { background-color: var(--color-primary-light); }
+		&:hover { border-color: var(--color-primary-light); }
+		&:focus { border-color: var(--color-primary-dark); }
+	}
+
+	&.secondary
+	{
+		border-color: var(--color-secondary);
+
+		&.filled { background-color: var(--color-secondary-light); }
+		&:hover { border-color: var(--color-secondary-light); }
+		&:focus { border-color: var(--color-secondary-dark); }
+	}
+
+	&.error
+	{
+		border-color: var(--color-error);
+
+		&.filled { background-color: var(--color-error-light); }
+		&:hover { border-color: var(--color-error-light); }
+		&:focus { border-color: var(--color-error-dark); }
+	}
+
+	&.warning
+	{
+		border-color: var(--color-warning);
+
+		&.filled { background-color: var(--color-warning-light); }
+		&:hover { border-color: var(--color-warning-light); }
+		&:focus { border-color: var(--color-warning-dark); }
+	}
+
+	&.info
+	{
+		border-color: var(--color-info);
+
+		&.filled { background-color: var(--color-info-light); }
+		&:hover { border-color: var(--color-info-light); }
+		&:focus { border-color: var(--color-info-dark); }
+	}
+
+	&.success
+	{
+		border-color: var(--color-success);
+
+		&.filled { background-color: var(--color-success-light); }
+		&:hover { border-color: var(--color-success-light); }
+		&:focus { border-color: var(--color-success-dark); }
+	}
+
+
+
+	//--------------------------------------------------------------------------
+	//	Errors
+	//--------------------------------------------------------------------------
+
+	&.is_error
+	{
+		border-color: var(--color-error);
+		color: var(--color-error);
+
+		&.filled
+		{
+			background-color: var(--color-error-light);
+			color: var(--color-error-text);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:hover
+	{
+		border-color: var(--color-border-light);
+	}
+
+	&:focus
+	{
+		border-color: var(--color-info);
+	}
+
+	&:disabled
+	{
+		color: var(--color-disabled-text);
+		border-color: var(--color-disabled-text);
+		cursor: not-allowed;
+
+		&::placeholder
+		{
+			opacity: 1;
+		}
+
+		&.filled
+		{
+			background-color: var(--color-disabled);
+		}
+	}
+
+	&:read-only
+	{
+		&:hover { border-color: var(--color-border); }
+		&:focus { border-color: var(--color-border); }
+	}
+}
