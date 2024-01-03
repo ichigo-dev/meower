@@ -14,10 +14,12 @@
  
    <div>
     <label>Chose Theme</label>
-    <select id="theme_select" class="ui_select">
-     <option	value="theme_meower_light" selected>Meower Light</option>
-     <option	value="theme_meower_dark">Meower Dark</option>
-    </select>
+    <div class="ui_select">
+     <select id="theme_select">
+      <option	value="theme_meower_light" selected>Meower Light</option>
+      <option	value="theme_meower_dark">Meower Dark</option>
+     </select>
+    </div>
    </div>
  
    <main class="flex flex_column flex_gap_xl padding_xl">
@@ -508,15 +510,248 @@
     </section>
 
     <section>
+     <h2 class="ui_heading h2">Range Slider</h2>
+     <div>
+      <h2 class="ui_heading h3">Basic</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <input type="range" class="ui_range_slider" min="0" max="100">
+       <input type="range" class="ui_range_slider" min="0" max="100" step="10">
+       <input type="range" class="ui_range_slider" min="0" max="100" disabled>
+      </div>
+     </div>
+
+     <div>
+      <h2 class="ui_heading h3">Sizes</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <input type="range" class="ui_range_slider small" min="0" max="100">
+       <input type="range" class="ui_range_slider" min="0" max="100">
+       <input type="range" class="ui_range_slider large" min="0" max="100">
+      </div>
+     </div>
+    </section>
+
+    <section>
      <h2 class="ui_heading h2">Select</h2>
      <div>
       <h2 class="ui_heading h3">Basic</h2>
       <div class="flex flex_row flex_align_center flex_gap_lg">
-       <select class="ui_select">
-        <option>Option 1</option>
-        <option>Option 2</option>
-        <option>Option 3</option>
-       </select>
+       <div class="ui_select">
+        <select>
+         <option>Option 1</option>
+         <option>Option 2</option>
+         <option>Option 3</option>
+        </select>
+       </div>
+       <div class="ui_select standard">
+        <select>
+         <option>Option 1</option>
+         <option>Option 2</option>
+         <option>Option 3</option>
+        </select>
+       </div>
+       <div class="ui_select filled">
+        <select>
+         <option>Option 1</option>
+         <option>Option 2</option>
+         <option>Option 3</option>
+        </select>
+       </div>
+      </div>
+     </div>
+
+     <div>
+      <h2 class="ui_heading h3">Disabled</h2>
+      <div class="flex flex_column flex_align_start flex_gap_lg">
+       <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="ui_select">
+         <select disabled>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+        <div class="ui_select standard">
+         <select disabled>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+        <div class="ui_select filled">
+         <select disabled>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+       </div>
+       <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="ui_select">
+         <select>
+          <option disabled>Option 1</option>
+          <option selected>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     <div>
+      <h2 class="ui_heading h3">Sizes</h2>
+      <div class="flex flex_column flex_align_start flex_gap_lg">
+       <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="ui_select small">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+        <div class="ui_select">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+        <div class="ui_select large">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+       </div>
+
+       <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="ui_select standard small">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+        <div class="ui_select standard">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+        <div class="ui_select standard large">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+       </div>
+
+       <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="ui_select filled small">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+        <div class="ui_select filled">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+        <div class="ui_select filled large">
+         <select>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </select>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     <div>
+      <h2 class="ui_heading h3">Errors</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <div class="ui_select error">
+        <select>
+         <option>Option 1</option>
+         <option>Option 2</option>
+         <option>Option 3</option>
+        </select>
+       </div>
+       <div class="ui_select standard error">
+        <select>
+         <option>Option 1</option>
+         <option>Option 2</option>
+         <option>Option 3</option>
+        </select>
+       </div>
+       <div class="ui_select filled error">
+        <select>
+         <option>Option 1</option>
+         <option>Option 2</option>
+         <option>Option 3</option>
+        </select>
+       </div>
+      </div>
+     </div>
+
+     <div>
+      <h2 class="ui_heading h3">Option group</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <div class="ui_select">
+        <select>
+         <option selected>None</option>
+         <optgroup label="Group 1">
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+         </optgroup>
+         <optgroup label="Group 2">
+          <option>Option 4</option>
+          <option>Option 5</option>
+          <option>Option 6</option>
+         </optgroup>
+        </select>
+       </div>
+      </div>
+     </div>
+    </section>
+
+    <section>
+     <h2 class="ui_heading h2">Switch</h2>
+     <div>
+      <h2 class="ui_heading h3">Basic</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <input type="checkbox" class="ui_switch">
+       <input type="checkbox" class="ui_switch" checked>
+       <input type="checkbox" class="ui_switch" disabled>
+       <input type="checkbox" class="ui_switch" checked disabled>
+      </div>
+     </div>
+
+     <div>
+      <h2 class="ui_heading h3">Sizes</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <input type="checkbox" class="ui_switch small">
+       <input type="checkbox" class="ui_switch">
+       <input type="checkbox" class="ui_switch large">
+      </div>
+     </div>
+     <div>
+      <h2 class="ui_heading h3">Colors</h2>
+      <div class="flex flex_row flex_align_center flex_gap_lg">
+       <input type="checkbox" class="ui_switch primary" checked>
+       <input type="checkbox" class="ui_switch secondary" checked>
+       <input type="checkbox" class="ui_switch error" checked>
+       <input type="checkbox" class="ui_switch warning" checked>
+       <input type="checkbox" class="ui_switch info" checked>
+       <input type="checkbox" class="ui_switch success" checked>
       </div>
      </div>
     </section>

@@ -21,7 +21,7 @@
 	position: relative;
 	transition: border-color 0.2s 0s ease-in-out;
 
-	&::before
+	&:before
 	{
 		content: "";
 		background-color: transparent;
@@ -141,7 +141,7 @@
 			color: var(--color-disabled-text);
 		}
 
-		&::before
+		&:before
 		{
 			background-color: var(--color-info-text);
 			width: calc(var(--size-md) * $icon_ratio);

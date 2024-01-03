@@ -1,0 +1,167 @@
+//------------------------------------------------------------------------------
+//	UI switch
+//
+//
+//	# Usage
+//
+//	```html
+//	<input type="checkbox" class="ui_switch">
+//	```
+//------------------------------------------------------------------------------
+
+.ui_switch
+{
+	display: inline-block;
+	width: var(--size-xl);
+	height: var(--size-sm);
+	border-radius: var(--radius-circle);
+	background-color: var(--color-surface);
+	position: relative;
+	cursor: pointer;
+
+	&:before
+	{
+		content: "";
+		display: inline-block;
+		background-color: var(--color-surface-text);
+		width: var(--size-sm);
+		height: var(--size-sm);
+		box-shadow: var(--shadow-sm);
+		border-radius: var(--radius-circle);
+		position: absolute;
+		top: 0;
+		left: 0;
+		transition: transform 0.2s 0s linear;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		width: var(--size-lg);
+		height: var(--size-sm);
+
+		&:before
+		{
+			width: var(--size-sm);
+			height: var(--size-sm);
+		}
+
+		&:checked:before
+		{
+			transform: translateX(calc(var(--size-lg) - var(--size-sm)));
+		}
+	}
+
+	&.large
+	{
+		width: var(--size-2xl);
+		height: var(--size-md);
+
+		&:before
+		{
+			width: var(--size-md);
+			height: var(--size-md);
+		}
+
+		&:checked:before
+		{
+			transform: translateX(calc(var(--size-2xl) - var(--size-md)));
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	&.primary:checked
+	{
+		background-color: var(--color-primary);
+
+		&:before
+		{
+			background-color: var(--color-primary-text);
+		}
+	}
+
+	&.secondary:checked
+	{
+		background-color: var(--color-secondary);
+
+		&:before
+		{
+			background-color: var(--color-secondary-text);
+		}
+	}
+
+	&.error:checked
+	{
+		background-color: var(--color-error);
+
+		&:before
+		{
+			background-color: var(--color-error-text);
+		}
+	}
+
+	&.warning:checked
+	{
+		background-color: var(--color-warning);
+
+		&:before
+		{
+			background-color: var(--color-warning-text);
+		}
+	}
+
+	&.info:checked
+	{
+		background-color: var(--color-info);
+
+		&:before
+		{
+			background-color: var(--color-info-text);
+		}
+	}
+
+	&.success:checked
+	{
+		background-color: var(--color-success);
+
+		&:before
+		{
+			background-color: var(--color-success-text);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:checked
+	{
+		background-color: var(--color-info);
+
+		&:before
+		{
+			background-color: var(--color-info-text);
+			transform: translateX(calc(var(--size-xl) - var(--size-sm)));
+		}
+	}
+
+	&:disabled
+	{
+		background-color:  var(--color-disabled);
+		cursor: not-allowed;
+
+		&:before
+		{
+			background-color: var(--color-disabled-text);
+		}
+	}
+}
