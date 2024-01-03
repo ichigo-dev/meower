@@ -1,0 +1,20 @@
+//------------------------------------------------------------------------------
+//	UI select
+//------------------------------------------------------------------------------
+
+.ui_select
+{
+	padding: var(--spacing-xs) var(--spacing-sm);
+	border: 1px solid var(--color-background-text);
+	border-radius: var(--radius-sm);
+	cursor: pointer;
+	transition:
+		color 0.2s 0s ease-in-out,
+		border-color 0.2s 0s ease-in-out;
+
+	&:hover
+	{
+		color: var(--color-info);
+		border-color: var(--color-info);
+	}
+}
