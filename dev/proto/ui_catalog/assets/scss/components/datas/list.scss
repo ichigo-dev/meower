@@ -1,0 +1,255 @@
+//------------------------------------------------------------------------------
+//	UI list
+//------------------------------------------------------------------------------
+
+.ui_list
+{
+	list-style: disc;
+	padding-left: var(--spacing-xl);
+
+	li
+	{
+		padding: var(--spacing-xs) var(--spacing-sm);
+
+		&.clickable
+		{
+			cursor: pointer;
+			transition: all 0.3s 0s ease-in-out;
+
+			&:hover
+			{
+				opacity: var(--opacity-hover);
+			}
+		}
+	}
+
+	ul
+	{
+		list-style: disc;
+		padding-left: var(--spacing-xl);
+	}
+
+	ol
+	{
+		list-style: decimal;
+		padding-left: var(--spacing-xl);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Styles
+	//--------------------------------------------------------------------------
+
+	&.ordered
+	{
+		list-style: decimal;
+	}
+
+	&.boxed
+	{
+		list-style: none;
+		padding-left: 0;
+
+		li
+		{
+			border: 1px solid var(--color-border);
+			padding: var(--spacing-sm) var(--spacing-lg);
+
+			&:not(:last-child)
+			{
+				border-bottom: none;
+			}
+		}
+
+		ul,
+		ol
+		{
+			list-style: none;
+			padding-left: 0;
+
+			li
+			{
+				padding-left: var(--spacing-2xl);
+			}
+		}
+
+		ol,
+		&.ordered
+		{
+			list-style: inside decimal;
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	&.primary
+	{
+		color: var(--color-primary);
+
+		li.clickable:hover
+		{
+			opacity: 1;
+			color: var(--color-primary-dark);
+		}
+
+		&.boxed
+		{
+			background-color: var(--color-primary);
+			color: var(--color-primary-text);
+
+			li
+			{
+				border-color: var(--color-primary-dark);
+
+				&.clickable:hover
+				{
+					background-color: var(--color-primary-dark);
+					color: var(--color-primary-text);
+				}
+			}
+		}
+	}
+
+	&.secondary
+	{
+		color: var(--color-secondary);
+
+		li.clickable:hover
+		{
+			opacity: 1;
+			color: var(--color-secondary-dark);
+		}
+
+		&.boxed
+		{
+			background-color: var(--color-secondary);
+			color: var(--color-secondary-text);
+
+			li
+			{
+				border-color: var(--color-secondary-dark);
+
+				&.clickable:hover
+				{
+					background-color: var(--color-secondary-dark);
+					color: var(--color-secondary-text);
+				}
+			}
+		}
+	}
+
+	&.error
+	{
+		color: var(--color-error);
+
+		li.clickable:hover
+		{
+			opacity: 1;
+			color: var(--color-error-dark);
+		}
+
+		&.boxed
+		{
+			background-color: var(--color-error);
+			color: var(--color-error-text);
+
+			li
+			{
+				border-color: var(--color-error-dark);
+
+				&.clickable:hover
+				{
+					background-color: var(--color-error-dark);
+					color: var(--color-error-text);
+				}
+			}
+		}
+	}
+
+	&.warning
+	{
+		color: var(--color-warning);
+
+		li.clickable:hover
+		{
+			opacity: 1;
+			color: var(--color-warning-dark);
+		}
+
+		&.boxed
+		{
+			background-color: var(--color-warning);
+			color: var(--color-warning-text);
+
+			li
+			{
+				border-color: var(--color-warning-dark);
+
+				&.clickable:hover
+				{
+					background-color: var(--color-warning-dark);
+					color: var(--color-warning-text);
+				}
+			}
+		}
+	}
+
+	&.info
+	{
+		color: var(--color-info);
+
+		li.clickable:hover
+		{
+			opacity: 1;
+			color: var(--color-info-dark);
+		}
+
+		&.boxed
+		{
+			background-color: var(--color-info);
+			color: var(--color-info-text);
+
+			li
+			{
+				border-color: var(--color-info-dark);
+
+				&.clickable:hover
+				{
+					background-color: var(--color-info-dark);
+					color: var(--color-info-text);
+				}
+			}
+		}
+	}
+
+	&.success
+	{
+		color: var(--color-success);
+
+		li.clickable:hover
+		{
+			opacity: 1;
+			color: var(--color-success-dark);
+		}
+
+		&.boxed
+		{
+			background-color: var(--color-success);
+			color: var(--color-success-text);
+
+			li
+			{
+				border-color: var(--color-success-dark);
+
+				&.clickable:hover
+				{
+					background-color: var(--color-success-dark);
+					color: var(--color-success-text);
+				}
+			}
+		}
+	}
+}

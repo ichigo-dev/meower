@@ -145,12 +145,31 @@
 	&.is_error
 	{
 		border-color: var(--color-error);
-		color: var(--color-error);
+		color: var(--color-background-text);
 
 		&.filled
 		{
 			background-color: var(--color-error-light);
-			color: var(--color-error-text);
+
+			&::placeholder
+			{
+				color: var(--color-error-text);
+			}
+
+			&:focus
+			{
+				background-color: var(--color-info-light);
+
+				&::placeholder
+				{
+					color: var(--color-info-text);
+				}
+			}
+		}
+
+		&::placeholder
+		{
+			color: var(--color-error);
 		}
 	}
 

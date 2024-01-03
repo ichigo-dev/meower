@@ -28,6 +28,42 @@ const theme_color_types = ['light', '', 'dark'];
 
 
 //------------------------------------------------------------------------------
+//	Shows TOC.
+//------------------------------------------------------------------------------
+const show_toc = () =>
+{
+	const elm_headings = document.querySelectorAll('h2, h3');
+
+	const elm_list = document.createElement('ul');
+	elm_list.classList.add('ui_list');
+	elm_list.classList.add('primary');
+	for( elm_heading of elm_headings )
+	{
+		const elm_list_item_inner = document.createElement('a');
+		elm_list_item_inner.setAttribute('href', '#' + elm_heading.id);
+		elm_list_item_inner.innerText = elm_heading.innerText;
+		elm_list_item_inner.style.display = 'block';
+		elm_list_item_inner.style.height = '100%';
+
+		const elm_list_item = document.createElement('li');
+		elm_list_item.appendChild(elm_list_item_inner);
+		elm_list_item.classList.add('clickable');
+
+		if( elm_heading.tagName.toLowerCase() === 'h3' )
+		{
+			elm_list_item.classList.add('margin_left_lg');
+		}
+
+		elm_list.appendChild(elm_list_item);
+	}
+
+	const elm_toc = document.getElementById('toc');
+	elm_toc.style.overflow = 'auto';
+	elm_toc.appendChild(elm_list);
+};
+
+
+//------------------------------------------------------------------------------
 //	Apply the theme.
 //------------------------------------------------------------------------------
 const apply_theme = ( theme_ ) =>
@@ -141,6 +177,7 @@ const show_theme_colors = () =>
 //------------------------------------------------------------------------------
 const init = () =>
 {
+	show_toc();
 	show_colors();
 	show_theme_colors();
 
