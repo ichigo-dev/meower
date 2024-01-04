@@ -9,6 +9,9 @@
 //	```
 //------------------------------------------------------------------------------
 
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
 .ui_switch
 {
 	display: inline-block;
@@ -78,63 +81,17 @@
 	//	Colors
 	//--------------------------------------------------------------------------
 
-	&.primary:checked
+	@each $color in themes.$theme_colors
 	{
-		background-color: var(--color-primary);
-
-		&:before
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}:checked
 		{
-			background-color: var(--color-primary-text);
-		}
-	}
+			background-color: var(--color-#{$color});
 
-	&.secondary:checked
-	{
-		background-color: var(--color-secondary);
-
-		&:before
-		{
-			background-color: var(--color-secondary-text);
-		}
-	}
-
-	&.error:checked
-	{
-		background-color: var(--color-error);
-
-		&:before
-		{
-			background-color: var(--color-error-text);
-		}
-	}
-
-	&.warning:checked
-	{
-		background-color: var(--color-warning);
-
-		&:before
-		{
-			background-color: var(--color-warning-text);
-		}
-	}
-
-	&.info:checked
-	{
-		background-color: var(--color-info);
-
-		&:before
-		{
-			background-color: var(--color-info-text);
-		}
-	}
-
-	&.success:checked
-	{
-		background-color: var(--color-success);
-
-		&:before
-		{
-			background-color: var(--color-success-text);
+			&:before
+			{
+				background-color: var(--color-#{$color}-text);
+			}
 		}
 	}
 

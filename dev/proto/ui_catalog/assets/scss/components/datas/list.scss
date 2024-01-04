@@ -2,6 +2,9 @@
 //	UI list
 //------------------------------------------------------------------------------
 
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
 .ui_list
 {
 	list-style: disc;
@@ -85,169 +88,33 @@
 	//	Colors
 	//--------------------------------------------------------------------------
 
-	&.primary
+	@each $color in themes.$theme_colors
 	{
-		color: var(--color-primary);
-
-		li.clickable:hover
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
 		{
-			opacity: 1;
-			color: var(--color-primary-dark);
-		}
+			color: var(--color-#{$color});
 
-		&.boxed
-		{
-			background-color: var(--color-primary);
-			color: var(--color-primary-text);
-
-			li
+			li.clickable:hover
 			{
-				border-color: var(--color-primary-dark);
-
-				&.clickable:hover
-				{
-					background-color: var(--color-primary-dark);
-					color: var(--color-primary-text);
-				}
+				opacity: 1;
+				color: var(--color-#{$color}-dark);
 			}
-		}
-	}
 
-	&.secondary
-	{
-		color: var(--color-secondary);
-
-		li.clickable:hover
-		{
-			opacity: 1;
-			color: var(--color-secondary-dark);
-		}
-
-		&.boxed
-		{
-			background-color: var(--color-secondary);
-			color: var(--color-secondary-text);
-
-			li
+			&.boxed
 			{
-				border-color: var(--color-secondary-dark);
+				background-color: var(--color-#{$color});
+				color: var(--color-#{$color}-text);
 
-				&.clickable:hover
+				li
 				{
-					background-color: var(--color-secondary-dark);
-					color: var(--color-secondary-text);
-				}
-			}
-		}
-	}
+					border-color: var(--color-#{$color}-dark);
 
-	&.error
-	{
-		color: var(--color-error);
-
-		li.clickable:hover
-		{
-			opacity: 1;
-			color: var(--color-error-dark);
-		}
-
-		&.boxed
-		{
-			background-color: var(--color-error);
-			color: var(--color-error-text);
-
-			li
-			{
-				border-color: var(--color-error-dark);
-
-				&.clickable:hover
-				{
-					background-color: var(--color-error-dark);
-					color: var(--color-error-text);
-				}
-			}
-		}
-	}
-
-	&.warning
-	{
-		color: var(--color-warning);
-
-		li.clickable:hover
-		{
-			opacity: 1;
-			color: var(--color-warning-dark);
-		}
-
-		&.boxed
-		{
-			background-color: var(--color-warning);
-			color: var(--color-warning-text);
-
-			li
-			{
-				border-color: var(--color-warning-dark);
-
-				&.clickable:hover
-				{
-					background-color: var(--color-warning-dark);
-					color: var(--color-warning-text);
-				}
-			}
-		}
-	}
-
-	&.info
-	{
-		color: var(--color-info);
-
-		li.clickable:hover
-		{
-			opacity: 1;
-			color: var(--color-info-dark);
-		}
-
-		&.boxed
-		{
-			background-color: var(--color-info);
-			color: var(--color-info-text);
-
-			li
-			{
-				border-color: var(--color-info-dark);
-
-				&.clickable:hover
-				{
-					background-color: var(--color-info-dark);
-					color: var(--color-info-text);
-				}
-			}
-		}
-	}
-
-	&.success
-	{
-		color: var(--color-success);
-
-		li.clickable:hover
-		{
-			opacity: 1;
-			color: var(--color-success-dark);
-		}
-
-		&.boxed
-		{
-			background-color: var(--color-success);
-			color: var(--color-success-text);
-
-			li
-			{
-				border-color: var(--color-success-dark);
-
-				&.clickable:hover
-				{
-					background-color: var(--color-success-dark);
-					color: var(--color-success-text);
+					&.clickable:hover
+					{
+						background-color: var(--color-#{$color}-dark);
+						color: var(--color-#{$color}-text);
+					}
 				}
 			}
 		}

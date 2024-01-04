@@ -9,6 +9,9 @@
 //	```
 //------------------------------------------------------------------------------
 
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
 .ui_radio
 {
 	$icon_ratio: 0.55;
@@ -19,7 +22,7 @@
 	border: 2px solid var(--color-background-text);
 	cursor: pointer;
 	position: relative;
-	transition: border-color 0.2s 0s ease-in-out;
+	transition: all 0.2s 0s ease-in-out;
 
 	&:before
 	{
@@ -33,7 +36,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		transition: height 0.2s 0s ease-in, width 0.2s 0s ease-in;
+		transition: all 0.2s 0s ease-in;
 	}
 
 
@@ -70,63 +73,17 @@
 	//	Colors
 	//--------------------------------------------------------------------------
 
-	&.primary:checked
+	@each $color in themes.$theme_colors
 	{
-		border-color: var(--color-primary);
-
-		&:before
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}:checked
 		{
-			background-color: var(--color-primary);
-		}
-	}
+			border-color: var(--color-#{$color});
 
-	&.secondary:checked
-	{
-		border-color: var(--color-secondary);
-
-		&:before
-		{
-			background-color: var(--color-secondary);
-		}
-	}
-
-	&.error:checked
-	{
-		border-color: var(--color-error);
-
-		&:before
-		{
-			background-color: var(--color-error);
-		}
-	}
-
-	&.warning:checked
-	{
-		border-color: var(--color-warning);
-
-		&:before
-		{
-			background-color: var(--color-warning);
-		}
-	}
-
-	&.info:checked
-	{
-		border-color: var(--color-info);
-
-		&:before
-		{
-			background-color: var(--color-info);
-		}
-	}
-
-	&.success:checked
-	{
-		border-color: var(--color-success);
-
-		&:before
-		{
-			background-color: var(--color-success);
+			&:before
+			{
+				background-color: var(--color-#{$color});
+			}
 		}
 	}
 

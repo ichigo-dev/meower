@@ -10,6 +10,9 @@
 //	```
 //------------------------------------------------------------------------------
 
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
 .ui_text_field
 {
 	border-bottom: 2px solid var(--color-border);
@@ -82,60 +85,18 @@
 	//	Colors
 	//--------------------------------------------------------------------------
 
-	&.primary
+	@each $color in themes.$theme_colors
 	{
-		border-color: var(--color-primary);
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
+		{
+			border-color: var(--color-#{$color});
 
-		&.filled { background-color: var(--color-primary-light); }
-		&:hover { border-color: var(--color-primary-light); }
-		&:focus { border-color: var(--color-primary-dark); }
+			&.filled { background-color: var(--color-#{$color}-light); }
+			&:hover { border-color: var(--color-#{$color}-light); }
+			&:focus { border-color: var(--color-#{$color}-dark); }
+		}
 	}
-
-	&.secondary
-	{
-		border-color: var(--color-secondary);
-
-		&.filled { background-color: var(--color-secondary-light); }
-		&:hover { border-color: var(--color-secondary-light); }
-		&:focus { border-color: var(--color-secondary-dark); }
-	}
-
-	&.error
-	{
-		border-color: var(--color-error);
-
-		&.filled { background-color: var(--color-error-light); }
-		&:hover { border-color: var(--color-error-light); }
-		&:focus { border-color: var(--color-error-dark); }
-	}
-
-	&.warning
-	{
-		border-color: var(--color-warning);
-
-		&.filled { background-color: var(--color-warning-light); }
-		&:hover { border-color: var(--color-warning-light); }
-		&:focus { border-color: var(--color-warning-dark); }
-	}
-
-	&.info
-	{
-		border-color: var(--color-info);
-
-		&.filled { background-color: var(--color-info-light); }
-		&:hover { border-color: var(--color-info-light); }
-		&:focus { border-color: var(--color-info-dark); }
-	}
-
-	&.success
-	{
-		border-color: var(--color-success);
-
-		&.filled { background-color: var(--color-success-light); }
-		&:hover { border-color: var(--color-success-light); }
-		&:focus { border-color: var(--color-success-dark); }
-	}
-
 
 
 	//--------------------------------------------------------------------------

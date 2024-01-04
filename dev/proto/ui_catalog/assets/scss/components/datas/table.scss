@@ -1,0 +1,137 @@
+//------------------------------------------------------------------------------
+//	UI table
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
+.ui_table
+{
+	th,
+	td
+	{
+		border: 1px solid var(--color-border);
+		padding: var(--spacing-sm) var(--spacing-md);
+	}
+
+	thead th
+	{
+		background-color: var(--color-filled-dark);
+		border-bottom: 2px solid var(--color-border);
+		font-weight: bold;
+		text-align: center;
+	}
+
+	tbody
+	{
+		th
+		{
+			background-color: var(--color-filled-dark);
+			font-weight: bold;
+			text-align: center;
+		}
+
+		tr > th:first-child
+		{
+			border-right: 2px solid var(--color-border);
+		}
+	}
+
+	tfoot
+	{
+		border-top: 2px solid var(--color-border);
+		font-weight: bold;
+		text-align: center;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Styles
+	//--------------------------------------------------------------------------
+
+	&.stripe
+	{
+		tbody tr
+		{
+			&:nth-child(odd) td
+			{
+				background-color: var(--color-filled-light);
+			}
+
+			&:nth-child(even) td
+			{
+				background-color: var(--color-filled);
+			}
+		}
+
+		&_vertical
+		{
+			tbody tr
+			{
+				td:nth-child(odd)
+				{
+					background-color: var(--color-filled);
+				}
+
+				td:nth-child(even)
+				{
+					background-color: var(--color-filled-light);
+				}
+			}
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
+		{
+			color: var(--color-#{$color}-text);
+
+			th,
+			td
+			{
+				background-color: var(--color-#{$color}-light);
+				border-color: var(--color-#{$color}-dark);
+			}
+
+			thead th
+			{
+				background-color: var(--color-#{$color}-dark);
+				border-color: var(--color-#{$color}-dark);
+			}
+
+			tbody
+			{
+				th { background-color: var(--color-#{$color}-dark); }
+				tr > th:first-child { border-color: var(--color-#{$color}-dark); }
+			}
+
+			tfoot
+			{
+				border-color: var(--color-#{$color}-dark);
+			}
+
+			&.stripe
+			{
+				tbody tr
+				{
+					&:nth-child(odd) td
+					{
+						background-color: var(--color-#{$color}-light);
+					}
+
+					&:nth-child(even) td
+					{
+						background-color: var(--color-#{$color});
+					}
+				}
+			}
+		}
+	}
+}
