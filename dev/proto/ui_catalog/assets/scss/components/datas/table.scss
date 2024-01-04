@@ -7,6 +7,8 @@
 
 .ui_table
 {
+	white-space: nowrap;
+
 	th,
 	td
 	{
@@ -46,6 +48,29 @@
 
 
 	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		th,
+		td
+		{
+			padding: var(--spacing-xs) var(--spacing-sm);
+		}
+	}
+
+	&.large
+	{
+		th,
+		td
+		{
+			padding: var(--spacing-md) var(--spacing-lg);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
 	//	Styles
 	//--------------------------------------------------------------------------
 
@@ -78,6 +103,18 @@
 					background-color: var(--color-filled-light);
 				}
 			}
+		}
+	}
+
+	&.tiled
+	{
+		border-collapse: separate;
+		border-spacing: var(--spacing-xs);
+
+		th,
+		td
+		{
+			border-radius: var(--radius-xs);
 		}
 	}
 
@@ -132,6 +169,26 @@
 					}
 				}
 			}
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Sticky header
+	//--------------------------------------------------------------------------
+
+	&.sticky
+	{
+		thead tr th
+		{
+			position: sticky;
+			top: 0;
+		}
+
+		tbody tr th:first-child
+		{
+			position: sticky;
+			left: 0;
 		}
 	}
 }

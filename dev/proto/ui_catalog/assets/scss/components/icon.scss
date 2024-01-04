@@ -9,6 +9,10 @@
 //	```
 //------------------------------------------------------------------------------
 
+@use "../functions/string" as string;
+@use "../themes/index" as themes;
+@use "../variables/icons" as icons;
+
 .ui_icon
 {
 	display: inline-block;
@@ -44,19 +48,12 @@
 	//	Colors
 	//--------------------------------------------------------------------------
 
-	&.primary { background-color: var(--color-primary); }
-	&.secondary { background-color: var(--color-secondary); }
-	&.error { background-color: var(--color-error); }
-	&.warning { background-color: var(--color-warning); }
-	&.info { background-color: var(--color-info); }
-	&.success { background-color: var(--color-success); }
-
-	&.primary_text { background-color: var(--color-primary-text); }
-	&.secondary_text { background-color: var(--color-secondary-text); }
-	&.error_text { background-color: var(--color-error-text); }
-	&.warning_text { background-color: var(--color-warning-text); }
-	&.info_text { background-color: var(--color-info-text); }
-	&.success_text { background-color: var(--color-success-text); }
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace($color, "-", "_");
+		&.#{$class_name} { background-color: var(--color-#{$color}); }
+		&.#{$class_name}_text { background-color: var(--color-#{$color}-text); }
+	}
 
 	&.white { background-color: var(--color-white); }
 	&.black { background-color: var(--color-black); }
@@ -66,45 +63,14 @@
 	//	Icons
 	//--------------------------------------------------------------------------
 
-	&.icon_plus
+	@each $icon in icons.$icons
 	{
-		mask-image: var(--icon-svg-plus);
-		-webkit-mask-image: var(--icon-svg-plus);
-	}
+		$class_name: string.str-replace($icon, "-", "_");
 
-	&.icon_minus
-	{
-		mask-image: var(--icon-svg-minus);
-		-webkit-mask-image: var(--icon-svg-minus);
-	}
-
-	&.icon_check
-	{
-		mask-image: var(--icon-svg-check);
-		-webkit-mask-image: var(--icon-svg-check);
-	}
-
-	&.icon_caret_up
-	{
-		mask-image: var(--icon-svg-caret-up);
-		-webkit-mask-image: var(--icon-svg-caret-up);
-	}
-
-	&.icon_caret_down
-	{
-		mask-image: var(--icon-svg-caret-down);
-		-webkit-mask-image: var(--icon-svg-caret-down);
-	}
-
-	&.icon_caret_right
-	{
-		mask-image: var(--icon-svg-caret-right);
-		-webkit-mask-image: var(--icon-svg-caret-right);
-	}
-
-	&.icon_caret_left
-	{
-		mask-image: var(--icon-svg-caret-left);
-		-webkit-mask-image: var(--icon-svg-caret-left);
+		&.icon_#{$class_name}
+		{
+			mask-image: var(--icon-svg-#{$icon});
+			-webkit-mask-image: var(--icon-svg-#{$icon});
+		}
 	}
 }

@@ -5,6 +5,8 @@
 @use "../functions/string" as string;
 @use "../themes/index" as themes;
 @use "../variables/colors" as colors;
+@use "../variables/radii" as radii;
+@use "../variables/sizes" as sizes;
 
 .ui_box
 {
@@ -16,69 +18,49 @@
 	&.width
 	{
 		&_full { width: 100%; }
+		&_full_viewport { width: 100vw; }
 		&_half { width: 50%; }
-		&_5xs { width: var(--size-5xs); }
-		&_4xs { width: var(--size-4xs); }
-		&_3xs { width: var(--size-3xs); }
-		&_2xs { width: var(--size-2xs); }
-		&_xs { width: var(--size-xs); }
-		&_sm { width: var(--size-sm); }
-		&_md { width: var(--size-md); }
-		&_lg { width: var(--size-lg); }
-		&_xl { width: var(--size-xl); }
-		&_2xl { width: var(--size-2xl); }
-		&_3xl { width: var(--size-3xl); }
-		&_4xl { width: var(--size-4xl); }
-		&_5xl { width: var(--size-5xl); }
-		&_6xl { width: var(--size-6xl); }
-		&_7xl { width: var(--size-7xl); }
-		&_8xl { width: var(--size-8xl); }
+		&_half_viewport { width: 50vw; }
+
+		@each $size in sizes.$sizes
+		{
+			$class_name: string.str-replace(#{$size}, "-", "_");
+			&_#{$class_name} { width: var(--size-#{$size}); }
+		}
 	}
 
 	//	Height
 	&.height
 	{
 		&_full { height: 100%; }
+		&_full_viewport { height: 100vh; }
 		&_half { height: 50%; }
-		&_5xs { height: var(--size-5xs); }
-		&_4xs { height: var(--size-4xs); }
-		&_3xs { height: var(--size-3xs); }
-		&_2xs { height: var(--size-2xs); }
-		&_xs { height: var(--size-xs); }
-		&_sm { height: var(--size-sm); }
-		&_md { height: var(--size-md); }
-		&_lg { height: var(--size-lg); }
-		&_xl { height: var(--size-xl); }
-		&_2xl { height: var(--size-2xl); }
-		&_3xl { height: var(--size-3xl); }
-		&_4xl { height: var(--size-4xl); }
-		&_5xl { height: var(--size-5xl); }
-		&_6xl { height: var(--size-6xl); }
-		&_7xl { height: var(--size-7xl); }
-		&_8xl { height: var(--size-8xl); }
+		&_half_viewport { height: 50vh; }
+
+		@each $size in sizes.$sizes
+		{
+			$class_name: string.str-replace(#{$size}, "-", "_");
+			&_#{$class_name} { height: var(--size-#{$size}); }
+		}
 	}
 
 	//	Size
 	.size
 	{
 		&_full { width: 100%; height: 100%; }
+		&_full_viewport { width: 100vw; height: 100vh; }
 		&_half { width: 50%; height: 50%; }
-		&_5xs { width: var(--size-5xs); height: var(--size-5xs); }
-		&_4xs { width: var(--size-4xs); height: var(--size-4xs); }
-		&_3xs { width: var(--size-3xs); height: var(--size-3xs); }
-		&_2xs { width: var(--size-2xs); height: var(--size-2xs); }
-		&_xs { width: var(--size-xs); height: var(--size-xs); }
-		&_sm { width: var(--size-sm); height: var(--size-sm); }
-		&_md { width: var(--size-md); height: var(--size-md); }
-		&_lg { width: var(--size-lg); height: var(--size-lg); }
-		&_xl { width: var(--size-xl); height: var(--size-xl); }
-		&_2xl { width: var(--size-2xl); height: var(--size-2xl); }
-		&_3xl { width: var(--size-3xl); height: var(--size-3xl); }
-		&_4xl { width: var(--size-4xl); height: var(--size-4xl); }
-		&_5xl { width: var(--size-5xl); height: var(--size-5xl); }
-		&_6xl { width: var(--size-6xl); height: var(--size-6xl); }
-		&_7xl { width: var(--size-7xl); height: var(--size-7xl); }
-		&_8xl { width: var(--size-8xl); height: var(--size-8xl); }
+		&_half_viewport { width: 50vw; height: 50vh; }
+
+		@each $size in sizes.$sizes
+		{
+			$class_name: string.str-replace(#{$size}, "-", "_");
+			&_#{$class_name}
+			{
+				width: var(--size-#{$size});
+				height: var(--size-#{$size});
+			}
+		}
 	}
 
 
@@ -213,16 +195,10 @@
 	{
 		border-radius: var(--radius-md);
 
-		&_3xs { border-radius: var(--radius-3xs); }
-		&_2xs { border-radius: var(--radius-2xs); }
-		&_xs { border-radius: var(--radius-xs); }
-		&_sm { border-radius: var(--radius-sm); }
-		&_md { border-radius: var(--radius-md); }
-		&_lg { border-radius: var(--radius-lg); }
-		&_xl { border-radius: var(--radius-xl); }
-		&_2xl { border-radius: var(--radius-2xl); }
-		&_3xl { border-radius: var(--radius-3xl); }
-		&_4xl { border-radius: var(--radius-4xl); }
-		&_5xl { border-radius: var(--radius-5xl); }
+		@each $radius in radii.$radii
+		{
+			$class_name: string.str-replace(#{$radius}, "-", "_");
+			&_#{$class_name} { border-radius: var(--radius-#{$radius}); }
+		}
 	}
 }

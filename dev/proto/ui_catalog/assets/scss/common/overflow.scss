@@ -2,6 +2,14 @@
 //	Overflow
 //------------------------------------------------------------------------------
 
+.overflow_auto
+{
+	overflow: auto;
+
+	&_x { overflow-x: auto; }
+	&_y { overflow-y: auto; }
+}
+
 .overflow_scroll
 {
 	overflow: scroll;

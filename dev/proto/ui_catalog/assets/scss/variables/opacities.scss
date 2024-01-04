@@ -2,9 +2,11 @@
 //	Common opacities
 //------------------------------------------------------------------------------
 
+$opacities: none, hover, full;
+
 :root
 {
-	--opacity-0: 0;
+	--opacity-none: 1;
 	--opacity-hover: 0.7;
-	--opacity-100: 1;
+	--opacity-full: 0;
 }
