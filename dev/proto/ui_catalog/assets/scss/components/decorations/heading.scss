@@ -47,6 +47,11 @@
 		font-size: var(--fs-md);
 	}
 
+	&.bold
+	{
+		font-weight: bold;
+	}
+
 
 	//--------------------------------------------------------------------------
 	//	Styles
@@ -58,6 +63,23 @@
 		padding-bottom: var(--spacing-sm);
 		border-bottom: 2px solid var(--color-border);
 
+		//	Text align
+		&.left
+		{
+			text-align: left;
+		}
+
+		&.center
+		{
+			text-align: center;
+		}
+
+		&.right
+		{
+			text-align: right;
+		}
+
+		//	Thickness
 		&.thin
 		{
 			border-width: 1px;
@@ -68,6 +90,7 @@
 			border-width: 3px;
 		}
 
+		//	Colors
 		@each $color in themes.$theme_colors
 		{
 			$class_name: string.str-replace(#{$color}, "-", "_");
@@ -105,9 +128,130 @@
 
 	&.line
 	{
+		display: inline-flex;
+		align-items: center;
+		width: 100%;
+		white-space: nowrap;
+
+		&:before,
+		&:after
+		{
+			content: "";
+			height: 2px;
+			width: 100%;
+			background-color: var(--color-border);
+		}
+
+		&:before
+		{
+			margin-right: var(--spacing-sm);
+		}
+
+		&:after
+		{
+			margin-left: var(--spacing-sm);
+		}
+
+		//	Align
+		&.left
+		{
+			&:before
+			{
+				width: 0;
+				margin-right: 0;
+			}
+		}
+
+		&.center
+		{
+		}
+
+		&.right
+		{
+			&:after
+			{
+				width: 0;
+				margin-left: 0;
+			}
+		}
+
+		//	Thickness
+		&.thin
+		{
+			&:before,
+			&:after
+			{
+				height: 1px;
+			}
+		}
+
+		&.thick
+		{
+			&:before,
+			&:after
+			{
+				height: 3px;
+			}
+		}
+
+		//	Colors
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				&:before,
+				&:after
+				{
+					background-color: var(--color-#{$color});
+				}
+			}
+		}
 	}
 
-	&.background
+	&.band
 	{
+		width: 100%;
+		padding: var(--spacing-sm) var(--spacing-md);
+		background-color: var(--color-filled);
+		color: var(--color-filled-text);
+
+		//	Align
+		&.left
+		{
+			text-align: left;
+		}
+
+		&.center
+		{
+			text-align: center;
+		}
+
+		&.right
+		{
+			text-align: right;
+		}
+
+		//	Thickness
+		&.thin
+		{
+			padding: var(--spacing-xs) var(--spacing-sm);
+		}
+
+		&.thick
+		{
+			padding: var(--spacing-md) var(--spacing-lg);
+		}
+
+		//	Colors
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				background-color: var(--color-#{$color});
+				color: var(--color-#{$color}-text);
+			}
+		}
 	}
 }

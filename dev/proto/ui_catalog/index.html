@@ -15,7 +15,7 @@
      <div class="ui_sidebar_inner">
       <div class="flex flex_column flex_gap_xl margin_right_md">
        <div class="ui_heading h2">UI catalog</div>
-       <div>
+       <div class="flex flex_column flex_gap_sm">
         <label>Chose Theme</label>
         <div class="ui_select">
          <select id="theme_select">
@@ -30,10 +30,10 @@
     </aside>
  
     <main class="flex flex_column flex_gap_2xl padding_xl overflow_hidden_x">
-     <h1 class="ui_heading h1">UI catalog</h1>
+     <h1 class="ui_heading h1 bold divider center primary">UI catalog</h1>
 
      <section class="flex flex_column flex_gap_lg">
-      <h2 class="ui_heading h2" id="toc_common">Common</h2>
+      <h2 class="ui_heading h2 bold bullet primary" id="toc_common">Common</h2>
 
       <section>
        <div  class="flex flex_column flex_gap_md">
@@ -51,7 +51,7 @@
      </section>
 
      <section class="flex flex_column flex_gap_lg">
-      <h2 class="ui_heading h2" id="toc_datas">Datas</h2>
+      <h2 class="ui_heading h2 bold bullet primary" id="toc_datas">Datas</h2>
 
       <section class="flex flex_column flex_gap_xl">
        <h3 class="ui_heading h3" id="toc_list">List</h3>
@@ -2346,7 +2346,7 @@
      </section>
 
      <section class="flex flex_column flex_gap_lg">
-      <h2 class="ui_heading h2" id="toc_decorations">Decorations</h2>
+      <h2 class="ui_heading h2 bold bullet primary" id="toc_decorations">Decorations</h2>
 
       <section class="flex flex_column flex_gap_xl">
        <h3 class="ui_heading h3" id="toc_heading">Heading</h3>
@@ -2361,6 +2361,21 @@
           <span class="ui_heading h4">Heading 4</span>
           <span class="ui_heading h5">Heading 5</span>
           <span class="ui_heading h6">Heading 6</span>
+         </div>
+        </div>
+       </div>
+
+       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+        <h4 class="ui_heading h4">Divider Align</h4>
+        <div class="flex flex_column flex_align_stretch flex_gap_md">
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading divider left">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading divider center">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading divider right">Heading</span>
          </div>
         </div>
        </div>
@@ -2443,6 +2458,113 @@
         </div>
        </div>
 
+       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+        <h4 class="ui_heading h4">Line Align</h4>
+        <div class="flex flex_column flex_align_stretch flex_gap_md">
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line left">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line center">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line right">Heading</span>
+         </div>
+        </div>
+       </div>
+
+       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+        <h4 class="ui_heading h4">Line Thickness</h4>
+        <div class="flex flex_column flex_align_stretch flex_gap_md">
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line thin">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line thick">Heading</span>
+         </div>
+        </div>
+       </div>
+
+       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+        <h4 class="ui_heading h4">Line Colors</h4>
+        <div class="flex flex_column flex_align_stretch flex_gap_md">
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line primary">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line secondary">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line error">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line warning">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line info">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading line success">Heading</span>
+         </div>
+        </div>
+       </div>
+
+       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+        <h4 class="ui_heading h4">Band Align</h4>
+        <div class="flex flex_column flex_align_stretch flex_gap_md">
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band left">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band center">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band right">Heading</span>
+         </div>
+        </div>
+       </div>
+
+       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+        <h4 class="ui_heading h4">Band Thickness</h4>
+        <div class="flex flex_column flex_align_stretch flex_gap_md">
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band thin">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band thick">Heading</span>
+         </div>
+        </div>
+       </div>
+
+       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+        <h4 class="ui_heading h4">Band Colors</h4>
+        <div class="flex flex_column flex_align_stretch flex_gap_md">
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band primary">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band secondary">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band error">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band warning">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band info">Heading</span>
+         </div>
+         <div class="flex flex_row flex_align_center flex_gap_lg">
+          <span class="ui_heading band success">Heading</span>
+         </div>
+        </div>
+       </div>
       </section>
 
       <section class="flex flex_column flex_gap_xl">
@@ -2519,7 +2641,7 @@
      </section>
 
      <section class="flex flex_column flex_gap_lg">
-      <h2 class="ui_heading h2" id="toc_inputs">Inputs</h2>
+      <h2 class="ui_heading h2 bold bullet primary" id="toc_inputs">Inputs</h2>
 
       <section class="flex flex_column flex_gap_xl">
        <h3 class="ui_heading h3" id="toc_buttons">Button</h3>
@@ -2547,7 +2669,7 @@
        </div>
 
        <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
-        <h4 class="ui_heading h4">Sizes</h2>
+        <h4 class="ui_heading h4">Sizes</h4>
         <div class="flex flex_column flex_align_start flex_gap_md">
          <div class="flex flex_row flex_align_center flex_gap_lg">
           <button class="ui_button primary text small">Small Button</button>
