@@ -9,9 +9,9 @@
 //	```
 //------------------------------------------------------------------------------
 
-@use "../functions/string" as string;
-@use "../themes/index" as themes;
-@use "../variables/icons" as icons;
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+@use "../../variables/icons" as icons;
 
 .ui_icon
 {
@@ -71,6 +71,21 @@
 		{
 			mask-image: var(--icon-svg-#{$icon});
 			-webkit-mask-image: var(--icon-svg-#{$icon});
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Actions
+	//--------------------------------------------------------------------------
+
+	.clickable
+	{
+		cursor: pointer;
+
+		&:hover
+		{
+			opacity: var(--opacity-hover);
 		}
 	}
 }

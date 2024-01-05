@@ -1,8 +1,6 @@
 //------------------------------------------------------------------------------
-//	Component styles
+//	Layout component
 //------------------------------------------------------------------------------
 
-@forward "datas/index";
-@forward "decorations/index";
-@forward "inputs/index";
-@forward "layouts/index";
+@forward "box";
+@forward "sidebar";

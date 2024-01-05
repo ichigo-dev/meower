@@ -2,11 +2,11 @@
 //	UI box
 //------------------------------------------------------------------------------
 
-@use "../functions/string" as string;
-@use "../themes/index" as themes;
-@use "../variables/colors" as colors;
-@use "../variables/radii" as radii;
-@use "../variables/sizes" as sizes;
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+@use "../../variables/colors" as colors;
+@use "../../variables/radii" as radii;
+@use "../../variables/sizes" as sizes;
 
 .ui_box
 {
