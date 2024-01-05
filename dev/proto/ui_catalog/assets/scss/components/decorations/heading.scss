@@ -9,8 +9,12 @@
 //	```
 //------------------------------------------------------------------------------
 
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
 .ui_heading
 {
+	display: inline-block;
 	font-size: var(--fs-md);
 
 	&.h1
@@ -41,5 +45,69 @@
 	&.h6
 	{
 		font-size: var(--fs-md);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Styles
+	//--------------------------------------------------------------------------
+
+	&.divider
+	{
+		width: 100%;
+		padding-bottom: var(--spacing-sm);
+		border-bottom: 2px solid var(--color-border);
+
+		&.thin
+		{
+			border-width: 1px;
+		}
+
+		&.thick
+		{
+			border-width: 3px;
+		}
+
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				border-color: var(--color-#{$color});
+			}
+		}
+	}
+
+	&.bullet
+	{
+		border-left: 6px solid var(--color-border);
+		padding-left: var(--spacing-md);
+
+		&.thin
+		{
+			border-width: 4px;
+		}
+
+		&.thick
+		{
+			border-width: 8px;
+		}
+
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				border-color: var(--color-#{$color});
+			}
+		}
+	}
+
+	&.line
+	{
+	}
+
+	&.background
+	{
 	}
 }
