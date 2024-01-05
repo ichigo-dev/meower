@@ -105,26 +105,29 @@
 <!-- public.temporary_user -->
 <g id="node4" class="node">
 <title>public.temporary_user</title>
-<polygon fill="#efefef" stroke="transparent" points="3302.5,-1001.5 3302.5,-1036.5 3621.5,-1036.5 3621.5,-1001.5 3302.5,-1001.5"/>
-<polygon fill="none" stroke="#000000" points="3302.5,-1001.5 3302.5,-1036.5 3621.5,-1036.5 3621.5,-1001.5 3302.5,-1001.5"/>
-<text text-anchor="start" x="3309.2042" y="-1014.3" font-family="Arial Bold" font-size="18.00" fill="#000000">public.temporary_user</text>
-<text text-anchor="start" x="3487.2278" y="-1014.3" font-family="Arial" font-size="14.00" fill="#000000">    </text>
-<text text-anchor="start" x="3521.4326" y="-1014.3" font-family="Arial" font-size="14.00" fill="#666666">[BASE TABLE]</text>
-<polygon fill="none" stroke="#000000" points="3302.5,-971.5 3302.5,-1001.5 3621.5,-1001.5 3621.5,-971.5 3302.5,-971.5"/>
-<text text-anchor="start" x="3309.5" y="-982.9" font-family="Arial" font-size="14.00" fill="#000000">temporary_user_id    </text>
-<text text-anchor="start" x="3460.3878" y="-982.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
-<polygon fill="none" stroke="#000000" points="3302.5,-941.5 3302.5,-971.5 3621.5,-971.5 3621.5,-941.5 3302.5,-941.5"/>
-<text text-anchor="start" x="3309.5" y="-952.9" font-family="Arial" font-size="14.00" fill="#000000">token    </text>
-<text text-anchor="start" x="3377.9432" y="-952.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
-<polygon fill="none" stroke="#000000" points="3302.5,-911.5 3302.5,-941.5 3621.5,-941.5 3621.5,-911.5 3302.5,-911.5"/>
-<text text-anchor="start" x="3309.5" y="-922.9" font-family="Arial" font-size="14.00" fill="#000000">email    </text>
-<text text-anchor="start" x="3377.1438" y="-922.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
-<polygon fill="none" stroke="#000000" points="3302.5,-881.5 3302.5,-911.5 3621.5,-911.5 3621.5,-881.5 3302.5,-881.5"/>
-<text text-anchor="start" x="3309.5" y="-892.9" font-family="Arial" font-size="14.00" fill="#000000">password    </text>
-<text text-anchor="start" x="3403.6024" y="-892.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
-<polygon fill="none" stroke="#000000" points="3302.5,-851.5 3302.5,-881.5 3621.5,-881.5 3621.5,-851.5 3302.5,-851.5"/>
-<text text-anchor="start" x="3309.5" y="-862.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
-<text text-anchor="start" x="3409.8422" y="-862.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<polygon fill="#efefef" stroke="transparent" points="3302.5,-1016.5 3302.5,-1051.5 3621.5,-1051.5 3621.5,-1016.5 3302.5,-1016.5"/>
+<polygon fill="none" stroke="#000000" points="3302.5,-1016.5 3302.5,-1051.5 3621.5,-1051.5 3621.5,-1016.5 3302.5,-1016.5"/>
+<text text-anchor="start" x="3309.2042" y="-1029.3" font-family="Arial Bold" font-size="18.00" fill="#000000">public.temporary_user</text>
+<text text-anchor="start" x="3487.2278" y="-1029.3" font-family="Arial" font-size="14.00" fill="#000000">    </text>
+<text text-anchor="start" x="3521.4326" y="-1029.3" font-family="Arial" font-size="14.00" fill="#666666">[BASE TABLE]</text>
+<polygon fill="none" stroke="#000000" points="3302.5,-986.5 3302.5,-1016.5 3621.5,-1016.5 3621.5,-986.5 3302.5,-986.5"/>
+<text text-anchor="start" x="3309.5" y="-997.9" font-family="Arial" font-size="14.00" fill="#000000">temporary_user_id    </text>
+<text text-anchor="start" x="3460.3878" y="-997.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
+<polygon fill="none" stroke="#000000" points="3302.5,-956.5 3302.5,-986.5 3621.5,-986.5 3621.5,-956.5 3302.5,-956.5"/>
+<text text-anchor="start" x="3309.5" y="-967.9" font-family="Arial" font-size="14.00" fill="#000000">user_account_name    </text>
+<text text-anchor="start" x="3470.5252" y="-967.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="3302.5,-926.5 3302.5,-956.5 3621.5,-956.5 3621.5,-926.5 3302.5,-926.5"/>
+<text text-anchor="start" x="3309.5" y="-937.9" font-family="Arial" font-size="14.00" fill="#000000">token    </text>
+<text text-anchor="start" x="3377.9432" y="-937.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="3302.5,-896.5 3302.5,-926.5 3621.5,-926.5 3621.5,-896.5 3302.5,-896.5"/>
+<text text-anchor="start" x="3309.5" y="-907.9" font-family="Arial" font-size="14.00" fill="#000000">email    </text>
+<text text-anchor="start" x="3377.1438" y="-907.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="3302.5,-866.5 3302.5,-896.5 3621.5,-896.5 3621.5,-866.5 3302.5,-866.5"/>
+<text text-anchor="start" x="3309.5" y="-877.9" font-family="Arial" font-size="14.00" fill="#000000">password    </text>
+<text text-anchor="start" x="3403.6024" y="-877.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="3302.5,-836.5 3302.5,-866.5 3621.5,-866.5 3621.5,-836.5 3302.5,-836.5"/>
+<text text-anchor="start" x="3309.5" y="-847.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
+<text text-anchor="start" x="3409.8422" y="-847.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
 </g>
 <!-- public.temporary_user_code -->
 <g id="node5" class="node">
@@ -141,20 +144,20 @@
 <text text-anchor="start" x="3285.5" y="-1334.9" font-family="Arial" font-size="14.00" fill="#000000">temporary_user_id    </text>
 <text text-anchor="start" x="3436.3878" y="-1334.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
 <polygon fill="none" stroke="#000000" points="3278.5,-1293.5 3278.5,-1323.5 3646.5,-1323.5 3646.5,-1293.5 3278.5,-1293.5"/>
-<text text-anchor="start" x="3285.5" y="-1304.9" font-family="Arial" font-size="14.00" fill="#000000">token    </text>
-<text text-anchor="start" x="3353.9432" y="-1304.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<text text-anchor="start" x="3285.5" y="-1304.9" font-family="Arial" font-size="14.00" fill="#000000">code    </text>
+<text text-anchor="start" x="3350.0526" y="-1304.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
 <polygon fill="none" stroke="#000000" points="3278.5,-1263.5 3278.5,-1293.5 3646.5,-1293.5 3646.5,-1263.5 3278.5,-1263.5"/>
-<text text-anchor="start" x="3285.5" y="-1274.9" font-family="Arial" font-size="14.00" fill="#000000">code    </text>
-<text text-anchor="start" x="3350.0526" y="-1274.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<text text-anchor="start" x="3285.5" y="-1274.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
+<text text-anchor="start" x="3385.8422" y="-1274.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
 <polygon fill="none" stroke="#000000" points="3278.5,-1233.5 3278.5,-1263.5 3646.5,-1263.5 3646.5,-1233.5 3278.5,-1233.5"/>
-<text text-anchor="start" x="3285.5" y="-1244.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
-<text text-anchor="start" x="3385.8422" y="-1244.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<text text-anchor="start" x="3285.5" y="-1244.9" font-family="Arial" font-size="14.00" fill="#000000">expired_at    </text>
+<text text-anchor="start" x="3385.0582" y="-1244.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
 </g>
 <!-- public.temporary_user_code&#45;&gt;public.temporary_user -->
 <g id="edge3" class="edge">
 <title>public.temporary_user_code:temporary_user_id&#45;&gt;public.temporary_user:temporary_user_id</title>
-<path fill="none" stroke="#000000" d="M3268.2367,-1337.6153C3216.0392,-1327.9294 3242.1204,-1241.0101 3278.5,-1191 3372.7563,-1061.4282 3527.2437,-1209.5718 3621.5,-1080 3645.9456,-1046.3953 3663.0556,-986.5 3621.5,-986.5"/>
-<polygon fill="#000000" stroke="#000000" points="3268.5369,-1337.6411 3278.1135,-1342.9834 3273.5185,-1338.0706 3278.5,-1338.5 3278.5,-1338.5 3278.5,-1338.5 3273.5185,-1338.0706 3278.8865,-1334.0166 3268.5369,-1337.6411 3268.5369,-1337.6411"/>
+<path fill="none" stroke="#000000" d="M3268.2271,-1337.6082C3215.9265,-1327.8457 3241.1256,-1240.2711 3278.5,-1191 3374.17,-1064.877 3525.83,-1221.123 3621.5,-1095 3646.614,-1061.8919 3663.0556,-1001.5 3621.5,-1001.5"/>
+<polygon fill="#000000" stroke="#000000" points="3268.5375,-1337.6351 3278.1108,-1342.9831 3273.5187,-1338.0675 3278.5,-1338.5 3278.5,-1338.5 3278.5,-1338.5 3273.5187,-1338.0675 3278.8892,-1334.0169 3268.5375,-1337.6351 3268.5375,-1337.6351"/>
 </g>
 <!-- public.organization -->
 <g id="node6" class="node">
@@ -495,29 +498,32 @@
 <!-- public.reset_password_token -->
 <g id="node17" class="node">
 <title>public.reset_password_token</title>
-<polygon fill="#efefef" stroke="transparent" points="3741.5,-559.5 3741.5,-594.5 4115.5,-594.5 4115.5,-559.5 3741.5,-559.5"/>
-<polygon fill="none" stroke="#000000" points="3741.5,-559.5 3741.5,-594.5 4115.5,-594.5 4115.5,-559.5 3741.5,-559.5"/>
-<text text-anchor="start" x="3748.1858" y="-572.3" font-family="Arial Bold" font-size="18.00" fill="#000000">public.reset_password_token</text>
-<text text-anchor="start" x="3981.2462" y="-572.3" font-family="Arial" font-size="14.00" fill="#000000">    </text>
-<text text-anchor="start" x="4015.451" y="-572.3" font-family="Arial" font-size="14.00" fill="#666666">[BASE TABLE]</text>
-<polygon fill="none" stroke="#000000" points="3741.5,-529.5 3741.5,-559.5 4115.5,-559.5 4115.5,-529.5 3741.5,-529.5"/>
-<text text-anchor="start" x="3748.5" y="-540.9" font-family="Arial" font-size="14.00" fill="#000000">reset_password_token_id    </text>
-<text text-anchor="start" x="3942.1942" y="-540.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
-<polygon fill="none" stroke="#000000" points="3741.5,-499.5 3741.5,-529.5 4115.5,-529.5 4115.5,-499.5 3741.5,-499.5"/>
-<text text-anchor="start" x="3748.5" y="-510.9" font-family="Arial" font-size="14.00" fill="#000000">user_id    </text>
-<text text-anchor="start" x="3828.6024" y="-510.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
-<polygon fill="none" stroke="#000000" points="3741.5,-469.5 3741.5,-499.5 4115.5,-499.5 4115.5,-469.5 3741.5,-469.5"/>
-<text text-anchor="start" x="3748.5" y="-480.9" font-family="Arial" font-size="14.00" fill="#000000">token    </text>
-<text text-anchor="start" x="3816.9432" y="-480.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
-<polygon fill="none" stroke="#000000" points="3741.5,-439.5 3741.5,-469.5 4115.5,-469.5 4115.5,-439.5 3741.5,-439.5"/>
-<text text-anchor="start" x="3748.5" y="-450.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
-<text text-anchor="start" x="3848.8422" y="-450.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<polygon fill="#efefef" stroke="transparent" points="3741.5,-574.5 3741.5,-609.5 4115.5,-609.5 4115.5,-574.5 3741.5,-574.5"/>
+<polygon fill="none" stroke="#000000" points="3741.5,-574.5 3741.5,-609.5 4115.5,-609.5 4115.5,-574.5 3741.5,-574.5"/>
+<text text-anchor="start" x="3748.1858" y="-587.3" font-family="Arial Bold" font-size="18.00" fill="#000000">public.reset_password_token</text>
+<text text-anchor="start" x="3981.2462" y="-587.3" font-family="Arial" font-size="14.00" fill="#000000">    </text>
+<text text-anchor="start" x="4015.451" y="-587.3" font-family="Arial" font-size="14.00" fill="#666666">[BASE TABLE]</text>
+<polygon fill="none" stroke="#000000" points="3741.5,-544.5 3741.5,-574.5 4115.5,-574.5 4115.5,-544.5 3741.5,-544.5"/>
+<text text-anchor="start" x="3748.5" y="-555.9" font-family="Arial" font-size="14.00" fill="#000000">reset_password_token_id    </text>
+<text text-anchor="start" x="3942.1942" y="-555.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
+<polygon fill="none" stroke="#000000" points="3741.5,-514.5 3741.5,-544.5 4115.5,-544.5 4115.5,-514.5 3741.5,-514.5"/>
+<text text-anchor="start" x="3748.5" y="-525.9" font-family="Arial" font-size="14.00" fill="#000000">user_id    </text>
+<text text-anchor="start" x="3828.6024" y="-525.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
+<polygon fill="none" stroke="#000000" points="3741.5,-484.5 3741.5,-514.5 4115.5,-514.5 4115.5,-484.5 3741.5,-484.5"/>
+<text text-anchor="start" x="3748.5" y="-495.9" font-family="Arial" font-size="14.00" fill="#000000">token    </text>
+<text text-anchor="start" x="3816.9432" y="-495.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="3741.5,-454.5 3741.5,-484.5 4115.5,-484.5 4115.5,-454.5 3741.5,-454.5"/>
+<text text-anchor="start" x="3748.5" y="-465.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
+<text text-anchor="start" x="3848.8422" y="-465.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<polygon fill="none" stroke="#000000" points="3741.5,-424.5 3741.5,-454.5 4115.5,-454.5 4115.5,-424.5 3741.5,-424.5"/>
+<text text-anchor="start" x="3748.5" y="-435.9" font-family="Arial" font-size="14.00" fill="#000000">expired_at    </text>
+<text text-anchor="start" x="3848.0582" y="-435.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
 </g>
 <!-- public.reset_password_token&#45;&gt;public.user -->
 <g id="edge18" class="edge">
 <title>public.reset_password_token:user_id&#45;&gt;public.user:user_id</title>
-<path fill="none" stroke="#000000" d="M3731.2769,-513.8943C3664.7326,-505.3919 3720.491,-409.1363 3689.5,-337 3660.1774,-268.7471 3679.7851,-192.5 3605.5,-192.5"/>
-<polygon fill="#000000" stroke="#000000" points="3731.5175,-513.9085 3741.2338,-518.9921 3736.5088,-514.2042 3741.5,-514.5 3741.5,-514.5 3741.5,-514.5 3736.5088,-514.2042 3741.7662,-510.0079 3731.5175,-513.9085 3731.5175,-513.9085"/>
+<path fill="none" stroke="#000000" d="M3731.3814,-528.9509C3658.5045,-520.4671 3722.2195,-415.4364 3689.5,-337 3660.9008,-268.4409 3679.7851,-192.5 3605.5,-192.5"/>
+<polygon fill="#000000" stroke="#000000" points="3731.5147,-528.958 3741.2561,-533.9934 3736.5073,-529.229 3741.5,-529.5 3741.5,-529.5 3741.5,-529.5 3736.5073,-529.229 3741.7439,-525.0066 3731.5147,-528.958 3731.5147,-528.958"/>
 </g>
 <!-- public.user_jwt_subject -->
 <g id="node18" class="node">
