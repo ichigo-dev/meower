@@ -306,6 +306,47 @@ const init_dialog = () =>
 
 
 //------------------------------------------------------------------------------
+//	Initializes snackbar.
+//------------------------------------------------------------------------------
+const init_snackbar = () =>
+{
+	window.addEventListener('scroll', debounce(( event_ ) =>
+	{
+		const elm_snackbars = document.querySelectorAll('.ui_snackbar');
+		elm_snackbars.forEach(( elm_ ) =>
+		{
+			const main = document.getElementById('main');
+			if( !main ) return;
+
+			const rect = main.getBoundingClientRect();
+			const spacing = getComputedStyle(elm_)
+				.getPropertyValue('--spacing-md')
+				.replace('px', '');
+			const left = rect.left + parseInt(spacing);
+			elm_.style.left = left.toString() + 'px';
+		});
+	}, 100));
+
+	const elm_buttons = document.querySelectorAll('.button_open_snackbar');
+	elm_buttons.forEach((elm_) =>
+	{
+		elm_.addEventListener('click', ( event_ ) =>
+		{
+			const snackbar = event_.target.nextElementSibling;
+			if( snackbar )
+			{
+				snackbar.classList.add('open');
+				setTimeout(() =>
+				{
+					snackbar.classList.remove('open');
+				}, 5000);
+			}
+		});
+	});
+};
+
+
+//------------------------------------------------------------------------------
 //	Initializes.
 //------------------------------------------------------------------------------
 const init = () =>
@@ -317,6 +358,7 @@ const init = () =>
 	init_colors();
 	init_theme_colors();
 	init_dialog();
+	init_snackbar();
 };
 
 init();

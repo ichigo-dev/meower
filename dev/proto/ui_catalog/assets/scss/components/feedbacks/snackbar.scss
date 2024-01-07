@@ -1,0 +1,30 @@
+//------------------------------------------------------------------------------
+//	UI snackbar
+//
+//	# Usage
+//
+//	```html
+//	<div class="ui_snackbar">Snackbar</div>
+//	```
+//------------------------------------------------------------------------------
+
+.ui_snackbar
+{
+	position: fixed;
+	left: var(--spacing-md);
+	min-width: var(--size-8xl);
+	bottom: var(--spacing-md);
+	padding: var(--spacing-md);
+	border-radius: var(--radius-md);
+	background-color: var(--color-background-text);
+	box-shadow: var(--shadow-md);
+	color: var(--color-background);
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.2s 0s ease-in-out;
+
+	&.open
+	{
+		opacity: 1;
+	}
+}
