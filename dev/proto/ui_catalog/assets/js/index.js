@@ -206,6 +206,11 @@ const init = () =>
 	{
 		elm_.addEventListener('click', function( event_ )
 		{
+			if( event_.target.closest('.button_close_dialog') )
+			{
+				elm_.classList.remove('open');
+			}
+
 			if( event_.target.closest('.dialog') ) return;
 			elm_.classList.remove('open');
 		});
