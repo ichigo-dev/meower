@@ -1,5 +1,12 @@
 //------------------------------------------------------------------------------
 //	UI alert
+//
+//
+//	# Usage
+//
+//	```html
+//	<div class="ui_alert error">Alert</div>
+//	```
 //------------------------------------------------------------------------------
 
 @use "../../functions/string" as string;
@@ -27,6 +34,11 @@
 		-webkit-mask-position: center;
 		-webkit-mask-repeat: no-repeat;
 	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
 
 	@each $color in themes.$theme_colors
 	{
@@ -65,5 +77,44 @@
 	{
 		mask-image: var(--icon-svg-circle-check);
 		-webkit-mask-image: var(--icon-svg-circle-check);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Styles
+	//--------------------------------------------------------------------------
+
+	&.outlined
+	{
+		border: 2px solid var(--color-border);
+
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				background-color: transparent;
+				color: var(--color-background-text);
+				border-color: var(--color-#{$color});
+			}
+		}
+	}
+
+	&.filled
+	{
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				background-color: var(--color-#{$color});
+				color: var(--color-#{$color}-text);
+
+				&:before
+				{
+					background-color: var(--color-#{$color}-text);
+				}
+			}
+		}
 	}
 }

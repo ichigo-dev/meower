@@ -189,6 +189,27 @@ const init = () =>
 		apply_theme(theme);
 	});
 	elm_theme_select.dispatchEvent(new Event('change'));
+
+	//	Dialog
+	const elm_buttons = document.querySelectorAll('.button_open_dialog');
+	elm_buttons.forEach(function(elm_)
+	{
+		elm_.addEventListener('click', function( event_ )
+		{
+			const dialog = event_.target.nextElementSibling;
+			if( dialog ) { dialog.classList.add('open'); }
+		});
+	});
+
+	const elm_dialogs = document.querySelectorAll('.ui_dialog');
+	elm_dialogs.forEach(function( elm_ )
+	{
+		elm_.addEventListener('click', function( event_ )
+		{
+			if( event_.target.closest('.dialog') ) return;
+			elm_.classList.remove('open');
+		});
+	});
 };
 
 init();

@@ -1,6 +1,11 @@
 //------------------------------------------------------------------------------
-//	Feedback components
+//	Common z indices
 //------------------------------------------------------------------------------
 
-@forward "alert";
-@forward "dialog";
+:root
+{
+	--z-index-background: 0;
+	--z-index-default: 1;
+	--z-index-backdrop: 99;
+	--z-index-dialog: 100;
+}
