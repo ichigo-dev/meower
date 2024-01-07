@@ -179,3 +179,77 @@ body:has(.ui_dialog.open)
 		transition: none;
 	}
 }
+
+
+//------------------------------------------------------------------------------
+//	Dialog container
+//
+//	If you want to display the dialog in a specific area on the screen, use
+//	this. However, since the drawing position of the dialog needs to follow the
+//	scrolling, the operation may become slow.
+//
+//
+//	# Usage
+//
+//	```html
+//	<div class="ui_dialog">
+//	 <div class="dialog">
+//	  <div class="head">
+//	   <h4>Dialog</h4>
+//	  </div>
+//	  <div class="body">
+//	   <p>Content</p>
+//	  </div>
+//	  <div class="foot">
+//	   <button class="ui_button primary text">Close</button>
+//	  </div>
+//	 </div>
+//	</div>
+//	```
+//
+//	```js
+//	window.addEventListener('scroll', ( event_ ) =>
+//	{
+//		const elm_dialogs = document.querySelectorAll('.ui_dialog');
+//		elm_dialogs.forEach(( elm_ ) =>
+//		{
+//			elm_.style.top = window.scrollY.toString() + 'px';
+//		});
+//	});
+//	```
+//
+//	Tips to make the operation lighter using debounce technique:
+//
+//	```js
+//	const debounce = ( func_, wait_ ) =>
+//	{
+//		let timeout;
+//		return ( ...args_ ) =>
+//		{
+//			const context = this;
+//			clearTimeout(timeout);
+//			timeout = setTimeout(() => func_.apply(context, args_), wait_);
+//		};
+//	};
+//
+//	window.addEventListener('scroll', debounce(( event_ ) =>
+//	{
+//		const elm_dialogs = document.querySelectorAll('.ui_dialog');
+//		elm_dialogs.forEach(( elm_ ) =>
+//		{
+//			elm_.style.top = window.scrollY.toString() + 'px';
+//		});
+//	}), 100);
+//	```
+//------------------------------------------------------------------------------
+.ui_dialog_container
+{
+	position: relative;
+
+	.ui_dialog
+	{
+		position: absolute;
+		height: 100vh;
+		transform: translate(-50%, 0);
+	}
+}

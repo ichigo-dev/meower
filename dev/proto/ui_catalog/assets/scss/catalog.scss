@@ -46,11 +46,15 @@
 {
 	&.main
 	{
+		@extend .ui_box;
+		@extend .width_full;
+		@extend .background;
 		@extend .flex;
 		@extend .flex_column;
 		@extend .flex_gap_2xl;
 		@extend .padding_xl;
 		@extend .overflow_hidden_x;
+		@extend .ui_dialog_container;
 	}
 
 	&.parent_section

@@ -1,9 +1,8 @@
 //------------------------------------------------------------------------------
-//	Common styles
+//	Pointer event
 //------------------------------------------------------------------------------
 
-@forward "flex";
-@forward "overflow";
-@forward "pointer_event";
-@forward "spacer";
-@forward "typography";
+.pointer_event_none
+{
+    pointer-events: none;
+}

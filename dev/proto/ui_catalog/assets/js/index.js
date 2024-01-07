@@ -64,12 +64,62 @@ const show_toc = () =>
 
 
 //------------------------------------------------------------------------------
-//	Apply the theme.
+//	Initializes the theme.
+//------------------------------------------------------------------------------
+const init_theme = () =>
+{
+	const elm_theme_select = document.getElementById('theme_select');
+	elm_theme_select.addEventListener('change', ( event_ ) =>
+	{
+		const theme = event_.target.value;
+		apply_theme(theme);
+	});
+	elm_theme_select.dispatchEvent(new Event('change'));
+};
+
+
+//------------------------------------------------------------------------------
+//	Applies the theme.
 //------------------------------------------------------------------------------
 const apply_theme = ( theme_ ) =>
 {
 	const theme_wrapper = document.getElementById('theme_wrapper');
 	theme_wrapper.className = theme_;
+};
+
+
+//------------------------------------------------------------------------------
+//	Initializes the device mode.
+//------------------------------------------------------------------------------
+const init_device_mode = () =>
+{
+	const elms = document.querySelectorAll('#device_mode button');
+	elms.forEach((elm_) =>
+	{
+		elm_.addEventListener('click', ( event_ ) =>
+		{
+			const elm_active_button = document
+				.querySelector('#device_mode button.active');
+			if( elm_active_button )
+			{
+				elm_active_button.classList.remove('active');
+			}
+
+			const elm = event_.target;
+			elm.classList.add('active');
+
+			const data_screen_size = elm.getAttribute('data-screen_size');
+
+			const screen_size = data_screen_size > 0
+				? data_screen_size.toString() + 'px'
+				: '100%';
+			const elm_main = document.getElementById('main');
+			if( elm_main )
+			{
+				elm_main.style.width = screen_size;
+			}
+		});
+	});
 };
 
 
@@ -173,28 +223,38 @@ const show_theme_colors = () =>
 
 
 //------------------------------------------------------------------------------
-//	Initialize.
+//	Debounce function.
 //------------------------------------------------------------------------------
-const init = () =>
+const debounce = ( func_, wait_ ) =>
 {
-	show_toc();
-	show_colors();
-	show_theme_colors();
-
-	//	Apply the theme.
-	const elm_theme_select = document.getElementById('theme_select');
-	elm_theme_select.addEventListener('change', ( event_ ) =>
+	let timeout;
+	return ( ...args_ ) =>
 	{
-		const theme = event_.target.value;
-		apply_theme(theme);
-	});
-	elm_theme_select.dispatchEvent(new Event('change'));
+		const context = this;
+		clearTimeout(timeout);
+		timeout = setTimeout(() => func_.apply(context, args_), wait_);
+	};
+};
 
-	//	Dialog
+
+//------------------------------------------------------------------------------
+//	Enables dialog.
+//------------------------------------------------------------------------------
+const enable_dialog = () =>
+{
+	window.addEventListener('scroll', debounce(( event_ ) =>
+	{
+		const elm_dialogs = document.querySelectorAll('.ui_dialog');
+		elm_dialogs.forEach(( elm_ ) =>
+		{
+			elm_.style.top = window.scrollY.toString() + 'px';
+		});
+	}, 100));
+
 	const elm_buttons = document.querySelectorAll('.button_open_dialog');
-	elm_buttons.forEach(function(elm_)
+	elm_buttons.forEach((elm_) =>
 	{
-		elm_.addEventListener('click', function( event_ )
+		elm_.addEventListener('click', ( event_ ) =>
 		{
 			const dialog = event_.target.nextElementSibling;
 			if( dialog ) { dialog.classList.add('open'); }
@@ -202,9 +262,9 @@ const init = () =>
 	});
 
 	const elm_dialogs = document.querySelectorAll('.ui_dialog');
-	elm_dialogs.forEach(function( elm_ )
+	elm_dialogs.forEach(( elm_ ) =>
 	{
-		elm_.addEventListener('click', function( event_ )
+		elm_.addEventListener('click', ( event_ ) =>
 		{
 			if( event_.target.closest('.button_close_dialog') )
 			{
@@ -215,6 +275,20 @@ const init = () =>
 			elm_.classList.remove('open');
 		});
 	});
+};
+
+
+//------------------------------------------------------------------------------
+//	Initializes.
+//------------------------------------------------------------------------------
+const init = () =>
+{
+	show_toc();
+	init_theme();
+	init_device_mode();
+	show_colors();
+	show_theme_colors();
+	enable_dialog();
 };
 
 init();
