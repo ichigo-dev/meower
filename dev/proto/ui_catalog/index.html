@@ -17,7 +17,7 @@
     --------------------------------------------------------------------------->
     <aside class="ui_sidebar">
      <div class="ui_sidebar_inner">
-      <div class="flex flex_column flex_gap_xl margin_right_md">
+      <div class="uic_container child_section margin_right_md">
        <div class="ui_heading h2">UI catalog</div>
        <div class="flex flex_column flex_gap_sm">
         <label>Chose Theme</label>
@@ -36,21 +36,21 @@
     <!--------------------------------------------------------------------------
     -- Main
     --------------------------------------------------------------------------->
-    <main class="flex flex_column flex_gap_2xl padding_xl overflow_hidden_x">
-     <h1 class="ui_heading h1 bold divider center primary">UI catalog</h1>
+    <main class="uic_container main">
+     <h1 class="uic_heading h1">UI catalog</h1>
 
      <!-------------------------------------------------------------------------
      -- Common
      -------------------------------------------------------------------------->
-     <section class="flex flex_column flex_gap_lg">
-      <h2 class="ui_heading h2 bold bullet primary" id="toc_common">Common</h2>
+     <section class="uic_container parent_section">
+      <h2 class="uic_heading h2" id="toc_common">Common</h2>
 
       <!------------------------------------------------------------------------
       -- Colors
       ------------------------------------------------------------------------->
       <section>
        <div  class="flex flex_column flex_gap_md">
-        <h3 class="ui_heading h3" id="toc_colors">Colors</h3>
+        <h3 class="uic_heading h3" id="toc_colors">Colors</h3>
         <div id="colors" class="flex flex_row flex_gap_lg overflow_auto_x padding_bottom"></div>
        </div>
       </section>
@@ -60,7 +60,7 @@
       ------------------------------------------------------------------------->
       <section>
        <div  class="flex flex_column flex_gap_md">
-        <h3 class="ui_heading h3" id="toc_theme_colors">Theme Colors</h3>
+        <h3 class="uic_heading h3" id="toc_theme_colors">Theme Colors</h3>
         <div id="theme_colors" class="flex flex_row flex_gap_lg overflow_auto_x padding_bottom"></div>
        </div>
       </section>
@@ -69,22 +69,22 @@
      <!-------------------------------------------------------------------------
      -- Datas
      -------------------------------------------------------------------------->
-     <section class="flex flex_column flex_gap_lg">
-      <h2 class="ui_heading h2 bold bullet primary" id="toc_datas">Datas</h2>
+     <section class="uic_container parent_section">
+      <h2 class="uic_heading h2" id="toc_datas">Datas</h2>
 
       <!------------------------------------------------------------------------
       -- Heading
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_heading">Heading</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_heading">Heading</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <span class="ui_heading h1">Heading 1</span>
           <span class="ui_heading h2">Heading 2</span>
-          <span class="ui_heading h3">Heading 3</span>
+          <span class="uic_heading h3">Heading 3</span>
           <span class="ui_heading h4">Heading 4</span>
           <span class="ui_heading h5">Heading 5</span>
           <span class="ui_heading h6">Heading 6</span>
@@ -92,202 +92,202 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Divider Align</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="exapmle_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading divider left">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider center">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider right">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Divider Thickness</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading divider thin">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider thick">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Divider Colors</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading divider primary">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider secondary">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider error">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider warning">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider info">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading divider success">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Bullet Thickness</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading bullet thin">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading bullet">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading bullet thick">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Bullet Colors</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading bullet primary">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading bullet secondary">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading bullet error">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading bullet warning">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading bullet info">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading bullet success">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Line Align</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading line left">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line center">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line right">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Line Thickness</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading line thin">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line thick">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Line Colors</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading line primary">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line secondary">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line error">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line warning">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line info">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading line success">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Band Align</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading band left">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band center">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band right">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Band Thickness</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading band thin">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band thick">Heading</span>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Band Colors</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <span class="ui_heading band primary">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band secondary">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band error">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band warning">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band info">Heading</span>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <span class="ui_heading band success">Heading</span>
          </div>
         </div>
@@ -297,13 +297,13 @@
       <!------------------------------------------------------------------------
       -- Icon
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_icon">Icon</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_icon">Icon</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus"></div>
           <div class="ui_icon icon_minus"></div>
           <div class="ui_icon icon_caret_right"></div>
@@ -311,20 +311,20 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus small"></div>
           <div class="ui_icon icon_minus small"></div>
           <div class="ui_icon icon_caret_right small"></div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus"></div>
           <div class="ui_icon icon_minus"></div>
           <div class="ui_icon icon_caret_right"></div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus large"></div>
           <div class="ui_icon icon_minus large"></div>
           <div class="ui_icon icon_caret_right large"></div>
@@ -332,35 +332,35 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus primary"></div>
           <div class="ui_icon icon_minus primary"></div>
           <div class="ui_icon icon_caret_right primary"></div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus secondary"></div>
           <div class="ui_icon icon_minus secondary"></div>
           <div class="ui_icon icon_caret_right secondary"></div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus error"></div>
           <div class="ui_icon icon_minus error"></div>
           <div class="ui_icon icon_caret_right error"></div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus warning"></div>
           <div class="ui_icon icon_minus warning"></div>
           <div class="ui_icon icon_caret_right warning"></div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus info"></div>
           <div class="ui_icon icon_minus info"></div>
           <div class="ui_icon icon_caret_right info"></div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_icon icon_plus success"></div>
           <div class="ui_icon icon_minus success"></div>
           <div class="ui_icon icon_caret_right success"></div>
@@ -372,13 +372,13 @@
       <!------------------------------------------------------------------------
       -- List
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_list">List</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_list">List</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <ul class="ui_list">
            <li>List Item 1</li>
            <li>List Item 2</li>
@@ -390,7 +390,7 @@
            <li>List Item 3</li>
           </ul>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <ol class="ui_list ordered">
            <li>List Item 1</li>
            <li>List Item 2</li>
@@ -405,10 +405,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Clickable</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <ul class="ui_list">
            <li class="clickable">List Item 1</li>
            <li class="clickable">List Item 2</li>
@@ -423,10 +423,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <ul class="ui_list primary">
            <li class="clickable">Primary List Item 1</li>
            <li class="clickable">Primary List Item 2</li>
@@ -438,7 +438,7 @@
            <li>Primary List Item 3</li>
           </ul>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <ul class="ui_list secondary">
            <li class="clickable">Secondary List Item 1</li>
            <li class="clickable">Secondary List Item 2</li>
@@ -450,7 +450,7 @@
            <li>Secondary List Item 3</li>
           </ul>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <ul class="ui_list error">
            <li class="clickable">Error List Item 1</li>
            <li class="clickable">Error List Item 2</li>
@@ -462,7 +462,7 @@
            <li>Error List Item 3</li>
           </ul>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <ul class="ui_list warning">
            <li class="clickable">Warning List Item 1</li>
            <li class="clickable">Warning List Item 2</li>
@@ -474,7 +474,7 @@
            <li>Warning List Item 3</li>
           </ul>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <ul class="ui_list info">
            <li class="clickable">Info List Item 1</li>
            <li class="clickable">Info List Item 2</li>
@@ -486,7 +486,7 @@
            <li>Info List Item 3</li>
           </ul>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <ul class="ui_list success">
            <li class="clickable">Success List Item 1</li>
            <li class="clickable">Success List Item 2</li>
@@ -501,10 +501,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Nested</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <ul class="ui_list">
            <li>List Item 1</li>
            <li>List Item 2</li>
@@ -533,13 +533,13 @@
       <!------------------------------------------------------------------------
       -- Table
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_table">Table</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_table">Table</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <table class="ui_table">
            <thead>
             <tr>
@@ -645,10 +645,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <table class="ui_table small">
            <thead>
             <tr>
@@ -824,10 +824,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Stripe</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <table class="ui_table stripe">
            <thead>
             <tr>
@@ -930,7 +930,7 @@
            </tbody>
           </table>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <table class="ui_table stripe_vertical">
            <thead>
             <tr>
@@ -1036,10 +1036,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Tiled</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <table class="ui_table tiled">
            <thead>
             <tr>
@@ -1145,10 +1145,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <table class="ui_table primary">
            <thead>
             <tr>
@@ -1352,7 +1352,7 @@
            </tbody>
           </table>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <table class="ui_table secondary">
            <thead>
             <tr>
@@ -1556,7 +1556,7 @@
            </tbody>
           </table>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <table class="ui_table error">
            <thead>
             <tr>
@@ -1760,7 +1760,7 @@
            </tbody>
           </table>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <table class="ui_table warning">
            <thead>
             <tr>
@@ -1964,7 +1964,7 @@
            </tbody>
           </table>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <table class="ui_table info">
            <thead>
             <tr>
@@ -2168,7 +2168,7 @@
            </tbody>
           </table>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <table class="ui_table success">
            <thead>
             <tr>
@@ -2375,10 +2375,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sticky header</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="ui_box flex flex_row flex_align_center flex_gap_lg overflow_auto height_8xl">
+        <div class="example_flex_column">
+         <div class="ui_box example_flex_row overflow_auto height_8xl">
           <table class="ui_table sticky">
            <thead>
             <tr>
@@ -2542,7 +2542,7 @@
            </tfoot>
           </table>
          </div>
-         <div class="ui_box flex flex_row flex_align_center flex_gap_lg overflow_auto_x width_9xl">
+         <div class="ui_box example_flex_row overflow_auto_x width_9xl">
           <table class="ui_table sticky">
            <tbody>
             <tr>
@@ -2670,64 +2670,64 @@
      <!-------------------------------------------------------------------------
      -- Feedbacks
      -------------------------------------------------------------------------->
-     <section class="flex flex_column flex_gap_lg">
-      <h2 class="ui_heading h2 bold bullet primary" id="toc_feedbacks">Feedbacks</h2>
+     <section class="uic_container parent_section">
+      <h2 class="uic_heading h2" id="toc_feedbacks">Feedbacks</h2>
 
       <!------------------------------------------------------------------------
       -- Alert
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_alert">Alert</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_alert">Alert</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <div class="ui_alert error">Error alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert warning">Warning alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert info">Info alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert success">Success alert</div>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Outlined</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <div class="ui_alert outlined error">Error alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert outlined warning">Warning alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert outlined info">Info alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert outlined success">Success alert</div>
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Filled</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_row">
           <div class="ui_alert filled error">Error alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert filled warning">Warning alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert filled info">Info alert</div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_alert filled success">Success alert</div>
          </div>
         </div>
@@ -2737,13 +2737,13 @@
       <!------------------------------------------------------------------------
       -- Dialog
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_dialog">Dialog</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_dialog">Dialog</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_button primary button_open_dialog">Open dialog</div>
           <div class="ui_dialog">
            <dialog class="dialog">Dialog</dialog>
@@ -2752,10 +2752,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Animations</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_button primary button_open_dialog">Open fadein dialog</div>
           <div class="ui_dialog">
            <dialog class="dialog">Dialog</dialog>
@@ -2772,10 +2772,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Scroll</h4>
-        <div class="flex flex_column flex_align_stretch flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_button primary button_open_dialog">Open dialog</div>
           <div class="ui_dialog slidein">
            <dialog class="dialog">Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.Long Content.</dialog>
@@ -2789,19 +2789,19 @@
      <!-------------------------------------------------------------------------
      -- Inputs
      -------------------------------------------------------------------------->
-     <section class="flex flex_column flex_gap_lg">
-      <h2 class="ui_heading h2 bold bullet primary" id="toc_inputs">Inputs</h2>
+     <section class="uic_container parent_section">
+      <h2 class="uic_heading h2" id="toc_inputs">Inputs</h2>
 
       <!------------------------------------------------------------------------
       -- Button
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_buttons">Button</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_buttons">Button</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <button class="ui_button primary text">Text Button</button>
           <button class="ui_button primary">Filled Button</button>
           <button class="ui_button primary outlined">Outlined Button</button>
@@ -2809,10 +2809,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Disabled</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <button class="ui_button primary text" disabled>Text Button</button>
           <button class="ui_button primary" disabled>Filled Button</button>
           <button class="ui_button primary outlined" disabled>Outlined Button</button>
@@ -2820,20 +2820,20 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <button class="ui_button primary text small">Small Button</button>
           <button class="ui_button primary text">Medium Button</button>
           <button class="ui_button primary text large">Large Button</button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_button primary small">Small Button</button>
           <button class="ui_button primary">Medium Button</button>
           <button class="ui_button primary large">Large Button</button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_button primary outlined small">Small Button</button>
           <button class="ui_button primary outlined">Medium Button</button>
           <button class="ui_button primary outlined large">Large Button</button>
@@ -2841,35 +2841,35 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <button class="ui_button primary text">Primary Button</button>
           <button class="ui_button primary">Primary Button</button>
           <button class="ui_button primary outlined">Primary Button</button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_button secondary text">Secondary Button</button>
           <button class="ui_button secondary">Secondary Button</button>
           <button class="ui_button secondary outlined">Secondary Button</button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_button error text">Error Button</button>
           <button class="ui_button error">Error Button</button>
           <button class="ui_button error outlined">Error Button</button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_button warning text">Warning Button</button>
           <button class="ui_button warning">Warning Button</button>
           <button class="ui_button warning outlined">Warning Button</button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_button info text">Info Button</button>
           <button class="ui_button info">Info Button</button>
           <button class="ui_button info outlined">Info Button</button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_button success text">Success Button</button>
           <button class="ui_button success">Success Button</button>
           <button class="ui_button success outlined">Success Button</button>
@@ -2877,14 +2877,14 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Others</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <button class="ui_button primary full_rounded">Rounded Button</button>
           <button class="ui_button primary full_rounded outlined">Rounted Button</button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_button primary no_rounded">Square Button</button>
           <button class="ui_button primary no_rounded outlined">Square Button</button>
          </div>
@@ -2895,12 +2895,12 @@
       <!------------------------------------------------------------------------
       -- Button Group
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_button_group">Button Group</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_button_group">Button Group</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
+        <div class="example_flex_column">
          <div class="ui_button_group primary text">
           <button>Text Button 1</button>
           <button>Text Button 2</button>
@@ -2919,9 +2919,9 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Disabled</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
+        <div class="example_flex_column">
          <div class="ui_button_group primary text">
           <button disabled>Text Button 1</button>
           <button>Text Button 2</button>
@@ -2940,9 +2940,9 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
+        <div class="example_flex_column">
          <div class="ui_button_group primary small">
           <button>Small Button 1</button>
           <button>Small Button 2</button>
@@ -2961,10 +2961,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_button_group primary text">
            <button>Primary Button 1</button>
            <button>Primary Button 2</button>
@@ -2981,7 +2981,7 @@
            <button>Primary Button 3</button>
           </div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_button_group secondary text">
            <button>Secondary Button 1</button>
            <button>Secondary Button 2</button>
@@ -2998,7 +2998,7 @@
            <button>Secondary Button 3</button>
           </div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_button_group error text">
            <button>Error Button 1</button>
            <button>Error Button 2</button>
@@ -3015,7 +3015,7 @@
            <button>Error Button 3</button>
           </div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_button_group warning text">
            <button>Warning Button 1</button>
            <button>Warning Button 2</button>
@@ -3032,7 +3032,7 @@
            <button>Warning Button 3</button>
           </div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_button_group info text">
            <button>Info Button 1</button>
            <button>Info Button 2</button>
@@ -3049,7 +3049,7 @@
            <button>Info Button 3</button>
           </div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_button_group success text">
            <button>Success Button 1</button>
            <button>Success Button 2</button>
@@ -3069,9 +3069,9 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Vertical</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
+        <div class="example_flex_column">
          <div class="ui_button_group vertical primary text">
           <button>Text Button 1</button>
           <button>Text Button 2</button>
@@ -3090,9 +3090,9 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Active</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
+        <div class="example_flex_column">
          <div class="ui_button_group primary text">
           <button class="active">Text Button 1</button>
           <button class="active">Text Button 2</button>
@@ -3118,13 +3118,13 @@
       <!------------------------------------------------------------------------
       -- Checkbox
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_checkbox">Checkbox</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_checkbox">Checkbox</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_start flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="checkbox" class="ui_checkbox">
           <input type="checkbox" class="ui_checkbox" checked>
           <input type="checkbox" class="ui_checkbox" disabled>
@@ -3133,10 +3133,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_start flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="checkbox" class="ui_checkbox small" checked>
           <input type="checkbox" class="ui_checkbox" checked>
           <input type="checkbox" class="ui_checkbox large" checked>
@@ -3144,10 +3144,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_start flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="checkbox" class="ui_checkbox primary" checked>
           <input type="checkbox" class="ui_checkbox secondary" checked>
           <input type="checkbox" class="ui_checkbox error" checked>
@@ -3162,13 +3162,13 @@
       <!------------------------------------------------------------------------
       -- Floating Button
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_floating_button">Floating Button</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_floating_button">Floating Button</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <button class="ui_floating_button primary">
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3180,10 +3180,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Disabled</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg" disabled>
+        <div class="example_flex_column">
+         <div class="example_flex_row" disabled>
           <button class="ui_floating_button primary" disabled>
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3195,10 +3195,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <button class="ui_floating_button primary small">
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3209,7 +3209,7 @@
            <div class="ui_icon icon_plus"></div>
           </button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_floating_button primary small">
            <div class="ui_icon icon_plus"></div>
            <span>Small Floating Button</span>
@@ -3226,10 +3226,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <button class="ui_floating_button primary">
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3238,7 +3238,7 @@
            <span>Primary Floating Button</span>
           </button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_floating_button secondary">
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3247,7 +3247,7 @@
            <span>Secondary Floating Button</span>
           </button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_floating_button error">
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3256,7 +3256,7 @@
            <span>Error Floating Button</span>
           </button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_floating_button warning">
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3265,7 +3265,7 @@
            <span>Warning Floating Button</span>
           </button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_floating_button info">
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3274,7 +3274,7 @@
            <span>Info Floating Button</span>
           </button>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <button class="ui_floating_button success">
            <div class="ui_icon icon_plus"></div>
           </button>
@@ -3290,13 +3290,13 @@
       <!------------------------------------------------------------------------
       -- Radio
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_radio">Radio</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_radio">Radio</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="radio" class="ui_radio" name="ui_radio_basic">
           <input type="radio" class="ui_radio" name="ui_radio_basic" checked>
           <input type="radio" class="ui_radio" name="ui_radio_basic_disabled" disabled>
@@ -3305,10 +3305,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="radio" class="ui_radio small" name="ui_radio_size" checked>
           <input type="radio" class="ui_radio" name="ui_radio_size">
           <input type="radio" class="ui_radio large" name="ui_radio_size">
@@ -3316,10 +3316,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="radio" class="ui_radio primary" name="ui_radio_primary" checked>
           <input type="radio" class="ui_radio secondary" name="ui_radio_secondary" checked>
           <input type="radio" class="ui_radio error" name="ui_radio_error" checked>
@@ -3334,13 +3334,13 @@
       <!------------------------------------------------------------------------
       -- Range Slider
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_range_slider">Range Slider</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_range_slider">Range Slider</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="range" class="ui_range_slider" min="0" max="100">
           <input type="range" class="ui_range_slider" min="0" max="100" step="10">
           <input type="range" class="ui_range_slider" min="0" max="100" disabled>
@@ -3348,10 +3348,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="range" class="ui_range_slider small" min="0" max="100">
           <input type="range" class="ui_range_slider" min="0" max="100">
           <input type="range" class="ui_range_slider large" min="0" max="100">
@@ -3363,13 +3363,13 @@
       <!------------------------------------------------------------------------
       -- Select
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_select">Select</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_select">Select</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_select">
            <select>
             <option>Option 1</option>
@@ -3395,10 +3395,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Disabled</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_select">
            <select disabled>
             <option>Option 1</option>
@@ -3421,7 +3421,7 @@
            </select>
           </div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_select">
            <select>
             <option disabled>Option 1</option>
@@ -3433,10 +3433,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_select small">
            <select>
             <option>Option 1</option>
@@ -3459,7 +3459,7 @@
            </select>
           </div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_select standard small">
            <select>
             <option>Option 1</option>
@@ -3482,7 +3482,7 @@
            </select>
           </div>
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <div class="ui_select filled small">
            <select>
             <option>Option 1</option>
@@ -3508,10 +3508,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Validation</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_select is_error">
            <select>
             <option>Option 1</option>
@@ -3537,10 +3537,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Option group</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <div class="ui_select">
            <select>
             <option selected>None</option>
@@ -3564,13 +3564,13 @@
       <!------------------------------------------------------------------------
       -- Switch
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_switch">Switch</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_switch">Switch</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="checkbox" class="ui_switch">
           <input type="checkbox" class="ui_switch" checked>
           <input type="checkbox" class="ui_switch" disabled>
@@ -3579,10 +3579,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="checkbox" class="ui_switch small">
           <input type="checkbox" class="ui_switch">
           <input type="checkbox" class="ui_switch large">
@@ -3590,10 +3590,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="checkbox" class="ui_switch primary" checked>
           <input type="checkbox" class="ui_switch secondary" checked>
           <input type="checkbox" class="ui_switch error" checked>
@@ -3608,28 +3608,28 @@
       <!------------------------------------------------------------------------
       -- Text Field
       ------------------------------------------------------------------------->
-      <section class="flex flex_column flex_gap_xl">
-       <h3 class="ui_heading h3" id="toc_text_field">Text Field</h3>
+      <section class="uic_container child_section">
+       <h3 class="uic_heading h3" id="toc_text_field">Text Field</h3>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Basic</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field" placeholder="Text Filed">
           <input type="text" class="ui_text_field filled" placeholder="Filled Text Field">
           <input type="text" class="ui_text_field outlined" placeholder="Outlined Text Field">
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <input type="password" class="ui_text_field" placeholder="Password">
           <input type="number" class="ui_text_field" placeholder="Number">
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Disabled</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field" placeholder="Text Filed" disabled>
           <input type="text" class="ui_text_field filled" placeholder="Filled Text Field" disabled>
           <input type="text" class="ui_text_field outlined" placeholder="Outlined Text Field" disabled>
@@ -3637,10 +3637,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Readonly</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field" placeholder="Text Filed" readonly>
           <input type="text" class="ui_text_field filled" placeholder="Filled Text Field" readonly>
           <input type="text" class="ui_text_field outlined" placeholder="Outlined Text Field" readonly>
@@ -3648,20 +3648,20 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Sizes</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field small" placeholder="Small Text Filed">
           <input type="text" class="ui_text_field" placeholder="Medium Text Field">
           <input type="text" class="ui_text_field large" placeholder="Large Text Field">
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field filled small" placeholder="Small Text Filed">
           <input type="text" class="ui_text_field filled" placeholder="Medium Text Field">
           <input type="text" class="ui_text_field filled large" placeholder="Large Text Field">
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field outlined small" placeholder="Small Text Filed">
           <input type="text" class="ui_text_field outlined" placeholder="Medium Text Field">
           <input type="text" class="ui_text_field outlined large" placeholder="Large Text Field">
@@ -3669,19 +3669,19 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Full Width</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field full" placeholder="Text Filed">
          </div>
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Validation</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field is_error" placeholder="Text Filed">
           <input type="text" class="ui_text_field filled is_error" placeholder="Filled Text Field">
           <input type="text" class="ui_text_field outlined is_error" placeholder="Outlined Text Field">
@@ -3689,10 +3689,10 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Multiline</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <textarea class="ui_text_field" placeholder="Text Filed"></textarea>
           <textarea class="ui_text_field filled" placeholder="Filled Text Field"></textarea>
           <textarea class="ui_text_field outlined" placeholder="Outlined Text Field"></textarea>
@@ -3700,35 +3700,35 @@
         </div>
        </div>
 
-       <div class="ui_box surface radius padding_lg overflow_auto_x flex flex_column flex_gap_md">
+       <div class="uic_container example_box">
         <h4 class="ui_heading h4">Colors</h4>
-        <div class="flex flex_column flex_align_start flex_gap_md">
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+        <div class="example_flex_column">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field primary" placeholder="Primary Text Filed">
           <input type="text" class="ui_text_field primary filled" placeholder="Primary Text Field">
           <input type="text" class="ui_text_field primary outlined" placeholder="Primary Text Field">
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field secondary" placeholder="Secondary Text Filed">
           <input type="text" class="ui_text_field secondary filled" placeholder="Secondary Text Field">
           <input type="text" class="ui_text_field secondary outlined" placeholder="Secondary Text Field">
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field error" placeholder="Error Text Filed">
           <input type="text" class="ui_text_field error filled" placeholder="Error Text Field">
           <input type="text" class="ui_text_field error outlined" placeholder="Error Text Field">
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field warning" placeholder="Warning Text Filed">
           <input type="text" class="ui_text_field warning filled" placeholder="Warning Text Field">
           <input type="text" class="ui_text_field warning outlined" placeholder="Warning Text Field">
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field info" placeholder="Info Text Filed">
           <input type="text" class="ui_text_field info filled" placeholder="Info Text Field">
           <input type="text" class="ui_text_field info outlined" placeholder="Info Text Field">
          </div>
-         <div class="flex flex_row flex_align_center flex_gap_lg">
+         <div class="example_flex_row">
           <input type="text" class="ui_text_field success" placeholder="Success Text Filed">
           <input type="text" class="ui_text_field success filled" placeholder="Success Text Field">
           <input type="text" class="ui_text_field success outlined" placeholder="Success Text Field">
