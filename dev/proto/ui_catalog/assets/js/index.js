@@ -119,6 +119,8 @@ const init_device_mode = () =>
 	{
 		elm_.addEventListener('click', ( event_ ) =>
 		{
+			window.dispatchEvent(new Event('scroll'));
+
 			const elm_active_button = document
 				.querySelector('#device_mode button.active');
 			if( elm_active_button )
