@@ -19,7 +19,6 @@
 	thead th
 	{
 		background-color: var(--color-filled-dark);
-		border-bottom: 2px solid var(--color-border);
 		font-weight: bold;
 		text-align: center;
 	}
@@ -32,18 +31,33 @@
 			font-weight: bold;
 			text-align: center;
 		}
-
-		tr > th:first-child
-		{
-			border-right: 2px solid var(--color-border);
-		}
 	}
 
 	tfoot
 	{
-		border-top: 2px solid var(--color-border);
 		font-weight: bold;
 		text-align: center;
+	}
+
+	&:not(.tiled)
+	{
+		thead th
+		{
+			border-bottom: 2px solid var(--color-border);
+		}
+
+		tbody
+		{
+			tr > th:first-child
+			{
+				border-right: 2px solid var(--color-border);
+			}
+		}
+
+		tfoot
+		{
+			border-top: 2px solid var(--color-border);
+		}
 	}
 
 
