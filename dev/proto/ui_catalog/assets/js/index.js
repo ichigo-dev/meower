@@ -73,7 +73,12 @@ const init_theme = () =>
 	{
 		const theme = event_.target.value;
 		apply_theme(theme);
+		localStorage.setItem('theme', theme);
 	});
+
+	const default_theme = localStorage.getItem('theme') || 'light';
+	elm_theme_select.value = default_theme;
+
 	elm_theme_select.dispatchEvent(new Event('change'));
 };
 
@@ -94,6 +99,7 @@ const apply_theme = ( theme_ ) =>
 const init_device_mode = () =>
 {
 	const elms = document.querySelectorAll('#device_mode button');
+	const default_device_mode = localStorage.getItem('device_mode') || 'desktop';
 	elms.forEach((elm_) =>
 	{
 		elm_.addEventListener('click', ( event_ ) =>
@@ -109,7 +115,6 @@ const init_device_mode = () =>
 			elm.classList.add('active');
 
 			const data_screen_size = elm.getAttribute('data-screen_size');
-
 			const screen_size = data_screen_size > 0
 				? data_screen_size.toString() + 'px'
 				: '100%';
@@ -117,8 +122,15 @@ const init_device_mode = () =>
 			if( elm_main )
 			{
 				elm_main.style.width = screen_size;
+				localStorage.setItem('device_mode', elm.getAttribute('data-device_mode'));
 			}
 		});
+
+		if( elm_.getAttribute('data-device_mode') == default_device_mode )
+		{
+			elm_.classList.add('active');
+			elm_.dispatchEvent(new Event('click'));
+		}
 	});
 };
 
