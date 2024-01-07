@@ -15,30 +15,32 @@
     <!--------------------------------------------------------------------------
     -- Sidebar
     --------------------------------------------------------------------------->
-    <aside class="ui_sidebar ui_box border_right">
-     <div class="ui_sidebar_inner">
-      <div class="uic_container child_section margin_right_md">
-       <div class="ui_heading h2">UI catalog</div>
+    <aside id="sidebar" class="ui_sidebar ui_box border_right open">
+     <div class="ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden">
+      <div class="ui_heading h2">UI catalog</div>
 
-       <div class="flex flex_column flex_gap_sm">
-        <label>Chose Theme</label>
-        <div class="ui_select">
-         <select id="theme_select">
-          <option	value="theme_meower_light" selected>Meower Light</option>
-          <option	value="theme_meower_dark">Meower Dark</option>
-         </select>
-        </div>
+      <div class="flex flex_column flex_gap_sm">
+       <label>Chose Theme</label>
+       <div class="ui_select">
+        <select id="theme_select">
+         <option	value="theme_meower_light" selected>Meower Light</option>
+         <option	value="theme_meower_dark">Meower Dark</option>
+        </select>
        </div>
-
-       <div id="device_mode" class="ui_button_group primary">
-        <button data-device_mode="mobile" data-screen_size="375"><span class="ui_icon icon_mobile white pointer_event_none"></span></button>
-        <button data-device_mode="tablet" data-screen_size="768"><span class="ui_icon icon_tablet white pointer_event_none"></span></button>
-        <button data-device_mode="laptop" data-screen_size="1024"><span class="ui_icon icon_laptop white pointer_event_none"></span></button>
-        <button data-device_mode="desktop" data-screen_size="0"><span class="ui_icon icon_desktop white pointer_event_none"></span></button>
-       </div>
-
-       <div id="toc"></div>
       </div>
+
+      <div class="flex flex_column flex_gap_sm">
+       <span>Chose Device</span>
+       <div id="device_mode" class="ui_button_group primary outlined">
+        <button data-device_mode="mobile" data-screen_size="375"><span class="ui_icon icon_mobile pointer_event_none"></span></button>
+        <button data-device_mode="tablet" data-screen_size="768"><span class="ui_icon icon_tablet pointer_event_none"></span></button>
+        <button data-device_mode="laptop" data-screen_size="1024"><span class="ui_icon icon_laptop pointer_event_none"></span></button>
+        <button data-device_mode="desktop" data-screen_size="0"><span class="ui_icon icon_desktop pointer_event_none"></span></button>
+       </div>
+      </div>
+
+      <div id="toc"></div>
+      <div id="sidebar_toggle" class="sidebar_toggle ui_icon icon_left_right clickable flex_no_shrink"></div>
      </div>
     </aside>
  

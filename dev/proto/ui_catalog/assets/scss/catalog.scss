@@ -99,3 +99,24 @@
 		}
 	}
 }
+
+
+//------------------------------------------------------------------------------
+//	Sidebar
+//------------------------------------------------------------------------------
+
+.ui_sidebar:not(.open)
+{
+	.ui_sidebar_inner
+	{
+		overflow: hidden;
+		width: calc(var(--size-md));
+
+		:not(.sidebar_toggle)
+		{
+			opacity: 0;
+			margin-right: 0;
+			pointer-events: none;
+		}
+	}
+}

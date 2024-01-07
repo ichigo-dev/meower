@@ -28,9 +28,24 @@ const theme_color_types = ['light', '', 'dark'];
 
 
 //------------------------------------------------------------------------------
-//	Shows TOC.
+//	Initializes the sidebar.
 //------------------------------------------------------------------------------
-const show_toc = () =>
+const init_sidebar = () =>
+{
+	const elm_sidebar = document.getElementById('sidebar');
+	const elm_sidebar_toggle = document.getElementById('sidebar_toggle');
+
+	elm_sidebar_toggle.addEventListener('click', ( event_ ) =>
+	{
+		elm_sidebar.classList.toggle('open');
+	});
+};
+
+
+//------------------------------------------------------------------------------
+//	Initializes the TOC.
+//------------------------------------------------------------------------------
+const init_toc = () =>
 {
 	const elm_headings = document.querySelectorAll('h2, h3');
 
@@ -188,9 +203,9 @@ const create_color_band = ( color_, type_, fix_text_color_ = false ) =>
 
 
 //------------------------------------------------------------------------------
-//	Shows the colors.
+//	Initializes the colors.
 //------------------------------------------------------------------------------
-const show_colors = () =>
+const init_colors = () =>
 {
 	const elm = document.getElementById('colors');
 	for( color of colors )
@@ -215,9 +230,9 @@ const show_colors = () =>
 
 
 //------------------------------------------------------------------------------
-//	Shows the theme colors.
+//	Initializes the theme colors.
 //------------------------------------------------------------------------------
-const show_theme_colors = () =>
+const init_theme_colors = () =>
 {
 	const elm = document.getElementById('theme_colors');
 	for( color of theme_colors )
@@ -250,9 +265,9 @@ const debounce = ( func_, wait_ ) =>
 
 
 //------------------------------------------------------------------------------
-//	Enables dialog.
+//	Initializes dialogs.
 //------------------------------------------------------------------------------
-const enable_dialog = () =>
+const init_dialog = () =>
 {
 	window.addEventListener('scroll', debounce(( event_ ) =>
 	{
@@ -295,12 +310,13 @@ const enable_dialog = () =>
 //------------------------------------------------------------------------------
 const init = () =>
 {
-	show_toc();
+	init_sidebar();
+	init_toc();
 	init_theme();
 	init_device_mode();
-	show_colors();
-	show_theme_colors();
-	enable_dialog();
+	init_colors();
+	init_theme_colors();
+	init_dialog();
 };
 
 init();

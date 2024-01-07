@@ -33,6 +33,9 @@ everything.
 │   │   ├ base/            ... Docker base images for service containers
 │   │   └ service/         ... Docker images for service containers
 │   │
+│   ├ proto/               ... Prototypes
+│   │   └ ui_catalog/      ... UI catalog
+│   │
 │   ├ system/              ... Contains system components
 │   │   ├ util/            ... Contains utility files for the entire application
 │   │   │   ├ type/        ... Definition of common types
