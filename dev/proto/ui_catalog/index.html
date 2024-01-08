@@ -15,7 +15,7 @@
     <!--------------------------------------------------------------------------
     -- Sidebar
     --------------------------------------------------------------------------->
-    <aside id="sidebar" class="ui_sidebar ui_box border_right open">
+    <aside id="sidebar" class="ui_sidebar ui_box border_right z_index_front open">
      <div class="ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden">
       <div class="ui_heading h2">UI catalog</div>
 
@@ -3168,10 +3168,132 @@
 
         <div class="uic_container example_box">
          <h4 class="ui_heading h4">Basic</h4>
-         <div class="example_flex_column flex_align_stretch">
+         <div class="example_flex_column">
           <div class="example_flex_row">
            <div class="ui_button primary button_open_snackbar">Open snackbar</div>
-           <div class="ui_snackbar">Snackbar</div>
+           <div class="ui_snackbar">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Animations</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_snackbar">Open fadein snackbar</div>
+           <div class="ui_snackbar">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Open slidein snackbar</div>
+           <div class="ui_snackbar slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Open flash snackbar</div>
+           <div class="ui_snackbar flash">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button error button_open_snackbar">Open error snackbar</div>
+           <div class="ui_snackbar error">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button warning button_open_snackbar">Open warning snackbar</div>
+           <div class="ui_snackbar warning">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button info button_open_snackbar">Open info snackbar</div>
+           <div class="ui_snackbar info">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button success button_open_snackbar">Open success snackbar</div>
+           <div class="ui_snackbar success">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Position</h4>
+         <div class="example_flex_column flex_align_stretch ui_box max_width_10xl">
+          <div class="example_flex_row flex_justify_between">
+           <div class="ui_button primary button_open_snackbar">Top left</div>
+           <div class="ui_snackbar top_left slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Top</div>
+           <div class="ui_snackbar top slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Top right</div>
+           <div class="ui_snackbar top_right slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+          <div class="example_flex_row flex_justify_between">
+           <div class="ui_button primary button_open_snackbar">Left</div>
+           <div class="ui_snackbar left slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Right</div>
+           <div class="ui_snackbar right slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+          <div class="example_flex_row flex_justify_between">
+           <div class="ui_button primary button_open_snackbar">Bottom left</div>
+           <div class="ui_snackbar bottom_left slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Bottom</div>
+           <div class="ui_snackbar bottom slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Bottom right</div>
+           <div class="ui_snackbar bottom_right slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
           </div>
          </div>
         </div>

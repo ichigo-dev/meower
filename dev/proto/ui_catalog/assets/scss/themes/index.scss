@@ -2,7 +2,7 @@
 //	Theme configuration
 //------------------------------------------------------------------------------
 
-$theme_colors: primary, secondary, error, warning, info, success;
+$theme_colors: "primary", "secondary", "error", "warning", "info", "success";
 
 @forward "meower_light";
 @forward "meower_dark";

@@ -11,6 +11,7 @@
 
 @use "../../functions/string" as string;
 @use "../../themes/index" as themes;
+@use "../../variables/colors" as colors;
 @use "../../variables/icons" as icons;
 
 .ui_icon
@@ -48,6 +49,18 @@
 	//	Colors
 	//--------------------------------------------------------------------------
 
+	@each $color in colors.$general_colors
+	{
+		$class_name: string.str-replace($color, "-", "_");
+		&.#{$class_name} { background-color: var(--color-#{$color}); }
+	}
+
+	@each $color in colors.$colors
+	{
+		$class_name: string.str-replace($color, "-", "_");
+		&.#{$class_name} { background-color: var(--color-#{$color}); }
+	}
+
 	@each $color in themes.$theme_colors
 	{
 		$class_name: string.str-replace($color, "-", "_");
@@ -55,8 +68,15 @@
 		&.#{$class_name}_text { background-color: var(--color-#{$color}-text); }
 	}
 
-	&.white { background-color: var(--color-white); }
-	&.black { background-color: var(--color-black); }
+	&.background
+	{
+		background-color: var(--color-background);
+	}
+
+	&.surface
+	{
+		background-color: var(--color-surface);
+	}
 
 
 	//--------------------------------------------------------------------------

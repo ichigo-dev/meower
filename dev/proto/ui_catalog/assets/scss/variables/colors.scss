@@ -7,8 +7,8 @@
 //	- [Material UI color palette](https://vuetifyjs.com/en/styles/colors/#material-colors)
 //------------------------------------------------------------------------------
 
-$general_colors: black, white, transparent;
-$colors: red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, deep-orange, brown, blue-grey, grey;
+$general_colors: "black", "white", "transparent";
+$colors: "red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "blue-grey", "grey";
 
 :root
 {

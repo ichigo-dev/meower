@@ -74,3 +74,8 @@
 	> .flex_no_shrink { flex-shrink: 0; }
 	> .flex_shrink { flex-shrink: 1; }
 }
+
+.flex_spacer
+{
+	flex-grow: 1;
+}

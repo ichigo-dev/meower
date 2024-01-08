@@ -1,6 +1,8 @@
 //------------------------------------------------------------------------------
-//	Common z indices
+//	Common z indexes
 //------------------------------------------------------------------------------
+
+$z_indexes: "background", "default", "backdrop", "dialog", "snackbar", "front";
 
 :root
 {
@@ -8,4 +10,6 @@
 	--z-index-default: 1;
 	--z-index-backdrop: 99;
 	--z-index-dialog: 100;
+	--z-index-snackbar: 200;
+	--z-index-front: 999;
 }

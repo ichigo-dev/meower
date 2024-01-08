@@ -14,51 +14,65 @@
 	//	Sizes
 	//--------------------------------------------------------------------------
 
-	//	Width
-	&.width
-	{
-		&_full { width: 100%; }
-		&_full_viewport { width: 100vw; }
-		&_half { width: 50%; }
-		&_half_viewport { width: 50vw; }
+	$size_prefixes: "min-", "", "max-";
 
-		@each $size in sizes.$sizes
+	//	Width
+	@each $prefix in $size_prefixes
+	{
+		$class_prefix: string.str-replace(#{$prefix}, "-", "_");
+		&.#{$class_prefix}width
 		{
-			$class_name: string.str-replace(#{$size}, "-", "_");
-			&_#{$class_name} { width: var(--size-#{$size}); }
+			&_full { #{$prefix}width: 100%; }
+			&_full_viewport { #{$prefix}width: 100vw; }
+			&_half { #{$prefix}width: 50%; }
+			&_half_viewport { #{$prefix}width: 50vw; }
+
+			@each $size in sizes.$sizes
+			{
+				$class_name: string.str-replace(#{$size}, "-", "_");
+				&_#{$class_name} { #{$prefix}width: var(--size-#{$size}); }
+			}
 		}
 	}
 
 	//	Height
-	&.height
+	@each $prefix in $size_prefixes
 	{
-		&_full { height: 100%; }
-		&_full_viewport { height: 100vh; }
-		&_half { height: 50%; }
-		&_half_viewport { height: 50vh; }
-
-		@each $size in sizes.$sizes
+		$class_prefix: string.str-replace(#{$prefix}, "-", "_");
+		&.#{$class_prefix}height
 		{
-			$class_name: string.str-replace(#{$size}, "-", "_");
-			&_#{$class_name} { height: var(--size-#{$size}); }
+			&_full { #{$prefix}height: 100%; }
+			&_full_viewport { #{$prefix}height: 100vw; }
+			&_half { #{$prefix}height: 50%; }
+			&_half_viewport { #{$prefix}height: 50vw; }
+
+			@each $size in sizes.$sizes
+			{
+				$class_name: string.str-replace(#{$size}, "-", "_");
+				&_#{$class_name} { #{$prefix}height: var(--size-#{$size}); }
+			}
 		}
 	}
 
 	//	Size
-	.size
+	@each $prefix in $size_prefixes
 	{
-		&_full { width: 100%; height: 100%; }
-		&_full_viewport { width: 100vw; height: 100vh; }
-		&_half { width: 50%; height: 50%; }
-		&_half_viewport { width: 50vw; height: 50vh; }
-
-		@each $size in sizes.$sizes
+		$class_prefix: string.str-replace(#{$prefix}, "-", "_");
+		&.#{$class_prefix}size
 		{
-			$class_name: string.str-replace(#{$size}, "-", "_");
-			&_#{$class_name}
+			&_full { #{$prefix}height: 100%; #{$prefix}width: 100%; }
+			&_full_viewport { #{$prefix}height: 100vh; #{$prefix}width: 100vw; }
+			&_half { #{$prefix}height: 50%; #{$prefix}width: 50%; }
+			&_half_viewport { #{$prefix}height: 50vh; #{$prefix}width: 50vw; }
+
+			@each $size in sizes.$sizes
 			{
-				width: var(--size-#{$size});
-				height: var(--size-#{$size});
+				$class_name: string.str-replace(#{$size}, "-", "_");
+				&_#{$class_name}
+				{
+					#{$prefix}height: var(--size-#{$size});
+					#{$prefix}width: var(--size-#{$size});
+				}
 			}
 		}
 	}

@@ -324,8 +324,31 @@ const init_snackbar = () =>
 			const spacing = getComputedStyle(elm_)
 				.getPropertyValue('--spacing-md')
 				.replace('px', '');
-			const left = rect.left + parseInt(spacing);
-			elm_.style.left = left.toString() + 'px';
+
+			if
+			(
+				elm_.classList.contains('top')
+				|| elm_.classList.contains('bottom')
+			)
+			{
+				const left = rect.left + (rect.width / 2);
+				elm_.style.left = left.toString() + 'px';
+			}
+			else if
+			(
+				elm_.classList.contains('top_right')
+				|| elm_.classList.contains('right')
+				|| elm_.classList.contains('bottom_right')
+			)
+			{
+				const right = window.innerWidth - rect.right - parseInt(spacing);
+				elm_.style.right = right.toString() + 'px';
+			}
+			else
+			{
+				const left = rect.left + parseInt(spacing);
+				elm_.style.left = left.toString() + 'px';
+			}
 		});
 	}, 100));
 
@@ -334,15 +357,34 @@ const init_snackbar = () =>
 	{
 		elm_.addEventListener('click', ( event_ ) =>
 		{
+			let timeout;
+			const elm_snackbars = document.querySelectorAll('.ui_snackbar');
+			elm_snackbars.forEach(( elm_ ) =>
+			{
+				elm_.classList.remove('open');
+			});
+
 			const snackbar = event_.target.nextElementSibling;
 			if( snackbar )
 			{
 				snackbar.classList.add('open');
-				setTimeout(() =>
+				clearTimeout(timeout);
+				timeout = setTimeout(() =>
 				{
 					snackbar.classList.remove('open');
 				}, 5000);
 			}
+		});
+	});
+
+	const elm_button_closes = document
+		.querySelectorAll('.button_close_snackbar');
+	elm_button_closes.forEach((elm_) =>
+	{
+		elm_.addEventListener('click', ( event_ ) =>
+		{
+			const snackbar = event_.target.closest('.ui_snackbar');
+			if( snackbar ) { snackbar.classList.remove('open'); }
 		});
 	});
 };
