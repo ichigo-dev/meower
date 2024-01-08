@@ -1,0 +1,88 @@
+//------------------------------------------------------------------------------
+//	UI badge
+//
+//
+//	# Usage
+//
+//	```html
+//	<div class="ui_badge">
+//	 <span class="ui_icon icon_envelope"></span>
+//	</div>
+//	```
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
+.ui_badge
+{
+	position: relative;
+
+	&:after
+	{
+		content: "";
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		transform: translate(50%, -50%);
+		width: var(--size-xs);
+		height: var(--size-xs);
+		background-color: var(--color-info);
+		padding: var(--spacing-xs);
+		border-radius: var(--radius-circle);
+		z-index: var(--z-index-badge);
+	}
+
+	//--------------------------------------------------------------------------
+	//	Badge content
+	//--------------------------------------------------------------------------
+
+	.badge_content
+	{
+		position: absolute;
+		top: 0;
+		right: 0;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: var(--size-sm);
+		min-width: var(--size-sm);
+		padding: 0 var(--spacing-xs);
+		background-color: var(--color-info);
+		border-radius: var(--radius-circle);
+		transform: translate(50%, -50%);
+		z-index: var(--z-index-badge-content);
+
+		color: var(--color-info-text);
+		font-size: var(--fs-xs);
+		line-height: var(--fs-xs);
+		text-align: center;
+	}
+
+	&:has(.badge_content):after
+	{
+		display: none;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace($color, "-", "_");
+		&.#{$class_name}:after
+		{
+			background-color: var(--color-#{$color});
+		}
+
+		&.#{$class_name} .badge_content
+		{
+			background-color: var(--color-#{$color});
+			color: var(--color-#{$color}-text);
+		}
+	}
+}
