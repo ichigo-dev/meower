@@ -24,7 +24,9 @@
 	border-radius: var(--radius-circle);
 	cursor: pointer;
 	box-shadow: var(--shadow-md);
-	transition: all 0.3s 0s ease-in-out;
+	transition:
+		all 0.3s 0s ease-in-out,
+		transform 0.1s 0s ease-in-out;
 	white-space: nowrap;
 
 
@@ -76,5 +78,10 @@
 		cursor: not-allowed;
 
 		.ui_icon { background-color: var(--color-disabled-text); }
+	}
+
+	&:active:not(:disabled)
+	{
+		transform: scale(0.95);
 	}
 }
