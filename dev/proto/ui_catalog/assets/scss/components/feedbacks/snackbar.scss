@@ -50,6 +50,16 @@
 		}
 	}
 
+	&.grow
+	{
+		transform: scale(0);
+
+		&.open
+		{
+			transform: scale(1);
+		}
+	}
+
 	&.flash
 	{
 		transition: none;
