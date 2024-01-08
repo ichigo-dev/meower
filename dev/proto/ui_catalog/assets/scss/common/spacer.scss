@@ -20,72 +20,82 @@
 	//	Top
 	&_top
 	{
-		margin: var(--spacing-md) 0 0 0;
+		margin-top: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { margin: var(--spacing-#{$space}) 0 0 0; }
+			&_#{$class_name} { margin-top: var(--spacing-#{$space}); }
 		}
 	}
 
 	//	Right
 	&_right
 	{
-		margin: 0 var(--spacing-md) 0 0;
+		margin-right: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { margin: 0 var(--spacing-#{$space}) 0 0; }
+			&_#{$class_name} { margin-right: var(--spacing-#{$space}); }
 		}
 	}
 
 	//	Bottom
 	&_bottom
 	{
-		margin: 0 0 var(--spacing-md) 0;
+		margin-bottom: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { margin: 0 0 var(--spacing-#{$space}) 0; }
+			&_#{$class_name} { margin-bottom: var(--spacing-#{$space}); }
 		}
 	}
 
 	//	Left
 	&_left
 	{
-		margin: 0 0 0 var(--spacing-md);
+		margin-left: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { margin: 0 0 0 var(--spacing-#{$space}); }
+			&_#{$class_name} { margin-left: var(--spacing-#{$space}); }
 		}
 	}
 
 	//	Vertical
 	&_vertical
 	{
-		margin: var(--spacing-md) 0;
+		margin-top: var(--spacing-md);
+		margin-bottom: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { margin: var(--spacing-#{$space}) 0; }
+			&_#{$class_name}
+			{
+				margin-top: var(--spacing-#{$space});
+				margin-bottom: var(--spacing-#{$space});
+			}
 		}
 	}
 
 	//	Horizontal
 	&_horizontal
 	{
-		margin: 0 var(--spacing-md);
+		margin-left: var(--spacing-md);
+		margin-right: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { margin: 0 var(--spacing-#{$space}); }
+			&_#{$class_name}
+			{
+				margin-left: var(--spacing-#{$space});
+				margin-right: var(--spacing-#{$space});
+			}
 		}
 	}
 }
@@ -104,72 +114,82 @@
 	//	Top
 	&_top
 	{
-		padding: var(--spacing-md) 0 0 0;
+		padding-top: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { padding: var(--spacing-#{$space}) 0 0 0; }
+			&_#{$class_name} { padding-top: var(--spacing-#{$space}); }
 		}
 	}
 
 	//	Right
 	&_right
 	{
-		padding: 0 var(--spacing-md) 0 0;
+		padding-right: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { padding: 0 var(--spacing-#{$space}) 0 0; }
+			&_#{$class_name} { padding-right: var(--spacing-#{$space}); }
 		}
 	}
 
 	//	Bottom
 	&_bottom
 	{
-		padding: 0 0 var(--spacing-md) 0;
+		padding-bottom: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { padding: 0 0 var(--spacing-#{$space}) 0; }
+			&_#{$class_name} { padding: var(--spacing-#{$space}); }
 		}
 	}
 
 	//	Left
 	&_left
 	{
-		padding: 0 0 0 var(--spacing-md);
+		padding-left: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { padding: 0 0 0 var(--spacing-#{$space}); }
+			&_#{$class_name} { padding: var(--spacing-#{$space}); }
 		}
 	}
 
 	//	Vertical
 	&_vertical
 	{
-		padding: var(--spacing-md) 0;
+		padding-top: var(--spacing-md);
+		padding-bottom: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { padding: var(--spacing-#{$space}) 0; }
+			&_#{$class_name}
+			{
+				padding-top: var(--spacing-#{$space});
+				padding-bottom: var(--spacing-#{$space});
+			}
 		}
 	}
 
 	//	Horizontal
 	&_horizontal
 	{
-		padding: 0 var(--spacing-md);
+		padding-left: var(--spacing-md);
+		padding-right: var(--spacing-md);
 
 		@each $space in spaces.$spaces
 		{
 			$class_name: string.str-replace(#{$space}, "-", "_");
-			&_#{$class_name} { padding: 0 var(--spacing-#{$space}); }
+			&_#{$class_name}
+			{
+				padding-left: var(--spacing-#{$space});
+				padding-right: var(--spacing-#{$space});
+			}
 		}
 	}
 }

@@ -52,6 +52,7 @@ const init_toc = () =>
 	const elm_list = document.createElement('ul');
 	elm_list.classList.add('ui_list');
 	elm_list.classList.add('primary');
+	elm_list.classList.add('simple');
 	for( elm_heading of elm_headings )
 	{
 		const elm_list_item_inner = document.createElement('a');
@@ -63,6 +64,8 @@ const init_toc = () =>
 		const elm_list_item = document.createElement('li');
 		elm_list_item.appendChild(elm_list_item_inner);
 		elm_list_item.classList.add('clickable');
+		elm_list_item.classList.add('padding_vertical_xs');
+		elm_list_item.classList.add('padding_horizontal_sm');
 
 		if( elm_heading.tagName.toLowerCase() === 'h3' )
 		{
@@ -308,7 +311,7 @@ const init_dialog = () =>
 
 
 //------------------------------------------------------------------------------
-//	Initializes snackbar.
+//	Initializes snackbars.
 //------------------------------------------------------------------------------
 const init_snackbar = () =>
 {
@@ -391,6 +394,42 @@ const init_snackbar = () =>
 
 
 //------------------------------------------------------------------------------
+//	Initializes drawers.
+//------------------------------------------------------------------------------
+const init_drawer = () =>
+{
+	window.addEventListener('scroll', debounce(( event_ ) =>
+	{
+		const elm_drawers = document.querySelectorAll('.ui_drawer');
+		elm_drawers.forEach(( elm_ ) =>
+		{
+			elm_.style.top = window.scrollY.toString() + 'px';
+		});
+	}, 100));
+
+	const elm_buttons = document.querySelectorAll('.button_open_drawer');
+	elm_buttons.forEach((elm_) =>
+	{
+		elm_.addEventListener('click', ( event_ ) =>
+		{
+			const drawer = event_.target.nextElementSibling;
+			if( drawer ) { drawer.classList.add('open'); }
+		});
+	});
+
+	const elm_drawers = document.querySelectorAll('.ui_drawer');
+	elm_drawers.forEach(( elm_ ) =>
+	{
+		elm_.addEventListener('click', ( event_ ) =>
+		{
+			if( event_.target.closest('.drawer') ) return;
+			elm_.classList.remove('open');
+		});
+	});
+};
+
+
+//------------------------------------------------------------------------------
 //	Initializes.
 //------------------------------------------------------------------------------
 const init = () =>
@@ -403,6 +442,7 @@ const init = () =>
 	init_theme_colors();
 	init_dialog();
 	init_snackbar();
+	init_drawer();
 };
 
 init();

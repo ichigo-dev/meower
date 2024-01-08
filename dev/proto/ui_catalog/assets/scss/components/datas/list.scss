@@ -12,8 +12,6 @@
 
 	li
 	{
-		padding: var(--spacing-xs) var(--spacing-sm);
-
 		&.clickable
 		{
 			cursor: pointer;
@@ -56,7 +54,6 @@
 		li
 		{
 			border: 1px solid var(--color-border);
-			padding: var(--spacing-sm) var(--spacing-lg);
 
 			&:not(:last-child)
 			{
@@ -80,6 +77,27 @@
 		&.ordered
 		{
 			list-style: inside decimal;
+		}
+	}
+
+	&.simple
+	{
+		list-style: none;
+		padding-left: 0;
+
+		li
+		{
+			&.clickable:hover
+			{
+				background-color: var(--color-shadow-weak);
+				opacity: 1;
+			}
+		}
+
+		ul,
+		ol
+		{
+			list-style: none;
 		}
 	}
 
@@ -115,6 +133,14 @@
 						background-color: var(--color-#{$color}-dark);
 						color: var(--color-#{$color}-text);
 					}
+				}
+			}
+
+			&.simple
+			{
+				li.clickable:hover
+				{
+					opacity: 1;
 				}
 			}
 		}

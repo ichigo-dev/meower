@@ -1,0 +1,151 @@
+//------------------------------------------------------------------------------
+//	UI drawer
+//------------------------------------------------------------------------------
+
+body:has(.ui_drawer.open)
+{
+	overflow: hidden;
+}
+
+.ui_drawer
+{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background-color: var(--color-shadow);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: var(--z-index-dialog);
+	opacity: 0;
+	transform: translate(-50%, -50%);
+	transition: all 0.3s 0s ease-in-out;
+	pointer-events: none;
+
+	.drawer
+	{
+		height: 100%;
+		min-width: var(--size-7xl);
+		background-color: var(--color-surface);
+		position: absolute;
+		top: 0;
+		left: 0;
+		transform: translate(-100%, 0);
+		transition: all 0.3s 0s ease-in-out;
+		overflow: hidden;
+	}
+
+	&.open
+	{
+		opacity: 1;
+		pointer-events: auto;
+
+		.drawer
+		{
+			transform: translate(0, 0);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Positions
+	//--------------------------------------------------------------------------
+
+	&.top
+	{
+		.drawer
+		{
+			top: 0;
+			bottom: auto;
+			left: 0;
+			right: 0;
+			height: auto;
+			width: 100%;
+			min-width: auto;
+			transform: translate(0, -100%);
+		}
+
+		&.open .drawer
+		{
+			transform: translate(0, 0);
+		}
+	}
+
+	&.bottom
+	{
+		.drawer
+		{
+			top: auto;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: auto;
+			width: 100%;
+			min-width: auto;
+			transform: translate(0, 100%);
+		}
+
+		&.open .drawer
+		{
+			transform: translate(0, 0);
+		}
+	}
+
+	&.left
+	{
+		.drawer
+		{
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: auto;
+			height: 100%;
+			width: auto;
+			min-width: var(--size-7xl);
+			transform: translate(-100%, 0);
+		}
+
+		&.open .drawer
+		{
+			transform: translate(0, 0);
+		}
+	}
+
+	&.right
+	{
+		.drawer
+		{
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: auto;
+			height: 100%;
+			width: auto;
+			min-width: var(--size-7xl);
+			transform: translate(100%, 0);
+		}
+
+		&.open .drawer
+		{
+			transform: translate(0, 0);
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------
+//	Drawer container
+//
+//	See components/feedbacks/dialog.scss for details.
+//------------------------------------------------------------------------------
+.ui_drawer_container
+{
+	position: relative;
+
+	.ui_drawer
+	{
+		position: absolute;
+		height: 100vh;
+		transform: translate(-50%, 0);
+	}
+}
