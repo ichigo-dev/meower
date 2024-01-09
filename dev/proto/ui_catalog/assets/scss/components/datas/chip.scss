@@ -22,6 +22,7 @@
 	border-radius: var(--radius-circle);
 	padding: var(--spacing-xs) var(--spacing-md);
 	color: var(--color-filled-text);
+	white-space: nowrap;
 
 	&.clickable
 	{
