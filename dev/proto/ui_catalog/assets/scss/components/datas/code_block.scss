@@ -1,0 +1,77 @@
+//------------------------------------------------------------------------------
+//	UI code block
+//
+//
+//	```html
+//	<pre class="ui_code_block">
+//	<span>function get_random_int( min_ = 0, max_ = 100 )</span>
+//	<span>{</span>
+//	<span>    const range = max - min + 1;</span>
+//	<span>    const rand = Math.random();</span>
+//	<span>    return Math.floor(rand * range);</span>
+//	<span>}</span></pre>
+//	```
+//------------------------------------------------------------------------------
+
+.ui_code_block
+{
+	width: 100%;
+	background-color: var(--color-background-text);
+	color: var(--color-background);
+	margin: 0;
+	padding: var(--spacing-md);
+	border-radius: var(--radius-md);
+	line-height: calc(var(--fs-md) + var(--spacing-sm));
+	word-break: break-all;
+
+	> *
+	{
+		display: inline-block;
+	}
+
+	&.number
+	{
+		counter-reset: line;
+
+		> *
+		{
+			counter-increment: line;
+			padding-left: calc(var(--fs-md) + var(--spacing-sm));
+			position: relative;
+
+			&:before
+			{
+				content: counter(line);
+				color: var(--color-background);
+				position: absolute;
+				left: var(--spacing-xs);
+			}
+		}
+
+		&.bar
+		{
+			> *
+			{
+				padding-left: calc(var(--fs-md) + var(--spacing-md));
+
+				&:after
+				{
+					content: "";
+					display: inline-block;
+					width: 1px;
+					height: calc(var(--fs-md) + var(--spacing-sm));
+					background-color: var(--color-background);
+					position: absolute;
+					left: calc(var(--fs-md) + var(--spacing-2xs));
+					top: 0;
+				}
+			}
+		}
+	}
+
+	.highlight
+	{
+		background-color: var(--color-filled);
+		width: 100%;
+	}
+}

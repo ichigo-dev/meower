@@ -246,7 +246,7 @@
 
 					&.page_now
 					{
-						background-color: var(--color-#{$color});
+						background-color: var(--color-#{$color}-dark);
 						color: var(--color-#{$color}-text);
 					}
 
