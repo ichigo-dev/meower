@@ -15,6 +15,8 @@
 
 .ui_code_block
 {
+    display: flex;
+    flex-direction: column;
 	width: 100%;
 	background-color: var(--color-background-text);
 	color: var(--color-background);
@@ -22,11 +24,12 @@
 	padding: var(--spacing-md);
 	border-radius: var(--radius-md);
 	line-height: calc(var(--fs-md) + var(--spacing-sm));
-	word-break: break-all;
+    overflow-x: auto;
 
 	> *
 	{
 		display: inline-block;
+        height: calc(var(--fs-md) + var(--spacing-sm));
 	}
 
 	&.number
@@ -36,7 +39,7 @@
 		> *
 		{
 			counter-increment: line;
-			padding-left: calc(var(--fs-md) + var(--spacing-sm));
+			padding-left: calc(var(--fs-md) + var(--spacing-xl));
 			position: relative;
 
 			&:before
@@ -44,7 +47,7 @@
 				content: counter(line);
 				color: var(--color-background);
 				position: absolute;
-				left: var(--spacing-xs);
+				left: var(--spacing-2xs);
 			}
 		}
 
@@ -52,7 +55,7 @@
 		{
 			> *
 			{
-				padding-left: calc(var(--fs-md) + var(--spacing-md));
+				padding-left: calc(var(--fs-md) + var(--spacing-2xl));
 
 				&:after
 				{
@@ -62,7 +65,7 @@
 					height: calc(var(--fs-md) + var(--spacing-sm));
 					background-color: var(--color-background);
 					position: absolute;
-					left: calc(var(--fs-md) + var(--spacing-2xs));
+					left: calc(var(--fs-md) + var(--spacing-xl));
 					top: 0;
 				}
 			}

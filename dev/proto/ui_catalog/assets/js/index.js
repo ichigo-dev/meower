@@ -454,6 +454,46 @@ const init_tabs = () =>
 
 
 //------------------------------------------------------------------------------
+//	Initializes example codes.
+//------------------------------------------------------------------------------
+const init_example_code = () =>
+{
+	const elm_example_boxes = document.querySelectorAll('.example_box');
+	elm_example_boxes.forEach(( elm_ ) =>
+	{
+		const target = elm_.querySelector('.example_flex_column');
+		const elm_example_code = document.createElement('pre');
+		elm_example_code.classList.add('ui_code_block');
+		elm_example_code.classList.add('number');
+		elm_example_code.classList.add('separator');
+
+		const html = target.innerHTML;
+		const lines = html.split(/\r\n|\r|\n/);
+		let indent = 0;
+		for( let i = 0; i < lines.length; ++i )
+		{
+			const line = ( indent == 0
+				|| lines[i].trim().length > lines[i].length - indent )
+					? lines[i].trim()
+					: lines[i].substring(indent);
+			if( line.length == 0 ) continue;
+
+			if( indent == 0 )
+			{
+				indent = lines[i].length - line.length;
+			}
+
+			const elm_line = document.createElement('span');
+			elm_line.innerText = line;
+			elm_example_code.appendChild(elm_line);
+		}
+
+		elm_.parentNode.insertBefore(elm_example_code, elm_.nextSibling);
+	});
+};
+
+
+//------------------------------------------------------------------------------
 //	Initializes.
 //------------------------------------------------------------------------------
 const init = () =>
@@ -468,6 +508,7 @@ const init = () =>
 	init_snackbar();
 	init_drawer();
 	init_tabs();
+	init_example_code();
 };
 
 init();
