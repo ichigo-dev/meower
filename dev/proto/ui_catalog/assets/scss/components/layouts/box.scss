@@ -6,78 +6,9 @@
 @use "../../themes/index" as themes;
 @use "../../variables/colors" as colors;
 @use "../../variables/radii" as radii;
-@use "../../variables/sizes" as sizes;
 
 .ui_box
 {
-	//--------------------------------------------------------------------------
-	//	Sizes
-	//--------------------------------------------------------------------------
-
-	$size_prefixes: "min-", "", "max-";
-
-	//	Width
-	@each $prefix in $size_prefixes
-	{
-		$class_prefix: string.str-replace(#{$prefix}, "-", "_");
-		&.#{$class_prefix}width
-		{
-			&_full { #{$prefix}width: 100%; }
-			&_full_viewport { #{$prefix}width: 100vw; }
-			&_half { #{$prefix}width: 50%; }
-			&_half_viewport { #{$prefix}width: 50vw; }
-
-			@each $size in sizes.$sizes
-			{
-				$class_name: string.str-replace(#{$size}, "-", "_");
-				&_#{$class_name} { #{$prefix}width: var(--size-#{$size}); }
-			}
-		}
-	}
-
-	//	Height
-	@each $prefix in $size_prefixes
-	{
-		$class_prefix: string.str-replace(#{$prefix}, "-", "_");
-		&.#{$class_prefix}height
-		{
-			&_full { #{$prefix}height: 100%; }
-			&_full_viewport { #{$prefix}height: 100vw; }
-			&_half { #{$prefix}height: 50%; }
-			&_half_viewport { #{$prefix}height: 50vw; }
-
-			@each $size in sizes.$sizes
-			{
-				$class_name: string.str-replace(#{$size}, "-", "_");
-				&_#{$class_name} { #{$prefix}height: var(--size-#{$size}); }
-			}
-		}
-	}
-
-	//	Size
-	@each $prefix in $size_prefixes
-	{
-		$class_prefix: string.str-replace(#{$prefix}, "-", "_");
-		&.#{$class_prefix}size
-		{
-			&_full { #{$prefix}height: 100%; #{$prefix}width: 100%; }
-			&_full_viewport { #{$prefix}height: 100vh; #{$prefix}width: 100vw; }
-			&_half { #{$prefix}height: 50%; #{$prefix}width: 50%; }
-			&_half_viewport { #{$prefix}height: 50vh; #{$prefix}width: 50vw; }
-
-			@each $size in sizes.$sizes
-			{
-				$class_name: string.str-replace(#{$size}, "-", "_");
-				&_#{$class_name}
-				{
-					#{$prefix}height: var(--size-#{$size});
-					#{$prefix}width: var(--size-#{$size});
-				}
-			}
-		}
-	}
-
-
 	//--------------------------------------------------------------------------
 	//	Center
 	//--------------------------------------------------------------------------

@@ -94,7 +94,7 @@ const init_theme = () =>
 		localStorage.setItem('theme', theme);
 	});
 
-	const default_theme = localStorage.getItem('theme') || 'light';
+	const default_theme = localStorage.getItem('theme') || elm_theme_select.value;
 	elm_theme_select.value = default_theme;
 
 	elm_theme_select.dispatchEvent(new Event('change'));
