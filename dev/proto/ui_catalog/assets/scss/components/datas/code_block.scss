@@ -26,7 +26,7 @@
 	line-height: calc(var(--fs-md) + var(--spacing-sm));
     overflow-x: auto;
 
-	> *
+	> span
 	{
 		display: inline-block;
         height: calc(var(--fs-md) + var(--spacing-sm));
@@ -36,7 +36,7 @@
 	{
 		counter-reset: line;
 
-		> *
+		> span
 		{
 			counter-increment: line;
 			padding-left: calc(var(--fs-md) + var(--spacing-xl));
@@ -53,7 +53,7 @@
 
 		&.separator
 		{
-			> *
+			> span
 			{
 				padding-left: calc(var(--fs-md) + var(--spacing-2xl));
 

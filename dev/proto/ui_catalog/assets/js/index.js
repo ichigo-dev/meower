@@ -466,10 +466,12 @@ const init_example_code = () =>
 		elm_example_code.classList.add('ui_code_block');
 		elm_example_code.classList.add('number');
 		elm_example_code.classList.add('separator');
+		elm_example_code.classList.add('position_relative');
 
 		const html = target.innerHTML;
 		const lines = html.split(/\r\n|\r|\n/);
 		let indent = 0;
+		let copy_text = '';
 		for( let i = 0; i < lines.length; ++i )
 		{
 			const line = ( indent == 0
@@ -486,7 +488,49 @@ const init_example_code = () =>
 			const elm_line = document.createElement('span');
 			elm_line.innerText = line;
 			elm_example_code.appendChild(elm_line);
+
+			copy_text += line + '\n';
 		}
+
+		const elm_example_code_copy = document.createElement('button');
+		elm_example_code_copy.classList.add('button_copy_code');
+		elm_example_code_copy.classList.add('ui_icon');
+		elm_example_code_copy.classList.add('icon_copy');
+		elm_example_code_copy.classList.add('background');
+		elm_example_code_copy.classList.add('clickable');
+		elm_example_code_copy.classList.add('position_absolute');
+		elm_example_code_copy.classList.add('z_index_default');
+		elm_example_code_copy.addEventListener('click', ( event_ ) =>
+		{
+			navigator.clipboard.writeText(copy_text).then
+			(
+				() =>
+				{
+					const snackbar = document
+						.getElementById('snackbar_copy_code');
+					snackbar.classList.add('open');
+					setTimeout(() =>
+					{
+						snackbar.classList.remove('open');
+					}, 5000);
+				},
+				() =>
+				{
+					const snackbar = document
+						.getElementById('snackbar_copy_error');
+					snackbar.classList.add('open');
+					setTimeout(() =>
+					{
+						snackbar.classList.remove('open');
+					}, 5000);
+				},
+			);
+		});
+
+		const spacing = getComputedStyle(elm_).getPropertyValue('--spacing-md');
+		elm_example_code_copy.style.top = spacing;
+		elm_example_code_copy.style.right = spacing;
+		elm_example_code.appendChild(elm_example_code_copy);
 
 		elm_.parentNode.insertBefore(elm_example_code, elm_.nextSibling);
 	});
