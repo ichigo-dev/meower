@@ -87,8 +87,8 @@ install:
 
 scss:
 	@docker compose run --rm dev bash -c \
-		'cd /system/layer/auth/ && \
-		grass assets/scss/style.scss assets/css/style.css'
+		'cp /proto/ui_catalog/assets/css/style.css /system/layer/auth/assets/css/style.css && \
+		cp /proto/ui_catalog/assets/css/style.css /system/service/spa/public/style.css'
 
 # Table definition
 tbls:

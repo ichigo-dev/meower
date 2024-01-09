@@ -1,20 +1,20 @@
+<!DOCTYPE html>
+
 {% import "header.html" as header %}
 {% import "footer.html" as footer %}
 
-<!DOCTYPE html>
-<html>
+<html class="height_full">
  <head>
-  <link rel="stylesheet" href="/auth/assets/css/reset.css" />
   <link rel="stylesheet" href="/auth/assets/css/style.css" />
  </head>
 
- <body>
-  {% call header::render() %}
-  <main class="wrapper theme_default">
-   {% block content %}{% endblock %}
-  </main>
-  {% call footer::render() %}
-
-  <script src="/_assets/script.js"></script>
+ <body class="flex flex_column min_height_full">
+  <div class="theme_meower_light flex_grow">
+   {% call header::render() %}
+   <main>
+    {% block content %}{% endblock %}
+   </main>
+   {% call footer::render() %}
+  </div>
  </body>
 </html>
