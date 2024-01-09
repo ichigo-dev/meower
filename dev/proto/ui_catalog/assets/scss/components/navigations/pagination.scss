@@ -6,15 +6,15 @@
 //
 //	```html
 //	<div class="ui_pagination">
-//	 <div class="page_first disabled"></div>
-//	 <div class="page_prev disabled"></div>
-//	 <div class="page_no page_now">1</div>
-//	 <div class="page_no">2</div>
-//	 <div class="page_no">3</div>
+//	 <button class="page_first" disabled></button>
+//	 <button class="page_prev" disabled></button>
+//	 <button class="page_no page_now">1</button>
+//	 <button class="page_no">2</button>
+//	 <button class="page_no">3</button>
 //	 <div class="page_ellipsis"></div>
-//	 <div class="page_no">10</div>
-//	 <div class="page_next"></div>
-//	 <div class="page_last"></div>
+//	 <button class="page_no">10</button>
+//	 <button class="page_next"></button>
+//	 <button class="page_last"></button>
 //	</div>
 //	```
 //------------------------------------------------------------------------------
@@ -51,12 +51,12 @@
 	{
 		cursor: pointer;
 
-		&:not(.disabled):hover
+		&:not(:disabled):hover
 		{
 			background-color: var(--color-filled-light);
 			color: var(--color-filled-text);
 
-			&:not(.disabled):before
+			&:before
 			{
 				background-color: var(--color-filled-text);
 			}
@@ -68,7 +68,7 @@
 			color: var(--color-filled-text);
 		}
 
-		&.disabled
+		&:disabled
 		{
 			cursor: default;
 			color: var(--color-disabled-text);
@@ -154,7 +154,7 @@
 			background-color: var(--color-filled);
 			border: 1px solid var(--color-filled-dark);
 
-			&:not(.disabled):hover
+			&:not(:disabled):hover
 			{
 				background-color: var(--color-filled-light);
 				color: var(--color-filled-text);
@@ -166,7 +166,7 @@
 				color: var(--color-filled-text);
 			}
 
-			&.disabled
+			&:disabled
 			{
 				color: var(--color-disabled-text);
 				background-color: var(--color-disabled);
@@ -203,7 +203,7 @@
 			.page_next,
 			.page_no
 			{
-				&:not(.disabled):hover
+				&:not(:disabled):hover
 				{
 					background-color: var(--color-#{$color});
 					color: var(--color-#{$color}-text);
@@ -220,7 +220,7 @@
 					color: var(--color-#{$color}-text);
 				}
 
-				&.disabled
+				&:disabled
 				{
 					background-color: transparent;
 				}
@@ -238,7 +238,7 @@
 					background-color: var(--color-#{$color});
 					border-color: var(--color-#{$color}-dark);
 
-					&:not(.disabled):hover
+					&:not(:disabled):hover
 					{
 						background-color: var(--color-#{$color}-light);
 						color: var(--color-#{$color}-text);
@@ -250,7 +250,7 @@
 						color: var(--color-#{$color}-text);
 					}
 
-					&.disabled
+					&:disabled
 					{
 						color: var(--color-disabled-text);
 						background-color: var(--color-disabled);

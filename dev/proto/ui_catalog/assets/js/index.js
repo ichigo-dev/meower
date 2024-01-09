@@ -430,6 +430,30 @@ const init_drawer = () =>
 
 
 //------------------------------------------------------------------------------
+//	Initializes tabs.
+//------------------------------------------------------------------------------
+const init_tabs = () =>
+{
+	const elm_tabs = document.querySelectorAll('.ui_tabs');
+	elm_tabs.forEach(( elm_ ) =>
+	{
+		const elm_tab_buttons = elm_.querySelectorAll('.tab');
+		elm_tab_buttons.forEach(( elm_tab_button_ ) =>
+		{
+			elm_tab_button_.addEventListener('click', ( event_ ) =>
+			{
+				elm_tab_buttons.forEach(( elm_tab_button__ ) =>
+				{
+					elm_tab_button__.classList.remove('active');
+				});
+				event_.target.classList.add('active');
+			});
+		});
+	});
+}
+
+
+//------------------------------------------------------------------------------
 //	Initializes.
 //------------------------------------------------------------------------------
 const init = () =>
@@ -443,6 +467,7 @@ const init = () =>
 	init_dialog();
 	init_snackbar();
 	init_drawer();
+	init_tabs();
 };
 
 init();
