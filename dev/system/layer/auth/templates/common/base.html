@@ -5,13 +5,14 @@
 
 <html class="height_full">
  <head>
+  <link rel="stylesheet" href="/auth/assets/css/ui.css" />
   <link rel="stylesheet" href="/auth/assets/css/style.css" />
  </head>
 
  <body class="flex flex_column min_height_full">
-  <div class="theme_meower_light flex_grow">
+  <div class="theme_meower_light flex_grow flex flex_column">
    {% call header::render() %}
-   <main>
+   <main class="flex_grow size_full flex flex_column">
     {% block content %}{% endblock %}
    </main>
    {% call footer::render() %}
