@@ -1,51 +1,57 @@
 {% extends "common/base.html" %}
 
 {% block content %}
- <h1 class="ui_heading">{{ t!("pages.signup.heading") }}</h1>
- <div class="ui_panel sm shadow radius padding_xl margin_lg flex column align_center gap_md">
-  <form method="POST" class="flex column align_center gap_md full_horizon">
-   <label class="flex column gap_sm full_horizon">
-    <span class="ui_label">{{ t!("pages.signup.form.user_account_name.label") }}</span>
-    <input type="text" name="user_account_name" placeholder="{{ t!("pages.signup.form.user_account_name.placeholder") }}" value="{{ input.user_account_name }}" class="ui_text">
-    {% if input_error.user_account_name.is_some() %}
-     <div class="ui_error">{{ input_error.user_account_name.as_ref().unwrap() }}</div>
-    {% endif %}
-   </label>
-   <label class="flex column gap_sm full_horizon">
-    <span class="ui_label">{{ t!("pages.signup.form.email.label") }}</span>
-    <input type="email" name="email" placeholder="{{ t!("pages.signup.form.email.placeholder") }}" value="{{ input.email }}" class="ui_text">
-    {% if input_error.email.is_some() %}
-     <div class="ui_error">{{ input_error.email.as_ref().unwrap() }}</div>
-    {% endif %}
-   </label>
-   <label class="flex column gap_sm full_horizon">
-    <span class="ui_label">{{ t!("pages.signup.form.email_confirm.label") }}</span>
-    <input type="email" name="email_confirm" placeholder="{{ t!("pages.signup.form.email_confirm.placeholder") }}" class="ui_text">
-    {% if input_error.email_confirm.is_some() %}
-     <div class="ui_error">{{ input_error.email_confirm.as_ref().unwrap() }}</div>
-    {% endif %}
-   </label>
-   <label class="flex column gap_sm full_horizon">
-    <span class="ui_label">{{ t!("pages.signup.form.password.label") }}</span>
-    <input type="password" name="password" class="ui_text">
-    {% if input_error.password.is_some() %}
-     <div class="ui_error">{{ input_error.password.as_ref().unwrap() }}</div>
-    {% endif %}
-   </label>
-   <label class="flex column gap_sm full_horizon">
-    <span class="ui_label">{{ t!("pages.signup.form.password_confirm.label") }}</span>
-    <input type="password" name="password_confirm" class="ui_text">
-    {% if input_error.password_confirm.is_some() %}
-     <div class="ui_error">{{ input_error.password_confirm.as_ref().unwrap() }}</div>
-    {% endif %}
-   </label>
-   {% if input_error.other.is_some() %}
-    <div class="ui_error">{{ input_error.other.as_ref().unwrap() }}</div>
-   {% endif %}
-   <button type="submit" class="ui_button primary full_horizon">{{ t!("pages.signup.form.button.submit") }}</button>
-  </form>
-  <hr class="ui_panel border full_horizon">
-  <a href="/auth/login" class="ui_button primary_light full_horizon">{{ t!("pages.signup.button.login") }}</a>
-  <a href="/auth/resend_verify_code" class="ui_button primary_light full_horizon">{{ t!("pages.signup.button.resend_verify_code") }}</a>
+ <div class="flex_grow flex flex_column flex_align_center flex_justify_center">
+  <div class="main_center_inner flex flex_column">
+   <h1 class="ui_heading h1 text_align_center margin_bottom">{{ t!("pages.signup.heading") }}</h1>
+   <div class="ui_box surface radius_md padding_xl flex flex_column flex_gap_xl">
+    <form method="POST" class="flex flex_column flex_gap_md">
+     <label class="flex flex_column flex_gap_sm">
+      <span>{{ t!("pages.signup.form.user_account_name.label") }}</span>
+      <input type="text" name="user_account_name" placeholder="{{ t!("pages.signup.form.user_account_name.placeholder") }}" value="{{ input.user_account_name }}" class="ui_text_field">
+      {% if input_error.user_account_name.is_some() %}
+       <div class="ui_alert filled error">{{ input_error.user_account_name.as_ref().unwrap() }}</div>
+      {% endif %}
+     </label>
+     <label class="flex flex_column flex_gap_sm">
+      <span>{{ t!("pages.signup.form.email.label") }}</span>
+      <input type="email" name="email" placeholder="{{ t!("pages.signup.form.email.placeholder") }}" value="{{ input.email }}" class="ui_text_field">
+      {% if input_error.email.is_some() %}
+       <div class="ui_alert filled error">{{ input_error.email.as_ref().unwrap() }}</div>
+      {% endif %}
+     </label>
+     <label class="flex flex_column flex_gap_sm">
+      <span>{{ t!("pages.signup.form.email_confirm.label") }}</span>
+      <input type="email" name="email_confirm" placeholder="{{ t!("pages.signup.form.email_confirm.placeholder") }}" class="ui_text_field">
+      {% if input_error.email_confirm.is_some() %}
+       <div class="ui_alert filled error">{{ input_error.email_confirm.as_ref().unwrap() }}</div>
+      {% endif %}
+     </label>
+     <label class="flex flex_column flex_gap_sm">
+      <span>{{ t!("pages.signup.form.password.label") }}</span>
+      <input type="password" name="password" class="ui_text_field">
+      {% if input_error.password.is_some() %}
+       <div class="ui_alert filled error">{{ input_error.password.as_ref().unwrap() }}</div>
+      {% endif %}
+     </label>
+     <label class="flex flex_column flex_gap_sm">
+      <span>{{ t!("pages.signup.form.password_confirm.label") }}</span>
+      <input type="password" name="password_confirm" class="ui_text_field">
+      {% if input_error.password_confirm.is_some() %}
+       <div class="ui_alert filled error">{{ input_error.password_confirm.as_ref().unwrap() }}</div>
+      {% endif %}
+     </label>
+     {% if input_error.other.is_some() %}
+      <div class="ui_alert filled error">{{ input_error.other.as_ref().unwrap() }}</div>
+     {% endif %}
+     <button type="submit" class="ui_button primary text_align_center">{{ t!("pages.signup.form.button.submit") }}</button>
+    </form>
+
+    <div class="flex flex_column flex_gap_sm">
+     <a href="/auth/login" class="ui_button outlined primary text_align_center">{{ t!("pages.signup.button.login") }}</a>
+     <a href="/auth/resend_verify_code" class="ui_button outlined primary text_align_center">{{ t!("pages.signup.button.resend_verify_code") }}</a>
+    </div>
+   </div>
+  </div>
  </div>
 {% endblock %}
