@@ -202,7 +202,43 @@ const create_color_band = ( color_, type_, fix_text_color_ = false ) =>
 	let color = color_ + (type_.length > 0 ? '_' : '') + type_;
 	elm.classList.add(color);
 	elm.innerText = color.replaceAll('_', ' ');
+	elm.style.cursor = 'copy';
 	if( fix_text_color_ ) { elm.classList.add(on_text_color(color)); }
+
+	elm.addEventListener('click', ( event_ ) =>
+	{
+		const style = window.getComputedStyle(elm);
+		const color = style.getPropertyValue('background-color');
+		const values = color.match(/(\d+)/g);
+		const color_code = '#' + values.slice(0, 3).map(( v_ ) =>
+		{
+			return ('0' + parseInt(v_).toString(16)).slice(-2);
+		}).join('').toUpperCase();
+
+		navigator.clipboard.writeText(color_code).then
+		(
+			() =>
+			{
+				const snackbar = document
+					.getElementById('snackbar_copy');
+				snackbar.classList.add('open');
+				setTimeout(() =>
+				{
+					snackbar.classList.remove('open');
+				}, 5000);
+			},
+			() =>
+			{
+				const snackbar = document
+					.getElementById('snackbar_copy_error');
+				snackbar.classList.add('open');
+				setTimeout(() =>
+				{
+					snackbar.classList.remove('open');
+				}, 5000);
+			},
+		);
+	});
 	return elm;
 };
 
@@ -507,7 +543,7 @@ const init_example_code = () =>
 				() =>
 				{
 					const snackbar = document
-						.getElementById('snackbar_copy_code');
+						.getElementById('snackbar_copy');
 					snackbar.classList.add('open');
 					setTimeout(() =>
 					{
