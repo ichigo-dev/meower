@@ -462,11 +462,11 @@ const init_example_code = () =>
 	elm_example_boxes.forEach(( elm_ ) =>
 	{
 		const target = elm_.querySelector('.example_flex_column');
+
 		const elm_example_code = document.createElement('pre');
 		elm_example_code.classList.add('ui_code_block');
 		elm_example_code.classList.add('number');
 		elm_example_code.classList.add('separator');
-		elm_example_code.classList.add('position_relative');
 
 		const html = target.innerHTML;
 		const lines = html.split(/\r\n|\r|\n/);
@@ -530,9 +530,13 @@ const init_example_code = () =>
 		const spacing = getComputedStyle(elm_).getPropertyValue('--spacing-md');
 		elm_example_code_copy.style.top = spacing;
 		elm_example_code_copy.style.right = spacing;
-		elm_example_code.appendChild(elm_example_code_copy);
 
-		elm_.parentNode.insertBefore(elm_example_code, elm_.nextSibling);
+		const elm_container = document.createElement('div');
+		elm_container.classList.add('position_relative');
+		elm_container.appendChild(elm_example_code);
+		elm_container.appendChild(elm_example_code_copy);
+
+		elm_.parentNode.insertBefore(elm_container, elm_.nextSibling);
 	});
 };
 

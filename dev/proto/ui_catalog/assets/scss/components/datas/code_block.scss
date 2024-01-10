@@ -15,8 +15,8 @@
 
 .ui_code_block
 {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	background-color: var(--color-background-text);
 	color: var(--color-background);
@@ -24,12 +24,12 @@
 	padding: var(--spacing-md);
 	border-radius: var(--radius-md);
 	line-height: calc(var(--fs-md) + var(--spacing-sm));
-    overflow-x: auto;
+	overflow-x: auto;
 
 	> span
 	{
 		display: inline-block;
-        height: calc(var(--fs-md) + var(--spacing-sm));
+		height: calc(var(--fs-blockmd) + var(--spacing-sm));
 	}
 
 	&.number
@@ -75,6 +75,5 @@
 	.highlight
 	{
 		background-color: var(--color-filled);
-		width: 100%;
 	}
 }
