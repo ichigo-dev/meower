@@ -97,18 +97,13 @@
 	//	Theme colors
 	//--------------------------------------------------------------------------
 
-	//	Background
-	&.background
+	@each $color in themes.$auxiliary_colors
 	{
-		background-color: var(--color-background);
-		color: var(--color-background-text);
-	}
-
-	//	Surface
-	&.surface
-	{
-		background-color: var(--color-surface);
-		color: var(--color-surface-text);
+		&.#{$color}
+		{
+			background-color: var(--color-#{$color});
+			color: var(--color-#{$color}-text);
+		}
 	}
 
 	@each $color in themes.$theme_colors

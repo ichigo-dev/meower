@@ -1,5 +1,6 @@
 pages:
   reset_password_success:
+    title: "パスワードリセット完了"
     heading: "パスワードリセット完了"
     next: "ログイン画面から再度ログインしてください"
     button:

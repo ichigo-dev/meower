@@ -1,5 +1,6 @@
 pages:
   resend_verify_code:
+    title: "認証コードの再送信"
     heading: "認証コードの再送信"
     form:
       email:

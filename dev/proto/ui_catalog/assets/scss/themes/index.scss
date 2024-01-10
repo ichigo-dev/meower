@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 $theme_colors: "primary", "secondary", "error", "warning", "info", "success";
+$auxiliary_colors: "background", "surface", "filled";
 
 @forward "meower_light";
 @forward "meower_dark";

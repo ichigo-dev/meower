@@ -1,5 +1,6 @@
 pages:
   signup:
+    title: "アカウント作成"
     heading: "アカウント作成"
     form:
       user_account_name:

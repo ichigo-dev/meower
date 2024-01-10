@@ -1,5 +1,6 @@
 pages:
   login:
+    title: "ログイン"
     heading: "ログイン"
     form:
       email:
