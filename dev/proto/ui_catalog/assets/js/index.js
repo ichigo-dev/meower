@@ -215,6 +215,7 @@ const create_color_band = ( color_, type_, fix_text_color_ = false ) =>
 			return ('0' + parseInt(v_).toString(16)).slice(-2);
 		}).join('').toUpperCase();
 
+		let timeout;
 		navigator.clipboard.writeText(color_code).then
 		(
 			() =>
@@ -222,7 +223,8 @@ const create_color_band = ( color_, type_, fix_text_color_ = false ) =>
 				const snackbar = document
 					.getElementById('snackbar_copy');
 				snackbar.classList.add('open');
-				setTimeout(() =>
+				clearTimeout(timeout);
+				timeout = setTimeout(() =>
 				{
 					snackbar.classList.remove('open');
 				}, 5000);
@@ -231,7 +233,8 @@ const create_color_band = ( color_, type_, fix_text_color_ = false ) =>
 			{
 				const snackbar = document
 					.getElementById('snackbar_copy_error');
-				snackbar.classList.add('open');
+				timeout = snackbar.classList.add('open');
+				clearTimeout(timeout);
 				setTimeout(() =>
 				{
 					snackbar.classList.remove('open');
@@ -536,6 +539,8 @@ const init_example_code = () =>
 		elm_example_code_copy.classList.add('clickable');
 		elm_example_code_copy.classList.add('position_absolute');
 		elm_example_code_copy.classList.add('z_index_default');
+
+		let timeout;
 		elm_example_code_copy.addEventListener('click', ( event_ ) =>
 		{
 			navigator.clipboard.writeText(copy_text).then
@@ -545,7 +550,8 @@ const init_example_code = () =>
 					const snackbar = document
 						.getElementById('snackbar_copy');
 					snackbar.classList.add('open');
-					setTimeout(() =>
+					clearTimeout(timeout);
+					timeout = setTimeout(() =>
 					{
 						snackbar.classList.remove('open');
 					}, 5000);
@@ -555,7 +561,8 @@ const init_example_code = () =>
 					const snackbar = document
 						.getElementById('snackbar_copy_error');
 					snackbar.classList.add('open');
-					setTimeout(() =>
+					clearTimeout(timeout);
+					timeout = setTimeout(() =>
 					{
 						snackbar.classList.remove('open');
 					}, 5000);
