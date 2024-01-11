@@ -36,6 +36,7 @@ services:
       dockerfile: ./docker/system/auth/Dockerfile
     volumes:
       - ./system/layer/auth:/system/layer/auth
+      - ./proto/ui_catalog/assets/css/style.css:/system/layer/auth/assets/css/ui.css
       - ./system/database/entity:/system/database/entity
       - ./system/util:/system/util
     environment:
@@ -72,6 +73,7 @@ services:
       dockerfile: ./docker/system/auth/Dockerfile
     volumes:
       - ./system/layer/auth:/system/layer/auth
+      - ./proto/ui_catalog/assets/css/style.css:/system/layer/auth/assets/css/ui.css
       - ./system/database/entity:/system/database/entity
       - ./system/util:/system/util
     environment:
@@ -106,6 +108,7 @@ services:
       dockerfile: ./docker/system/spa/Dockerfile
     volumes:
       - ./system/service/spa:/system/service/spa
+      - ./proto/ui_catalog/assets/scss:/system/service/spa/public/scss
       - ./system/service/schema:/system/service/schema
     environment:
       API_URL: ${API_URL}

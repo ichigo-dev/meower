@@ -106,11 +106,27 @@
 //	Sidebar
 //------------------------------------------------------------------------------
 
-.ui_sidebar:not(.open)
+.uic_sidebar
 {
-	.ui_sidebar_inner
+	@extend .ui_sidebar;
+	@extend .ui_box;
+	@extend .border_right;
+	@extend .z_index_front;
+
+	.uic_sidebar_inner
 	{
-		overflow: hidden;
+		@extend .ui_sidebar_inner;
+		@extend .flex;
+		@extend .flex_column;
+		@extend .flex_gap_xl;
+		@extend .overflow_hidden;
+	}
+}
+
+.uic_sidebar:not(.open)
+{
+	.uic_sidebar_inner
+	{
 		width: calc(var(--size-md));
 
 		:not(.sidebar_toggle)
