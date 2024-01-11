@@ -2,6 +2,7 @@
 //! Home page.
 //------------------------------------------------------------------------------
 
+use rust_i18n::t;
 use sycamore::prelude::*;
 
 
@@ -14,9 +15,6 @@ pub fn Home<G: Html>( cx: Scope ) -> View<G>
     view!
     {
         cx,
-        h1(class="ui_heading h1")
-        {
-            "Home"
-        }
+        h1(class="ui_heading h1") { (t!("pages.home.heading")) }
     }
 }
