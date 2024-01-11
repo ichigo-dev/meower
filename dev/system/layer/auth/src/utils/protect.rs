@@ -10,14 +10,20 @@ use jsonwebtoken::{
     decode,
     Algorithm,
     DecodingKey,
+    TokenData,
     Validation,
 };
+use jsonwebtoken::errors::Result;
 
 
 //------------------------------------------------------------------------------
 /// Checks if the user is logined.
 //------------------------------------------------------------------------------
-pub(crate) fn is_logined( cookie: &CookieJar, config: &Config ) -> bool
+pub(crate) fn is_logined
+(
+    cookie: &CookieJar,
+    config: &Config,
+) -> Result<TokenData<JwtClaims>>
 {
     // Gets the JWT claims from the cookie.
     let jwt_claims_cookie = cookie
@@ -33,5 +39,5 @@ pub(crate) fn is_logined( cookie: &CookieJar, config: &Config ) -> bool
         &jwt_claims_cookie,
         &DecodingKey::from_secret(config.jwt_secret.as_ref()),
         &validation,
-    ).is_ok()
+    )
 }

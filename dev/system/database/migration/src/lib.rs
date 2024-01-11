@@ -45,6 +45,7 @@ impl MigratorTrait for Migrator
             Box::new(m20231213_054703_create_user_account_profile_table::Migration),
             Box::new(m20231216_134816_create_user_account_workspace_table::Migration),
             Box::new(m20231216_135419_create_organization_workspace_table::Migration),
+            Box::new(m20240111_090712_create_user_jwt_refresh_token_table::Migration),
         ]
     }
 }

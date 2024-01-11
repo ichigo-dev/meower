@@ -318,3 +318,17 @@ pub(crate) enum UserJwtSubject
     Subject,
     CreatedAt,
 }
+
+
+//------------------------------------------------------------------------------
+/// UserJwtRefreshToken.
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum UserJwtRefreshToken
+{
+    Table,
+    UserJwtRefreshTokenId,
+    Token,
+    CreatedAt,
+    ExpiredAt,
+}

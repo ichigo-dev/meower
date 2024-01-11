@@ -11,6 +11,7 @@ use axum::http::{ Request, StatusCode };
 use axum::middleware::Next;
 use axum::extract::State;
 use axum_extra::extract::cookie::CookieJar;
+use jsonwebtoken::errors::ErrorKind;
 
 
 //------------------------------------------------------------------------------
@@ -25,17 +26,26 @@ pub(crate) async fn layer
 ) -> Result<impl IntoResponse, Result<impl IntoResponse, impl IntoResponse>>
 {
     // If the user is not logined, then redirect to the login page.
-    if is_logined(&cookie, &state.config) == false
+    if let Err(e) = is_logined(&cookie, &state.config)
     {
-        if state.config.provide_pages
+        match e.kind()
         {
-            return Err(Ok(Redirect::to("/auth/login")));
+            ErrorKind::ExpiredSignature =>
+            {
+            }
+            _ =>
+            {
+                if state.config.provide_pages
+                {
+                    return Err(Ok(Redirect::to("/auth/login")));
+                }
+                else
+                {
+                    return Err(Err(StatusCode::UNAUTHORIZED));
+                }
+            }
         }
-        else
-        {
-            return Err(Err(StatusCode::UNAUTHORIZED));
-        }
-    };
+    }
 
     Ok(next.run(req).await)
 }

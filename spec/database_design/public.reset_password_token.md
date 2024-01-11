@@ -12,6 +12,7 @@ Reset passwort token table
 | user_id                 | bigint                      |                                                                       | false    |          | [public.user](public.user.md) | User ID                 |
 | token                   | varchar(255)                |                                                                       | false    |          |                               | Token                   |
 | created_at              | timestamp without time zone | CURRENT_TIMESTAMP                                                     | false    |          |                               | Create date             |
+| expired_at              | timestamp without time zone | CURRENT_TIMESTAMP                                                     | false    |          |                               |                         |
 
 ## Constraints
 

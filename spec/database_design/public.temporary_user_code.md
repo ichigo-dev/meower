@@ -10,9 +10,9 @@ Temporary user code
 | ---------------------- | --------------------------- | ------------------------------------------------------------------- | -------- | -------- | ------------------------------------------------- | ---------------------- |
 | temporary_user_code_id | bigint                      | nextval('temporary_user_code_temporary_user_code_id_seq'::regclass) | false    |          |                                                   | Temporary user code ID |
 | temporary_user_id      | bigint                      |                                                                     | false    |          | [public.temporary_user](public.temporary_user.md) | Temporary user ID      |
-| token                  | varchar(255)                |                                                                     | false    |          |                                                   |                        |
 | code                   | varchar(255)                |                                                                     | false    |          |                                                   | One time code          |
 | created_at             | timestamp without time zone | CURRENT_TIMESTAMP                                                   | false    |          |                                                   | Create date            |
+| expired_at             | timestamp without time zone | CURRENT_TIMESTAMP                                                   | false    |          |                                                   |                        |
 
 ## Constraints
 
@@ -20,14 +20,12 @@ Temporary user code
 | ------------------------------------------ | ----------- | ---------------------------------------------------------------------------- |
 | temporary_user_code_temporary_user_id_fkey | FOREIGN KEY | FOREIGN KEY (temporary_user_id) REFERENCES temporary_user(temporary_user_id) |
 | temporary_user_code_pkey                   | PRIMARY KEY | PRIMARY KEY (temporary_user_code_id)                                         |
-| temporary_user_code_token_key              | UNIQUE      | UNIQUE (token)                                                               |
 
 ## Indexes
 
 | Name                                      | Definition                                                                                                           |
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | temporary_user_code_pkey                  | CREATE UNIQUE INDEX temporary_user_code_pkey ON public.temporary_user_code USING btree (temporary_user_code_id)      |
-| temporary_user_code_token_key             | CREATE UNIQUE INDEX temporary_user_code_token_key ON public.temporary_user_code USING btree (token)                  |
 | temporary_user_code_temporary_user_id_idx | CREATE INDEX temporary_user_code_temporary_user_id_idx ON public.temporary_user_code USING btree (temporary_user_id) |
 
 ## Relations

@@ -25,7 +25,7 @@ pub(crate) async fn layer
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     // If the user is logined, then redirect to the home page.
-    if is_logined(&cookie, &state.config)
+    if is_logined(&cookie, &state.config).is_ok()
     {
         return Err(Redirect::to("/"));
     };
