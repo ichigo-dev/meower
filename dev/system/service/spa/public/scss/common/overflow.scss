@@ -1,0 +1,27 @@
+//------------------------------------------------------------------------------
+//	Overflow
+//------------------------------------------------------------------------------
+
+.overflow_auto
+{
+	overflow: auto;
+
+	&_x { overflow-x: auto; }
+	&_y { overflow-y: auto; }
+}
+
+.overflow_scroll
+{
+	overflow: scroll;
+
+	&_x { overflow-x: scroll; }
+	&_y { overflow-y: scroll; }
+}
+
+.overflow_hidden
+{
+	overflow: hidden;
+
+	&_x { overflow-x: hidden; }
+	&_y { overflow-y: hidden; }
+}

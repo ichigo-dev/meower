@@ -1,0 +1,120 @@
+//------------------------------------------------------------------------------
+//	UI alert
+//
+//
+//	# Usage
+//
+//	```html
+//	<div class="ui_alert error">Alert</div>
+//	```
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
+.ui_alert
+{
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-md);
+	width: 100%;
+	padding: var(--spacing-sm) var(--spacing-md);
+	border-radius: var(--radius-md);
+
+	&:before
+	{
+		content: "";
+		display: inline-block;
+		width: var(--size-md);
+		height: var(--size-md);
+		mask-size: contain;
+		mask-position: center;
+		mask-repeat: no-repeat;
+		-webkit-mask-size: contain;
+		-webkit-mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
+		{
+			background-color: var(--color-#{$color}-light);
+			color: var(--color-#{$color}-text);
+
+			&:before
+			{
+				background-color: var(--color-#{$color}-dark);
+			}
+		}
+	}
+
+	&.error:before
+	{
+		mask-image: var(--icon-svg-circle-exclamation);
+		-webkit-mask-image: var(--icon-svg-circle-exclamation);
+	}
+
+	&.warning:before
+	{
+		mask-image: var(--icon-svg-triangle-exclamation);
+		-webkit-mask-image: var(--icon-svg-triangle-exclamation);
+	}
+
+	&.info:before
+	{
+		mask-image: var(--icon-svg-circle-info);
+		-webkit-mask-image: var(--icon-svg-circle-info);
+	}
+
+	&.success:before
+	{
+		mask-image: var(--icon-svg-circle-check);
+		-webkit-mask-image: var(--icon-svg-circle-check);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Styles
+	//--------------------------------------------------------------------------
+
+	&.outlined
+	{
+		border: 2px solid var(--color-border);
+
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				background-color: transparent;
+				color: var(--color-background-text);
+				border-color: var(--color-#{$color});
+			}
+		}
+	}
+
+	&.filled
+	{
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				background-color: var(--color-#{$color});
+				color: var(--color-#{$color}-text);
+
+				&:before
+				{
+					background-color: var(--color-#{$color}-text);
+				}
+			}
+		}
+	}
+}

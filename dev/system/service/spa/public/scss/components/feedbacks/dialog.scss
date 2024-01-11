@@ -1,0 +1,270 @@
+//------------------------------------------------------------------------------
+//	UI dialog
+//
+//
+//	# Usage
+//
+//	```html
+//	<div class="ui_dialog">
+//	 <div class="dialog">
+//	  <div class="head">
+//	   <h4>Dialog</h4>
+//	  </div>
+//	  <div class="body">
+//	   <p>Content</p>
+//	  </div>
+//	  <div class="foot">
+//	   <button class="ui_button primary text">Close</button>
+//	  </div>
+//	 </div>
+//	</div>
+//	```
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
+body:has(.ui_dialog.open)
+{
+	overflow: hidden;
+}
+
+.ui_dialog
+{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background-color: var(--color-shadow);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: var(--z-index-dialog);
+	opacity: 0;
+	transform: translate(-50%, -50%);
+	transition: all 0.3s 0s ease-in-out;
+	pointer-events: none;
+
+	&.open
+	{
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.dialog
+	{
+		display: flex;
+		flex-direction: column;
+		width: 60%;
+		min-width: var(--size-8xl);
+		max-height: 80%;
+		background-color: var(--color-surface);
+		border-radius: var(--radius-md);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		transition: all 0.3s 0s ease-in-out;
+		overflow: hidden;
+
+
+		//----------------------------------------------------------------------
+		//	Content
+		//----------------------------------------------------------------------
+
+		.head
+		{
+			padding: var(--spacing-md);
+			border-bottom: 1px solid var(--color-border);
+			font-size: var(--fs-lg);
+			font-weight: bold;
+		}
+
+		.body
+		{
+			overflow: auto;
+			padding: var(--spacing-md);
+		}
+
+		.foot
+		{
+			display: flex;
+			justify-content: flex-end;
+			padding: var(--spacing-md);
+			border-top: 1px solid var(--color-border);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		.dialog
+		{
+			width: 40%;
+		}
+	}
+
+	&.large
+	{
+		.dialog
+		{
+			width: 80%;
+		}
+	}
+
+	&.full
+	{
+		.dialog
+		{
+			width: 100%;
+			height: 100%;
+			max-height: none;
+
+			.body
+			{
+				flex-grow: 1;
+			}
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
+		{
+			.dialog
+			{
+				.head
+				{
+					background-color: var(--color-#{$color});
+					color: var(--color-#{$color}-text);
+					border: none;
+				}
+			}
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Animations
+	//--------------------------------------------------------------------------
+
+	&.slidein
+	{
+		.dialog
+		{
+			top: 100%;
+		}
+
+		&.open
+		{
+			.dialog
+			{
+				top: 50%;
+			}
+		}
+	}
+
+	&.grow
+	{
+		.dialog
+		{
+			transform: translate(-50%, -50%) scale(0);
+		}
+
+		&.open
+		{
+			.dialog
+			{
+				transform: translate(-50%, -50%) scale(1);
+			}
+		}
+	}
+
+	&.flash
+	{
+		transition: none;
+	}
+}
+
+
+//------------------------------------------------------------------------------
+//	Dialog container
+//
+//	If you want to display the dialog in a specific area on the screen, use
+//	this. However, since the drawing position of the dialog needs to follow the
+//	scrolling, the operation may become slow.
+//
+//
+//	# Usage
+//
+//	```html
+//	<div class="ui_dialog">
+//	 <div class="dialog">
+//	  <div class="head">
+//	   <h4>Dialog</h4>
+//	  </div>
+//	  <div class="body">
+//	   <p>Content</p>
+//	  </div>
+//	  <div class="foot">
+//	   <button class="ui_button primary text">Close</button>
+//	  </div>
+//	 </div>
+//	</div>
+//	```
+//
+//	```js
+//	window.addEventListener('scroll', ( event_ ) =>
+//	{
+//		const elm_dialogs = document.querySelectorAll('.ui_dialog');
+//		elm_dialogs.forEach(( elm_ ) =>
+//		{
+//			elm_.style.top = window.scrollY.toString() + 'px';
+//		});
+//	});
+//	```
+//
+//	Tips to make the operation lighter using debounce technique:
+//
+//	```js
+//	const debounce = ( func_, wait_ ) =>
+//	{
+//		let timeout;
+//		return ( ...args_ ) =>
+//		{
+//			const context = this;
+//			clearTimeout(timeout);
+//			timeout = setTimeout(() => func_.apply(context, args_), wait_);
+//		};
+//	};
+//
+//	window.addEventListener('scroll', debounce(( event_ ) =>
+//	{
+//		const elm_dialogs = document.querySelectorAll('.ui_dialog');
+//		elm_dialogs.forEach(( elm_ ) =>
+//		{
+//			elm_.style.top = window.scrollY.toString() + 'px';
+//		});
+//	}), 100);
+//	```
+//------------------------------------------------------------------------------
+.ui_dialog_container
+{
+	position: relative;
+
+	.ui_dialog
+	{
+		position: absolute;
+		height: 100vh;
+		transform: translate(-50%, 0);
+	}
+}

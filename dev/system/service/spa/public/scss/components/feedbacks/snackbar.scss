@@ -1,0 +1,286 @@
+//------------------------------------------------------------------------------
+//	UI snackbar
+//
+//	# Usage
+//
+//	```html
+//	<div class="ui_snackbar">Snackbar</div>
+//	```
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
+.ui_snackbar
+{
+	display: flex;
+	align-items: center;
+	position: fixed;
+	left: var(--spacing-md);
+	bottom: var(--spacing-md);
+	min-width: var(--size-8xl);
+	padding: var(--spacing-md);
+	border-radius: var(--radius-md);
+	background-color: var(--color-background-text);
+	box-shadow: var(--shadow-md);
+	color: var(--color-background);
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.2s 0s ease-in-out;
+	z-index: var(--z-index-snackbar);
+
+	&.open
+	{
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Animations
+	//--------------------------------------------------------------------------
+
+	&.slidein
+	{
+		transform: translateY(100%);
+
+		&.open
+		{
+			transform: translateY(0);
+		}
+	}
+
+	&.grow
+	{
+		transform: scale(0);
+
+		&.open
+		{
+			transform: scale(1);
+		}
+	}
+
+	&.flash
+	{
+		transition: none;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
+		{
+			background-color: var(--color-#{$color});
+			color: var(--color-#{$color}-text);
+
+			&:before
+			{
+				background-color: var(--color-#{$color}-text);
+			}
+		}
+	}
+
+	&.error:before,
+	&.warning:before,
+	&.info:before,
+	&.success:before,
+	{
+		content: "";
+		display: inline-block;
+		width: var(--size-md);
+		height: var(--size-md);
+		margin-right: var(--spacing-md);
+		mask-size: contain;
+		mask-position: center;
+		mask-repeat: no-repeat;
+		-webkit-mask-size: contain;
+		-webkit-mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+	}
+
+	&.error:before
+	{
+		mask-image: var(--icon-svg-circle-exclamation);
+		-webkit-mask-image: var(--icon-svg-circle-exclamation);
+	}
+
+	&.warning:before
+	{
+		mask-image: var(--icon-svg-triangle-exclamation);
+		-webkit-mask-image: var(--icon-svg-triangle-exclamation);
+	}
+
+	&.info:before
+	{
+		mask-image: var(--icon-svg-circle-info);
+		-webkit-mask-image: var(--icon-svg-circle-info);
+	}
+
+	&.success:before
+	{
+		mask-image: var(--icon-svg-circle-check);
+		-webkit-mask-image: var(--icon-svg-circle-check);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Positions
+	//--------------------------------------------------------------------------
+
+	&.top
+	{
+		left: 50%;
+		right: auto;
+		top: var(--spacing-md);
+		bottom: auto;
+		transform: translateX(-50%);
+
+		&.slidein
+		{
+			transform: translate(-50%, -100%);
+
+			&.open
+			{
+				transform: translate(-50%, 0);
+			}
+		}
+
+		&_left
+		{
+			left: var(--spacing-md);
+			right: auto;
+			top: var(--spacing-md);
+			bottom: auto;
+			transform: none;
+
+			&.slidein
+			{
+				transform: translateY(-100%);
+
+				&.open
+				{
+					transform: translateY(0);
+				}
+			}
+		}
+
+		&_right
+		{
+			left: auto;
+			right: var(--spacing-md);
+			top: var(--spacing-md);
+			bottom: auto;
+			transform: none;
+
+			&.slidein
+			{
+				transform: translateY(-100%);
+
+				&.open
+				{
+					transform: translateY(0);
+				}
+			}
+		}
+	}
+
+	&.left
+	{
+		left: var(--spacing-md);
+		right: auto;
+		top: 50%;
+		bottom: auto;
+		transform: translateY(-50%);
+
+		&.slidein
+		{
+			transform: translate(-100%, -50%);
+
+			&.open
+			{
+				transform: translate(0, -50%);
+			}
+		}
+	}
+
+	&.right
+	{
+		left: auto;
+		right: var(--spacing-md);
+		top: 50%;
+		bottom: auto;
+		transform: translateY(-50%);
+
+		&.slidein
+		{
+			transform: translate(100%, -50%);
+
+			&.open
+			{
+				transform: translate(0, -50%);
+			}
+		}
+	}
+
+	&.bottom
+	{
+		left: 50%;
+		right: auto;
+		top: auto;
+		bottom: var(--spacing-md);
+		transform: translateX(-50%);
+
+		&.slidein
+		{
+			transform: translate(-50%, 100%);
+
+			&.open
+			{
+				transform: translate(-50%, 0);
+			}
+		}
+
+		&_left
+		{
+			left: var(--spacing-md);
+			right: auto;
+			top: auto;
+			bottom: var(--spacing-md);
+			transform: none;
+
+			&.slidein
+			{
+				transform: translateY(100%);
+
+				&.open
+				{
+					transform: translateY(0);
+				}
+			}
+		}
+
+		&_right
+		{
+			left: auto;
+			right: var(--spacing-md);
+			top: auto;
+			bottom: var(--spacing-md);
+			transform: none;
+
+			&.slidein
+			{
+				transform: translateY(100%);
+
+				&.open
+				{
+					transform: translateY(0);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+//------------------------------------------------------------------------------
+//	Common spaces
+//------------------------------------------------------------------------------
+
+$spaces: "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl";
+
+:root
+{
+	--spacing-3xs: 1px;
+	--spacing-2xs: 2px;
+	--spacing-xs: 4px;
+	--spacing-sm: 8px;
+	--spacing-md: 12px;
+	--spacing-lg: 18px;
+	--spacing-xl: 24px;
+	--spacing-2xl: 36px;
+	--spacing-3xl: 48px;
+	--spacing-4xl: 72px;
+	--spacing-5xl: 80px;
+}

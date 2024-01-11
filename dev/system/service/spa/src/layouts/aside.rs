@@ -1,28 +1,24 @@
 //------------------------------------------------------------------------------
-//! Layout.
+//! Aside.
 //------------------------------------------------------------------------------
-
-use super::{ Header, Footer, Main };
 
 use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// Component.
+/// Aside.
 //------------------------------------------------------------------------------
-#[component(inline_props)]
-pub fn Layout<G: Html>( cx: Scope, child: View<G> ) -> View<G>
+#[component]
+pub fn Aside<G: Html>( cx: Scope ) -> View<G>
 {
     view!
     {
         cx,
-        div(class="flex flex_column min_height_full_viewport")
+        div(class="ui_sidebar")
         {
-            div(class="theme_meower_light flex_grow flex flex_column")
+            div(class="ui_sidebar_inner width_full")
             {
-                Header()
-                Main(child=child)
-                Footer()
+                "Aside"
             }
         }
     }

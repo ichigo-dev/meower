@@ -1,0 +1,177 @@
+//------------------------------------------------------------------------------
+//	UI box
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+@use "../../variables/colors" as colors;
+@use "../../variables/radii" as radii;
+
+.ui_box
+{
+	//--------------------------------------------------------------------------
+	//	Center
+	//--------------------------------------------------------------------------
+
+	&.center
+	{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Background colors
+	//--------------------------------------------------------------------------
+
+	@each $color in colors.$general_colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name} { background-color: var(--color-#{$color}); }
+	}
+
+	@each $color in colors.$colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
+		{
+			background-color: var(--color-#{$color});
+
+			&_lighten_5 { background-color: var(--color-#{$color}-lighten-5); }
+			&_lighten_4 { background-color: var(--color-#{$color}-lighten-4); }
+			&_lighten_3 { background-color: var(--color-#{$color}-lighten-3); }
+			&_lighten_2 { background-color: var(--color-#{$color}-lighten-2); }
+			&_lighten_1 { background-color: var(--color-#{$color}-lighten-1); }
+			&_darken_1 { background-color: var(--color-#{$color}-darken-1); }
+			&_darken_2 { background-color: var(--color-#{$color}-darken-2); }
+			&_darken_3 { background-color: var(--color-#{$color}-darken-3); }
+			&_darken_4 { background-color: var(--color-#{$color}-darken-4); }
+			&_accent_1 { background-color: var(--color-#{$color}-accent-1); }
+			&_accent_2 { background-color: var(--color-#{$color}-accent-2); }
+			&_accent_3 { background-color: var(--color-#{$color}-accent-3); }
+			&_accent_4 { background-color: var(--color-#{$color}-accent-4); }
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Text colors
+	//--------------------------------------------------------------------------
+
+	//	General
+	&.text
+	{
+		@each $color in colors.$general_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&_#{$class_name} { color: var(--color-#{$color}); }
+		}
+
+		@each $color in colors.$colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&_#{$class_name}
+			{
+				color: var(--color-#{$color});
+
+				&_lighten_5 { color: var(--color-#{$color}-lighten-5); }
+				&_lighten_4 { color: var(--color-#{$color}-lighten-4); }
+				&_lighten_3 { color: var(--color-#{$color}-lighten-3); }
+				&_lighten_2 { color: var(--color-#{$color}-lighten-2); }
+				&_lighten_1 { color: var(--color-#{$color}-lighten-1); }
+				&_darken_1 { color: var(--color-#{$color}-darken-1); }
+				&_darken_2 { color: var(--color-#{$color}-darken-2); }
+				&_darken_3 { color: var(--color-#{$color}-darken-3); }
+				&_darken_4 { color: var(--color-#{$color}-darken-4); }
+				&_accent_1 { color: var(--color-#{$color}-accent-1); }
+				&_accent_2 { color: var(--color-#{$color}-accent-2); }
+				&_accent_3 { color: var(--color-#{$color}-accent-3); }
+				&_accent_4 { color: var(--color-#{$color}-accent-4); }
+			}
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Theme colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$auxiliary_colors
+	{
+		&.#{$color}
+		{
+			background-color: var(--color-#{$color});
+			color: var(--color-#{$color}-text);
+		}
+	}
+
+	@each $color in themes.$theme_colors
+	{
+		&.#{$color}
+		{
+			background-color: var(--color-#{$color});
+			color: var(--color-#{$color}-text);
+
+			&_light
+			{
+				background-color: var(--color-#{$color}-light);
+				color: var(--color-#{$color}-text);
+			}
+			&_dark
+			{
+				background-color: var(--color-#{$color}-dark);
+				color: var(--color-#{$color}-text);
+			}
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Border
+	//--------------------------------------------------------------------------
+
+	&.border
+	{
+		border: 1px solid var(--color-border);
+
+		@each $color in themes.$theme_colors
+		{
+			$class_name: string.str-replace(#{$color}, "-", "_");
+			&.#{$class_name}
+			{
+				border-color: var(--color-#{$color});
+
+				&_light
+				{
+					border-color: var(--color-#{$color}-light);
+				}
+				&_dark
+				{
+					border-color: var(--color-#{$color}-dark);
+				}
+			}
+		}
+
+		&_top { border-top: 1px solid var(--color-border); }
+		&_right { border-right: 1px solid var(--color-border); }
+		&_bottom { border-bottom: 1px solid var(--color-border); }
+		&_left { border-left: 1px solid var(--color-border); }
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Radus
+	//--------------------------------------------------------------------------
+
+	&.radius
+	{
+		border-radius: var(--radius-md);
+
+		@each $radius in radii.$radii
+		{
+			$class_name: string.str-replace(#{$radius}, "-", "_");
+			&_#{$class_name} { border-radius: var(--radius-#{$radius}); }
+		}
+	}
+}

@@ -1,0 +1,43 @@
+//------------------------------------------------------------------------------
+//	UI crumbs
+//------------------------------------------------------------------------------
+
+.ui_crumbs
+{
+	display: flex;
+	flex-direction: row;
+	align-items: bottom;
+	gap: var(--spacing-md);
+
+	> *
+	{
+		display: flex;
+		align-items: center;
+
+		&:not(:last-child):after
+		{
+			content: '/';
+			margin-left: var(--spacing-md);
+		}
+	}
+
+	&.angle
+	{
+		> *:not(:last-child):after
+		{
+			content: "";
+			display: inline-block;
+			background-color: var(--color-background-text);
+			width: var(--size-md);
+			height: var(--size-md);
+			mask-image: var(--icon-svg-angle-right);
+			mask-size: contain;
+			mask-position: center;
+			mask-repeat: no-repeat;
+			-webkit-mask-image: var(--icon-svg-angle-right);
+			-webkit-mask-size: contain;
+			-webkit-mask-position: center;
+			-webkit-mask-repeat: no-repeat;
+		}
+	}
+}

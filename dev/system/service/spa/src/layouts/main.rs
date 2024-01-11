@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-//! Layout.
+//! Main.
 //------------------------------------------------------------------------------
 
-use super::{ Header, Footer, Main };
+use super::Aside;
 
 use sycamore::prelude::*;
 
@@ -11,19 +11,15 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub fn Layout<G: Html>( cx: Scope, child: View<G> ) -> View<G>
+pub fn Main<G: Html>( cx: Scope, child: View<G> ) -> View<G>
 {
     view!
     {
         cx,
-        div(class="flex flex_column min_height_full_viewport")
+        div(class="flex_grow size_full flex flex_row")
         {
-            div(class="theme_meower_light flex_grow flex flex_column")
-            {
-                Header()
-                Main(child=child)
-                Footer()
-            }
+            Aside()
+            (child)
         }
     }
 }

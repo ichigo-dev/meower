@@ -1,0 +1,87 @@
+//------------------------------------------------------------------------------
+//	UI floating button
+//
+//
+//	# Usage
+//
+//	```html
+//	<button class="ui_floating_button">
+//	 <div class="ui_icon icon_plus"></div>
+//	 <span>Plus</span>
+//	</button>
+//	```
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
+.ui_floating_button
+{
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-md);
+	padding: var(--spacing-md);
+	border-radius: var(--radius-circle);
+	cursor: pointer;
+	box-shadow: var(--shadow-md);
+	transition:
+		all 0.3s 0s ease-in-out,
+		transform 0.1s 0s ease-in-out;
+	white-space: nowrap;
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		padding: var(--spacing-sm);
+	}
+
+	&.large
+	{
+		padding: var(--spacing-lg);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
+		{
+			background-color: var(--color-#{$color});
+			color: var(--color-#{$color}-text);
+
+			&:hover:not(:disabled)
+			{
+				background-color: var(--color-#{$color}-dark);
+			}
+
+			.ui_icon { background-color: var(--color-#{$color}-text); }
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:disabled
+	{
+		background-color: var(--color-disabled);
+		color: var(--color-disabled-text);
+		cursor: not-allowed;
+
+		.ui_icon { background-color: var(--color-disabled-text); }
+	}
+
+	&:active:not(:disabled)
+	{
+		transform: scale(1.1);
+	}
+}

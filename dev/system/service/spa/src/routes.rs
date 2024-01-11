@@ -45,7 +45,11 @@ pub fn AppRouter<G: Html>( cx: Scope ) -> View<G>
                     AppRoutes::Home => view! { cx, Home },
                     AppRoutes::Mypage(mypage_route) =>
                     {
-                        view!{ cx, mypage::MypageRouter(route=mypage_route.clone()) }
+                        view!
+                        {
+                            cx,
+                            mypage::MypageRouter(route=mypage_route.clone())
+                        }
                     },
                     AppRoutes::NotFound => view! { cx, NotFound },
                 }

@@ -1,0 +1,19 @@
+//------------------------------------------------------------------------------
+//	Variables definition
+//
+//
+//	# Overwride variables
+//
+//	Creates a new theme file in `assets/scss/themes` and adjust the style by
+//	overriding each custom property.
+//------------------------------------------------------------------------------
+
+@forward "colors";
+@forward "fonts";
+@forward "icons";
+@forward "opacities";
+@forward "shadows";
+@forward "sizes";
+@forward "spaces";
+@forward "radii";
+@forward "z_indexes";
