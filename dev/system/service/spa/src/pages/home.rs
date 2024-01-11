@@ -14,7 +14,9 @@ pub fn Home<G: Html>( cx: Scope ) -> View<G>
     view!
     {
         cx,
-        h1 { "Home" }
-        a(href="/mypage", rel="external") { "Mypage" }
+        h1(class="ui_heading h1")
+        {
+            "Home"
+        }
     }
 }

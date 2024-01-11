@@ -2,7 +2,7 @@
 //! Layout.
 //------------------------------------------------------------------------------
 
-use super::{ Header, Footer, Main };
+use super::{ Header, Footer, Aside };
 
 use sycamore::prelude::*;
 
@@ -18,11 +18,18 @@ pub fn Layout<G: Html>( cx: Scope, child: View<G> ) -> View<G>
         cx,
         div(class="flex flex_column min_height_full_viewport")
         {
-            div(class="theme_meower_light flex_grow flex flex_column")
+            div(class="theme_meower_light flex_grow flex flex_row")
             {
-                Header()
-                Main(child=child)
-                Footer()
+                Aside()
+                div(class="flex_grow flex flex_column")
+                {
+                    Header()
+                    div(class="flex_grow padding_xl")
+                    {
+                        (child)
+                    }
+                    Footer()
+                }
             }
         }
     }

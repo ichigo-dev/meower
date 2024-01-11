@@ -14,7 +14,7 @@ pub fn NotFound<G: Html>( cx: Scope ) -> View<G>
     view!
     {
         cx,
-        div
+        h1(class="ui_heading h1")
         {
             "404 Not Found"
         }

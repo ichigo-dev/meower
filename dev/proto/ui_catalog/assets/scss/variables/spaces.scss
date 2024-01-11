@@ -2,10 +2,11 @@
 //	Common spaces
 //------------------------------------------------------------------------------
 
-$spaces: "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl";
+$spaces: "zero", "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl";
 
 :root
 {
+	--spacing-zero: 0;
 	--spacing-3xs: 1px;
 	--spacing-2xs: 2px;
 	--spacing-xs: 4px;

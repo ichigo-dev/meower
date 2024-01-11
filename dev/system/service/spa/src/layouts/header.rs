@@ -14,6 +14,9 @@ pub fn Header<G: Html>( cx: Scope ) -> View<G>
     view!
     {
         cx,
-        div { "header" }
+        div(class="ui_box primary text_align_center padding_lg")
+        {
+            "Meower"
+        }
     }
 }

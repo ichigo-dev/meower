@@ -14,6 +14,9 @@ pub fn Footer<G: Html>( cx: Scope ) -> View<G>
     view!
     {
         cx,
-        div { "footer" }
+        div(class="ui_box filled text_align_center padding_lg")
+        {
+            "© 2024 Meower."
+        }
     }
 }
