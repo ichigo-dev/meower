@@ -10,8 +10,8 @@ repository = "https://github.com/ichigo-dev/meower"
 
 
 [dependencies]
-meower_entity = { version = "0.1.0", path = "../../database/entity" }
-meower_type = { version = "0.1.0", path = "../../util/type" }
+meower_entity = { version = "0.1.0", path = "../database/entity" }
+meower_type = { version = "0.1.0", path = "../util/type" }
 accept-language = "3.1.0"
 askama = "0.12.1"
 axum = "0.7.2"

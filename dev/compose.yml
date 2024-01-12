@@ -23,27 +23,25 @@ services:
     volumes:
       - ./docker/system/balancer/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
-      - spa_auth_layer
-      - api_auth_layer
+      - auth_server
+      - spa
+      - api
 
-  # SPA authentication
-  spa_auth_layer:
-    container_name: meower_spa_auth_layer
-    ports:
-      - ${SPA_AUTH_LAYER_PORT}:9000
+  # Auth server
+  auth_server:
+    container_name: meower_auth_server
     build:
       context: .
       dockerfile: ./docker/system/auth/Dockerfile
     volumes:
-      - ./system/layer/auth:/system/layer/auth
-      - ./proto/ui_catalog/assets/css/style.css:/system/layer/auth/assets/css/ui.css
+      - ./system/auth_server:/system/auth_server
+      - ./proto/ui_catalog/assets/css/style.css:/system/auth_server/assets/css/ui.css
       - ./system/database/entity:/system/database/entity
       - ./system/util:/system/util
     environment:
       SYSTEM_URL: ${SYSTEM_URL}
       DEBUG_MODE: ${DEBUG_MODE}
-      PROVIDE_PAGES: true
-      PORT: ${SPA_AUTH_LAYER_PORT}
+      PORT: ${AUTH_SERVER_PORT}
       DATABASE_URL: ${DATABASE_URL}
       FALLBACK_LOCALE: en
       JWT_ISSUE: ${JWT_ISSUE}
@@ -56,45 +54,8 @@ services:
       SMTP_PORT: ${SMTP_PORT}
       SMTP_USER: ${SMTP_USER}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
-      PROXY_URL: ${PROXY_SPA_URL}
-    working_dir: /system/layer/auth
-    command: "cargo watch -x run"
-    depends_on:
-      - postgres
-    tty: true
-
-  # API authentication
-  api_auth_layer:
-    container_name: meower_api_auth_layer
-    ports:
-      - ${API_AUTH_LAYER_PORT}:9001
-    build:
-      context: .
-      dockerfile: ./docker/system/auth/Dockerfile
-    volumes:
-      - ./system/layer/auth:/system/layer/auth
-      - ./proto/ui_catalog/assets/css/style.css:/system/layer/auth/assets/css/ui.css
-      - ./system/database/entity:/system/database/entity
-      - ./system/util:/system/util
-    environment:
-      SYSTEM_URL: ${SYSTEM_URL}
-      DEBUG_MODE: ${DEBUG_MODE}
-      PROVIDE_PAGES: false
-      PORT: ${API_AUTH_LAYER_PORT}
-      DATABASE_URL: ${DATABASE_URL}
-      FALLBACK_LOCALE: en
-      JWT_ISSUE: ${JWT_ISSUE}
-      JWT_AUDIENCE: ${JWT_AUDIENCE}
-      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES}
-      JWT_SECRET: ${JWT_SECRET}
-      SYSTEM_EMAIL_ADDRESS: ${SYSTEM_EMAIL_ADDRESS}
-      SMTP_TLS: ${SMTP_TLS}
-      SMTP_HOST: ${SMTP_HOST}
-      SMTP_PORT: ${SMTP_PORT}
-      SMTP_USER: ${SMTP_USER}
-      SMTP_PASSWORD: ${SMTP_PASSWORD}
-      PROXY_URL: ${PROXY_API_URL}
-    working_dir: /system/layer/auth
+      SPA_URL: ${SPA_URL}
+    working_dir: /system/auth_server
     command: "cargo watch -x run"
     depends_on:
       - postgres

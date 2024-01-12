@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Authentication.
+//! Authentication server.
 //------------------------------------------------------------------------------
 
 mod config;
@@ -12,7 +12,7 @@ pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
 use axum::{ Router, middleware };
-use axum::routing::{ get, post };
+use axum::routing::{ get, post, any };
 use tokio::net::TcpListener;
 use tower_http::services::ServeDir;
 
@@ -31,8 +31,8 @@ async fn main()
     let port = config.port;
     let state = AppState::init(config).await;
 
-    // Creates the authentication routes.
-    let auth_routes = Router::new()
+    // Creates the application routes.
+    let routes = Router::new()
         .route("/login", get(pages::login::get_handler))
         .route("/login", post(pages::login::post_handler))
         .route("/signup", get(pages::signup::get_handler))
@@ -60,28 +60,8 @@ async fn main()
             "/reset_password/:token",
             post(pages::reset_password::post_handler)
         )
-        .layer
-        (
-            middleware::from_fn_with_state
-            (
-                state.clone(),
-                layers::protect_auth::layer,
-            )
-        )
-        .nest_service("/assets", ServeDir::new("assets"));
-
-    // Creates the application routes.
-    let routes = Router::new()
-        .fallback(utils::proxy::handler)
-        .layer
-        (
-            middleware::from_fn_with_state
-            (
-                state.clone(),
-                layers::protect::layer,
-            )
-        )
-        .nest("/auth", auth_routes)
+        .nest_service("/assets", ServeDir::new("assets"))
+        .fallback(any(pages::not_found::handler))
         .layer
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)

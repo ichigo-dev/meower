@@ -209,7 +209,7 @@ pub(crate) async fn post_handler
     // Sets JWT token to cookie.
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
-        .header(header::LOCATION, "/")
+        .header(header::LOCATION, config.spa_url.clone())
         .header(header::SET_COOKIE, jwt_claims_cookie)
         .body(Body::empty())
         .unwrap();

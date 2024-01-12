@@ -37,6 +37,8 @@ everything.
 │   │   └ ui_catalog/      ... UI catalog
 │   │
 │   ├ system/              ... Contains system components
+│   │   ├ auth_server/     ... Authentication server
+│   │   │
 │   │   ├ util/            ... Contains utility files for the entire application
 │   │   │   ├ type/        ... Definition of common types
 │   │   │   └ validator/   ... Validation utility
@@ -45,9 +47,6 @@ everything.
 │   │   │   ├ entity/      ... Database table entities
 │   │   │   ├ install/     ... Utility for installing test data and initial data
 │   │   │   └ migration/   ... Migration files
-│   │   │
-│   │   ├ layer/
-│   │   │   └ auth/        ... Authentication layer
 │   │   │
 │   │   └ service/
 │   │       ├ schema/      ... API schemas

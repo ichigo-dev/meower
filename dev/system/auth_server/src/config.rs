@@ -17,8 +17,7 @@ pub(crate) struct Config
     // Server config.
     pub(crate) debug_mode: bool,
     pub(crate) port: u16,
-    pub(crate) proxy_url: String,
-    pub(crate) provide_pages: bool,
+    pub(crate) spa_url: String,
 
     // Database config.
     pub(crate) database_url: String,
@@ -61,14 +60,10 @@ impl Config
             .expect("PORT must be set")
             .parse::<u16>()
             .expect("PORT must be a number");
-        let proxy_url = env::var("PROXY_URL")
-            .expect("PROXY_URL must be set")
+        let spa_url = env::var("SPA_URL")
+            .expect("SPA_URL must be set")
             .trim_end_matches('/')
             .to_string();
-        let provide_pages = env::var("PROVIDE_PAGES")
-            .unwrap_or_else(|_| "false".to_string())
-            .parse::<bool>()
-            .expect("PROVIDE_PAGES must be a boolean");
 
         // Database config.
         let database_url = env::var("DATABASE_URL")
@@ -119,8 +114,7 @@ impl Config
             // Server config.
             debug_mode,
             port,
-            proxy_url,
-            provide_pages,
+            spa_url,
 
             // Database config.
             database_url,
