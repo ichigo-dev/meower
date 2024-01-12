@@ -70,8 +70,11 @@ services:
     volumes:
       - ./system/service/spa_server:/system/service/spa_server
       - ./system/service/spa/dist:/system/service/spa_server/public
+      - ./system/util:/system/util
     environment:
       PORT: ${SPA_SERVER_PORT}
+      JWT_AUDIENCE: ${JWT_AUDIENCE}
+      JWT_SECRET: ${JWT_SECRET}
     working_dir: /system/service/spa_server
     command: "cargo watch -x run"
     tty: true

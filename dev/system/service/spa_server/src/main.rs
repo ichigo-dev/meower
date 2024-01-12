@@ -3,12 +3,12 @@
 //------------------------------------------------------------------------------
 
 mod config;
-mod state;
 
 pub(crate) use config::Config;
-pub(crate) use state::AppState;
 
-use axum::{ Router, middleware };
+use meower_layer::ProtectedLayer;
+
+use axum::Router;
 use tokio::net::TcpListener;
 use tower_http::services::ServeDir;
 
@@ -22,12 +22,13 @@ async fn main()
     // Initializes the configuration and state.
     let config = Config::init();
     let port = config.port;
-    let state = AppState::init(config).await;
+    let jwt_audience = config.jwt_audience.clone();
+    let jwt_secret = config.jwt_secret.clone();
 
     // Creates the application routes.
     let routes = Router::new()
         .nest_service("/", ServeDir::new("public"))
-        .with_state(state);
+        .layer(ProtectedLayer::new(&jwt_audience, &jwt_secret));
 
     // Starts the server.
     let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
