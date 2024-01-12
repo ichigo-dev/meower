@@ -1,0 +1,13 @@
+[package]
+name = "meower_layer"
+version = "0.1.0"
+edition = "2021"
+authors = ["ichigo-dev <dev.honda.ichigo@gmail.com>"]
+description = "Common layers"
+license = "MIT"
+documentation = ""
+repository = "https://github.com/ichigo-dev/meower"
+
+
+[dependencies]
+serde = "1.0.193"

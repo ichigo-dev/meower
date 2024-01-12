@@ -66,3 +66,6 @@ everything.
 - Cargo does not currently support nested workspaces, but we would like to take
   advantage of this.
   ([GitHub Issue](https://github.com/rust-lang/cargo/issues/5042)
+- I want to change the callback URL based on the referrer URL so that the Auth
+  server can link IDs with other services. Also, the JWT encryption method
+  should be asymmetric key authentication.

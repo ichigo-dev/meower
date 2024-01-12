@@ -64,6 +64,14 @@ async fn main()
         .fallback(any(pages::not_found::handler))
         .layer
         (
+            middleware::from_fn_with_state
+            (
+                state.clone(),
+                layers::protected::layer
+            )
+        )
+        .layer
+        (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
         .with_state(state);

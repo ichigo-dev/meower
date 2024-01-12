@@ -2,6 +2,7 @@
 //! Pages.
 //------------------------------------------------------------------------------
 
+pub mod already_logined;
 pub mod forgot_password;
 pub mod forgot_password_success;
 pub mod login;

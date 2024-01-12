@@ -24,7 +24,7 @@ services:
       - ./docker/system/balancer/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - auth_server
-      - spa
+      - spa_server
       - api
 
   # Auth server
@@ -61,6 +61,21 @@ services:
       - postgres
     tty: true
 
+  # SPA delivery server
+  spa_server:
+    container_name: meower_spa_server
+    build:
+      context: .
+      dockerfile: ./docker/system/spa_server/Dockerfile
+    volumes:
+      - ./system/service/spa_server:/system/service/spa_server
+      - ./system/service/spa/dist:/system/service/spa_server/public
+    environment:
+      PORT: ${SPA_SERVER_PORT}
+    working_dir: /system/service/spa_server
+    command: "cargo watch -x run"
+    tty: true
+
   # SPA
   spa:
     container_name: meower_spa
@@ -74,7 +89,7 @@ services:
     environment:
       API_URL: ${API_URL}
     working_dir: /system/service/spa
-    command: "trunk serve --address 0.0.0.0 --release --port ${SPA_PORT}"
+    command: "trunk watch --release"
     tty: true
 
   # API
