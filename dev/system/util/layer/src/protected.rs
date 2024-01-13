@@ -6,6 +6,7 @@ use std::task::{ Poll, Context };
 use meower_type::{ JwtClaims, JWT_CLAIMS_KEY };
 
 use axum::body::Body;
+use axum::response::Response;
 use axum_extra::extract::cookie::CookieJar;
 use http::Request;
 use jsonwebtoken::{
@@ -14,6 +15,7 @@ use jsonwebtoken::{
     DecodingKey,
     Validation,
 };
+use jsonwebtoken::errors::ErrorKind;
 use tower::Service;
 use tower_layer::Layer;
 
@@ -109,14 +111,18 @@ where
         // Validates the JWT claims.
         let mut validation = Validation::new(Algorithm::HS256);
         validation.set_audience(&self.jwt_audience);
-        let result = decode::<JwtClaims>
+        if let Err(e) = decode::<JwtClaims>
         (
             &jwt_claims_cookie,
             &DecodingKey::from_secret(self.jwt_secret.as_ref()),
             &validation,
-        );
-        if result.is_ok()
+        )
         {
+            match e.kind()
+            {
+                ErrorKind::ExpiredSignature => println!("Expired signature"),
+                _ => {},
+            }
         }
 
         self.inner.call(req)
