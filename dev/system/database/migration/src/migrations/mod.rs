@@ -24,3 +24,4 @@ pub(crate) mod m20231213_054703_create_user_account_profile_table;
 pub(crate) mod m20231216_134816_create_user_account_workspace_table;
 pub(crate) mod m20231216_135419_create_organization_workspace_table;
 pub(crate) mod m20240111_090712_create_user_jwt_refresh_token_table;
+pub(crate) mod m20240114_213811_create_user_jwt_token_code_table;

@@ -3,30 +3,20 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use meower_type::{ JwtClaims, JWT_CLAIMS_KEY };
 use meower_entity::traits::validate::ValidateExt;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
-use meower_entity::user_jwt_subject::ActiveModel as ActiveUserJwtSubject;
-use meower_entity::user_jwt_subject::Error as UserJwtSubjectError;
+use meower_entity::user_jwt_token_code::ActiveModel as UserJwtTokenCodeActiveModel;
+use meower_entity::user_jwt_token_code::Error as UserJwtTokenCodeError;
 
 use askama::Template;
 use axum::response::{ Html, Response, IntoResponse };
 use axum::http::{ header, StatusCode };
 use axum::body::Body;
 use axum::extract::{ State, Form };
-use axum_extra::extract::cookie::{ Cookie, SameSite };
-use chrono::{ Utc, Duration };
-use jsonwebtoken::{
-    encode,
-    Header,
-    Algorithm,
-    EncodingKey,
-};
 use rust_i18n::t;
 use serde::Deserialize;
 use sea_orm::{ ActiveValue, TransactionTrait };
-use time::{ Duration as TimeDuration, OffsetDateTime };
 
 
 //------------------------------------------------------------------------------
@@ -133,84 +123,48 @@ pub(crate) async fn post_handler
         return Err(Html(template.render().unwrap()));
     }
 
-    // Creates JWT subject.
-    let active_user_jwt_subject = ActiveUserJwtSubject
+    // Creates JWT token code.
+    let code = UserJwtTokenCodeActiveModel
     {
         user_id: ActiveValue::set(user.user_id),
         ..Default::default()
     };
-    let user_jwt_subject = match active_user_jwt_subject
+    let user_jwt_token_code = match code
         .validate_and_insert(&tsx)
         .await
     {
-        Ok(subject) => subject,
+        Ok(user_jwt_token_code) => user_jwt_token_code,
         Err(e) =>
         {
             tsx.rollback().await.unwrap();
             let error = match e
             {
-                UserJwtSubjectError::DbError(e) => e.to_string(),
+                UserJwtTokenCodeError::DbError(e) => e.to_string(),
             };
             let template = PageTemplate
             {
                 input: input,
                 input_error: FormError
                 {
-                    email: Some(error),
+                    other: Some(error.clone()),
                     ..Default::default()
                 },
             };
             return Err(Html(template.render().unwrap()));
         },
     };
-
-    // Creates JWT claims.
-    let now = Utc::now();
-    let iat = now.timestamp();
-    let duration = Duration::minutes(config.jwt_expiration_minutes);
-    let exp = (now + duration).timestamp();
-    let user_account_name = match user.get_last_logined_user_account(&tsx).await
-    {
-        Some(user_account) => user_account.user_account_name,
-        None => "".to_string(),
-    };
-    let jwt_claims = JwtClaims
-    {
-        iss: config.jwt_issue.clone(),
-        sub: user_jwt_subject.subject.to_string(),
-        aud: config.jwt_audience.clone(),
-        iat,
-        exp,
-        nbf: iat,
-        jti: "meower".to_string(),
-        uan: user_account_name,
-    };
-
-    // Encodes JWT claims.
-    let mut header = Header::default();
-    header.typ = Some("JWT".to_string());
-    header.alg = Algorithm::HS256;
-    let key = EncodingKey::from_secret(&config.jwt_secret.as_bytes());
-    let jwt = encode(&header, &jwt_claims, &key).unwrap();
-
-    // Builds JWT claims cookie.
-    let offset_date_time = OffsetDateTime::now_utc();
-    let time_duration = TimeDuration::minutes(config.jwt_expiration_minutes);
-    let jwt_claims_cookie = Cookie::build((JWT_CLAIMS_KEY, jwt.to_owned()))
-        .path("/")
-        .same_site(SameSite::Lax)
-        .http_only(true)
-        .max_age(time_duration)
-        .expires(offset_date_time + time_duration)
-        .secure(config.debug_mode == false)
-        .to_string();
     tsx.commit().await.unwrap();
 
     // Sets JWT token to cookie.
+    let url = format!
+    (
+        "{}?code={}",
+        config.spa_url.clone().trim_end_matches('/'),
+        user_jwt_token_code.code,
+    );
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
-        .header(header::LOCATION, config.spa_url.clone())
-        .header(header::SET_COOKIE, jwt_claims_cookie)
+        .header(header::LOCATION, url)
         .body(Body::empty())
         .unwrap();
     Ok(response)
