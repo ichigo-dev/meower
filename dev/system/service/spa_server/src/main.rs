@@ -36,7 +36,13 @@ async fn main()
         )
         .layer
         (
-            ProtectedLayer::new(&jwt_audience, &jwt_secret, &auth_server_url)
+            ProtectedLayer::new
+            (
+                &jwt_audience,
+                &jwt_secret,
+                &auth_server_url,
+                false,
+            )
         );
 
     // Starts the server.

@@ -59,12 +59,12 @@ async fn main()
         (
             "/reset_password/:token",
             post(pages::reset_password::post_handler)
-        );
+        )
+        .nest_service("/assets", ServeDir::new("assets"));
 
     // Creates the application routes.
     let routes = Router::new()
         .nest("/auth", auth_routes)
-        .nest_service("/assets", ServeDir::new("assets"))
         .fallback(Redirect::temporary("/auth/login"))
         .layer
         (

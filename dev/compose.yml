@@ -92,6 +92,7 @@ services:
       - ./system/service/schema:/system/service/schema
     environment:
       API_URL: ${API_URL}
+      AUTH_SERVER_URL: ${AUTH_SERVER_URL}
     working_dir: /system/service/spa
     command: "trunk watch --release"
     tty: true

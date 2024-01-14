@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
+use super::get_response_body;
 use meower_schema::apis::ApiResponse;
 use meower_schema::apis::mypage::GetProfileResponse;
 
@@ -24,6 +25,6 @@ pub async fn get_profile<'cx>
         .send()
         .await
         .unwrap();
-    let body = response.text().await.unwrap_or("".to_string());
+    let body = get_response_body(cx, response).await;
     serde_json::from_str(&body).unwrap()
 }

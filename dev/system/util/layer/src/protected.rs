@@ -31,6 +31,7 @@ pub struct ProtectedLayer
     jwt_audience: Vec<String>,
     jwt_secret: String,
     auth_server_url: String,
+    no_redirect: bool,
 }
 
 impl ProtectedLayer
@@ -43,6 +44,7 @@ impl ProtectedLayer
         jwt_audience: &Vec<String>,
         jwt_secret: &str,
         auth_server_url: &str,
+        no_redirect: bool,
     ) -> Self
     {
         Self
@@ -50,6 +52,7 @@ impl ProtectedLayer
             jwt_audience: jwt_audience.to_vec(),
             jwt_secret: jwt_secret.to_string(),
             auth_server_url: auth_server_url.to_string(),
+            no_redirect,
         }
     }
 }
@@ -69,6 +72,7 @@ impl<S> Layer<S> for ProtectedLayer
             jwt_audience: self.jwt_audience.clone(),
             jwt_secret: self.jwt_secret.clone(),
             auth_server_url: self.auth_server_url.clone(),
+            no_redirect: self.no_redirect,
         }
     }
 }
@@ -84,6 +88,7 @@ pub struct ProtectedService<S>
     jwt_audience: Vec<String>,
     jwt_secret: String,
     auth_server_url: String,
+    no_redirect: bool,
 }
 
 impl<S> Service<Request> for ProtectedService<S>
@@ -142,8 +147,18 @@ where
                     _ =>
                     {
                         let auth_server_url = self.auth_server_url.clone();
+                        let no_redirect = self.no_redirect;
                         return Box::pin(async move
                         {
+                            if no_redirect
+                            {
+                                let response = Response::builder()
+                                    .status(StatusCode::UNAUTHORIZED)
+                                    .body(Body::empty())
+                                    .unwrap();
+                                return Ok(response);
+                            }
+
                             let response = Response::builder()
                                 .status(StatusCode::SEE_OTHER)
                                 .header(header::LOCATION, &auth_server_url)
