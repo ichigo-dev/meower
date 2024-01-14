@@ -110,7 +110,7 @@ where
     //--------------------------------------------------------------------------
     /// Calls the service.
     //--------------------------------------------------------------------------
-    fn call( &mut self, req: Request<Body> ) -> Self::Future
+    fn call( &mut self, mut req: Request<Body> ) -> Self::Future
     {
         let cookie = CookieJar::from_headers(&req.headers());
 
@@ -123,32 +123,41 @@ where
         // Validates the JWT claims.
         let mut validation = Validation::new(Algorithm::HS256);
         validation.set_audience(&self.jwt_audience);
-        if let Err(e) = decode::<JwtClaims>
+        let jwt_claims = match decode::<JwtClaims>
         (
             &jwt_claims_cookie,
             &DecodingKey::from_secret(self.jwt_secret.as_ref()),
             &validation,
         )
         {
-            match e.kind()
+            Ok(claims) => claims.claims,
+            Err(e) =>
             {
-                ErrorKind::ExpiredSignature => println!("Expired signature"),
-                _ =>
+                match e.kind()
                 {
-                    let auth_server_url = self.auth_server_url.clone();
-                    return Box::pin(async move
+                    ErrorKind::ExpiredSignature =>
                     {
-                        let response = Response::builder()
-                            .status(StatusCode::SEE_OTHER)
-                            .header(header::LOCATION, &auth_server_url)
-                            .body(Body::empty())
-                            .unwrap();
-                        Ok(response)
-                    });
-                },
-            }
-        }
+                        panic!("Expired signature");
+                    },
+                    _ =>
+                    {
+                        let auth_server_url = self.auth_server_url.clone();
+                        return Box::pin(async move
+                        {
+                            let response = Response::builder()
+                                .status(StatusCode::SEE_OTHER)
+                                .header(header::LOCATION, &auth_server_url)
+                                .body(Body::empty())
+                                .unwrap();
+                            Ok(response)
+                        });
+                    },
+                }
+            },
+        };
 
+        req.extensions_mut().insert(jwt_claims);
+        println!("{:#?}", req.extensions());
         let future = self.inner.call(req);
         Box::pin(async move
         {

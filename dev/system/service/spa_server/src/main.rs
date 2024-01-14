@@ -10,7 +10,7 @@ use meower_layer::ProtectedLayer;
 
 use axum::Router;
 use tokio::net::TcpListener;
-use tower_http::services::ServeDir;
+use tower_http::services::{ ServeDir, ServeFile };
 
 
 //------------------------------------------------------------------------------
@@ -28,7 +28,12 @@ async fn main()
 
     // Creates the application routes.
     let routes = Router::new()
-        .nest_service("/", ServeDir::new("public"))
+        .nest_service
+        (
+            "/",
+            ServeDir::new("public")
+                .fallback(ServeFile::new("public/index.html"))
+        )
         .layer
         (
             ProtectedLayer::new(&jwt_audience, &jwt_secret, &auth_server_url)
