@@ -13,6 +13,7 @@ repository = "https://github.com/ichigo-dev/meower"
 meower_schema = { version = "0.1.0", path = "../schema" }
 meower_entity = { version = "0.1.0", path = "../../database/entity" }
 meower_type = { version = "0.1.0", path = "../../util/type" }
+meower_layer = { version = "0.1.0", path = "../../util/layer" }
 accept-language = "3.1.0"
 axum = "0.7.2"
 axum-extra = { version = "0.9.0", features = ["cookie"] }

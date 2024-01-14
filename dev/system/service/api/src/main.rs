@@ -10,6 +10,8 @@ mod layers;
 pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
+use meower_layer::ProtectedLayer;
+
 use axum::{ Router, middleware };
 use axum::routing::get;
 use tokio::net::TcpListener;
@@ -27,22 +29,28 @@ async fn main()
     // Initializes the configuration and state.
     let config = Config::init();
     let port = config.port;
+    let jwt_audience = config.jwt_audience.clone();
+    let jwt_secret = config.jwt_secret.clone();
+    let auth_server_url = config.auth_server_url.clone();
     let state = AppState::init(config).await;
 
     // Creates the mypage api routes.
     let mypage_routes = Router::new()
         .route("/get_profile", get(apis::mypage::get_profile::get_handler));
 
+    let api_routes = Router::new()
+        .nest("/mypage", mypage_routes);
+
     // Creates the application routes.
     let routes = Router::new()
-        .nest("/mypage", mypage_routes)
+        .nest("/api", api_routes)
         .layer
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
         .layer
         (
-            middleware::from_fn_with_state(state.clone(), layers::auth::layer)
+            ProtectedLayer::new(&jwt_audience, &jwt_secret, &auth_server_url)
         )
         .with_state(state);
 

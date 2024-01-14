@@ -16,6 +16,8 @@ pub(crate) struct Config
     // JWT config.
     pub(crate) jwt_audience: Vec<String>,
     pub(crate) jwt_secret: String,
+
+    pub(crate) auth_server_url: String,
 }
 
 impl Config
@@ -40,13 +42,19 @@ impl Config
         let jwt_secret = env::var("JWT_SECRET")
             .expect("JWT_SECRET must be set");
 
+        let auth_server_url = env::var("AUTH_SERVER_URL")
+            .expect("AUTH_SERVER_URL must be set");
+
         Self
         {
+            // Server config.
             port,
 
             // JWT config.
             jwt_audience,
             jwt_secret,
+
+            auth_server_url,
         }
     }
 }

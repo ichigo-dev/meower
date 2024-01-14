@@ -12,7 +12,8 @@ pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
 use axum::{ Router, middleware };
-use axum::routing::{ get, post, any };
+use axum::response::Redirect;
+use axum::routing::{ get, post };
 use tokio::net::TcpListener;
 use tower_http::services::ServeDir;
 
@@ -31,8 +32,7 @@ async fn main()
     let port = config.port;
     let state = AppState::init(config).await;
 
-    // Creates the application routes.
-    let routes = Router::new()
+    let auth_routes = Router::new()
         .route("/login", get(pages::login::get_handler))
         .route("/login", post(pages::login::post_handler))
         .route("/signup", get(pages::signup::get_handler))
@@ -59,9 +59,13 @@ async fn main()
         (
             "/reset_password/:token",
             post(pages::reset_password::post_handler)
-        )
+        );
+
+    // Creates the application routes.
+    let routes = Router::new()
+        .nest("/auth", auth_routes)
         .nest_service("/assets", ServeDir::new("assets"))
-        .fallback(any(pages::not_found::handler))
+        .fallback(Redirect::temporary("/auth/login"))
         .layer
         (
             middleware::from_fn_with_state

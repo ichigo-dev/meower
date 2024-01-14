@@ -24,11 +24,15 @@ async fn main()
     let port = config.port;
     let jwt_audience = config.jwt_audience.clone();
     let jwt_secret = config.jwt_secret.clone();
+    let auth_server_url = config.auth_server_url.clone();
 
     // Creates the application routes.
     let routes = Router::new()
         .nest_service("/", ServeDir::new("public"))
-        .layer(ProtectedLayer::new(&jwt_audience, &jwt_secret));
+        .layer
+        (
+            ProtectedLayer::new(&jwt_audience, &jwt_secret, &auth_server_url)
+        );
 
     // Starts the server.
     let listener = TcpListener::bind(format!("0.0.0.0:{}", port))

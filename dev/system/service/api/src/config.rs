@@ -33,6 +33,8 @@ pub(crate) struct Config
     pub(crate) smtp_port: u16,
     pub(crate) smtp_user: String,
     pub(crate) smtp_password: String,
+
+    pub(crate) auth_server_url: String,
 }
 
 impl Config
@@ -89,6 +91,9 @@ impl Config
         let smtp_password = env::var("SMTP_PASSWORD")
             .expect("SMTP_PASSWORD must be set");
 
+        let auth_server_url = env::var("AUTH_SERVER_URL")
+            .expect("AUTH_SERVER_URL must be set");
+
         Self
         {
             // Server config.
@@ -113,6 +118,8 @@ impl Config
             smtp_port,
             smtp_user,
             smtp_password,
+
+            auth_server_url,
         }
     }
 }
