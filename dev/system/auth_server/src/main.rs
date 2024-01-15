@@ -61,7 +61,7 @@ async fn main()
             "/reset_password/:token",
             post(pages::reset_password::post_handler)
         )
-        .route("/request_token", get(apis::request_token::get_handler))
+        .route("/request_token/:code", get(apis::request_token::get_handler))
         .nest_service("/assets", ServeDir::new("assets"));
 
     // Creates the application routes.

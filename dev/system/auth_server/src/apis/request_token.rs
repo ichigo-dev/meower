@@ -12,7 +12,7 @@ use meower_entity::user_jwt_refresh_token::ActiveModel as ActiveUserJwtRefreshTo
 
 use axum::response::{ Json, IntoResponse };
 use axum::http::StatusCode;
-use axum::extract::State;
+use axum::extract::{ State, Path };
 use chrono::{ Utc, Duration };
 use jsonwebtoken::{
     encode,
@@ -43,14 +43,14 @@ struct Response
 pub(crate) async fn get_handler
 (
     State(state): State<AppState>,
+    Path(code): Path<String>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let config = state.config;
     let tsx = state.hdb.begin().await.unwrap();
-    let code = "";
 
     // Gets user jwt token code.
-    let user_token_code = match UserJwtTokenCodeEntity::find_by_code(code)
+    let user_token_code = match UserJwtTokenCodeEntity::find_by_code(&code)
         .one(&tsx)
         .await
         .unwrap()

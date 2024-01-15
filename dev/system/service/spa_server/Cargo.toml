@@ -10,8 +10,8 @@ repository = "https://github.com/ichigo-dev/meower"
 
 
 [dependencies]
-meower_handler = { version = "0.1.0", path = "../../util/handler" }
 meower_layer = { version = "0.1.0", path = "../../util/layer" }
+meower_routes = { version = "0.1.0", path = "../../util/routes" }
 meower_type = { version = "0.1.0", path = "../../util/type" }
 axum = "0.7.2"
 axum-extra = { version = "0.9.0", features = ["cookie"] }

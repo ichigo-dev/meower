@@ -2,8 +2,9 @@
 //! Protected.
 //------------------------------------------------------------------------------
 
-use std::task::{ Poll, Context };
 use meower_type::{ JwtClaims, JWT_CLAIMS_KEY };
+
+use std::task::{ Poll, Context };
 
 use axum::body::Body;
 use axum::extract::Request;
@@ -172,7 +173,6 @@ where
         };
 
         req.extensions_mut().insert(jwt_claims);
-        println!("{:#?}", req.extensions());
         let future = self.inner.call(req);
         Box::pin(async move
         {
