@@ -142,7 +142,7 @@ pub(crate) async fn get_handler
             return Err(StatusCode::BAD_REQUEST);
         },
     };
-    
+
     let response = Response
     {
         access_token,

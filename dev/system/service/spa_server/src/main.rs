@@ -7,8 +7,10 @@ mod config;
 pub(crate) use config::Config;
 
 use meower_layer::ProtectedLayer;
+use meower_handler::login_callback;
 
 use axum::Router;
+use axum::routing::get;
 use tokio::net::TcpListener;
 use tower_http::services::{ ServeDir, ServeFile };
 
@@ -28,6 +30,7 @@ async fn main()
 
     // Creates the application routes.
     let routes = Router::new()
+        .route("/login_callback", get(login_callback::handler))
         .nest_service
         (
             "/",

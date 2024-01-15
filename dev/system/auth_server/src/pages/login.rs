@@ -158,7 +158,7 @@ pub(crate) async fn post_handler
     // Sets JWT token to cookie.
     let url = format!
     (
-        "{}?code={}",
+        "{}/login_callback?code={}",
         config.spa_url.clone().trim_end_matches('/'),
         user_jwt_token_code.code,
     );
