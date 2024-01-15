@@ -7,7 +7,6 @@ use meower_entity::traits::validate::ValidateExt;
 use meower_entity::user::Entity as UserEntity;
 use meower_entity::temporary_user::Entity as TemporaryUserEntity;
 use meower_entity::user_jwt_token_code::ActiveModel as UserJwtTokenCodeActiveModel;
-use meower_entity::user_jwt_token_code::Error as UserJwtTokenCodeError;
 
 use askama::Template;
 use axum::response::{ Html, Response, IntoResponse };
@@ -137,16 +136,12 @@ pub(crate) async fn post_handler
         Err(e) =>
         {
             tsx.rollback().await.unwrap();
-            let error = match e
-            {
-                UserJwtTokenCodeError::DbError(e) => e.to_string(),
-            };
             let template = PageTemplate
             {
                 input: input,
                 input_error: FormError
                 {
-                    other: Some(error.clone()),
+                    other: Some(e.get_error_message().1),
                     ..Default::default()
                 },
             };

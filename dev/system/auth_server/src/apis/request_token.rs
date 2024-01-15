@@ -8,7 +8,6 @@ use meower_entity::traits::validate::ValidateExt;
 use meower_entity::user::Entity as User;
 use meower_entity::user_jwt_subject::ActiveModel as ActiveUserJwtSubject;
 use meower_entity::user_jwt_token_code::Entity as UserJwtTokenCodeEntity;
-use meower_entity::user_jwt_refresh_token::ActiveModel as ActiveUserJwtRefreshToken;
 
 use axum::response::{ Json, IntoResponse };
 use axum::http::StatusCode;
@@ -126,27 +125,10 @@ pub(crate) async fn get_handler
     let key = EncodingKey::from_secret(&config.jwt_secret.as_bytes());
     let access_token = encode(&header, &jwt_claims, &key).unwrap();
 
-    // Creates refresh token.
-    let active_refresh_token = ActiveUserJwtRefreshToken
-    {
-        ..Default::default()
-    };
-    let refresh_token = match active_refresh_token
-        .validate_and_insert(&tsx)
-        .await
-    {
-        Ok(refresh_token) => refresh_token,
-        Err(_) =>
-        {
-            tsx.rollback().await.unwrap();
-            return Err(StatusCode::BAD_REQUEST);
-        },
-    };
-
     let response = Response
     {
-        access_token,
-        refresh_token: refresh_token.token,
+        access_token: access_token.clone(),
+        refresh_token: access_token,
     };
     tsx.commit().await.unwrap();
 

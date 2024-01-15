@@ -20,6 +20,9 @@ const CODE_EXPIRATION_MINUTES: i64 = 10;
 #[derive(Debug, Error)]
 pub enum Error
 {
+    #[error("UserJwtTokenCode: The token is expired.")]
+    CodeExpired,
+
     #[error("UserJwtTokenCode: Database error.")]
     DbError(#[from] DbErr),
 }
@@ -33,6 +36,14 @@ impl Error
     {
         match self
         {
+            Self::CodeExpired =>
+            {
+                return
+                (
+                    Some(Column::Code),
+                    t!("entities.user_jwt_token_code.code.error.expired"),
+                );
+            },
             Self::DbError(_) => (None, t!("common.error.db")),
         }
     }
@@ -54,7 +65,7 @@ impl Column
             Self::UserJwtTokenCodeId => t!("entities.user_jwt_token_code.user_jwt_token_code_id.name"),
             Self::UserId => t!("entities.user_jwt_token_code.user_id.name"),
             Self::Code => t!("entities.user_jwt_token_code.code.name"),
-            Self::CreatedAt => t!("entities.user_jwt_subject.created_at.name"),
+            Self::CreatedAt => t!("entities.user_jwt_token_code.created_at.name"),
             Self::ExpiredAt => t!("entities.user_jwt_token_code.expired_at.name"),
         }
         .to_string()
@@ -91,6 +102,21 @@ pub struct Model
     pub code: String,
     pub created_at: DateTime,
     pub expired_at: DateTime,
+}
+
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Checks if the code is valid.
+    //--------------------------------------------------------------------------
+    pub fn is_valid_code( &self ) -> Result<(), Error>
+    {
+        if Utc::now().naive_utc() > self.expired_at
+        {
+            return Err(Error::CodeExpired);
+        }
+        Ok(())
+    }
 }
 
 
