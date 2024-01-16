@@ -657,26 +657,29 @@
 <path fill="none" stroke="#000000" d="M237.4151,-871.2849C233.5049,-635.8696 96.5656,-514.2215 256.5,-337 326.9144,-258.9746 1088.3993,-207.5 1193.5,-207.5"/>
 <polygon fill="#000000" stroke="#000000" points="237.4168,-871.5003 233.0002,-881.5374 237.4584,-876.5002 237.5,-881.5 237.5,-881.5 237.5,-881.5 237.4584,-876.5002 241.9998,-881.4626 237.4168,-871.5003 237.4168,-871.5003"/>
 </g>
-<!-- public.user_jwt_refresh_token -->
+<!-- public.user_jwt_token_code -->
 <g id="node22" class="node">
-<title>public.user_jwt_refresh_token</title>
-<polygon fill="#efefef" stroke="transparent" points="3750.5,-1368.5 3750.5,-1403.5 4130.5,-1403.5 4130.5,-1368.5 3750.5,-1368.5"/>
-<polygon fill="none" stroke="#000000" points="3750.5,-1368.5 3750.5,-1403.5 4130.5,-1403.5 4130.5,-1368.5 3750.5,-1368.5"/>
-<text text-anchor="start" x="3757.1915" y="-1381.3" font-family="Arial Bold" font-size="18.00" fill="#000000">public.user_jwt_refresh_token</text>
-<text text-anchor="start" x="3996.2405" y="-1381.3" font-family="Arial" font-size="14.00" fill="#000000">    </text>
-<text text-anchor="start" x="4030.4453" y="-1381.3" font-family="Arial" font-size="14.00" fill="#666666">[BASE TABLE]</text>
-<polygon fill="none" stroke="#000000" points="3750.5,-1338.5 3750.5,-1368.5 4130.5,-1368.5 4130.5,-1338.5 3750.5,-1338.5"/>
-<text text-anchor="start" x="3757.5" y="-1349.9" font-family="Arial" font-size="14.00" fill="#000000">user_jwt_refresh_token_id    </text>
-<text text-anchor="start" x="3955.852" y="-1349.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
-<polygon fill="none" stroke="#000000" points="3750.5,-1308.5 3750.5,-1338.5 4130.5,-1338.5 4130.5,-1308.5 3750.5,-1308.5"/>
-<text text-anchor="start" x="3757.5" y="-1319.9" font-family="Arial" font-size="14.00" fill="#000000">token    </text>
-<text text-anchor="start" x="3825.9432" y="-1319.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
-<polygon fill="none" stroke="#000000" points="3750.5,-1278.5 3750.5,-1308.5 4130.5,-1308.5 4130.5,-1278.5 3750.5,-1278.5"/>
-<text text-anchor="start" x="3757.5" y="-1289.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
-<text text-anchor="start" x="3857.8422" y="-1289.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
-<polygon fill="none" stroke="#000000" points="3750.5,-1248.5 3750.5,-1278.5 4130.5,-1278.5 4130.5,-1248.5 3750.5,-1248.5"/>
-<text text-anchor="start" x="3757.5" y="-1259.9" font-family="Arial" font-size="14.00" fill="#000000">expired_at    </text>
-<text text-anchor="start" x="3857.0582" y="-1259.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<title>public.user_jwt_token_code</title>
+<polygon fill="#efefef" stroke="transparent" points="3751.5,-1383.5 3751.5,-1418.5 4114.5,-1418.5 4114.5,-1383.5 3751.5,-1383.5"/>
+<polygon fill="none" stroke="#000000" points="3751.5,-1383.5 3751.5,-1418.5 4114.5,-1418.5 4114.5,-1383.5 3751.5,-1383.5"/>
+<text text-anchor="start" x="3758.1848" y="-1396.3" font-family="Arial Bold" font-size="18.00" fill="#000000">public.user_jwt_token_code</text>
+<text text-anchor="start" x="3980.2472" y="-1396.3" font-family="Arial" font-size="14.00" fill="#000000">    </text>
+<text text-anchor="start" x="4014.452" y="-1396.3" font-family="Arial" font-size="14.00" fill="#666666">[BASE TABLE]</text>
+<polygon fill="none" stroke="#000000" points="3751.5,-1353.5 3751.5,-1383.5 4114.5,-1383.5 4114.5,-1353.5 3751.5,-1353.5"/>
+<text text-anchor="start" x="3758.5" y="-1364.9" font-family="Arial" font-size="14.00" fill="#000000">user_jwt_token_code_id    </text>
+<text text-anchor="start" x="3943.6402" y="-1364.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
+<polygon fill="none" stroke="#000000" points="3751.5,-1323.5 3751.5,-1353.5 4114.5,-1353.5 4114.5,-1323.5 3751.5,-1323.5"/>
+<text text-anchor="start" x="3758.5" y="-1334.9" font-family="Arial" font-size="14.00" fill="#000000">user_id    </text>
+<text text-anchor="start" x="3838.6024" y="-1334.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
+<polygon fill="none" stroke="#000000" points="3751.5,-1293.5 3751.5,-1323.5 4114.5,-1323.5 4114.5,-1293.5 3751.5,-1293.5"/>
+<text text-anchor="start" x="3758.5" y="-1304.9" font-family="Arial" font-size="14.00" fill="#000000">code    </text>
+<text text-anchor="start" x="3823.0526" y="-1304.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="3751.5,-1263.5 3751.5,-1293.5 4114.5,-1293.5 4114.5,-1263.5 3751.5,-1263.5"/>
+<text text-anchor="start" x="3758.5" y="-1274.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
+<text text-anchor="start" x="3858.8422" y="-1274.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<polygon fill="none" stroke="#000000" points="3751.5,-1233.5 3751.5,-1263.5 4114.5,-1263.5 4114.5,-1233.5 3751.5,-1233.5"/>
+<text text-anchor="start" x="3758.5" y="-1244.9" font-family="Arial" font-size="14.00" fill="#000000">expired_at    </text>
+<text text-anchor="start" x="3858.0582" y="-1244.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
 </g>
 </g>
 </svg>

@@ -25,7 +25,7 @@
 | [public.user_account_profile](public.user_account_profile.md)                   | 10      | User account profile table    | BASE TABLE |
 | [public.user_account_workspace](public.user_account_workspace.md)               | 3       | User account workspace table  | BASE TABLE |
 | [public.organization_workspace](public.organization_workspace.md)               | 3       | Organization workspace table  | BASE TABLE |
-| [public.user_jwt_refresh_token](public.user_jwt_refresh_token.md)               | 4       | User JWT refresh token        | BASE TABLE |
+| [public.user_jwt_token_code](public.user_jwt_token_code.md)                     | 5       | User JWT token code           | BASE TABLE |
 
 ## Relations
 
