@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-//! Creates user table.
+//! Creates client_application table.
 //------------------------------------------------------------------------------
 
-use crate::table_def::User;
+use crate::table_def::ClientApplication;
 
 use sea_orm::Statement;
 use sea_orm_migration::prelude::*;
@@ -23,11 +23,11 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(User::Table)
+            .table(ClientApplication::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(User::UserId)
+                ColumnDef::new(ClientApplication::ClientApplicationId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -35,7 +35,14 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::Email)
+                ColumnDef::new(ClientApplication::Name)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(ClientApplication::ClientId)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -43,7 +50,7 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::JwtSubject)
+                ColumnDef::new(ClientApplication::ClientSecret)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -51,23 +58,23 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::CreatedAt)
+                ColumnDef::new(ClientApplication::RedirectUri)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(ClientApplication::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(User::UpdatedAt)
+                ColumnDef::new(ClientApplication::UpdatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
-                    .not_null()
-            )
-            .col
-            (
-                ColumnDef::new(User::IsDeleted)
-                    .boolean()
-                    .default(false)
                     .not_null()
             )
             .to_owned();
@@ -75,13 +82,14 @@ impl MigrationTrait for Migration
 
         let querys = vec!
         [
-            "COMMENT ON TABLE \"user\" IS 'User table'",
-            "COMMENT ON COLUMN \"user\".\"user_id\" IS 'User ID'",
-            "COMMENT ON COLUMN \"user\".\"email\" IS 'Email address'",
-            "COMMENT ON COLUMN \"user\".\"jwt_subject\" IS 'JWT subject'",
-            "COMMENT ON COLUMN \"user\".\"created_at\" IS 'Create date'",
-            "COMMENT ON COLUMN \"user\".\"updated_at\" IS 'Update date'",
-            "COMMENT ON COLUMN \"user\".\"is_deleted\" IS 'Soft delete flag'",
+            "COMMENT ON TABLE \"client_application\" IS 'Client application table';",
+            "COMMENT ON COLUMN \"client_application\".\"client_application_id\" IS 'Client application ID';",
+            "COMMENT ON COLUMN \"client_application\".\"name\" IS 'Client application name';",
+            "COMMENT ON COLUMN \"client_application\".\"client_id\" IS 'Client ID';",
+            "COMMENT ON COLUMN \"client_application\".\"client_secret\" IS 'Client secret';",
+            "COMMENT ON COLUMN \"client_application\".\"redirect_uri\" IS 'Redirect URI';",
+            "COMMENT ON COLUMN \"client_application\".\"created_at\" IS 'Create date';",
+            "COMMENT ON COLUMN \"client_application\".\"updated_at\" IS 'Update date';",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
@@ -99,7 +107,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(User::Table).to_owned())
+            .drop_table(Table::drop().table(ClientApplication::Table).to_owned())
             .await?;
 
         Ok(())

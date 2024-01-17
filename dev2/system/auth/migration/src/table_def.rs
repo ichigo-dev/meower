@@ -126,4 +126,3 @@ pub(crate) enum ClientApplication
     CreatedAt,
     UpdatedAt,
 }
-

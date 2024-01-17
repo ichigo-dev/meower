@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-//! Creates user table.
+//! Creates user_auth table.
 //------------------------------------------------------------------------------
 
-use crate::table_def::User;
+use crate::table_def::{ User, UserAuth };
 
 use sea_orm::Statement;
 use sea_orm_migration::prelude::*;
@@ -23,11 +23,11 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(User::Table)
+            .table(UserAuth::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(User::UserId)
+                ColumnDef::new(UserAuth::UserAuthId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -35,53 +35,56 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::Email)
-                    .string()
-                    .string_len(255)
+                ColumnDef::new(UserAuth::UserId)
+                    .big_integer()
                     .not_null()
-                    .unique_key()
             )
             .col
             (
-                ColumnDef::new(User::JwtSubject)
+                ColumnDef::new(UserAuth::Password)
                     .string()
                     .string_len(255)
                     .not_null()
-                    .unique_key()
             )
             .col
             (
-                ColumnDef::new(User::CreatedAt)
+                ColumnDef::new(UserAuth::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(User::UpdatedAt)
+                ColumnDef::new(UserAuth::UpdatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
             )
-            .col
+            .foreign_key
             (
-                ColumnDef::new(User::IsDeleted)
-                    .boolean()
-                    .default(false)
-                    .not_null()
+                ForeignKey::create()
+                    .name("user_auth_user_id_fkey")
+                    .from(UserAuth::Table, UserAuth::UserId)
+                    .to(User::Table, User::UserId)
             )
             .to_owned();
         manager.create_table(table).await?;
 
+        let index = Index::create()
+            .name("user_auth_user_id_idx")
+            .table(UserAuth::Table)
+            .col(UserAuth::UserId)
+            .to_owned();
+        manager.create_index(index).await?;
+
         let querys = vec!
         [
-            "COMMENT ON TABLE \"user\" IS 'User table'",
-            "COMMENT ON COLUMN \"user\".\"user_id\" IS 'User ID'",
-            "COMMENT ON COLUMN \"user\".\"email\" IS 'Email address'",
-            "COMMENT ON COLUMN \"user\".\"jwt_subject\" IS 'JWT subject'",
-            "COMMENT ON COLUMN \"user\".\"created_at\" IS 'Create date'",
-            "COMMENT ON COLUMN \"user\".\"updated_at\" IS 'Update date'",
-            "COMMENT ON COLUMN \"user\".\"is_deleted\" IS 'Soft delete flag'",
+            "COMMENT ON TABLE \"user_auth\" IS 'User authentication table';",
+            "COMMENT ON COLUMN \"user_auth\".\"user_auth_id\" IS 'User authentication ID';",
+            "COMMENT ON COLUMN \"user_auth\".\"user_id\" IS 'User ID';",
+            "COMMENT ON COLUMN \"user_auth\".\"password\" IS 'Hashed password';",
+            "COMMENT ON COLUMN \"user_auth\".\"created_at\" IS 'Create date';",
+            "COMMENT ON COLUMN \"user_auth\".\"updated_at\" IS 'Update date';",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
@@ -99,7 +102,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(User::Table).to_owned())
+            .drop_table(Table::drop().table(UserAuth::Table).to_owned())
             .await?;
 
         Ok(())

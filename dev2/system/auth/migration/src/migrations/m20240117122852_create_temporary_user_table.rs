@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-//! Creates user table.
+//! Creates temporary_user table.
 //------------------------------------------------------------------------------
 
-use crate::table_def::User;
+use crate::table_def::TemporaryUser;
 
 use sea_orm::Statement;
 use sea_orm_migration::prelude::*;
@@ -23,11 +23,11 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(User::Table)
+            .table(TemporaryUser::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(User::UserId)
+                ColumnDef::new(TemporaryUser::TemporaryUserId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -35,7 +35,7 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::Email)
+                ColumnDef::new(TemporaryUser::Token)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -43,7 +43,7 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::JwtSubject)
+                ColumnDef::new(TemporaryUser::Email)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -51,23 +51,16 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::CreatedAt)
-                    .timestamp()
-                    .default(Expr::current_timestamp())
+                ColumnDef::new(TemporaryUser::Password)
+                    .string()
+                    .string_len(255)
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(User::UpdatedAt)
+                ColumnDef::new(TemporaryUser::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
-                    .not_null()
-            )
-            .col
-            (
-                ColumnDef::new(User::IsDeleted)
-                    .boolean()
-                    .default(false)
                     .not_null()
             )
             .to_owned();
@@ -75,13 +68,12 @@ impl MigrationTrait for Migration
 
         let querys = vec!
         [
-            "COMMENT ON TABLE \"user\" IS 'User table'",
-            "COMMENT ON COLUMN \"user\".\"user_id\" IS 'User ID'",
-            "COMMENT ON COLUMN \"user\".\"email\" IS 'Email address'",
-            "COMMENT ON COLUMN \"user\".\"jwt_subject\" IS 'JWT subject'",
-            "COMMENT ON COLUMN \"user\".\"created_at\" IS 'Create date'",
-            "COMMENT ON COLUMN \"user\".\"updated_at\" IS 'Update date'",
-            "COMMENT ON COLUMN \"user\".\"is_deleted\" IS 'Soft delete flag'",
+            "COMMENT ON TABLE \"temporary_user\" IS 'Temporary user table';",
+            "COMMENT ON COLUMN \"temporary_user\".\"temporary_user_id\" IS 'Temporary user ID';",
+            "COMMENT ON COLUMN \"temporary_user\".\"token\" IS 'Token';",
+            "COMMENT ON COLUMN \"temporary_user\".\"email\" IS 'Email';",
+            "COMMENT ON COLUMN \"temporary_user\".\"password\" IS 'Password';",
+            "COMMENT ON COLUMN \"temporary_user\".\"created_at\" IS 'Created at';",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
@@ -99,7 +91,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(User::Table).to_owned())
+            .drop_table(Table::drop().table(TemporaryUser::Table).to_owned())
             .await?;
 
         Ok(())
