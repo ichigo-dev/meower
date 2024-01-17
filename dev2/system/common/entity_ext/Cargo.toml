@@ -1,0 +1,14 @@
+[package]
+name = "meower_entity_ext"
+version = "0.1.0"
+edition = "2021"
+authors = ["ichigo-dev <dev.honda.ichigo@gmail.com>"]
+description = "Entity extensions"
+license = "MIT"
+documentation = ""
+repository = "https://github.com/ichigo-dev/meower"
+
+
+[dependencies]
+async-trait = "0.1.74"
+sea-orm = "0.12.6"

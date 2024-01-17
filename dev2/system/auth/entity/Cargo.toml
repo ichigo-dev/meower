@@ -7,3 +7,13 @@ description = "Meower authentication server data entity"
 license = "MIT"
 documentation = ""
 repository = "https://github.com/ichigo-dev/meower"
+
+
+[dependencies]
+meower_entity_ext = { version = "0.1.0", path = "../../common/entity_ext" }
+meower_validator = { version = "0.1.0", path = "../../common/validator" }
+async-trait = "0.1.74"
+sea-orm = "0.12.6"
+sea-query = "0.30.3"
+rust-i18n = "2.3.0"
+thiserror = "1.0.51"

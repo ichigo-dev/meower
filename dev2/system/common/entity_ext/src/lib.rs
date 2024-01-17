@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
-//! Database entities.
+//! SeaOrm entity extensions.
 //------------------------------------------------------------------------------
 
-pub use entities::*;
+pub mod validate;
 
-rust_i18n::i18n!("locales");
+pub use validate::ValidateExt;
