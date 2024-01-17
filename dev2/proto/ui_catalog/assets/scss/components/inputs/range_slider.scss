@@ -1,0 +1,69 @@
+//------------------------------------------------------------------------------
+//	UI range slider
+//
+//
+//	# Usage
+//
+//	```html
+//	<input type="range" class="ui_range_slider" min="0" max="100">
+//	```
+//------------------------------------------------------------------------------
+
+.ui_range_slider
+{
+	margin: var(--spacing-md) 0;
+	height: var(--size-xs);
+	width: 100%;
+	max-width: var(--size-7xl);
+	border-radius: var(--radius-circle);
+	background-color: var(--color-filled);
+	cursor: pointer;
+
+	&::-webkit-slider-thumb,
+	&::-moz-range-thumb,
+	&::-ms-thumb
+	{
+		background-color: var(--color-info);
+		border: none;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		height: var(--size-2xs);
+		max-width: var(--size-6xl);
+	}
+
+	&.large
+	{
+		height: var(--size-sm);
+		max-width: var(--size-8xl);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:focus
+	{
+		box-shadow: var(--shadow-sm);
+	}
+
+	&:disabled
+	{
+		background-color: var(--color-disabled);
+		cursor: not-allowed;
+
+		&::-webkit-slider-thumb,
+		&::-moz-range-thumb,
+		&::-ms-thumb
+		{
+			background-color: var(--color-disabled-text);
+		}
+	}
+}

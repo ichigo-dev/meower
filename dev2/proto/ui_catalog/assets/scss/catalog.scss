@@ -1,0 +1,139 @@
+//------------------------------------------------------------------------------
+//	UI catalog styles
+//------------------------------------------------------------------------------
+
+@use "common/index" as common;
+@use "components/index" as components;
+@use "themes/index" as themes;
+@use "variables/index" as variables;
+
+
+//------------------------------------------------------------------------------
+//	Headings
+//------------------------------------------------------------------------------
+.uic_heading
+{
+	@extend .ui_heading;
+
+	&.h1
+	{
+		@extend .h1;
+		@extend .bold;
+		@extend .divider;
+		@extend .center;
+		@extend .primary;
+	}
+
+	&.h2
+	{
+		@extend .h2;
+		@extend .bold;
+		@extend .bullet;
+		@extend .primary;
+	}
+
+	&.h3
+	{
+		@extend .h3;
+	}
+}
+
+
+//------------------------------------------------------------------------------
+//	Containers
+//------------------------------------------------------------------------------
+.uic_container
+{
+	&.main
+	{
+		@extend .ui_box;
+		@extend .width_full;
+		@extend .background;
+		@extend .flex;
+		@extend .flex_column;
+		@extend .flex_gap_2xl;
+		@extend .padding_xl;
+		@extend .overflow_hidden;
+		@extend .ui_dialog_container;
+		@extend .ui_drawer_container;
+	}
+
+	&.parent_section
+	{
+		@extend .flex;
+		@extend .flex_column;
+		@extend .flex_gap_lg;
+	}
+
+	&.child_section
+	{
+		@extend .flex;
+		@extend .flex_column;
+		@extend .flex_gap_xl;
+	}
+
+	&.example_box
+	{
+		@extend .ui_box;
+		@extend .surface;
+		@extend .radius;
+		@extend .padding_lg;
+		@extend .overflow_auto_x;
+		@extend .flex;
+		@extend .flex_column;
+		@extend .flex_gap_md;
+
+		.example_flex_column
+		{
+			@extend .flex;
+			@extend .flex_column;
+			@extend .flex_align_start;
+			@extend .flex_gap_md;
+		}
+
+		.example_flex_row
+		{
+			@extend .flex;
+			@extend .flex_row;
+			@extend .flex_align_center;
+			@extend .flex_gap_lg;
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------
+//	Sidebar
+//------------------------------------------------------------------------------
+
+.uic_sidebar
+{
+	@extend .ui_sidebar;
+	@extend .ui_box;
+	@extend .border_right;
+	@extend .z_index_front;
+
+	.uic_sidebar_inner
+	{
+		@extend .ui_sidebar_inner;
+		@extend .flex;
+		@extend .flex_column;
+		@extend .flex_gap_xl;
+		@extend .overflow_hidden;
+	}
+}
+
+.uic_sidebar:not(.open)
+{
+	.uic_sidebar_inner
+	{
+		width: calc(var(--size-md));
+
+		:not(.sidebar_toggle)
+		{
+			opacity: 0;
+			margin-right: 0;
+			pointer-events: none;
+		}
+	}
+}

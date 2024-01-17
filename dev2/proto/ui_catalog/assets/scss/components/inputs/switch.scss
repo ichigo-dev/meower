@@ -1,0 +1,124 @@
+//------------------------------------------------------------------------------
+//	UI switch
+//
+//
+//	# Usage
+//
+//	```html
+//	<input type="checkbox" class="ui_switch">
+//	```
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
+.ui_switch
+{
+	display: inline-block;
+	width: var(--size-xl);
+	height: var(--size-sm);
+	border-radius: var(--radius-circle);
+	background-color: var(--color-filled);
+	position: relative;
+	cursor: pointer;
+
+	&:before
+	{
+		content: "";
+		display: inline-block;
+		background-color: var(--color-surface-text);
+		width: var(--size-sm);
+		height: var(--size-sm);
+		box-shadow: var(--shadow-sm);
+		border-radius: var(--radius-circle);
+		position: absolute;
+		top: 0;
+		left: 0;
+		transition: transform 0.2s 0s linear;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		width: var(--size-lg);
+		height: var(--size-sm);
+
+		&:before
+		{
+			width: var(--size-sm);
+			height: var(--size-sm);
+		}
+
+		&:checked:before
+		{
+			transform: translateX(calc(var(--size-lg) - var(--size-sm)));
+		}
+	}
+
+	&.large
+	{
+		width: var(--size-2xl);
+		height: var(--size-md);
+
+		&:before
+		{
+			width: var(--size-md);
+			height: var(--size-md);
+		}
+
+		&:checked:before
+		{
+			transform: translateX(calc(var(--size-2xl) - var(--size-md)));
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}:checked
+		{
+			background-color: var(--color-#{$color});
+
+			&:before
+			{
+				background-color: var(--color-#{$color}-text);
+			}
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:checked
+	{
+		background-color: var(--color-info);
+
+		&:before
+		{
+			background-color: var(--color-info-text);
+			transform: translateX(calc(var(--size-xl) - var(--size-sm)));
+		}
+	}
+
+	&:disabled
+	{
+		background-color:  var(--color-disabled);
+		cursor: not-allowed;
+
+		&:before
+		{
+			background-color: var(--color-disabled-text);
+		}
+	}
+}

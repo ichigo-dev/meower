@@ -1,0 +1,38 @@
+//------------------------------------------------------------------------------
+//	Position
+//------------------------------------------------------------------------------
+
+@use "../functions/string" as string;
+@use "../variables/z_indexes" as z_index;
+
+.position
+{
+	&_relative
+	{
+		position: relative;
+	}
+
+	&_absolute
+	{
+		position: absolute;
+	}
+
+	&_fixed
+	{
+		position: fixed;
+	}
+}
+
+.z_index
+{
+	z-index: var(--z-index-default);
+
+	@each $z_index in z_index.$z_indexes
+	{
+		$class_name: string.str-replace($z_index, "-", "_");
+		&_#{$class_name}
+		{
+			z-index: var(--z-index-#{$z_index});
+		}
+	}
+}

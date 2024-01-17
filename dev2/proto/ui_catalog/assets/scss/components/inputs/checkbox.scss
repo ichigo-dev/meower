@@ -1,0 +1,123 @@
+//------------------------------------------------------------------------------
+//	UI checkbox
+//
+//
+//	# Usage
+//
+//	```html
+//	<input type="checkbox" class="ui_checkbox">
+//	```
+//------------------------------------------------------------------------------
+
+@use "../../functions/string" as string;
+@use "../../themes/index" as themes;
+
+.ui_checkbox
+{
+	$icon_ratio: 0.8;
+
+	width: var(--size-md);
+	height: var(--size-md);
+	border-radius: var(--radius-2xs);
+	border: 2px solid var(--color-surface-text);
+	cursor: pointer;
+	position: relative;
+	transition: all 0.2s 0s ease-in-out;
+
+	&:before
+	{
+		content: "";
+		background-color: transparent;
+		mask-image: var(--icon-svg-check);
+		mask-size: contain;
+		mask-position: center;
+		mask-repeat: no-repeat;
+		-webkit-mask-image: var(--icon-svg-check);
+		-webkit-mask-size: contain;
+		-webkit-mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+		width: 0;
+		height: 0;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		transition: all 0.2s 0s ease-in;
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Sizes
+	//--------------------------------------------------------------------------
+
+	&.small
+	{
+		height: var(--size-sm);
+		width: var(--size-sm);
+
+		&:checked:before
+		{
+			height: calc(var(--size-sm) * $icon_ratio);
+			width: calc(var(--size-sm) * $icon_ratio);
+		}
+	}
+
+	&.large
+	{
+		height: var(--size-lg);
+		width: var(--size-lg);
+
+		&:checked:before
+		{
+			height: calc(var(--size-lg) * $icon_ratio);
+			width: calc(var(--size-lg) * $icon_ratio);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+
+	@each $color in themes.$theme_colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}:checked
+		{
+			background-color: var(--color-#{$color});
+			border-color: var(--color-#{$color});
+			color: var(--color-#{$color}-text);
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	States
+	//--------------------------------------------------------------------------
+
+	&:disabled
+	{
+		border-color: var(--color-disabled);
+		cursor: not-allowed;
+	}
+
+	&:checked
+	{
+		background-color: var(--color-info);
+		border-color: var(--color-info);
+
+		&:disabled
+		{
+			background-color: var(--color-disabled);
+			border-color: var(--color-disabled);
+			color: var(--color-disabled-text);
+		}
+
+		&:before
+		{
+			background-color: var(--color-info-text);
+			width: calc(var(--size-md) * $icon_ratio);
+			height: calc(var(--size-md) * $icon_ratio);
+		}
+	}
+}

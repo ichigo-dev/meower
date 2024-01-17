@@ -1,0 +1,31 @@
+//------------------------------------------------------------------------------
+//	Display
+//------------------------------------------------------------------------------
+
+.display
+{
+	&_none
+	{
+		display: none !important;
+	}
+
+	&_inline
+	{
+		display: inline !important;
+	}
+
+	&_inline_block
+	{
+		display: inline-block !important;
+	}
+
+	&_block
+	{
+		display: block !important;
+	}
+}
+
+.hide
+{
+	display: none !important;
+}

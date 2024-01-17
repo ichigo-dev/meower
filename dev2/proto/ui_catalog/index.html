@@ -1,0 +1,5211 @@
+<!DOCTYPE html>
+<html lang="ja">
+ <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UI catalog</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+ </head>
+
+ <body>
+  <div id="theme_wrapper">
+   <div class="flex flex_row">
+
+    <!--------------------------------------------------------------------------
+    -- Sidebar
+    --------------------------------------------------------------------------->
+    <aside id="sidebar" class="uic_sidebar open">
+     <div class="uic_sidebar_inner">
+      <div class="ui_heading h2">UI catalog</div>
+
+      <div class="flex flex_column flex_gap_sm">
+       <label>Chose Theme</label>
+       <div class="ui_select">
+        <select id="theme_select">
+         <option value="theme_meower_light" selected>Meower Light</option>
+         <option value="theme_meower_dark">Meower Dark</option>
+        </select>
+       </div>
+      </div>
+
+      <div class="flex flex_column flex_gap_sm">
+       <span>Chose Device</span>
+       <div id="device_mode" class="ui_button_group primary outlined">
+        <button data-device_mode="mobile" data-screen_size="375"><span class="ui_icon icon_mobile pointer_event_none"></span></button>
+        <button data-device_mode="tablet" data-screen_size="768"><span class="ui_icon icon_tablet pointer_event_none"></span></button>
+        <button data-device_mode="laptop" data-screen_size="1024"><span class="ui_icon icon_laptop pointer_event_none"></span></button>
+        <button data-device_mode="desktop" data-screen_size="0"><span class="ui_icon icon_desktop pointer_event_none"></span></button>
+       </div>
+      </div>
+
+      <div id="toc"></div>
+      <div id="sidebar_toggle" class="sidebar_toggle ui_icon icon_left_right clickable flex_no_shrink"></div>
+     </div>
+    </aside>
+ 
+    <div class="ui_box width_full overflow_hidden_x flex flex_justify_center black">
+
+     <!-------------------------------------------------------------------------
+     -- Main
+     -------------------------------------------------------------------------->
+     <main id="main" class="uic_container main">
+      <h1 class="uic_heading h1">UI catalog</h1>
+
+      <!------------------------------------------------------------------------
+      -- Common
+      ------------------------------------------------------------------------->
+      <section class="uic_container parent_section">
+       <h2 class="uic_heading h2" id="toc_common">Common</h2>
+
+       <!-----------------------------------------------------------------------
+       -- Colors
+       ------------------------------------------------------------------------>
+       <section>
+        <div  class="flex flex_column flex_gap_md">
+         <h3 class="uic_heading h3" id="toc_colors">Colors</h3>
+         <div id="colors" class="flex flex_row flex_gap_lg overflow_auto_x padding_bottom"></div>
+        </div>
+       </section>
+  
+       <!-----------------------------------------------------------------------
+       -- Theme Colors
+       ------------------------------------------------------------------------>
+       <section>
+        <div  class="flex flex_column flex_gap_md">
+         <h3 class="uic_heading h3" id="toc_theme_colors">Theme Colors</h3>
+         <div id="theme_colors" class="flex flex_row flex_gap_lg overflow_auto_x padding_bottom"></div>
+        </div>
+       </section>
+      </section>
+
+      <!------------------------------------------------------------------------
+      -- Datas
+      ------------------------------------------------------------------------->
+      <section class="uic_container parent_section">
+       <h2 class="uic_heading h2" id="toc_datas">Datas</h2>
+
+       <!-----------------------------------------------------------------------
+       -- Badge
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_badge">Badge</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column padding_top_sm">
+          <div class="example_flex_row">
+           <div class="ui_badge">
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+           <div class="ui_badge">
+            <span class="badge_content">3</span>
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+           <div class="ui_badge">
+            <span class="badge_content">999+</span>
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column padding_top_sm">
+          <div class="example_flex_row">
+           <div class="ui_badge primary">
+            <span class="badge_content">3</span>
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+           <div class="ui_badge secondary">
+            <span class="badge_content">3</span>
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+           <div class="ui_badge error">
+            <span class="badge_content">3</span>
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+           <div class="ui_badge warning">
+            <span class="badge_content">3</span>
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+           <div class="ui_badge info">
+            <span class="badge_content">3</span>
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+           <div class="ui_badge success">
+            <span class="badge_content">3</span>
+            <div class="ui_icon icon_envelope"></div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Chip
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_chip">Chip</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column padding_top_sm">
+          <div class="example_flex_row">
+           <div class="ui_chip">Filled Chip</div>
+           <div class="ui_chip outlined">Outlined Chip</div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Disabled</h4>
+         <div class="example_flex_column padding_top_sm">
+          <div class="example_flex_row">
+           <div class="ui_chip disabled">Disabled Chip</div>
+           <div class="ui_chip outlined disabled">Disabled Chip</div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Clickable</h4>
+         <div class="example_flex_column padding_top_sm">
+          <div class="example_flex_row">
+           <div class="ui_chip clickable">Clickable Chip</div>
+           <div class="ui_chip outlined clickable">Clickable Chip</div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Icon</h4>
+         <div class="example_flex_column padding_top_sm">
+          <div class="example_flex_row">
+           <div class="ui_chip">
+            <span class="ui_icon icon_envelope"></span>
+            <span>Clickable Chip</span>
+            <span class="ui_icon icon_xmark clickable"></span>
+           </div>
+           <div class="ui_chip outlined">
+            <span class="ui_icon icon_envelope"></span>
+            <span>Clickable Chip</span>
+            <span class="ui_icon icon_xmark clickable"></span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column padding_top_sm">
+          <div class="example_flex_row">
+           <div class="ui_chip small">Small Chip</div>
+           <div class="ui_chip">Medium Chip</div>
+           <div class="ui_chip large">Large Chip</div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column padding_top_sm">
+          <div class="example_flex_row">
+           <div class="ui_chip primary">Filled Chip</div>
+           <div class="ui_chip outlined primary">Outlined Chip</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_chip secondary">Filled Chip</div>
+           <div class="ui_chip outlined secondary">Outlined Chip</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_chip error">Filled Chip</div>
+           <div class="ui_chip outlined error">Outlined Chip</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_chip warning">Filled Chip</div>
+           <div class="ui_chip outlined warning">Outlined Chip</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_chip info">Filled Chip</div>
+           <div class="ui_chip outlined info">Outlined Chip</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_chip success">Filled Chip</div>
+           <div class="ui_chip outlined success">Outlined Chip</div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Code Block
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_code_block">Code Block</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <pre class="ui_code_block">
+<span>function get_random_int( min_ = 0, max_ = 100 )</span>
+<span>{</span>
+<span>    const range = max - min + 1;</span>
+<span>    const rand = Math.random();</span>
+<span>    return Math.floor(rand * range);</span>
+<span>}</span></pre>
+          </div>
+          <div class="example_flex_row">
+           <pre class="ui_code_block number">
+<span>function get_random_int( min_ = 0, max_ = 100 )</span>
+<span>{</span>
+<span>    const range = max - min + 1;</span>
+<span>    const rand = Math.random();</span>
+<span>    return Math.floor(rand * range);</span>
+<span>}</span></pre>
+          </div>
+          <div class="example_flex_row">
+           <pre class="ui_code_block number separator">
+<span>function get_random_int( min_ = 0, max_ = 100 )</span>
+<span>{</span>
+<span>    const range = max - min + 1;</span>
+<span>    const rand = Math.random();</span>
+<span>    return Math.floor(rand * range);</span>
+<span>}</span></pre>
+          </div>
+          <div class="example_flex_row">
+           <pre class="ui_code_block number separator">
+<span>function get_random_int( min_ = 0, max_ = 100 )</span>
+<span>{</span>
+<span>    const range = max - min + 1;</span>
+<span>    const rand = Math.random();</span>
+<span class="highlight">    return Math.floor(rand * range);</span>
+<span>}</span></pre>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Heading
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_heading">Heading</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <span class="ui_heading h1">Heading 1</span>
+           <span class="ui_heading h2">Heading 2</span>
+           <span class="ui_heading h3">Heading 3</span>
+           <span class="ui_heading h4">Heading 4</span>
+           <span class="ui_heading h5">Heading 5</span>
+           <span class="ui_heading h6">Heading 6</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Divider Align</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading divider left">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider center">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider right">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Divider Thickness</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading divider thin">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider thick">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Divider Colors</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading divider primary">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider secondary">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider error">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider warning">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider info">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading divider success">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Bullet Thickness</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading bullet thin">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading bullet">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading bullet thick">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Bullet Colors</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading bullet primary">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading bullet secondary">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading bullet error">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading bullet warning">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading bullet info">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading bullet success">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Line Align</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading line left">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line center">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line right">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Line Thickness</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading line thin">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line thick">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Line Colors</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading line primary">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line secondary">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line error">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line warning">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line info">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading line success">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Band Align</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading band left">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band center">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band right">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Band Thickness</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading band thin">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band thick">Heading</span>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Band Colors</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <span class="ui_heading band primary">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band secondary">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band error">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band warning">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band info">Heading</span>
+          </div>
+          <div class="example_flex_row">
+           <span class="ui_heading band success">Heading</span>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Icon
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_icon">Icon</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus"></div>
+           <div class="ui_icon icon_minus"></div>
+           <div class="ui_icon icon_caret_right"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus small"></div>
+           <div class="ui_icon icon_minus small"></div>
+           <div class="ui_icon icon_caret_right small"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus"></div>
+           <div class="ui_icon icon_minus"></div>
+           <div class="ui_icon icon_caret_right"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus large"></div>
+           <div class="ui_icon icon_minus large"></div>
+           <div class="ui_icon icon_caret_right large"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus primary"></div>
+           <div class="ui_icon icon_minus primary"></div>
+           <div class="ui_icon icon_caret_right primary"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus secondary"></div>
+           <div class="ui_icon icon_minus secondary"></div>
+           <div class="ui_icon icon_caret_right secondary"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus error"></div>
+           <div class="ui_icon icon_minus error"></div>
+           <div class="ui_icon icon_caret_right error"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus warning"></div>
+           <div class="ui_icon icon_minus warning"></div>
+           <div class="ui_icon icon_caret_right warning"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus info"></div>
+           <div class="ui_icon icon_minus info"></div>
+           <div class="ui_icon icon_caret_right info"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_icon icon_plus success"></div>
+           <div class="ui_icon icon_minus success"></div>
+           <div class="ui_icon icon_caret_right success"></div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!------------------------------------------------------------------------
+       -- List
+       ------------------------------------------------------------------------->
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_list">List</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <ul class="ui_list">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list boxed">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list simple">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+          </div>
+          <div class="example_flex_row">
+           <ol class="ui_list ordered">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+           </ol>
+           <ol class="ui_list ordered boxed">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+           </ol>
+           <ol class="ui_list ordered simple">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+           </ol>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Clickable</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <ul class="ui_list">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list boxed">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list simple">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <ul class="ui_list primary">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list primary boxed">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list primary simple">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+          </div>
+          <div class="example_flex_row">
+           <ul class="ui_list secondary">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list secondary boxed">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list secondary simple">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+          </div>
+          <div class="example_flex_row">
+           <ul class="ui_list error">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list error boxed">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list error simple">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+          </div>
+          <div class="example_flex_row">
+           <ul class="ui_list warning">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list warning boxed">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list warning simple">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+          </div>
+          <div class="example_flex_row">
+           <ul class="ui_list info">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list info boxed">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list info simple">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+          </div>
+          <div class="example_flex_row">
+           <ul class="ui_list success">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list success boxed">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+           <ul class="ui_list success simple">
+            <li class="clickable">List Item 1</li>
+            <li class="clickable">List Item 2</li>
+            <li>List Item 3</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Nested</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <ul class="ui_list">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+            <ol>
+             <li>List Item 1</li>
+             <li>List Item 2</li>
+             <li>List Item 3</li>
+            </ol>
+           </ul>
+           <ul class="ui_list boxed">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+            <ol>
+             <li>Nested List Item 1</li>
+             <li>Nested List Item 2</li>
+             <li>Nested List Item 3</li>
+            </ol>
+           </ul>
+           <ul class="ui_list simple">
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+            <ol>
+             <li>Nested List Item 1</li>
+             <li>Nested List Item 2</li>
+             <li>Nested List Item 3</li>
+            </ol>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Table
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_table">Table</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <table class="ui_table">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <table class="ui_table small">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table large">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Stripe</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <table class="ui_table stripe">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table stripe">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+          <div class="example_flex_row">
+           <table class="ui_table stripe_vertical">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table stripe_vertical">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Tiled</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <table class="ui_table tiled">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table tiled">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <table class="ui_table primary">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table primary">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+           <table class="ui_table primary stripe">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table primary stripe">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+          <div class="example_flex_row">
+           <table class="ui_table secondary">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table secondary">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+           <table class="ui_table secondary stripe">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table secondary stripe">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+          <div class="example_flex_row">
+           <table class="ui_table error">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table error">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+           <table class="ui_table error stripe">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table error stripe">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+          <div class="example_flex_row">
+           <table class="ui_table warning">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table warning">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+           <table class="ui_table warning stripe">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table warning stripe">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+          <div class="example_flex_row">
+           <table class="ui_table info">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table info">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+           <table class="ui_table info stripe">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table info stripe">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+          <div class="example_flex_row">
+           <table class="ui_table success">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table success">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+           <table class="ui_table success stripe">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+           <table class="ui_table success stripe">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sticky header</h4>
+         <div class="example_flex_column">
+          <div class="ui_box example_flex_row overflow_auto height_8xl">
+           <table class="ui_table sticky">
+            <thead>
+             <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+              <th>Header 3</th>
+              <th>Header 4</th>
+              <th>Header 5</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+             </tr>
+             <tr>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+             </tr>
+             <tr>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+             </tr>
+             <tr>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+             </tr>
+             <tr>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+             </tr>
+             <tr>
+              <td>Data 6-1</td>
+              <td>Data 6-2</td>
+              <td>Data 6-3</td>
+              <td>Data 6-4</td>
+              <td>Data 6-5</td>
+             </tr>
+             <tr>
+              <td>Data 7-1</td>
+              <td>Data 7-2</td>
+              <td>Data 7-3</td>
+              <td>Data 7-4</td>
+              <td>Data 7-5</td>
+             </tr>
+             <tr>
+              <td>Data 8-1</td>
+              <td>Data 8-2</td>
+              <td>Data 8-3</td>
+              <td>Data 8-4</td>
+              <td>Data 8-5</td>
+             </tr>
+             <tr>
+              <td>Data 9-1</td>
+              <td>Data 9-2</td>
+              <td>Data 9-3</td>
+              <td>Data 9-4</td>
+              <td>Data 9-5</td>
+             </tr>
+             <tr>
+              <td>Data 10-1</td>
+              <td>Data 10-2</td>
+              <td>Data 10-3</td>
+              <td>Data 10-4</td>
+              <td>Data 10-5</td>
+             </tr>
+             <tr>
+              <td>Data 11-1</td>
+              <td>Data 11-2</td>
+              <td>Data 11-3</td>
+              <td>Data 11-4</td>
+              <td>Data 11-5</td>
+             </tr>
+             <tr>
+              <td>Data 12-1</td>
+              <td>Data 12-2</td>
+              <td>Data 12-3</td>
+              <td>Data 12-4</td>
+              <td>Data 12-5</td>
+             </tr>
+             <tr>
+              <td>Data 13-1</td>
+              <td>Data 13-2</td>
+              <td>Data 13-3</td>
+              <td>Data 13-4</td>
+              <td>Data 13-5</td>
+             </tr>
+             <tr>
+              <td>Data 14-1</td>
+              <td>Data 14-2</td>
+              <td>Data 14-3</td>
+              <td>Data 14-4</td>
+              <td>Data 14-5</td>
+             </tr>
+             <tr>
+              <td>Data 15-1</td>
+              <td>Data 15-2</td>
+              <td>Data 15-3</td>
+              <td>Data 15-4</td>
+              <td>Data 15-5</td>
+             </tr>
+             <tr>
+              <td>Data 16-1</td>
+              <td>Data 16-2</td>
+              <td>Data 16-3</td>
+              <td>Data 16-4</td>
+              <td>Data 16-5</td>
+             </tr>
+             <tr>
+              <td>Data 17-1</td>
+              <td>Data 17-2</td>
+              <td>Data 17-3</td>
+              <td>Data 17-4</td>
+              <td>Data 17-5</td>
+             </tr>
+             <tr>
+              <td>Data 18-1</td>
+              <td>Data 18-2</td>
+              <td>Data 18-3</td>
+              <td>Data 18-4</td>
+              <td>Data 18-5</td>
+             </tr>
+             <tr>
+              <td>Data 19-1</td>
+              <td>Data 19-2</td>
+              <td>Data 19-3</td>
+              <td>Data 19-4</td>
+              <td>Data 19-5</td>
+             </tr>
+             <tr>
+              <td>Data 20-1</td>
+              <td>Data 20-2</td>
+              <td>Data 20-3</td>
+              <td>Data 20-4</td>
+              <td>Data 20-5</td>
+             </tr>
+            </tbody>
+            <tfoot>
+             <tr>
+              <td>Footer 1</td>
+              <td>Footer 2</td>
+              <td>Footer 3</td>
+              <td>Footer 4</td>
+              <td>Footer 5</td>
+             </tr>
+            </tfoot>
+           </table>
+          </div>
+          <div class="ui_box example_flex_row overflow_auto_x width_9xl">
+           <table class="ui_table sticky">
+            <tbody>
+             <tr>
+              <th>Header 1</th>
+              <td>Data 1-1</td>
+              <td>Data 1-2</td>
+              <td>Data 1-3</td>
+              <td>Data 1-4</td>
+              <td>Data 1-5</td>
+              <td>Data 1-6</td>
+              <td>Data 1-7</td>
+              <td>Data 1-8</td>
+              <td>Data 1-9</td>
+              <td>Data 1-10</td>
+              <td>Data 1-11</td>
+              <td>Data 1-12</td>
+              <td>Data 1-13</td>
+              <td>Data 1-14</td>
+              <td>Data 1-15</td>
+              <td>Data 1-16</td>
+              <td>Data 1-17</td>
+              <td>Data 1-18</td>
+              <td>Data 1-19</td>
+              <td>Data 1-20</td>
+             </tr>
+             <tr>
+              <th>Header 2</th>
+              <td>Data 2-1</td>
+              <td>Data 2-2</td>
+              <td>Data 2-3</td>
+              <td>Data 2-4</td>
+              <td>Data 2-5</td>
+              <td>Data 2-6</td>
+              <td>Data 2-7</td>
+              <td>Data 2-8</td>
+              <td>Data 2-9</td>
+              <td>Data 2-10</td>
+              <td>Data 2-11</td>
+              <td>Data 2-12</td>
+              <td>Data 2-13</td>
+              <td>Data 2-14</td>
+              <td>Data 2-15</td>
+              <td>Data 2-16</td>
+              <td>Data 2-17</td>
+              <td>Data 2-18</td>
+              <td>Data 2-19</td>
+              <td>Data 2-20</td>
+             </tr>
+             <tr>
+              <th>Header 3</th>
+              <td>Data 3-1</td>
+              <td>Data 3-2</td>
+              <td>Data 3-3</td>
+              <td>Data 3-4</td>
+              <td>Data 3-5</td>
+              <td>Data 3-6</td>
+              <td>Data 3-7</td>
+              <td>Data 3-8</td>
+              <td>Data 3-9</td>
+              <td>Data 3-10</td>
+              <td>Data 3-11</td>
+              <td>Data 3-12</td>
+              <td>Data 3-13</td>
+              <td>Data 3-14</td>
+              <td>Data 3-15</td>
+              <td>Data 3-16</td>
+              <td>Data 3-17</td>
+              <td>Data 3-18</td>
+              <td>Data 3-19</td>
+              <td>Data 3-20</td>
+             </tr>
+             <tr>
+              <th>Header 4</th>
+              <td>Data 4-1</td>
+              <td>Data 4-2</td>
+              <td>Data 4-3</td>
+              <td>Data 4-4</td>
+              <td>Data 4-5</td>
+              <td>Data 4-6</td>
+              <td>Data 4-7</td>
+              <td>Data 4-8</td>
+              <td>Data 4-9</td>
+              <td>Data 4-10</td>
+              <td>Data 4-11</td>
+              <td>Data 4-12</td>
+              <td>Data 4-13</td>
+              <td>Data 4-14</td>
+              <td>Data 4-15</td>
+              <td>Data 4-16</td>
+              <td>Data 4-17</td>
+              <td>Data 4-18</td>
+              <td>Data 4-19</td>
+              <td>Data 4-20</td>
+             </tr>
+             <tr>
+              <th>Header 5</th>
+              <td>Data 5-1</td>
+              <td>Data 5-2</td>
+              <td>Data 5-3</td>
+              <td>Data 5-4</td>
+              <td>Data 5-5</td>
+              <td>Data 5-6</td>
+              <td>Data 5-7</td>
+              <td>Data 5-8</td>
+              <td>Data 5-9</td>
+              <td>Data 5-10</td>
+              <td>Data 5-11</td>
+              <td>Data 5-12</td>
+              <td>Data 5-13</td>
+              <td>Data 5-14</td>
+              <td>Data 5-15</td>
+              <td>Data 5-16</td>
+              <td>Data 5-17</td>
+              <td>Data 5-18</td>
+              <td>Data 5-19</td>
+              <td>Data 5-20</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Tooltip
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_tooltip">Tooltip</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_tooltip margin_top_3xl margin_horizontal_lg">
+            <span>Hover me</span>
+            <div class="description">Content</div>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_tooltip primary margin_top_3xl margin_horizontal_lg">
+            <span>Hover me</span>
+            <div class="description">Content</div>
+           </div>
+           <div class="ui_tooltip secondary margin_top_3xl margin_horizontal_lg">
+            <span>Hover me</span>
+            <div class="description">Content</div>
+           </div>
+           <div class="ui_tooltip error margin_top_3xl margin_horizontal_lg">
+            <span>Hover me</span>
+            <div class="description">Content</div>
+           </div>
+           <div class="ui_tooltip warning margin_top_3xl margin_horizontal_lg">
+            <span>Hover me</span>
+            <div class="description">Content</div>
+           </div>
+           <div class="ui_tooltip info margin_top_3xl margin_horizontal_lg">
+            <span>Hover me</span>
+            <div class="description">Content</div>
+           </div>
+           <div class="ui_tooltip success margin_top_3xl margin_horizontal_lg">
+            <span>Hover me</span>
+            <div class="description">Content</div>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Position</h4>
+         <div class="example_flex_column flex_align_center padding_3xl">
+          <div class="example_flex_row">
+           <div class="ui_tooltip top width_6xl text_align_center">
+            <span>Top</span>
+            <div class="description">Content</div>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_tooltip left width_6xl text_align_center">
+            <span>Left</span>
+            <div class="description">Content</div>
+           </div>
+           <div class="ui_tooltip right width_6xl text_align_center">
+            <span>Right</span>
+            <div class="description">Content</div>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_tooltip bottom width_6xl text_align_center">
+            <span>Bottom</span>
+            <div class="description">Content</div>
+           </div>
+          </div>
+         </div>
+        </div>
+
+       </section>
+      </section>
+
+      <!------------------------------------------------------------------------
+      -- Feedbacks
+      ------------------------------------------------------------------------->
+      <section class="uic_container parent_section">
+       <h2 class="uic_heading h2" id="toc_feedbacks">Feedbacks</h2>
+
+       <!-----------------------------------------------------------------------
+       -- Alert
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_alert">Alert</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_alert error">Error alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert warning">Warning alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert info">Info alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert success">Success alert</div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Outlined</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_alert outlined error">Error alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert outlined warning">Warning alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert outlined info">Info alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert outlined success">Success alert</div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Filled</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_alert filled error">Error alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert filled warning">Warning alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert filled info">Info alert</div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_alert filled success">Success alert</div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Dialog
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_dialog">Dialog</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_dialog">Open dialog</div>
+           <div class="ui_dialog">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Animations</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_dialog">Open fadein dialog</div>
+           <div class="ui_dialog">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button primary button_open_dialog">Open slidein dialog</div>
+           <div class="ui_dialog slidein">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button primary button_open_dialog">Open grow dialog</div>
+           <div class="ui_dialog grow">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button primary button_open_dialog">Open flash dialog</div>
+           <div class="ui_dialog flash">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_dialog">Open small dialog</div>
+           <div class="ui_dialog small">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button primary button_open_dialog">Open medium dialog</div>
+           <div class="ui_dialog">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button primary button_open_dialog">Open large dialog</div>
+           <div class="ui_dialog large">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button primary button_open_dialog">Open full dialog</div>
+           <div class="ui_dialog full">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+          </div>
+         </div>
+        </div>
+
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Scroll</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_dialog">Open dialog</div>
+           <div class="ui_dialog">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              <div class="flex flex_column flex_gap_md">
+               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+               <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt molli</p>
+              </div>
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_dialog">Open primary dialog</div>
+           <div class="ui_dialog primary">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button secondary button_open_dialog">Open secondary dialog</div>
+           <div class="ui_dialog secondary">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button error button_open_dialog">Open error dialog</div>
+           <div class="ui_dialog error">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button warning button_open_dialog">Open warning dialog</div>
+           <div class="ui_dialog warning">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button info button_open_dialog">Open info dialog</div>
+           <div class="ui_dialog info">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+           <div class="ui_button success button_open_dialog">Open success dialog</div>
+           <div class="ui_dialog success">
+            <dialog class="dialog">
+             <div class="head">
+              <span>Dialog</span>
+             </div>
+             <div class="body">
+              Content
+             </div>
+             <div class="foot">
+              <button class="ui_button primary text button_close_dialog">Close</button>
+             </div>
+            </dialog>
+           </div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Progress
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_progress">Progress</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Spin</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_progress spin"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Spin Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_progress spin small"></div>
+           <div class="ui_progress spin"></div>
+           <div class="ui_progress spin large"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Spin Thickness</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_progress spin thin"></div>
+           <div class="ui_progress spin"></div>
+           <div class="ui_progress spin thick"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Spin Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_progress spin primary"></div>
+           <div class="ui_progress spin secondary"></div>
+           <div class="ui_progress spin error"></div>
+           <div class="ui_progress spin warning"></div>
+           <div class="ui_progress spin info"></div>
+           <div class="ui_progress spin success"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Linear</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_progress linear"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Linear Colors</h4>
+         <div class="example_flex_column flex_align_stretch flex_gap_xl">
+          <div class="example_flex_row">
+           <div class="ui_progress linear primary"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_progress linear secondary"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_progress linear error"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_progress linear warning"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_progress linear info"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_progress linear success"></div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Skeleton
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_skeleton">Skeleton</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_skeleton text"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton circle"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton box"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton box rounded"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Pulse</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_skeleton pulse text"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton pulse circle"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton pulse box"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton pulse box rounded"></div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Wave</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_skeleton wave text"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton wave circle"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton wave box"></div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_skeleton wave box rounded"></div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Snackbar
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_snackbar">Snackbar</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_snackbar">Open snackbar</div>
+           <div class="ui_snackbar">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Animations</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_snackbar">Open fadein snackbar</div>
+           <div class="ui_snackbar">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Open slidein snackbar</div>
+           <div class="ui_snackbar slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Open grow snackbar</div>
+           <div class="ui_snackbar grow">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar">Open flash snackbar</div>
+           <div class="ui_snackbar flash">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button error button_open_snackbar">Open error snackbar</div>
+           <div class="ui_snackbar error">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button warning button_open_snackbar">Open warning snackbar</div>
+           <div class="ui_snackbar warning">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button info button_open_snackbar">Open info snackbar</div>
+           <div class="ui_snackbar info">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button success button_open_snackbar">Open success snackbar</div>
+           <div class="ui_snackbar success">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Position</h4>
+         <div class="example_flex_column flex_align_center">
+          <div class="example_flex_row flex_justify_between">
+           <div class="ui_button primary button_open_snackbar ui_box width_7xl text_align_center">Top left</div>
+           <div class="ui_snackbar top_left slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar ui_box width_7xl text_align_center">Top</div>
+           <div class="ui_snackbar top slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar ui_box width_7xl text_align_center">Top right</div>
+           <div class="ui_snackbar top_right slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+          <div class="example_flex_row flex_justify_between">
+           <div class="ui_button primary button_open_snackbar ui_box width_7xl text_align_center">Left</div>
+           <div class="ui_snackbar left slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_box width_7xl"></div>
+           <div class="ui_button primary button_open_snackbar ui_box width_7xl text_align_center">Right</div>
+           <div class="ui_snackbar right slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+          <div class="example_flex_row flex_justify_between">
+           <div class="ui_button primary button_open_snackbar ui_box width_7xl text_align_center">Bottom left</div>
+           <div class="ui_snackbar bottom_left slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar ui_box width_7xl text_align_center">Bottom</div>
+           <div class="ui_snackbar bottom slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+           <div class="ui_button primary button_open_snackbar ui_box width_7xl text_align_center">Bottom right</div>
+           <div class="ui_snackbar bottom_right slidein">
+            <span>Snackbar</span>
+            <span class="flex_spacer"></span>
+            <span class="ui_icon icon_xmark background clickable button_close_snackbar"></span>
+           </div>
+          </div>
+         </div>
+        </div>
+       </section>
+      </section>
+
+      <!------------------------------------------------------------------------
+      -- Inputs
+      ------------------------------------------------------------------------->
+      <section class="uic_container parent_section">
+       <h2 class="uic_heading h2" id="toc_inputs">Inputs</h2>
+
+       <!-----------------------------------------------------------------------
+       -- Button
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_buttons">Button</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <button class="ui_button primary text">Text Button</button>
+           <button class="ui_button primary">Filled Button</button>
+           <button class="ui_button primary outlined">Outlined Button</button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Disabled</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <button class="ui_button primary text" disabled>Text Button</button>
+           <button class="ui_button primary" disabled>Filled Button</button>
+           <button class="ui_button primary outlined" disabled>Outlined Button</button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <button class="ui_button primary text small">Small Button</button>
+           <button class="ui_button primary text">Medium Button</button>
+           <button class="ui_button primary text large">Large Button</button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_button primary small">Small Button</button>
+           <button class="ui_button primary">Medium Button</button>
+           <button class="ui_button primary large">Large Button</button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_button primary outlined small">Small Button</button>
+           <button class="ui_button primary outlined">Medium Button</button>
+           <button class="ui_button primary outlined large">Large Button</button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <button class="ui_button primary text">Primary Button</button>
+           <button class="ui_button primary">Primary Button</button>
+           <button class="ui_button primary outlined">Primary Button</button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_button secondary text">Secondary Button</button>
+           <button class="ui_button secondary">Secondary Button</button>
+           <button class="ui_button secondary outlined">Secondary Button</button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_button error text">Error Button</button>
+           <button class="ui_button error">Error Button</button>
+           <button class="ui_button error outlined">Error Button</button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_button warning text">Warning Button</button>
+           <button class="ui_button warning">Warning Button</button>
+           <button class="ui_button warning outlined">Warning Button</button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_button info text">Info Button</button>
+           <button class="ui_button info">Info Button</button>
+           <button class="ui_button info outlined">Info Button</button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_button success text">Success Button</button>
+           <button class="ui_button success">Success Button</button>
+           <button class="ui_button success outlined">Success Button</button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Others</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <button class="ui_button primary full_rounded">Rounded Button</button>
+           <button class="ui_button primary full_rounded outlined">Rounded Button</button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_button primary no_rounded">Square Button</button>
+           <button class="ui_button primary no_rounded outlined">Square Button</button>
+          </div>
+         </div>
+        </div>
+       </section>
+  
+       <!-----------------------------------------------------------------------
+       -- Button Group
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_button_group">Button Group</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="ui_button_group primary text">
+           <button>Text Button 1</button>
+           <button>Text Button 2</button>
+           <button>Text Button 3</button>
+          </div>
+          <div class="ui_button_group primary">
+           <button>Filled Button 1</button>
+           <button>Filled Button 2</button>
+           <button>Filled Button 3</button>
+          </div>
+          <div class="ui_button_group primary outlined">
+           <button>Outlined Button 1</button>
+           <button>Outlined Button 2</button>
+           <button>Outlined Button 3</button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Disabled</h4>
+         <div class="example_flex_column">
+          <div class="ui_button_group primary text">
+           <button disabled>Text Button 1</button>
+           <button>Text Button 2</button>
+           <button>Text Button 3</button>
+          </div>
+          <div class="ui_button_group primary">
+           <button disabled>Filled Button 1</button>
+           <button>Filled Button 2</button>
+           <button>Filled Button 3</button>
+          </div>
+          <div class="ui_button_group primary outlined">
+           <button disabled>Outlined Button 1</button>
+           <button>Outlined Button 2</button>
+           <button>Outlined Button 3</button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="ui_button_group primary small">
+           <button>Small Button 1</button>
+           <button>Small Button 2</button>
+           <button>Small Button 3</button>
+          </div>
+          <div class="ui_button_group primary">
+           <button>Medium Button 1</button>
+           <button>Medium Button 2</button>
+           <button>Medium Button 3</button>
+          </div>
+          <div class="ui_button_group primary large">
+           <button>Large Button 1</button>
+           <button>Large Button 2</button>
+           <button>Large Button 3</button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button_group primary text">
+            <button>Primary Button 1</button>
+            <button>Primary Button 2</button>
+            <button>Primary Button 3</button>
+           </div>
+           <div class="ui_button_group primary">
+            <button>Primary Button 1</button>
+            <button>Primary Button 2</button>
+            <button>Primary Button 3</button>
+           </div>
+           <div class="ui_button_group primary outlined">
+            <button>Primary Button 1</button>
+            <button>Primary Button 2</button>
+            <button>Primary Button 3</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_button_group secondary text">
+            <button>Secondary Button 1</button>
+            <button>Secondary Button 2</button>
+            <button>Secondary Button 3</button>
+           </div>
+           <div class="ui_button_group secondary">
+            <button>Secondary Button 1</button>
+            <button>Secondary Button 2</button>
+            <button>Secondary Button 3</button>
+           </div>
+           <div class="ui_button_group secondary outlined">
+            <button>Secondary Button 1</button>
+            <button>Secondary Button 2</button>
+            <button>Secondary Button 3</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_button_group error text">
+            <button>Error Button 1</button>
+            <button>Error Button 2</button>
+            <button>Error Button 3</button>
+           </div>
+           <div class="ui_button_group error">
+            <button>Error Button 1</button>
+            <button>Error Button 2</button>
+            <button>Error Button 3</button>
+           </div>
+           <div class="ui_button_group error outlined">
+            <button>Error Button 1</button>
+            <button>Error Button 2</button>
+            <button>Error Button 3</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_button_group warning text">
+            <button>Warning Button 1</button>
+            <button>Warning Button 2</button>
+            <button>Warning Button 3</button>
+           </div>
+           <div class="ui_button_group warning">
+            <button>Warning Button 1</button>
+            <button>Warning Button 2</button>
+            <button>Warning Button 3</button>
+           </div>
+           <div class="ui_button_group warning outlined">
+            <button>Warning Button 1</button>
+            <button>Warning Button 2</button>
+            <button>Warning Button 3</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_button_group info text">
+            <button>Info Button 1</button>
+            <button>Info Button 2</button>
+            <button>Info Button 3</button>
+           </div>
+           <div class="ui_button_group info">
+            <button>Info Button 1</button>
+            <button>Info Button 2</button>
+            <button>Info Button 3</button>
+           </div>
+           <div class="ui_button_group info outlined">
+            <button>Info Button 1</button>
+            <button>Info Button 2</button>
+            <button>Info Button 3</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_button_group success text">
+            <button>Success Button 1</button>
+            <button>Success Button 2</button>
+            <button>Success Button 3</button>
+           </div>
+           <div class="ui_button_group success">
+            <button>Success Button 1</button>
+            <button>Success Button 2</button>
+            <button>Success Button 3</button>
+           </div>
+           <div class="ui_button_group success outlined">
+            <button>Success Button 1</button>
+            <button>Success Button 2</button>
+            <button>Success Button 3</button>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Vertical</h4>
+         <div class="example_flex_column">
+          <div class="ui_button_group vertical primary text">
+           <button>Text Button 1</button>
+           <button>Text Button 2</button>
+           <button>Text Button 3</button>
+          </div>
+          <div class="ui_button_group vertical primary">
+           <button>Filled Button 1</button>
+           <button>Filled Button 2</button>
+           <button>Filled Button 3</button>
+          </div>
+          <div class="ui_button_group vertical primary outlined">
+           <button>Outlined Button 1</button>
+           <button>Outlined Button 2</button>
+           <button>Outlined Button 3</button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Active</h4>
+         <div class="example_flex_column">
+          <div class="ui_button_group primary text">
+           <button class="active">Text Button 1</button>
+           <button class="active">Text Button 2</button>
+           <button>Text Button 3</button>
+           <button>Text Button 4</button>
+          </div>
+          <div class="ui_button_group primary">
+           <button class="active">Filled Button 1</button>
+           <button class="active">Filled Button 2</button>
+           <button>Filled Button 3</button>
+           <button>Filled Button 4</button>
+          </div>
+          <div class="ui_button_group primary outlined">
+           <button class="active">Outlined Button 1</button>
+           <button class="active">Outlined Button 2</button>
+           <button>Outlined Button 3</button>
+           <button>Outlined Button 4</button>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Checkbox
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_checkbox">Checkbox</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="checkbox" class="ui_checkbox">
+           <input type="checkbox" class="ui_checkbox" checked>
+           <input type="checkbox" class="ui_checkbox" disabled>
+           <input type="checkbox" class="ui_checkbox" checked disabled>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="checkbox" class="ui_checkbox small" checked>
+           <input type="checkbox" class="ui_checkbox" checked>
+           <input type="checkbox" class="ui_checkbox large" checked>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="checkbox" class="ui_checkbox primary" checked>
+           <input type="checkbox" class="ui_checkbox secondary" checked>
+           <input type="checkbox" class="ui_checkbox error" checked>
+           <input type="checkbox" class="ui_checkbox warning" checked>
+           <input type="checkbox" class="ui_checkbox info" checked>
+           <input type="checkbox" class="ui_checkbox success" checked>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Floating Button
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_floating_button">Floating Button</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <button class="ui_floating_button primary">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button primary">
+            <div class="ui_icon icon_plus"></div>
+            <span>Floating Button</span>
+           </button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Disabled</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row" disabled>
+           <button class="ui_floating_button primary" disabled>
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button primary" disabled>
+            <div class="ui_icon icon_plus"></div>
+            <span>Floating Button</span>
+           </button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <button class="ui_floating_button primary small">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button primary">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button primary large">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_floating_button primary small">
+            <div class="ui_icon icon_plus"></div>
+            <span>Small Floating Button</span>
+           </button>
+           <button class="ui_floating_button primary">
+            <div class="ui_icon icon_plus"></div>
+            <span>Medium Floating Button</span>
+           </button>
+           <button class="ui_floating_button primary large">
+            <div class="ui_icon icon_plus"></div>
+            <span>Large Floating Button</span>
+           </button>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <button class="ui_floating_button primary">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button primary">
+            <div class="ui_icon icon_plus"></div>
+            <span>Primary Floating Button</span>
+           </button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_floating_button secondary">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button secondary">
+            <div class="ui_icon icon_plus"></div>
+            <span>Secondary Floating Button</span>
+           </button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_floating_button error">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button error">
+            <div class="ui_icon icon_plus"></div>
+            <span>Error Floating Button</span>
+           </button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_floating_button warning">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button warning">
+            <div class="ui_icon icon_plus"></div>
+            <span>Warning Floating Button</span>
+           </button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_floating_button info">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button info">
+            <div class="ui_icon icon_plus"></div>
+            <span>Info Floating Button</span>
+           </button>
+          </div>
+          <div class="example_flex_row">
+           <button class="ui_floating_button success">
+            <div class="ui_icon icon_plus"></div>
+           </button>
+           <button class="ui_floating_button success">
+            <div class="ui_icon icon_plus"></div>
+            <span>Success Floating Button</span>
+           </button>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Radio
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_radio">Radio</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="radio" class="ui_radio" name="ui_radio_basic">
+           <input type="radio" class="ui_radio" name="ui_radio_basic" checked>
+           <input type="radio" class="ui_radio" name="ui_radio_basic_disabled" disabled>
+           <input type="radio" class="ui_radio" name="ui_radio_basic_disabled" checked disabled>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="radio" class="ui_radio small" name="ui_radio_size" checked>
+           <input type="radio" class="ui_radio" name="ui_radio_size">
+           <input type="radio" class="ui_radio large" name="ui_radio_size">
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="radio" class="ui_radio primary" name="ui_radio_primary" checked>
+           <input type="radio" class="ui_radio secondary" name="ui_radio_secondary" checked>
+           <input type="radio" class="ui_radio error" name="ui_radio_error" checked>
+           <input type="radio" class="ui_radio warning" name="ui_radio_warning" checked>
+           <input type="radio" class="ui_radio info" name="ui_radio_info" checked>
+           <input type="radio" class="ui_radio success" name="ui_radio_success" checked>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Range Slider
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_range_slider">Range Slider</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="range" class="ui_range_slider" min="0" max="100">
+           <input type="range" class="ui_range_slider" min="0" max="100" step="10">
+           <input type="range" class="ui_range_slider" min="0" max="100" disabled>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="range" class="ui_range_slider small" min="0" max="100">
+           <input type="range" class="ui_range_slider" min="0" max="100">
+           <input type="range" class="ui_range_slider large" min="0" max="100">
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Select
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_select">Select</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_select">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select standard">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select filled">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Disabled</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_select">
+            <select disabled>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select standard">
+            <select disabled>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select filled">
+            <select disabled>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_select">
+            <select>
+             <option disabled>Option 1</option>
+             <option selected>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_select small">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select large">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_select standard small">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select standard">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select standard large">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_select filled small">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select filled">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select filled large">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Validation</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_select is_error">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select standard is_error">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+           <div class="ui_select filled is_error">
+            <select>
+             <option>Option 1</option>
+             <option>Option 2</option>
+             <option>Option 3</option>
+            </select>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Option group</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_select">
+            <select>
+             <option selected>None</option>
+             <optgroup label="Group 1">
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+             </optgroup>
+             <optgroup label="Group 2">
+              <option>Option 4</option>
+              <option>Option 5</option>
+              <option>Option 6</option>
+             </optgroup>
+            </select>
+           </div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Switch
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_switch">Switch</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="checkbox" class="ui_switch">
+           <input type="checkbox" class="ui_switch" checked>
+           <input type="checkbox" class="ui_switch" disabled>
+           <input type="checkbox" class="ui_switch" checked disabled>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="checkbox" class="ui_switch small">
+           <input type="checkbox" class="ui_switch">
+           <input type="checkbox" class="ui_switch large">
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="checkbox" class="ui_switch primary" checked>
+           <input type="checkbox" class="ui_switch secondary" checked>
+           <input type="checkbox" class="ui_switch error" checked>
+           <input type="checkbox" class="ui_switch warning" checked>
+           <input type="checkbox" class="ui_switch info" checked>
+           <input type="checkbox" class="ui_switch success" checked>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Text Field
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_text_field">Text Field</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field" placeholder="Text Filed">
+           <input type="text" class="ui_text_field filled" placeholder="Filled Text Field">
+           <input type="text" class="ui_text_field outlined" placeholder="Outlined Text Field">
+          </div>
+          <div class="example_flex_row">
+           <input type="password" class="ui_text_field" placeholder="Password">
+           <input type="number" class="ui_text_field" placeholder="Number">
+           <input type="date" class="ui_text_field">
+           <input type="time" class="ui_text_field">
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Disabled</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field" placeholder="Text Filed" disabled>
+           <input type="text" class="ui_text_field filled" placeholder="Filled Text Field" disabled>
+           <input type="text" class="ui_text_field outlined" placeholder="Outlined Text Field" disabled>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Readonly</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field" placeholder="Text Filed" readonly>
+           <input type="text" class="ui_text_field filled" placeholder="Filled Text Field" readonly>
+           <input type="text" class="ui_text_field outlined" placeholder="Outlined Text Field" readonly>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Sizes</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field small" placeholder="Small Text Filed">
+           <input type="text" class="ui_text_field" placeholder="Medium Text Field">
+           <input type="text" class="ui_text_field large" placeholder="Large Text Field">
+          </div>
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field filled small" placeholder="Small Text Filed">
+           <input type="text" class="ui_text_field filled" placeholder="Medium Text Field">
+           <input type="text" class="ui_text_field filled large" placeholder="Large Text Field">
+          </div>
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field outlined small" placeholder="Small Text Filed">
+           <input type="text" class="ui_text_field outlined" placeholder="Medium Text Field">
+           <input type="text" class="ui_text_field outlined large" placeholder="Large Text Field">
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Full Width</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field full" placeholder="Text Filed">
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Validation</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field is_error" placeholder="Text Filed">
+           <input type="text" class="ui_text_field filled is_error" placeholder="Filled Text Field">
+           <input type="text" class="ui_text_field outlined is_error" placeholder="Outlined Text Field">
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Multiline</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <textarea class="ui_text_field" placeholder="Text Filed"></textarea>
+           <textarea class="ui_text_field filled" placeholder="Filled Text Field"></textarea>
+           <textarea class="ui_text_field outlined" placeholder="Outlined Text Field"></textarea>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field primary" placeholder="Primary Text Filed">
+           <input type="text" class="ui_text_field primary filled" placeholder="Primary Text Field">
+           <input type="text" class="ui_text_field primary outlined" placeholder="Primary Text Field">
+          </div>
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field secondary" placeholder="Secondary Text Filed">
+           <input type="text" class="ui_text_field secondary filled" placeholder="Secondary Text Field">
+           <input type="text" class="ui_text_field secondary outlined" placeholder="Secondary Text Field">
+          </div>
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field error" placeholder="Error Text Filed">
+           <input type="text" class="ui_text_field error filled" placeholder="Error Text Field">
+           <input type="text" class="ui_text_field error outlined" placeholder="Error Text Field">
+          </div>
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field warning" placeholder="Warning Text Filed">
+           <input type="text" class="ui_text_field warning filled" placeholder="Warning Text Field">
+           <input type="text" class="ui_text_field warning outlined" placeholder="Warning Text Field">
+          </div>
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field info" placeholder="Info Text Filed">
+           <input type="text" class="ui_text_field info filled" placeholder="Info Text Field">
+           <input type="text" class="ui_text_field info outlined" placeholder="Info Text Field">
+          </div>
+          <div class="example_flex_row">
+           <input type="text" class="ui_text_field success" placeholder="Success Text Filed">
+           <input type="text" class="ui_text_field success filled" placeholder="Success Text Field">
+           <input type="text" class="ui_text_field success outlined" placeholder="Success Text Field">
+          </div>
+         </div>
+        </div>
+       </section>
+      </section>
+
+      <!------------------------------------------------------------------------
+      -- Navigations
+      ------------------------------------------------------------------------->
+      <section class="uic_container parent_section">
+       <h2 class="uic_heading h2" id="toc_navigations">Navigations</h2>
+
+       <!-----------------------------------------------------------------------
+       -- Crumbs
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_crumbs">Crumbs</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <ul class="ui_crumbs">
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+           </ul>
+          </div>
+         </div>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <ul class="ui_crumbs angle">
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Drawer
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_drawer">Drawer</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_button primary button_open_drawer">Open drawer</div>
+           <div class="ui_drawer">
+            <div class="drawer padding_vertical">
+             <ul class="ui_list simple primary">
+              <li class="clickable padding_horizontal_xl">Home</li>
+              <li class="clickable padding_horizontal_xl">Mypage</li>
+              <li class="clickable padding_horizontal_xl">Settings</li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Position</h4>
+         <div class="example_flex_column flex_align_center">
+          <div class="example_flex_row flex_justify_center">
+           <div class="ui_button primary button_open_drawer ui_box width_7xl text_align_center">Top</div>
+           <div class="ui_drawer top">
+            <div class="drawer padding_vertical">
+             <ul class="ui_list simple primary">
+              <li class="clickable padding_horizontal_xl">Home</li>
+              <li class="clickable padding_horizontal_xl">Mypage</li>
+              <li class="clickable padding_horizontal_xl">Settings</li>
+             </ul>
+            </div>
+           </div>
+          </div>
+          <div class="example_flex_row flex_justify_between">
+           <div class="ui_button primary button_open_drawer ui_box width_7xl text_align_center">Left</div>
+           <div class="ui_drawer left">
+            <div class="drawer padding_vertical">
+             <ul class="ui_list simple primary">
+              <li class="clickable padding_horizontal_xl">Home</li>
+              <li class="clickable padding_horizontal_xl">Mypage</li>
+              <li class="clickable padding_horizontal_xl">Settings</li>
+             </ul>
+            </div>
+           </div>
+           <div class="ui_box width_7xl"></div>
+           <div class="ui_button primary button_open_drawer ui_box width_7xl text_align_center">Right</div>
+           <div class="ui_drawer right">
+            <div class="drawer padding_vertical">
+             <ul class="ui_list simple primary">
+              <li class="clickable padding_horizontal_xl">Home</li>
+              <li class="clickable padding_horizontal_xl">Mypage</li>
+              <li class="clickable padding_horizontal_xl">Settings</li>
+             </ul>
+            </div>
+           </div>
+          </div>
+          <div class="example_flex_row flex_justify_center">
+           <div class="ui_button primary button_open_drawer ui_box width_7xl text_align_center">Bottom</div>
+           <div class="ui_drawer bottom">
+            <div class="drawer padding_vertical">
+             <ul class="ui_list simple primary">
+              <li class="clickable padding_horizontal_xl">Home</li>
+              <li class="clickable padding_horizontal_xl">Mypage</li>
+              <li class="clickable padding_horizontal_xl">Settings</li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Pagination
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_pagination">Pagination</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_pagination">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination outlined">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination outlined rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column">
+          <div class="example_flex_row">
+           <div class="ui_pagination primary">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination primary outlined">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination primary rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination primary outlined rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination secondary">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination secondary outlined">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination secondary rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination secondary outlined rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination error">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination error outlined">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination error rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination error outlined rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination warning">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination warning outlined">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination warning rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination warning outlined rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination info">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination info outlined">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination info rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination info outlined rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination success">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination success outlined">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination success rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_pagination success outlined rounded">
+            <button class="page_first" disabled></button>
+            <button class="page_prev" disabled></button>
+            <button class="page_no page_now">1</button>
+            <button class="page_no">2</button>
+            <button class="page_no">3</button>
+            <div class="page_ellipsis"></div>
+            <button class="page_no">10</button>
+            <button class="page_next"></button>
+            <button class="page_last"></button>
+           </div>
+          </div>
+         </div>
+        </div>
+       </section>
+
+       <!-----------------------------------------------------------------------
+       -- Tabs
+       ------------------------------------------------------------------------>
+       <section class="uic_container child_section">
+        <h3 class="uic_heading h3" id="toc_tabs">Tabs</h3>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Basic</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_tabs">
+            <button class="tab padding_vertical_md padding_horizontal_lg active">Tab1</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab2</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg" disabled>Tab3</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab4</button>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Colors</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_tabs primary">
+            <button class="tab padding_vertical_md padding_horizontal_lg active">Tab1</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab2</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg" disabled>Tab3</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab4</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_tabs secondary">
+            <button class="tab padding_vertical_md padding_horizontal_lg active">Tab1</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab2</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg" disabled>Tab3</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab4</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_tabs error">
+            <button class="tab padding_vertical_md padding_horizontal_lg active">Tab1</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab2</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg" disabled>Tab3</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab4</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_tabs warning">
+            <button class="tab padding_vertical_md padding_horizontal_lg active">Tab1</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab2</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg" disabled>Tab3</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab4</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_tabs info">
+            <button class="tab padding_vertical_md padding_horizontal_lg active">Tab1</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab2</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg" disabled>Tab3</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab4</button>
+           </div>
+          </div>
+          <div class="example_flex_row">
+           <div class="ui_tabs success">
+            <button class="tab padding_vertical_md padding_horizontal_lg active">Tab1</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab2</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg" disabled>Tab3</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab4</button>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div class="uic_container example_box">
+         <h4 class="ui_heading h4">Vertical</h4>
+         <div class="example_flex_column flex_align_stretch">
+          <div class="example_flex_row">
+           <div class="ui_tabs vertical">
+            <button class="tab padding_vertical_md padding_horizontal_lg active">Tab1</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab2</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg" disabled>Tab3</button>
+            <button class="tab padding_vertical_md padding_horizontal_lg">Tab4</button>
+           </div>
+          </div>
+         </div>
+        </div>
+       </section>
+      </section>
+     </main>
+    </div>
+   </div>
+
+   <span id="snackbar_copy" class="ui_snackbar slidein success">Copy successful!</span>
+   <span id="snackbar_copy_error" class="ui_snackbar slidein error">Copy failed...</span>
+
+  </div>
+  <script src="assets/js/index.js"></script>
+ </body>
+</html>
