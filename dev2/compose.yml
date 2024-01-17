@@ -22,7 +22,7 @@ services:
       - ${AUTH_PORT}:${AUTH_PORT}
     volumes:
       - ./system/auth:/system/auth
-      - ./proto/ui_catalog/assets/css/style.css:/system/auth/assets/css/ui.css
+      - ./proto/ui_catalog/assets/css/style.css:/system/auth/core/assets/css/ui.css
     environment:
       PORT: ${AUTH_PORT}
     working_dir: /system/auth/core
@@ -64,8 +64,6 @@ services:
     volumes:
       - ./system:/system
       - ./proto:/proto
-    environment:
-      AUTH_DB_URL: ${AUTH_DB_URL}
     tty: true
 
   # mailhog

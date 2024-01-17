@@ -64,10 +64,28 @@ dev:
 
 
 ################################################################################
+# Database utilities
+################################################################################
+
+# Migrate database
+migrate-auth:
+	@docker compose exec dev \
+		bash -c 'cd /system/auth && \
+			sea-orm-cli migrate ${cmd} -u ${AUTH_DB_URL}'
+
+# Install data
+install-auth:
+	@docker compose exec dev \
+		bash -c '
+			cd /system/auth/install && \
+			DATABASE_URL=${AUTH_DB_URL} && \
+			cargo run --bin ${bin}'
+
+
+################################################################################
 # Development utilities
 ################################################################################
 
 # Table definition
 tbls:
-	@docker compose run --rm \
-		tbls doc ${AUTH_DB_URL} ${TBLS_OUTPUT_PATH}/auth --force
+	@docker compose run --rm tbls doc ${AUTH_DB_URL} ./auth --force
