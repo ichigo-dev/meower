@@ -22,6 +22,7 @@ services:
       - ${AUTH_PORT}:${AUTH_PORT}
     volumes:
       - ./system/auth:/system/auth
+      - ./system/common:/system/common
       - ./proto/ui_catalog/assets/css/style.css:/system/auth/core/assets/css/ui.css
     environment:
       PORT: ${AUTH_PORT}

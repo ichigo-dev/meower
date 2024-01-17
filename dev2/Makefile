@@ -25,7 +25,7 @@ setup:
 # Build the containers
 build:
 	@echo "===== Building ====="
-	@docker build . -f ./docker/base/rust/Dockerfile -t rust_base
+	@docker build . -f ./docker/common/rust/Dockerfile -t rust_base
 	@docker compose build
 	@echo "===== Finish ====="
 
