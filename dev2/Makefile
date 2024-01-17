@@ -56,7 +56,7 @@ ps:
 ################################################################################
 
 auth_db:
-	@docker compose exec postgres \
+	@docker compose exec auth_db \
 		bash -c 'psql ${AUTH_DB_NAME} -U ${AUTH_DB_USER}'
 
 dev:
