@@ -2,6 +2,8 @@
 //! Database entities.
 //------------------------------------------------------------------------------
 
+mod entities;
+
 pub use entities::*;
 
 rust_i18n::i18n!("locales");

@@ -2,5 +2,6 @@
 resolver = "2"
 members = [
     "entity_ext",
+    "utility",
     "validator",
 ]
