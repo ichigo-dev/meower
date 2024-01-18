@@ -1,0 +1,12 @@
+entities:
+  jwt_token_code:
+    jwt_token_code_id:
+      name: "JWT認可コードID"
+    user_id:
+      name: "ユーザID"
+    code:
+      name: "認可コード"
+    created_at:
+      name: "作成日時"
+    expired_at:
+      name: "有効期限"

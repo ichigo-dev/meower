@@ -1,0 +1,16 @@
+entities:
+  client_application:
+    client_application_id:
+      name: "クライアントアプリケーションID"
+    name:
+      name: "アプリケーション名"
+    client_id:
+      name: "クライアントID"
+    client_secret:
+      name: "クライアントシークレット"
+    redirect_uri:
+      name: "リダイレクトURL"
+    created_at:
+      name: "作成日時"
+    updated_at:
+      name: "更新日時"

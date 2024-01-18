@@ -1,11 +1,9 @@
 //------------------------------------------------------------------------------
-//! User model.
+//! ClientApplication model.
 //------------------------------------------------------------------------------
 
 use meower_entity_ext::ValidateExt;
-use meower_validator::ValidationError;
-
-use super::user_auth::Entity as UserAuthEntity;
+use meower_validator::{ Validator, ValidationError };
 
 use async_trait::async_trait;
 use chrono::Utc;
@@ -18,40 +16,19 @@ use thiserror::Error;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
-#[sea_orm(table_name = "user")]
+#[sea_orm(table_name = "client_application")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub user_id: i64,
+    pub client_application_id: i64,
+    pub name: String,
     #[sea_orm(unique)]
-    pub email: String,
+    pub client_id: String,
     #[sea_orm(unique)]
-    pub jwt_subject: String,
-    pub last_logined_at: DateTime,
+    pub client_secret: String,
+    pub redirect_uri: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
-    pub is_deleted: bool,
-}
-
-impl Model
-{
-    //--------------------------------------------------------------------------
-    /// Tries to login.
-    //--------------------------------------------------------------------------
-    pub async fn login<C>( &self, hdb: &C, password: &str ) -> bool
-    where
-        C: ConnectionTrait,
-    {
-        if let Some(user_auth) = self
-            .find_related(UserAuthEntity)
-            .one(hdb)
-            .await
-            .unwrap_or(None)
-        {
-            return user_auth.verify_password(password);
-        }
-        false
-    }
 }
 
 
@@ -77,11 +54,13 @@ impl ActiveModelBehavior for ActiveModel
         let now = Utc::now().naive_utc();
         if insert
         {
-            let jwt_subject = meower_utility::get_random_str(64);
-            self.set(Column::JwtSubject, jwt_subject.into());
+            let client_id = meower_utility::get_random_code(32);
+            self.set(Column::ClientId, client_id.into());
+
+            let client_secret = meower_utility::get_random_code(64);
+            self.set(Column::ClientSecret, client_secret.into());
+
             self.set(Column::CreatedAt, now.into());
-            self.set(Column::LastLoginedAt, now.into());
-            self.set(Column::IsDeleted, false.into());
         }
         self.set(Column::UpdatedAt, now.into());
 
@@ -101,6 +80,35 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
+        let name = self.name.clone().take().unwrap_or("".to_string());
+        let redirect_uri = self
+            .redirect_uri
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
+
+        // Validates fields.
+        if let Err(e) = Validator::new()
+            .required()
+            .min_length(4)
+            .max_length(255)
+            .validate(&name)
+        {
+            return Err(Error::Validation { column: Column::Name, error: e });
+        }
+
+        if let Err(e) = Validator::new()
+            .required()
+            .min_length(4)
+            .max_length(255)
+            .is_url()
+            .validate(&redirect_uri)
+        {
+            return Err
+            (
+                Error::Validation { column: Column::RedirectUri, error: e }
+            );
+        }
 
         Ok(())
     }
@@ -119,13 +127,13 @@ impl Column
     {
         match self
         {
-            Self::UserId => t!("entities.user.user_id.name"),
-            Self::Email => t!("entities.user.email.name"),
-            Self::JwtSubject => t!("entities.user.jwt_subject.name"),
-            Self::CreatedAt => t!("entities.user.created_at.name"),
-            Self::UpdatedAt => t!("entities.user.updated_at.name"),
-            Self::LastLoginedAt => t!("entities.user.last_logined_at.name"),
-            Self::IsDeleted => t!("entities.user.is_deleted.name"),
+            Self::ClientApplicationId => t!("entities.client_application.client_application_id.name"),
+            Self::Name => t!("entities.client_application.name.name"),
+            Self::ClientId => t!("entities.client_application.client_id.name"),
+            Self::ClientSecret => t!("entities.client_application.client_secret.name"),
+            Self::RedirectUri => t!("entities.client_application.redirect_uri.name"),
+            Self::CreatedAt => t!("entities.client_application.created_at.name"),
+            Self::UpdatedAt => t!("entities.client_application.updated_at.name"),
         }
     }
 }
@@ -137,13 +145,10 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
-    #[error("User: The email already exists.")]
-    EmailAlreadyExists,
-
-    #[error("User: {column:?} {error:?}")]
+    #[error("ClientApplication: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
-    #[error("User: Database error.")]
+    #[error("ClientApplication: Database error.")]
     DbError(#[from] DbErr),
 }
 
@@ -156,7 +161,6 @@ impl Error
     {
         match self
         {
-            Self::EmailAlreadyExists => Some(Column::Email),
             Self::Validation { column, .. } => Some(*column),
             Self::DbError(_) => None,
         }
@@ -169,10 +173,6 @@ impl Error
     {
         match self
         {
-            Self::EmailAlreadyExists =>
-            {
-                t!("entities.user.email.error.already_exists")
-            },
             Self::Validation { column, error } =>
             {
                 error.get_error_message(&column.get_name())
@@ -187,16 +187,4 @@ impl Error
 /// Relation.
 //------------------------------------------------------------------------------
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
-pub enum Relation
-{
-    #[sea_orm(has_one = "super::user_auth::Entity")]
-    UserAuth,
-}
-
-impl Related<super::user_auth::Entity> for Entity
-{
-    fn to() -> RelationDef
-    {
-        Relation::UserAuth.def()
-    }
-}
+pub enum Relation {}

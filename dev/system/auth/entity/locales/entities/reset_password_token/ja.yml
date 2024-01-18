@@ -1,0 +1,12 @@
+entities:
+  reset_password_token:
+    reset_password_token_id:
+      name: "パスワードリセットトークンID"
+    user_id:
+      name: "ユーザID"
+    token:
+      name: "パスワードリセットトークン"
+    created_at:
+      name: "作成日時"
+    expired_at:
+      name: "有効期限"

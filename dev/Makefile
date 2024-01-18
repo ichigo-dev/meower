@@ -25,7 +25,7 @@ setup:
 # Build the containers
 build:
 	@echo "===== Building ====="
-	@docker build . -f ./docker/base/rust/Dockerfile -t rust_base
+	@docker build . -f ./docker/common/rust/Dockerfile -t rust_base
 	@docker compose build
 	@echo "===== Finish ====="
 
@@ -55,12 +55,9 @@ ps:
 # Enter containers
 ################################################################################
 
-balancer:
-	@docker compose exec balancer bash
-
-postgres:
-	@docker compose exec postgres \
-		bash -c 'psql ${POSTGRES_DB} -U ${POSTGRES_USER}'
+auth_db:
+	@docker compose exec auth_db \
+		bash -c 'psql ${AUTH_DB_NAME} -U ${AUTH_DB_USER}'
 
 dev:
 	@docker compose exec dev bash
@@ -71,14 +68,18 @@ dev:
 ################################################################################
 
 # Migrate database
-migrate:
+migrate-auth:
 	@docker compose exec dev \
-		bash -c 'cd /system/database && sea-orm-cli migrate ${cmd}'
+		bash -c 'cd /system/auth && \
+			sea-orm-cli migrate ${cmd} -u ${AUTH_DB_URL}'
 
 # Install data
-install:
+install-auth:
 	@docker compose exec dev \
-		bash -c 'cd /system/database/install && cargo run --bin ${bin}'
+		bash -c '
+			cd /system/auth/install && \
+			DATABASE_URL=${AUTH_DB_URL} && \
+			cargo run --bin ${bin}'
 
 
 ################################################################################
@@ -87,4 +88,4 @@ install:
 
 # Table definition
 tbls:
-	@docker compose run --rm tbls doc --force --config .tbls.yml
+	@docker compose run --rm tbls doc ${AUTH_DB_URL} ./auth --force

@@ -54,7 +54,6 @@ impl MigrationTrait for Migration
                     .string()
                     .string_len(255)
                     .not_null()
-                    .unique_key()
             )
             .col
             (
