@@ -17,6 +17,7 @@ pub(crate) enum User
     JwtSubject,
     CreatedAt,
     UpdatedAt,
+    LastLoginedAt,
     IsDeleted,
 }
 

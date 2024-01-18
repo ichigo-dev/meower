@@ -1,0 +1,12 @@
+entities:
+  temporary_user_code:
+    temporary_user_code_id:
+      name: "仮登録ユーザコードID"
+    temporary_user_id:
+      name: "仮登録ユーザID"
+    code:
+      name: "認証コード"
+    created_at:
+      name: "作成日時"
+    expired_at:
+      name: "有効期限"

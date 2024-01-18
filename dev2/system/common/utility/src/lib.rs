@@ -51,3 +51,12 @@ pub fn verify_value( value: &str, hash: &str ) -> bool
     let parsed_hash = PasswordHash::new(&hash).unwrap();
     Argon2::default().verify_password(value.as_bytes(), &parsed_hash).is_ok()
 }
+
+
+//------------------------------------------------------------------------------
+/// Checks if a value is hashed.
+//------------------------------------------------------------------------------
+pub fn is_hashed( value: &str ) -> bool
+{
+    PasswordHash::new(value).is_ok()
+}

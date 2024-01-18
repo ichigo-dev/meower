@@ -1,0 +1,12 @@
+entities:
+  user_auth:
+    user_auth_id:
+      name: "ユーザ認証ID"
+    user_id:
+      name: "ユーザID"
+    password:
+      name: "パスワード"
+    created_at:
+      name: "作成日時"
+    updated_at:
+      name: "更新日時"

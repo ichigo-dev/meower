@@ -1,0 +1,18 @@
+entities:
+  user:
+    user_id:
+      name: "ユーザID"
+    email:
+      name: "メールアドレス"
+      error:
+        already_exists: "そのメールアドレスは既に登録されています"
+    jwt_subject:
+      name: "JWT sub"
+    created_at:
+      name: "登録日時"
+    updated_at:
+      name: "更新日時"
+    last_logined_at:
+      name: "最終ログイン日時"
+    is_deleted:
+      name: "削除フラグ"

@@ -1,56 +1,43 @@
 //------------------------------------------------------------------------------
-//! User model.
+//! TemporaryUserCode model.
 //------------------------------------------------------------------------------
 
 use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
-use super::user_auth::Entity as UserAuthEntity;
-
 use async_trait::async_trait;
-use chrono::Utc;
+use chrono::{ Duration, Utc };
 use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
+
+const CODE_EXPIRATION_MINUTES: i64 = 10;
 
 
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
-#[sea_orm(table_name = "user")]
+#[sea_orm(table_name = "temporary_user_code")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub user_id: i64,
-    #[sea_orm(unique)]
-    pub email: String,
-    #[sea_orm(unique)]
-    pub jwt_subject: String,
-    pub last_logined_at: DateTime,
+    pub temporary_user_code_id: i64,
+    pub temporary_user_id: i64,
+    pub code: String,
     pub created_at: DateTime,
-    pub updated_at: DateTime,
-    pub is_deleted: bool,
+    pub expired_at: DateTime,
 }
 
 impl Model
 {
     //--------------------------------------------------------------------------
-    /// Tries to login.
+    /// Verifies code.
     //--------------------------------------------------------------------------
-    pub async fn login<C>( &self, hdb: &C, password: &str ) -> bool
-    where
-        C: ConnectionTrait,
+    pub fn verify( &self ) -> bool
     {
-        if let Some(user_auth) = self
-            .find_related(UserAuthEntity)
-            .one(hdb)
-            .await
-            .unwrap_or(None)
-        {
-            return user_auth.verify_password(password);
-        }
-        false
+        let now = Utc::now().naive_utc();
+        now <= self.expired_at
     }
 }
 
@@ -67,44 +54,45 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         mut self,
-        _hdb: &C,
+        hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
     where
         C: ConnectionTrait,
     {
-        // Sets the default values.
-        let now = Utc::now().naive_utc();
+        // Deletes the old datas.
         if insert
         {
-            let jwt_subject = meower_utility::get_random_str(64);
-            self.set(Column::JwtSubject, jwt_subject.into());
-            self.set(Column::CreatedAt, now.into());
-            self.set(Column::LastLoginedAt, now.into());
-            self.set(Column::IsDeleted, false.into());
+            let temporary_user_id = self
+                .temporary_user_id
+                .clone()
+                .take()
+                .unwrap_or(0);
+            Entity::delete_many()
+                .filter(Column::TemporaryUserId.eq(temporary_user_id))
+                .exec(hdb)
+                .await?;
         }
-        self.set(Column::UpdatedAt, now.into());
+
+        // Sets the default values.
+        if insert
+        {
+            let code = meower_utility::get_random_code(6);
+            self.set(Column::Code, code.into());
+
+            let now = Utc::now().naive_utc();
+            self.set(Column::CreatedAt, now.into());
+
+            let expired_at = now + Duration::minutes(CODE_EXPIRATION_MINUTES);
+            self.set(Column::ExpiredAt, expired_at.into());
+        }
 
         Ok(self)
     }
 }
 
 #[async_trait]
-impl ValidateExt for ActiveModel
-{
-    type Error = Error;
-
-    //--------------------------------------------------------------------------
-    /// Validates the data.
-    //--------------------------------------------------------------------------
-    async fn validate<C>( &self, _hdb: &C ) -> Result<(), Self::Error>
-    where
-        C: ConnectionTrait,
-    {
-
-        Ok(())
-    }
-}
+impl ValidateExt for ActiveModel { type Error = Error; }
 
 
 //------------------------------------------------------------------------------
@@ -119,13 +107,11 @@ impl Column
     {
         match self
         {
-            Self::UserId => t!("entities.user.user_id.name"),
-            Self::Email => t!("entities.user.email.name"),
-            Self::JwtSubject => t!("entities.user.jwt_subject.name"),
-            Self::CreatedAt => t!("entities.user.created_at.name"),
-            Self::UpdatedAt => t!("entities.user.updated_at.name"),
-            Self::LastLoginedAt => t!("entities.user.last_logined_at.name"),
-            Self::IsDeleted => t!("entities.user.is_deleted.name"),
+            Self::TemporaryUserCodeId => t!("entities.temporary_user_code.temporary_user_code_id.name"),
+            Self::TemporaryUserId => t!("entities.temporary_user_code.temporary_user_id.name"),
+            Self::Code => t!("entities.temporary_user_code.code.name"),
+            Self::CreatedAt => t!("entities.temporary_user_code.created_at.name"),
+            Self::ExpiredAt => t!("entities.temporary_user_code.expired_at.name"),
         }
     }
 }
@@ -137,13 +123,10 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
-    #[error("User: The email already exists.")]
-    EmailAlreadyExists,
-
-    #[error("User: {column:?} {error:?}")]
+    #[error("TemporaryUser: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
-    #[error("User: Database error.")]
+    #[error("TemporaryUser: Database error.")]
     DbError(#[from] DbErr),
 }
 
@@ -156,7 +139,6 @@ impl Error
     {
         match self
         {
-            Self::EmailAlreadyExists => Some(Column::Email),
             Self::Validation { column, .. } => Some(*column),
             Self::DbError(_) => None,
         }
@@ -169,10 +151,6 @@ impl Error
     {
         match self
         {
-            Self::EmailAlreadyExists =>
-            {
-                t!("entities.user.email.error.already_exists")
-            },
             Self::Validation { column, error } =>
             {
                 error.get_error_message(&column.get_name())
@@ -189,14 +167,20 @@ impl Error
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(has_one = "super::user_auth::Entity")]
-    UserAuth,
+    #[sea_orm(
+        belongs_to = "super::temporary_user::Entity",
+        from = "Column::TemporaryUserId",
+        to = "super::temporary_user::Column::TemporaryUserId",
+        on_update = "NoAction",
+        on_delete = "Cascade"
+    )]
+    TemporaryUser,
 }
 
-impl Related<super::user_auth::Entity> for Entity
+impl Related<super::temporary_user::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::UserAuth.def()
+        Relation::TemporaryUser.def()
     }
 }

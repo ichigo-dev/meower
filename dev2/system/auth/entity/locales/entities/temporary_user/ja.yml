@@ -1,0 +1,14 @@
+entities:
+  temporary_user:
+    temporary_user_id:
+      name: "仮登録ユーザID"
+    token:
+      name: "トークン"
+    email:
+      name: "メールアドレス"
+      error:
+        already_exists: "そのメールアドレスは既に登録されています"
+    password:
+      name: "パスワード"
+    created_at:
+      name: "登録日時"

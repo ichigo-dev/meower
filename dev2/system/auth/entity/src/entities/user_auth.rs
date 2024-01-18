@@ -1,11 +1,9 @@
 //------------------------------------------------------------------------------
-//! User model.
+//! UserAuth model.
 //------------------------------------------------------------------------------
 
 use meower_entity_ext::ValidateExt;
-use meower_validator::ValidationError;
-
-use super::user_auth::Entity as UserAuthEntity;
+use meower_validator::{ Validator, ValidationError };
 
 use async_trait::async_trait;
 use chrono::Utc;
@@ -18,39 +16,25 @@ use thiserror::Error;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
-#[sea_orm(table_name = "user")]
+#[sea_orm(table_name = "user_auth")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
+    pub user_auth_id: i64,
     pub user_id: i64,
-    #[sea_orm(unique)]
-    pub email: String,
-    #[sea_orm(unique)]
-    pub jwt_subject: String,
-    pub last_logined_at: DateTime,
+    pub password: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
-    pub is_deleted: bool,
 }
 
 impl Model
 {
     //--------------------------------------------------------------------------
-    /// Tries to login.
+    /// Verifies password.
     //--------------------------------------------------------------------------
-    pub async fn login<C>( &self, hdb: &C, password: &str ) -> bool
-    where
-        C: ConnectionTrait,
+    pub fn verify_password( &self, password: &str ) -> bool
     {
-        if let Some(user_auth) = self
-            .find_related(UserAuthEntity)
-            .one(hdb)
-            .await
-            .unwrap_or(None)
-        {
-            return user_auth.verify_password(password);
-        }
-        false
+        meower_utility::verify_value(password, &self.password)
     }
 }
 
@@ -67,23 +51,36 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         mut self,
-        _hdb: &C,
+        hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
     where
         C: ConnectionTrait,
     {
-        // Sets the default values.
+        // Deletes the old datas.
+        if insert
+        {
+            let user_id = self.user_id.clone().take().unwrap_or(0);
+            Entity::delete_many()
+                .filter(Column::UserId.eq(user_id))
+                .exec(hdb)
+                .await?;
+        }
+
         let now = Utc::now().naive_utc();
         if insert
         {
-            let jwt_subject = meower_utility::get_random_str(64);
-            self.set(Column::JwtSubject, jwt_subject.into());
             self.set(Column::CreatedAt, now.into());
-            self.set(Column::LastLoginedAt, now.into());
-            self.set(Column::IsDeleted, false.into());
         }
         self.set(Column::UpdatedAt, now.into());
+
+        // Hashes the password.
+        let password = self.password.clone().take().unwrap_or("".to_string());
+        if meower_utility::is_hashed(&password) == false
+        {
+            let password = meower_utility::hash_value(&password);
+            self.set(Column::Password, password.into());
+        };
 
         Ok(self)
     }
@@ -101,6 +98,20 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
+        let password = self.password.clone().take().unwrap_or("".to_string());
+
+        // Validates fields.
+        if let Err(e) = Validator::new()
+            .required()
+            .min_length(8)
+            .max_length(255)
+            .regex(r".*[a-zA-Z].*")
+            .regex(r".*[0-9].*")
+            .regex(r".*[!@#$%^&*()].*")
+            .validate(&password)
+        {
+            return Err(Error::Validation{ column: Column::Password, error: e });
+        };
 
         Ok(())
     }
@@ -119,13 +130,11 @@ impl Column
     {
         match self
         {
-            Self::UserId => t!("entities.user.user_id.name"),
-            Self::Email => t!("entities.user.email.name"),
-            Self::JwtSubject => t!("entities.user.jwt_subject.name"),
-            Self::CreatedAt => t!("entities.user.created_at.name"),
-            Self::UpdatedAt => t!("entities.user.updated_at.name"),
-            Self::LastLoginedAt => t!("entities.user.last_logined_at.name"),
-            Self::IsDeleted => t!("entities.user.is_deleted.name"),
+            Self::UserAuthId => t!("entities.user_auth.user_auth_id.name"),
+            Self::UserId => t!("entities.user_auth.user_id.name"),
+            Self::Password => t!("entities.user_auth.password.name"),
+            Self::CreatedAt => t!("entities.user_auth.created_at.name"),
+            Self::UpdatedAt => t!("entities.user_auth.updated_at.name"),
         }
     }
 }
@@ -137,13 +146,10 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
-    #[error("User: The email already exists.")]
-    EmailAlreadyExists,
-
-    #[error("User: {column:?} {error:?}")]
+    #[error("UserAuth: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
-    #[error("User: Database error.")]
+    #[error("UserAuth: Database error.")]
     DbError(#[from] DbErr),
 }
 
@@ -156,7 +162,6 @@ impl Error
     {
         match self
         {
-            Self::EmailAlreadyExists => Some(Column::Email),
             Self::Validation { column, .. } => Some(*column),
             Self::DbError(_) => None,
         }
@@ -169,10 +174,6 @@ impl Error
     {
         match self
         {
-            Self::EmailAlreadyExists =>
-            {
-                t!("entities.user.email.error.already_exists")
-            },
             Self::Validation { column, error } =>
             {
                 error.get_error_message(&column.get_name())
@@ -189,14 +190,20 @@ impl Error
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(has_one = "super::user_auth::Entity")]
-    UserAuth,
+    #[sea_orm(
+        belongs_to = "super::user::Entity",
+        from = "Column::UserId",
+        to = "super::user::Column::UserId",
+        on_update = "NoAction",
+        on_delete = "Cascade"
+    )]
+    User,
 }
 
-impl Related<super::user_auth::Entity> for Entity
+impl Related<super::user::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::UserAuth.def()
+        Relation::User.def()
     }
 }

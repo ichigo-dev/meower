@@ -65,6 +65,13 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(User::LastLoginedAt)
+                    .timestamp()
+                    .default(Expr::current_timestamp())
+                    .not_null()
+            )
+            .col
+            (
                 ColumnDef::new(User::IsDeleted)
                     .boolean()
                     .default(false)
@@ -81,6 +88,7 @@ impl MigrationTrait for Migration
             "COMMENT ON COLUMN \"user\".\"jwt_subject\" IS 'JWT subject'",
             "COMMENT ON COLUMN \"user\".\"created_at\" IS 'Create date'",
             "COMMENT ON COLUMN \"user\".\"updated_at\" IS 'Update date'",
+            "COMMENT ON COLUMN \"user\".\"last_logined_at\" IS 'Last logined date'",
             "COMMENT ON COLUMN \"user\".\"is_deleted\" IS 'Soft delete flag'",
         ];
         let hdb = manager.get_connection();

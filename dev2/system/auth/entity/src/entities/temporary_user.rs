@@ -1,15 +1,19 @@
 //------------------------------------------------------------------------------
-//! User model.
+//! TemporaryUser model.
 //------------------------------------------------------------------------------
 
 use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
-use super::user_auth::Entity as UserAuthEntity;
+use super::user::ActiveModel as UserActiveModel;
+use super::user::Error as UserError;
+use super::user_auth::ActiveModel as UserAuthActiveModel;
+use super::user_auth::Error as UserAuthError;
 
 use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
+use sea_orm::ActiveValue;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -18,40 +22,17 @@ use thiserror::Error;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
-#[sea_orm(table_name = "user")]
+#[sea_orm(table_name = "temporary_user")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub user_id: i64,
+    pub temporary_user_id: i64,
+    #[sea_orm(unique)]
+    pub token: String,
     #[sea_orm(unique)]
     pub email: String,
-    #[sea_orm(unique)]
-    pub jwt_subject: String,
-    pub last_logined_at: DateTime,
+    pub password: String,
     pub created_at: DateTime,
-    pub updated_at: DateTime,
-    pub is_deleted: bool,
-}
-
-impl Model
-{
-    //--------------------------------------------------------------------------
-    /// Tries to login.
-    //--------------------------------------------------------------------------
-    pub async fn login<C>( &self, hdb: &C, password: &str ) -> bool
-    where
-        C: ConnectionTrait,
-    {
-        if let Some(user_auth) = self
-            .find_related(UserAuthEntity)
-            .one(hdb)
-            .await
-            .unwrap_or(None)
-        {
-            return user_auth.verify_password(password);
-        }
-        false
-    }
 }
 
 
@@ -74,16 +55,22 @@ impl ActiveModelBehavior for ActiveModel
         C: ConnectionTrait,
     {
         // Sets the default values.
-        let now = Utc::now().naive_utc();
         if insert
         {
-            let jwt_subject = meower_utility::get_random_str(64);
-            self.set(Column::JwtSubject, jwt_subject.into());
+            let token = meower_utility::get_random_str(64);
+            self.set(Column::Token, token.into());
+
+            let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
-            self.set(Column::LastLoginedAt, now.into());
-            self.set(Column::IsDeleted, false.into());
         }
-        self.set(Column::UpdatedAt, now.into());
+
+        // Hashes the password.
+        let password = self.password.clone().take().unwrap_or("".to_string());
+        if meower_utility::is_hashed(&password) == false
+        {
+            let password = meower_utility::hash_value(&password);
+            self.set(Column::Password, password.into());
+        };
 
         Ok(self)
     }
@@ -97,10 +84,46 @@ impl ValidateExt for ActiveModel
     //--------------------------------------------------------------------------
     /// Validates the data.
     //--------------------------------------------------------------------------
-    async fn validate<C>( &self, _hdb: &C ) -> Result<(), Self::Error>
+    async fn validate<C>( &self, hdb: &C ) -> Result<(), Self::Error>
     where
         C: ConnectionTrait,
     {
+        let email = self
+            .email
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
+        let password = self
+            .password
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
+
+        // Checks if the email already exists.
+        if Entity::find()
+            .filter(Column::Email.eq(&email))
+            .one(hdb)
+            .await?
+            .is_some()
+        {
+            return Err(Error::EmailAlreadyExists);
+        }
+
+        // User validation.
+        let user = UserActiveModel
+        {
+            email: ActiveValue::Set(email),
+            ..Default::default()
+        };
+        user.validate(hdb).await?;
+
+        // UserAuth validation.
+        let user_auth = UserAuthActiveModel
+        {
+            password: ActiveValue::Set(password),
+            ..Default::default()
+        };
+        user_auth.validate(hdb).await?;
 
         Ok(())
     }
@@ -119,13 +142,11 @@ impl Column
     {
         match self
         {
-            Self::UserId => t!("entities.user.user_id.name"),
-            Self::Email => t!("entities.user.email.name"),
-            Self::JwtSubject => t!("entities.user.jwt_subject.name"),
-            Self::CreatedAt => t!("entities.user.created_at.name"),
-            Self::UpdatedAt => t!("entities.user.updated_at.name"),
-            Self::LastLoginedAt => t!("entities.user.last_logined_at.name"),
-            Self::IsDeleted => t!("entities.user.is_deleted.name"),
+            Self::TemporaryUserId => t!("entities.temporary_user.temporary_user_id.name"),
+            Self::Token => t!("entities.temporary_user.token.name"),
+            Self::Email => t!("entities.temporary_user.email.name"),
+            Self::Password => t!("entities.temporary_user.password.name"),
+            Self::CreatedAt => t!("entities.temporary_user.created_at.name"),
         }
     }
 }
@@ -137,13 +158,19 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
-    #[error("User: The email already exists.")]
+    #[error("TemporaryUser: The email already exists.")]
     EmailAlreadyExists,
 
-    #[error("User: {column:?} {error:?}")]
+    #[error("TemporaryUser: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
-    #[error("User: Database error.")]
+    #[error("TemporaryUser: {0}")]
+    UserError(#[from] UserError),
+
+    #[error("TemporaryUser: {0}")]
+    UserAuthError(#[from] UserAuthError),
+
+    #[error("TemporaryUser: Database error.")]
     DbError(#[from] DbErr),
 }
 
@@ -158,6 +185,8 @@ impl Error
         {
             Self::EmailAlreadyExists => Some(Column::Email),
             Self::Validation { column, .. } => Some(*column),
+            Self::UserError(_) => Some(Column::Email),
+            Self::UserAuthError(_) => Some(Column::Password),
             Self::DbError(_) => None,
         }
     }
@@ -171,12 +200,14 @@ impl Error
         {
             Self::EmailAlreadyExists =>
             {
-                t!("entities.user.email.error.already_exists")
+                t!("entities.temporary_user.email.error.already_exists")
             },
             Self::Validation { column, error } =>
             {
                 error.get_error_message(&column.get_name())
             },
+            Self::UserError(error) => error.get_message(),
+            Self::UserAuthError(error) => error.get_message(),
             Self::DbError(_) => t!("common.error.db"),
         }
     }
@@ -189,14 +220,14 @@ impl Error
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(has_one = "super::user_auth::Entity")]
-    UserAuth,
+    #[sea_orm(has_many = "super::temporary_user_code::Entity")]
+    TemporaryUserCode,
 }
 
-impl Related<super::user_auth::Entity> for Entity
+impl Related<super::temporary_user_code::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::UserAuth.def()
+        Relation::TemporaryUserCode.def()
     }
 }
