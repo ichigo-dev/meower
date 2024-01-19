@@ -1,0 +1,4 @@
+pages:
+  bad_request:
+    title: "不正アクセス"
+    heading: "不正なアクセスです"

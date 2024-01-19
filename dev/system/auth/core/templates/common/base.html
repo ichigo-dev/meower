@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+{% import "header.html" as header %}
+{% import "footer.html" as footer %}
+
+<html class="height_full">
+ <head>
+  <title>{% block title %}{% endblock %} - Meower</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/auth/assets/css/ui.css" />
+  <link rel="stylesheet" href="/auth/assets/css/style.css" />
+ </head>
+
+ <body class="flex flex_column min_height_full">
+  <div class="theme_meower_light flex_grow flex flex_column">
+   {% call header::render() %}
+   <main class="flex_grow size_full flex flex_column">
+    {% block content %}{% endblock %}
+   </main>
+   {% call footer::render() %}
+  </div>
+ </body>
+</html>

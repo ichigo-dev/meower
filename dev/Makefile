@@ -76,10 +76,8 @@ migrate-auth:
 # Install data
 install-auth:
 	@docker compose exec dev \
-		bash -c '
-			cd /system/auth/install && \
-			DATABASE_URL=${AUTH_DB_URL} && \
-			cargo run --bin ${bin}'
+		bash -c 'cd /system/auth/install && \
+			env DATABASE_URL=${AUTH_DB_URL} cargo run --bin ${bin}'
 
 
 ################################################################################

@@ -26,6 +26,8 @@ services:
       - ./proto/ui_catalog/assets/css/style.css:/system/auth/core/assets/css/ui.css
     environment:
       PORT: ${AUTH_PORT}
+      DATABASE_URL: ${AUTH_DB_URL}
+      FALLBACK_LOCALE: ${FALLBACK_LOCALE}
     working_dir: /system/auth/core
     command: "cargo watch -x run"
     depends_on:
