@@ -59,6 +59,10 @@ auth_db:
 	@docker compose exec auth_db \
 		bash -c 'psql ${AUTH_DB_NAME} -U ${AUTH_DB_USER}'
 
+app_db:
+	@docker compose exec app_db \
+		bash -c 'psql ${APP_DB_NAME} -U ${APP_DB_USER}'
+
 dev:
 	@docker compose exec dev bash
 
@@ -72,6 +76,11 @@ migrate-auth:
 	@docker compose exec dev \
 		bash -c 'cd /system/auth && \
 			sea-orm-cli migrate ${cmd} -u ${AUTH_DB_URL}'
+
+migrate-app:
+	@docker compose exec dev \
+		bash -c 'cd /system/app && \
+			sea-orm-cli migrate ${cmd} -u ${APP_DB_URL}'
 
 # Install data
 install-auth:
@@ -87,3 +96,4 @@ install-auth:
 # Table definition
 tbls:
 	@docker compose run --rm tbls doc ${AUTH_DB_URL} ./auth --force
+	@docker compose run --rm tbls doc ${APP_DB_URL} ./app --force

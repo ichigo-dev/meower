@@ -2,8 +2,6 @@
 
 Task management application
 
-![Sequence - Auth](./sequence_auth.png)
-
 
 ## Description
 

@@ -55,6 +55,47 @@ services:
     restart: always
     tty: true
 
+  # App server
+  app:
+    container_name: meower_app
+    build:
+      context: .
+      dockerfile: ./docker/services/app/Dockerfile
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - ./system/app:/system/app
+      - ./system/common:/system/common
+    environment:
+      PORT: ${APP_PORT}
+      DATABASE_URL: ${APP_DB_URL}
+      CLIENT_ID_KEY: ${CLIENT_ID_KEY}
+      CLIENT_SECRET_KEY: ${CLIENT_SECRET_KEY}
+    working_dir: /system/app/core
+    command: "cargo watch -x run"
+    depends_on:
+      - app_db
+    tty: true
+
+  # App server DB
+  app_db:
+    container_name: meower_app_db
+    build:
+      context: .
+      dockerfile: ./docker/services/postgres/Dockerfile
+    ports:
+      - ${APP_DB_PORT}:5432
+    volumes:
+      - app_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${APP_DB_NAME}
+      POSTGRES_USER: ${APP_DB_USER}
+      POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8
+    command: ["-c", "max_connections=200"]
+    restart: always
+    tty: true
+
 
   ##############################################################################
   # Development tools
@@ -69,6 +110,10 @@ services:
     volumes:
       - ./system:/system
       - ./proto:/proto
+    environment:
+      MEOWER_CLIENT_ID: ${MEOWER_CLIENT_ID}
+      MEOWER_CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
+      MEOWER_REDIRECT_URI: ${MEOWER_REDIRECT_URI}
     tty: true
 
   # mailhog
@@ -93,6 +138,7 @@ services:
     working_dir: /work
     depends_on:
       - auth_db
+      - app_db
     tty: true
 
   # UI catalog
@@ -116,5 +162,6 @@ services:
 ################################################################################
 volumes:
   auth_db_data:
+  app_db_data:
   mailhog_data:
   ui_catalog_node_modules:
