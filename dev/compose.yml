@@ -28,6 +28,8 @@ services:
       PORT: ${AUTH_PORT}
       DATABASE_URL: ${AUTH_DB_URL}
       FALLBACK_LOCALE: ${FALLBACK_LOCALE}
+      CLIENT_ID_KEY: ${CLIENT_ID_KEY}
+      CLIENT_SECRET_KEY: ${CLIENT_SECRET_KEY}
     working_dir: /system/auth/core
     command: "cargo watch -x run"
     depends_on:

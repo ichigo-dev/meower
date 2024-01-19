@@ -33,8 +33,7 @@ async fn main()
 
     let auth_routes = Router::new()
         .route("/login", get(pages::login::get_handler))
-        .route("/login", post(pages::login::post_handler))
-        .nest_service("/assets", ServeDir::new("assets"));
+        .route("/login", post(pages::login::post_handler));
 
     // Creates the application routes.
     let routes = Router::new()
@@ -52,6 +51,7 @@ async fn main()
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
+        .nest_service("/assets", ServeDir::new("assets"))
         .with_state(state);
 
     // Starts the server.

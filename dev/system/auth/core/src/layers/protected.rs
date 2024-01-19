@@ -27,9 +27,17 @@ pub(crate) async fn layer
     next: Next,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
+    let config = state.config;
     let hdb = state.hdb;
 
-    let client_id= "hoge";
+    let client_id = match req.headers().get(config.client_id_key.as_str())
+    {
+        Some(client_id) => client_id.to_str().unwrap_or("").to_string(),
+        None =>
+        {
+            return Err(Html(PageTemplate::default().render().unwrap()));
+        },
+    };
     let client_application = match ClientApplicationEntity::find()
         .filter(ClientApplicationColumn::ClientId.eq(client_id))
         .one(&hdb)

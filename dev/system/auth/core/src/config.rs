@@ -8,7 +8,7 @@ use std::env;
 //------------------------------------------------------------------------------
 /// Config.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub(crate) struct Config
 {
     // Server config.
@@ -19,6 +19,10 @@ pub(crate) struct Config
 
     // Locale config.
     pub(crate) fallback_locale: String,
+
+    // Parameter config.
+    pub(crate) client_id_key: String,
+    pub(crate) client_secret_key: String,
 }
 
 impl Config
@@ -42,6 +46,12 @@ impl Config
         let fallback_locale = env::var("FALLBACK_LOCALE")
             .unwrap_or_else(|_| "en".to_string());
 
+        // Parameter config.
+        let client_id_key = env::var("CLIENT_ID_KEY")
+            .expect("CLIENT_ID_KEY must be set");
+        let client_secret_key = env::var("CLIENT_SECRET_KEY")
+            .expect("CLIENT_SECRET_KEY must be set");
+
         Self
         {
             // Server config.
@@ -52,6 +62,10 @@ impl Config
 
             // Locale config.
             fallback_locale,
+
+            // Parameter config.
+            client_id_key,
+            client_secret_key,
         }
     }
 }

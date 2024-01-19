@@ -23,7 +23,7 @@ async fn main()
         .expect("Failed to setup the database");
     let tsx = hdb.begin().await.unwrap();
 
-    println!("=== Installing test data ===");
+    println!("=== Installing initial data ===");
 
     let client_application = ClientApplicationActiveModel
     {
@@ -34,10 +34,10 @@ async fn main()
     if let Err(e) = client_application.validate_and_insert(&tsx).await
     {
         tsx.rollback().await.unwrap();
-        panic!("Failed to install test data: {}", e.get_message());
+        panic!("Failed to install initial data: {}", e.get_message());
     };
 
-    println!("=== Test data installed ===");
+    println!("=== Initial data installed ===");
 
     tsx.commit().await.unwrap();
 }
