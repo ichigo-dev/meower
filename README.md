@@ -35,21 +35,21 @@ everything.
 │   │   └ ui_catalog/      ... UI catalog
 │   │
 │   ├ system/              ... Contains system components
-│   │   ├ auth_server/     ... Authentication server
+│   │   ├ app/             ... Application server
+│   │   │   ├ core/        ... Server core
+│   │   │   ├ entity/      ... Database table entities
+│   │   │   └ migration/   ... Migration files
 │   │   │
-│   │   ├ util/            ... Contains utility files for the entire application
-│   │   │   ├ type/        ... Definition of common types
-│   │   │   └ validator/   ... Validation utility
-│   │   │
-│   │   ├ database/
+│   │   ├ auth/            ... Authentication server
+│   │   │   ├ core/        ... Server core
 │   │   │   ├ entity/      ... Database table entities
 │   │   │   ├ install/     ... Utility for installing test data and initial data
 │   │   │   └ migration/   ... Migration files
 │   │   │
-│   │   └ service/
-│   │       ├ schema/      ... API schemas
-│   │       ├ api/         ... Application backend(API) server
-│   │       └ spa/         ... Application frontend(SPA) server
+│   │   └ common/          ... Contains utility files for the entire application
+│   │       ├ entity_ext/  ... Entity extensions
+│   │       ├ utility/     ... Utility functions
+│   │       └ validator/   ... Validation
 │   │
 │   ├ .env                 ... Definition of various environment variables
 │   ├ .env.example         ... Example of .env
