@@ -51,7 +51,7 @@ services:
       POSTGRES_USER: ${AUTH_DB_USER}
       POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
       POSTGRES_INITDB_ARGS: --encoding=UTF-8
-    command: ["-c", "max_connections=200"]
+    command: ["-c", "max_connections=200", "-p", "${AUTH_DB_PORT}"]
     restart: always
     tty: true
 
@@ -71,6 +71,8 @@ services:
       DATABASE_URL: ${APP_DB_URL}
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}
       CLIENT_SECRET_KEY: ${CLIENT_SECRET_KEY}
+      CLIENT_ID: ${MEOWER_CLIENT_ID}
+      CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
     working_dir: /system/app/core
     command: "cargo watch -x run"
     depends_on:
@@ -84,7 +86,7 @@ services:
       context: .
       dockerfile: ./docker/services/postgres/Dockerfile
     ports:
-      - ${APP_DB_PORT}:5432
+      - ${APP_DB_PORT}:${APP_DB_PORT}
     volumes:
       - app_db_data:/var/lib/postgresql/data
     environment:
@@ -92,7 +94,7 @@ services:
       POSTGRES_USER: ${APP_DB_USER}
       POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
       POSTGRES_INITDB_ARGS: --encoding=UTF-8
-    command: ["-c", "max_connections=200"]
+    command: ["-c", "max_connections=200", "-p", "${APP_DB_PORT}"]
     restart: always
     tty: true
 

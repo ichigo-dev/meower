@@ -20,6 +20,8 @@ pub(crate) struct Config
     // Parameter config.
     pub(crate) client_id_key: String,
     pub(crate) client_secret_key: String,
+    pub(crate) client_id: String,
+    pub(crate) client_secret: String,
 }
 
 impl Config
@@ -44,7 +46,11 @@ impl Config
             .expect("CLIENT_ID_KEY must be set");
         let client_secret_key = env::var("CLIENT_SECRET_KEY")
             .expect("CLIENT_SECRET_KEY must be set");
-
+        let client_id = env::var("CLIENT_ID")
+            .expect("CLIENT_ID must be set");
+        let client_secret = env::var("CLIENT_SECRET")
+            .expect("CLIENT_SECRET must be set");
+        
         Self
         {
             // Server config.
@@ -56,6 +62,8 @@ impl Config
             // Parameter config.
             client_id_key,
             client_secret_key,
+            client_id,
+            client_secret,
         }
     }
 }

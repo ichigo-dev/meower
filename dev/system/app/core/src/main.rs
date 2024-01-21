@@ -10,8 +10,6 @@ pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
 use axum::{ Router, middleware };
-use axum::response::Redirect;
-use axum::routing::{ get, post };
 use tokio::net::TcpListener;
 
 
@@ -28,15 +26,14 @@ async fn main()
 
     // Creates the application routes.
     let routes = Router::new()
-//        .nest("/", get(hoge))
-//        .layer
-//        (
-//            middleware::from_fn_with_state
-//            (
-//                state.clone(),
-//                layers::protected::layer
-//            )
-//        )
+        .layer
+        (
+            middleware::from_fn_with_state
+            (
+                state.clone(),
+                layers::protected::layer
+            )
+        )
         .with_state(state);
 
     // Starts the server.
