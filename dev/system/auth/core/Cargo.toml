@@ -16,6 +16,12 @@ accept-language = "3.1.0"
 askama = "0.12.1"
 axum = "0.7.2"
 axum-extra = { version = "0.9.2", features = ["cookie"] }
+lettre = { version = "0.11.2", features = [
+    "builder",
+    "tokio1",
+    "tokio1-native-tls",
+    "smtp-transport",
+]}
 rust-i18n = "2.3.0"
 sea-orm = { version = "0.12.6", features = [
     "runtime-tokio-rustls",

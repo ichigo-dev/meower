@@ -7,8 +7,11 @@ use meower_validator::ValidationError;
 
 use super::user::ActiveModel as UserActiveModel;
 use super::user::Error as UserError;
+use super::user::Model as UserModel;
 use super::user_auth::ActiveModel as UserAuthActiveModel;
 use super::user_auth::Error as UserAuthError;
+use super::temporary_user_code::Entity as TemporaryUserCodeEntity;
+use super::temporary_user_code::Error as TemporaryUserCodeError;
 
 use async_trait::async_trait;
 use chrono::Utc;
@@ -33,6 +36,60 @@ pub struct Model
     pub email: String,
     pub password: String,
     pub created_at: DateTime,
+}
+
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Checks if the code is valid.
+    //--------------------------------------------------------------------------
+    pub async fn verify_code<C>
+    (
+        &self,
+        hdb: &C,
+        code: &str
+    ) -> Result<(), Error>
+    where
+        C: ConnectionTrait,
+    {
+        let temporary_user_code = match self
+            .find_related(TemporaryUserCodeEntity)
+            .one(hdb)
+            .await?
+        {
+            Some(temporary_user_code) => temporary_user_code,
+            None => return Err(Error::TemporaryUserCodeNotFound),
+        };
+        temporary_user_code.verify(code)?;
+        Ok(())
+    }
+
+    //--------------------------------------------------------------------------
+    /// Registers a new user.
+    //--------------------------------------------------------------------------
+    pub async fn register<C>( &self, hdb: &C ) -> Result<UserModel, Error>
+    where
+        C: ConnectionTrait,
+    {
+        // Creates a new user.
+        let user = UserActiveModel
+        {
+            email: ActiveValue::Set(self.email.clone()),
+            ..Default::default()
+        };
+        let user = user.validate_and_insert(hdb).await?;
+
+        // Creates a new user_auth.
+        let user_auth = UserAuthActiveModel
+        {
+            user_id: ActiveValue::Set(user.user_id),
+            password: ActiveValue::Set(self.password.clone()),
+            ..Default::default()
+        };
+        user_auth.validate_and_insert(hdb).await?;
+
+        Ok(user)
+    }
 }
 
 
@@ -164,11 +221,17 @@ pub enum Error
     #[error("TemporaryUser: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
+    #[error("TemporaryUser: The temporary user code is not found.")]
+    TemporaryUserCodeNotFound,
+
     #[error("TemporaryUser: {0}")]
     UserError(#[from] UserError),
 
     #[error("TemporaryUser: {0}")]
     UserAuthError(#[from] UserAuthError),
+
+    #[error("TemporaryUser: {0}")]
+    TemporaryUserCodeError(#[from] TemporaryUserCodeError),
 
     #[error("TemporaryUser: Database error.")]
     DbError(#[from] DbErr),
@@ -185,8 +248,10 @@ impl Error
         {
             Self::EmailAlreadyExists => Some(Column::Email),
             Self::Validation { column, .. } => Some(*column),
+            Self::TemporaryUserCodeNotFound => None,
             Self::UserError(_) => Some(Column::Email),
             Self::UserAuthError(_) => Some(Column::Password),
+            Self::TemporaryUserCodeError(_) => None,
             Self::DbError(_) => None,
         }
     }
@@ -206,8 +271,13 @@ impl Error
             {
                 error.get_error_message(&column.get_name())
             },
+            Self::TemporaryUserCodeNotFound =>
+            {
+                t!("entities.temporary_user.error.code_not_found")
+            },
             Self::UserError(error) => error.get_message(),
             Self::UserAuthError(error) => error.get_message(),
+            Self::TemporaryUserCodeError(error) => error.get_message(),
             Self::DbError(_) => t!("common.error.db"),
         }
     }

@@ -30,6 +30,12 @@ services:
       FALLBACK_LOCALE: ${FALLBACK_LOCALE}
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}
       CLIENT_SECRET_KEY: ${CLIENT_SECRET_KEY}
+      SMTP_HOST: ${AUTH_SMTP_HOST}
+      SMTP_PORT: ${AUTH_SMTP_PORT}
+      SMTP_USER: ${AUTH_SMTP_USER}
+      SMTP_PASSWORD: ${AUTH_SMTP_PASSWORD}
+      SMTP_TLS: ${AUTH_SMTP_TLS}
+      SYSTEM_EMAIL_ADDRESS: ${AUTH_SYSTEM_EMAIL_ADDRESS}
     working_dir: /system/auth/core
     command: "cargo watch -x run"
     depends_on:

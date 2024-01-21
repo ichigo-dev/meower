@@ -6,7 +6,11 @@ entities:
       name: "仮登録ユーザID"
     code:
       name: "認証コード"
+      error:
+        not_match: "認証コードが一致しません"
     created_at:
       name: "作成日時"
     expired_at:
       name: "有効期限"
+      error:
+        expired: "期限切れの認証コードです"

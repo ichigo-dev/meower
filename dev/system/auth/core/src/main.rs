@@ -6,6 +6,7 @@ mod config;
 mod layers;
 mod pages;
 mod state;
+mod utils;
 
 pub(crate) use config::Config;
 pub(crate) use state::AppState;
@@ -33,7 +34,10 @@ async fn main()
 
     let auth_routes = Router::new()
         .route("/login", get(pages::login::get_handler))
-        .route("/login", post(pages::login::post_handler));
+        .route("/login", post(pages::login::post_handler))
+        .route("/signup", get(pages::signup::get_handler))
+        .route("/signup", post(pages::signup::post_handler))
+        .route("/verify_code", post(pages::verify_code::post_handler));
 
     // Creates the application routes.
     let routes = Router::new()

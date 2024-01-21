@@ -6,7 +6,7 @@ use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
 use async_trait::async_trait;
-use chrono::{ Duration, Utc };
+use chrono::Utc;
 use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
@@ -41,7 +41,7 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         mut self,
-        hdb: &C,
+        _hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
     where

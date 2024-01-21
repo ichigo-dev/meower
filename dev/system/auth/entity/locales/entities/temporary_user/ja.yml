@@ -12,3 +12,5 @@ entities:
       name: "パスワード"
     created_at:
       name: "登録日時"
+    error:
+      code_not_found: "不正な仮登録ユーザです"

@@ -4,6 +4,7 @@
 
 use crate::AppState;
 
+use meower_auth_entity::client_application::Model as ClientApplicationModel;
 use meower_auth_entity::jwt_token_code::ActiveModel as JwtTokenCodeActiveModel;
 use meower_auth_entity::temporary_user::Column as TemporaryUserColumn;
 use meower_auth_entity::temporary_user::Entity as TemporaryUserEntity;
@@ -13,7 +14,7 @@ use meower_entity_ext::ValidateExt;
 
 use askama::Template;
 use axum::body::Body;
-use axum::extract::{ Form, State };
+use axum::extract::{ Extension, Form, State };
 use axum::http::{ header, StatusCode };
 use axum::response::{ Html, IntoResponse, Response };
 use rust_i18n::t;
@@ -75,6 +76,7 @@ pub(crate) async fn get_handler() -> impl IntoResponse
 // POST
 pub(crate) async fn post_handler
 (
+    Extension(client_application): Extension<ClientApplicationModel>,
     State(state): State<AppState>,
     Form(input): Form<FormData>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
@@ -160,14 +162,15 @@ pub(crate) async fn post_handler
     tsx.commit().await.unwrap();
 
     // Sets JWT token to cookie.
-    let url = format!
+    let redirect_uri = format!
     (
-        "https://localhost:8080/login_callback?code={}",
+        "{}?code={}",
+        client_application.redirect_uri,
         user_jwt_token_code.code,
     );
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
-        .header(header::LOCATION, url)
+        .header(header::LOCATION, redirect_uri)
         .body(Body::empty())
         .unwrap();
     Ok(response)

@@ -34,10 +34,20 @@ impl Model
     //--------------------------------------------------------------------------
     /// Verifies code.
     //--------------------------------------------------------------------------
-    pub fn verify( &self ) -> bool
+    pub fn verify( &self, code: &str ) -> Result<(), Error>
     {
+        if self.code != code
+        {
+            return Err(Error::CodeNotMatch);
+        }
+
         let now = Utc::now().naive_utc();
-        now <= self.expired_at
+        if now <= self.expired_at
+        {
+            return Err(Error::CodeExpired);
+        }
+
+        Ok(())
     }
 }
 
@@ -123,6 +133,12 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
+    #[error("TemporaryUser: The code is not match.")]
+    CodeNotMatch,
+
+    #[error("TemporaryUser: The token is expired.")]
+    CodeExpired,
+
     #[error("TemporaryUser: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
@@ -139,6 +155,8 @@ impl Error
     {
         match self
         {
+            Self::CodeNotMatch => Some(Column::Code),
+            Self::CodeExpired => Some(Column::ExpiredAt),
             Self::Validation { column, .. } => Some(*column),
             Self::DbError(_) => None,
         }
@@ -151,6 +169,14 @@ impl Error
     {
         match self
         {
+            Self::CodeNotMatch =>
+            {
+                t!("entities.temporary_user_code.code.error.not_match")
+            },
+            Self::CodeExpired =>
+            {
+                t!("entities.temporary_user_code.expired_at.error.expired")
+            },
             Self::Validation { column, error } =>
             {
                 error.get_error_message(&column.get_name())

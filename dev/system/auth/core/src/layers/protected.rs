@@ -40,7 +40,7 @@ pub(crate) async fn layer
     State(state): State<AppState>,
     Query(params): Query<Params>,
     cookie: CookieJar,
-    req: Request<Body>,
+    mut req: Request<Body>,
     next: Next,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
@@ -76,10 +76,11 @@ pub(crate) async fn layer
             return Err(Html(PageTemplate::default().render().unwrap()));
         },
     };
+    req.extensions_mut().insert(client_application.clone());
 
     let mut res = next.run(req).await;
-    let expire = OffsetDateTime::now_utc()
-        + Duration::minutes(COOKIE_EXPIERATION_MINUTES);
+    let now = OffsetDateTime::now_utc();
+    let expire = now + Duration::minutes(COOKIE_EXPIERATION_MINUTES);
     res.headers_mut().insert
     (
         header::SET_COOKIE,

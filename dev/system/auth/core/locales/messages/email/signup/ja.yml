@@ -1,0 +1,25 @@
+messages:
+  email:
+    signup:
+      subject: "サインアップ"
+      body: |-
+        <!DOCTYPE html>
+        <html>
+         <head lang="ja">
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1.0">
+          <title>Meower サインアップ メールアドレス認証</title>
+         </head>
+
+         <body>
+          <div>
+           <h1>Meowerへようこそ！</h1>
+          
+           <p>サインアップはまだ完了していません。</p>
+           <p>認証画面にて、以下の認証コードを入力してください。</p>
+           <p>認証コードの有効期限は10分です。</p>
+          
+           <p>認証コード: <code>%{verify_code}</code></p>
+          </div>
+         </body>
+        </html>
