@@ -90,6 +90,14 @@ impl Model
 
         Ok(user)
     }
+
+    //--------------------------------------------------------------------------
+    /// Verifies the password.
+    //--------------------------------------------------------------------------
+    pub fn verify_password( &self, password: &str ) -> bool
+    {
+        meower_utility::verify_value(password, &self.password)
+    }
 }
 
 

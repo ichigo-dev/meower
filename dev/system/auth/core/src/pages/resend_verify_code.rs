@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Signup page.
+//! Resend verify code page. 
 //------------------------------------------------------------------------------
 
 use crate::AppState;
@@ -7,26 +7,32 @@ use crate::utils::email::get_mailer;
 use crate::pages::verify_code::PageTemplate as VerifyCodePageTemplate;
 
 use meower_auth_entity::temporary_user::Column as TemporaryUserColumn;
-use meower_auth_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
-use meower_auth_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
+use meower_auth_entity::temporary_user::Entity as TemporaryUserEntity;
+use meower_auth_entity::temporary_user_code::ActiveModel as TemporaryUserCodeActiveModel;
 use meower_entity_ext::ValidateExt;
 
 use askama::Template;
-use axum::extract::{ Form, State };
 use axum::response::{ Html, IntoResponse };
-use lettre::AsyncTransport;
-use lettre::Message;
+use axum::extract::{ Form, State };
+use lettre::{ AsyncTransport, Message };
 use lettre::message::header::ContentType;
 use rust_i18n::t;
+use sea_orm::{
+    ActiveValue,
+    ColumnTrait,
+    EntityTrait,
+    QueryFilter,
+    TransactionTrait,
+};
 use serde::Deserialize;
-use sea_orm::{ ActiveValue, TransactionTrait };
 
 
 //------------------------------------------------------------------------------
 /// Page template.
 //------------------------------------------------------------------------------
+#[allow(dead_code)]
 #[derive(Template, Default)]
-#[template(path = "signup.html")]
+#[template(path = "resend_verify_code.html")]
 pub(crate) struct PageTemplate
 {
     pub(crate) input: FormData,
@@ -43,9 +49,7 @@ pub(crate) struct PageTemplate
 pub(crate) struct FormData
 {
     pub(crate) email: String,
-    pub(crate) email_confirm: String,
     pub(crate) password: String,
-    pub(crate) password_confirm: String,
 }
 
 // Error
@@ -53,9 +57,7 @@ pub(crate) struct FormData
 pub(crate) struct FormError
 {
     pub(crate) email: Option<String>,
-    pub(crate) email_confirm: Option<String>,
     pub(crate) password: Option<String>,
-    pub(crate) password_confirm: Option<String>,
     pub(crate) other: Option<String>,
 }
 
@@ -79,83 +81,74 @@ pub(crate) async fn post_handler
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let config = state.config;
+    let tsx = state.hdb.begin().await.unwrap();
 
-    // Checks if the email address matches the confirmation email address
-    if input.email != input.email_confirm
+    // Checks the email is not empty.
+    if input.email.is_empty()
     {
-        let error = t!("pages.signup.form.email_confirm.error.not_match");
         let template = PageTemplate
         {
             input: input,
             input_error: FormError
             {
-                email_confirm: Some(error),
+                email: Some(t!("pages.resend_verify_code.form.email.error.required")),
                 ..Default::default()
             },
         };
-        return Err(Html(template.render().unwrap()));
+        return Ok(Html(template.render().unwrap()));
     }
 
-    // Checks if the password matches the confirmation password
-    if input.password != input.password_confirm
+    // Checks the password is not empty.
+    if input.password.is_empty()
     {
-        let error = t!("pages.signup.form.password_confirm.error.not_match");
         let template = PageTemplate
         {
             input: input,
             input_error: FormError
             {
-                password_confirm: Some(error),
+                password: Some(t!("pages.resend_verify_code.form.password.error.required")),
                 ..Default::default()
             },
         };
-        return Err(Html(template.render().unwrap()));
+        return Ok(Html(template.render().unwrap()));
     }
 
     // Creates a temporary user.
-    let tsx = state.hdb.begin().await.unwrap();
-    let temporary_user = ActiveTemporaryUser
-    {
-        email: ActiveValue::set(input.email.clone()),
-        password: ActiveValue::set(input.password.clone()),
-        ..Default::default()
-    };
-    let temporary_user = match temporary_user
-        .validate_and_insert(&tsx)
+    let temporary_user = match TemporaryUserEntity::find()
+        .filter(TemporaryUserColumn::Email.eq(&input.email))
+        .one(&tsx)
         .await
+        .unwrap()
     {
-        Ok(temporary_user) => temporary_user,
-        Err(e) =>
+        Some(temporary_user) => temporary_user,
+        None =>
         {
+            // Ends normally as a countermeasure against blind SQL injection.
             tsx.rollback().await.unwrap();
-            let mut form_error = FormError::default();
-            let message = e.get_message();
-            match e.get_column()
+            let template = VerifyCodePageTemplate
             {
-                Some(TemporaryUserColumn::Email) =>
-                {
-                    form_error.email = Some(message);
-                },
-                Some(TemporaryUserColumn::Password) =>
-                {
-                    form_error.password = Some(message);
-                },
-                _ =>
-                {
-                    form_error.other = Some(message);
-                },
-            }
-            let template = PageTemplate
-            {
-                input: input,
-                input_error: form_error,
+                token: "".to_string(),
+                ..Default::default()
             };
-            return Err(Html(template.render().unwrap()));
+            return Ok(Html(template.render().unwrap()));
         },
     };
 
+    // Verifies the password.
+    if temporary_user.verify_password(&input.password) == false
+    {
+        // Ends normally as a countermeasure against blind SQL injection.
+        tsx.rollback().await.unwrap();
+        let template = VerifyCodePageTemplate
+        {
+            token: "".to_string(),
+            ..Default::default()
+        };
+        return Ok(Html(template.render().unwrap()));
+    }
+
     // Creates a temporary user code.
-    let temporary_user_code = ActiveTemporaryUserCode
+    let temporary_user_code = TemporaryUserCodeActiveModel
     {
         temporary_user_id: ActiveValue::set(temporary_user.temporary_user_id),
         ..Default::default()
@@ -175,29 +168,28 @@ pub(crate) async fn post_handler
                 {
                     other: Some(e.get_message()),
                     ..Default::default()
-                },
+                }
             };
             return Err(Html(template.render().unwrap()));
         },
     };
 
     // Sends a confirmation email.
+    let mailer = get_mailer(&config);
     let email = Message::builder()
         .from(config.system_email_address.parse().unwrap())
         .to(input.email.clone().parse().unwrap())
         .header(ContentType::TEXT_HTML)
-        .subject(t!("messages.email.signup.subject"))
+        .subject(t!("messages.email.resend_verify_code.subject"))
         .body
         (
             t!
             (
-                "messages.email.signup.body",
+                "messages.email.resend_verify_code.body",
                 verify_code = temporary_user_code.code
             )
         )
         .unwrap();
-
-    let mailer = get_mailer(&config);
     if let Err(e) = mailer.send(email).await
     {
         tsx.rollback().await.unwrap();

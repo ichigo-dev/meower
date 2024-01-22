@@ -37,7 +37,29 @@ async fn main()
         .route("/login", post(pages::login::post_handler))
         .route("/signup", get(pages::signup::get_handler))
         .route("/signup", post(pages::signup::post_handler))
-        .route("/verify_code", post(pages::verify_code::post_handler));
+        .route("/verify_code", post(pages::verify_code::post_handler))
+        .route
+        (
+            "/resend_verify_code",
+            get(pages::resend_verify_code::get_handler)
+        )
+        .route
+        (
+            "/resend_verify_code",
+            post(pages::resend_verify_code::post_handler)
+        )
+        .route("/forgot_password", get(pages::forgot_password::get_handler))
+        .route("/forgot_password", post(pages::forgot_password::post_handler))
+        .route
+        (
+            "/reset_password/:token",
+            get(pages::reset_password::get_handler)
+        )
+        .route
+        (
+            "/reset_password/:token",
+            post(pages::reset_password::post_handler)
+        );
 
     // Creates the application routes.
     let routes = Router::new()

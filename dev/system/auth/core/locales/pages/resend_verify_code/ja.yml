@@ -1,0 +1,19 @@
+pages:
+  resend_verify_code:
+    title: "認証コードの再送信"
+    heading: "認証コードの再送信"
+    form:
+      email:
+        label: "メールアドレス"
+        placeholder: "meower@example.com"
+        error:
+          required: "メールアドレスが入力されていません"
+      password:
+        label: "パスワード"
+        error:
+          required: "パスワードが入力されていません"
+      button:
+        submit: "送信"
+    button:
+      login: "ログイン"
+      signup: "サインアップ"

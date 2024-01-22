@@ -9,7 +9,6 @@ use rust_i18n::t;
 //------------------------------------------------------------------------------
 /// Page template.
 //------------------------------------------------------------------------------
-#[allow(dead_code)]
 #[derive(Template, Default)]
 #[template(path = "signup_success.html")]
 pub(crate) struct PageTemplate {}
