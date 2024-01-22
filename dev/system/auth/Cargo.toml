@@ -5,4 +5,5 @@ members = [
     "entity",
     "install",
     "migration",
+    "shared",
 ]

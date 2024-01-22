@@ -27,7 +27,8 @@ pub(crate) async fn layer
         let config = &state.config;
         let url = format!
         (
-            "http://localhost:9000/auth/login?{}={}",
+            "{}?{}={}",
+            config.auth_login_url,
             config.client_id_key,
             config.client_id,
         );

@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------
 
 mod config;
+mod handlers;
 mod layers;
-mod pages;
 mod state;
 mod utils;
 
@@ -33,32 +33,37 @@ async fn main()
     let state = AppState::init(config).await;
 
     let auth_routes = Router::new()
-        .route("/login", get(pages::login::get_handler))
-        .route("/login", post(pages::login::post_handler))
-        .route("/signup", get(pages::signup::get_handler))
-        .route("/signup", post(pages::signup::post_handler))
-        .route("/verify_code", post(pages::verify_code::post_handler))
+        .route("/login", get(handlers::login::get_handler))
+        .route("/login", post(handlers::login::post_handler))
+        .route("/signup", get(handlers::signup::get_handler))
+        .route("/signup", post(handlers::signup::post_handler))
+        .route("/verify_code", post(handlers::verify_code::post_handler))
         .route
         (
             "/resend_verify_code",
-            get(pages::resend_verify_code::get_handler)
+            get(handlers::resend_verify_code::get_handler)
         )
         .route
         (
             "/resend_verify_code",
-            post(pages::resend_verify_code::post_handler)
+            post(handlers::resend_verify_code::post_handler)
         )
-        .route("/forgot_password", get(pages::forgot_password::get_handler))
-        .route("/forgot_password", post(pages::forgot_password::post_handler))
+        .route("/forgot_password", get(handlers::forgot_password::get_handler))
+        .route("/forgot_password", post(handlers::forgot_password::post_handler))
         .route
         (
             "/reset_password/:token",
-            get(pages::reset_password::get_handler)
+            get(handlers::reset_password::get_handler)
         )
         .route
         (
             "/reset_password/:token",
-            post(pages::reset_password::post_handler)
+            post(handlers::reset_password::post_handler)
+        )
+        .route
+        (
+            "/request_token/:code",
+            get(handlers::request_token::get_handler)
         );
 
     // Creates the application routes.

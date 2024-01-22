@@ -26,9 +26,11 @@ async fn main()
     println!("=== Installing initial data ===");
 
     let meower_redirect_uri = env::var("MEOWER_REDIRECT_URI").unwrap();
+    let app_url = env::var("APP_URL").unwrap();
     let client_application = ClientApplicationActiveModel
     {
         name: ActiveValue::Set("Meower".to_string()),
+        url: ActiveValue::Set(app_url),
         redirect_uri: ActiveValue::Set(meower_redirect_uri),
         ..Default::default()
     };

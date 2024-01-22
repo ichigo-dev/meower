@@ -4,7 +4,7 @@
 
 use crate::AppState;
 use crate::utils::email::get_mailer;
-use crate::pages::verify_code::PageTemplate as VerifyCodePageTemplate;
+use crate::handlers::verify_code::PageTemplate as VerifyCodePageTemplate;
 
 use meower_auth_entity::temporary_user::Column as TemporaryUserColumn;
 use meower_auth_entity::temporary_user::Entity as TemporaryUserEntity;

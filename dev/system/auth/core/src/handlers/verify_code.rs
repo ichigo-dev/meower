@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use crate::pages::signup_success::PageTemplate as SignupSuccessPageTemplate;
+use crate::handlers::signup_success::PageTemplate as SignupSuccessPageTemplate;
 
 use meower_auth_entity::temporary_user::Column as TemporaryUserColumn;
 use meower_auth_entity::temporary_user::Entity as TemporaryUserEntity;

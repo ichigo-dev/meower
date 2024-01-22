@@ -22,6 +22,10 @@ pub(crate) struct Config
     pub(crate) client_secret_key: String,
     pub(crate) client_id: String,
     pub(crate) client_secret: String,
+
+    // Urls
+    pub(crate) auth_login_url: String,
+    pub(crate) auth_request_token_url: String,
 }
 
 impl Config
@@ -50,6 +54,12 @@ impl Config
             .expect("CLIENT_ID must be set");
         let client_secret = env::var("CLIENT_SECRET")
             .expect("CLIENT_SECRET must be set");
+
+        // Urls
+        let auth_login_url = env::var("AUTH_LOGIN_URL")
+            .expect("AUTH_LOGIN_URL must be set");
+        let auth_request_token_url = env::var("AUTH_REQUEST_TOKEN_URL")
+            .expect("AUTH_REQUEST_TOKEN_URL must be set");
         
         Self
         {
@@ -64,6 +74,10 @@ impl Config
             client_secret_key,
             client_id,
             client_secret,
+
+            // Urls
+            auth_login_url,
+            auth_request_token_url,
         }
     }
 }

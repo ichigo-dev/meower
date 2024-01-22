@@ -113,7 +113,7 @@ pub(crate) enum JwtRefreshToken
 
 
 //------------------------------------------------------------------------------
-/// ClientApp.
+/// ClientApplication.
 //------------------------------------------------------------------------------
 #[derive(Iden)]
 pub(crate) enum ClientApplication

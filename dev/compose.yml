@@ -26,6 +26,7 @@ services:
       - ./proto/ui_catalog/assets/css/style.css:/system/auth/core/assets/css/ui.css
     environment:
       PORT: ${AUTH_PORT}
+      URL: ${AUTH_URL}
       DATABASE_URL: ${AUTH_DB_URL}
       FALLBACK_LOCALE: ${FALLBACK_LOCALE}
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}
@@ -79,6 +80,8 @@ services:
       CLIENT_SECRET_KEY: ${CLIENT_SECRET_KEY}
       CLIENT_ID: ${MEOWER_CLIENT_ID}
       CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
+      AUTH_LOGIN_URL: ${APP_AUTH_LOGIN_URL}
+      AUTH_REQUEST_TOKEN_URL: ${APP_AUTH_REQUEST_TOKEN_URL}
     working_dir: /system/app/core
     command: "cargo watch -x run"
     depends_on:
@@ -119,6 +122,7 @@ services:
       - ./system:/system
       - ./proto:/proto
     environment:
+      APP_URL: ${APP_URL}
       MEOWER_CLIENT_ID: ${MEOWER_CLIENT_ID}
       MEOWER_CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
       MEOWER_REDIRECT_URI: ${MEOWER_REDIRECT_URI}

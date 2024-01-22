@@ -4,11 +4,11 @@
 
 use crate::AppState;
 use crate::utils::email::get_mailer;
-use crate::pages::verify_code::PageTemplate as VerifyCodePageTemplate;
+use crate::handlers::verify_code::PageTemplate as VerifyCodePageTemplate;
 
 use meower_auth_entity::temporary_user::Column as TemporaryUserColumn;
-use meower_auth_entity::temporary_user::ActiveModel as ActiveTemporaryUser;
-use meower_auth_entity::temporary_user_code::ActiveModel as ActiveTemporaryUserCode;
+use meower_auth_entity::temporary_user::ActiveModel as TemporaryUserActiveModel;
+use meower_auth_entity::temporary_user_code::ActiveModel as TemporaryUserCodeActiveModel;
 use meower_entity_ext::ValidateExt;
 
 use askama::Template;
@@ -114,7 +114,7 @@ pub(crate) async fn post_handler
 
     // Creates a temporary user.
     let tsx = state.hdb.begin().await.unwrap();
-    let temporary_user = ActiveTemporaryUser
+    let temporary_user = TemporaryUserActiveModel
     {
         email: ActiveValue::set(input.email.clone()),
         password: ActiveValue::set(input.password.clone()),
@@ -155,7 +155,7 @@ pub(crate) async fn post_handler
     };
 
     // Creates a temporary user code.
-    let temporary_user_code = ActiveTemporaryUserCode
+    let temporary_user_code = TemporaryUserCodeActiveModel
     {
         temporary_user_id: ActiveValue::set(temporary_user.temporary_user_id),
         ..Default::default()

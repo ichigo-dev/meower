@@ -4,7 +4,7 @@
 
 use crate::AppState;
 use crate::utils::email::get_mailer;
-use crate::pages::forgot_password_success::PageTemplate as PasswordForgotSuccessPageTemplate;
+use crate::handlers::forgot_password_success::PageTemplate as PasswordForgotSuccessPageTemplate;
 
 use meower_auth_entity::user::Column as UserColumn;
 use meower_auth_entity::user::Entity as UserEntity;

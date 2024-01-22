@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 mod config;
+mod handlers;
 mod layers;
 mod state;
 
@@ -10,6 +11,7 @@ pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
 use axum::{ Router, middleware };
+use axum::routing::get;
 use tokio::net::TcpListener;
 
 
@@ -34,6 +36,7 @@ async fn main()
                 layers::protected::layer
             )
         )
+        .route("/auth/callback", get(handlers::auth_callback::get_handler))
         .with_state(state);
 
     // Starts the server.

@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use crate::pages::login::PageTemplate as LoginPageTemplate;
-use crate::pages::reset_password_success::PageTemplate as ResetPasswordSuccessPageTemplate;
+use crate::handlers::login::PageTemplate as LoginPageTemplate;
+use crate::handlers::reset_password_success::PageTemplate as ResetPasswordSuccessPageTemplate;
 
 use meower_auth_entity::user::Column as UserColumn;
 use meower_auth_entity::user::Entity as UserEntity;

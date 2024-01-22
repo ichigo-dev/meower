@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use crate::pages::bad_request::PageTemplate;
+use crate::handlers::bad_request::PageTemplate;
 
 use meower_auth_entity::client_application::Column as ClientApplicationColumn;
 use meower_auth_entity::client_application::Entity as ClientApplicationEntity;
@@ -52,15 +52,20 @@ pub(crate) async fn layer
         Some(client_id) => client_id,
         None =>
         {
-            match cookie.get(&config.client_id_key)
+            let client_id = cookie
+                .get(&config.client_id_key)
                 .map(|cookie| cookie.value().to_string())
+                .unwrap_or(String::new());
+
+            let client_id = if client_id.len() > 0 { client_id } else
             {
-                Some(client_id) => client_id,
-                None =>
-                {
-                    return Err(Html(PageTemplate::default().render().unwrap()));
-                },
-            }
+                req.headers()
+                    .get(&config.client_id_key)
+                    .map(|value| value.to_str().unwrap().to_string())
+                    .unwrap_or(String::new())
+            };
+
+            client_id
         },
     };
 
