@@ -17,6 +17,7 @@ use axum::body::Body;
 use axum::extract::{ Extension, Form, State };
 use axum::http::{ header, StatusCode };
 use axum::response::{ Html, IntoResponse, Response };
+use axum_extra::extract::cookie::Cookie;
 use rust_i18n::t;
 use sea_orm::{
     ActiveValue,
@@ -81,6 +82,7 @@ pub(crate) async fn post_handler
     Form(input): Form<FormData>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
+    let config = state.config;
     let tsx = state.hdb.begin().await.unwrap();
 
     // Finds user.
@@ -168,10 +170,12 @@ pub(crate) async fn post_handler
         client_application.redirect_uri,
         user_jwt_token_code.code,
     );
-    let response = Response::builder()
+    let cookie = Cookie::build((&config.client_id_key, "")).to_string();
+    let res = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, redirect_uri)
+        .header(header::SET_COOKIE, cookie)
         .body(Body::empty())
         .unwrap();
-    Ok(response)
+    Ok(res)
 }
