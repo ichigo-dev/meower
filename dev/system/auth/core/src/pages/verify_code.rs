@@ -82,6 +82,7 @@ pub(crate) async fn post_handler
         {
             let template = PageTemplate
             {
+                token: input.token.clone(),
                 input,
                 input_error: FormError
                 {
@@ -99,6 +100,7 @@ pub(crate) async fn post_handler
     {
         let template = PageTemplate
         {
+            token: input.token.clone(),
             input,
             input_error: FormError
             {
@@ -115,6 +117,7 @@ pub(crate) async fn post_handler
     {
         let template = PageTemplate
         {
+            token: input.token.clone(),
             input,
             input_error: FormError
             {
@@ -132,6 +135,7 @@ pub(crate) async fn post_handler
         tsx.rollback().await.unwrap();
         let template = PageTemplate
         {
+            token: input.token.clone(),
             input: input,
             input_error: FormError
             {

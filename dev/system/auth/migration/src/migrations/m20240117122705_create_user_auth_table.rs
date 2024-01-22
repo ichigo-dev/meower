@@ -66,6 +66,7 @@ impl MigrationTrait for Migration
                     .name("user_auth_user_id_fkey")
                     .from(UserAuth::Table, UserAuth::UserId)
                     .to(User::Table, User::UserId)
+                    .on_delete(ForeignKeyAction::Cascade)
             )
             .to_owned();
         manager.create_table(table).await?;

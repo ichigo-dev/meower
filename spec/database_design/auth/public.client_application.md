@@ -18,19 +18,17 @@ Client application table
 
 ## Constraints
 
-| Name                                 | Type        | Definition                          |
-| ------------------------------------ | ----------- | ----------------------------------- |
-| client_application_pkey              | PRIMARY KEY | PRIMARY KEY (client_application_id) |
-| client_application_client_id_key     | UNIQUE      | UNIQUE (client_id)                  |
-| client_application_client_secret_key | UNIQUE      | UNIQUE (client_secret)              |
+| Name                             | Type        | Definition                          |
+| -------------------------------- | ----------- | ----------------------------------- |
+| client_application_pkey          | PRIMARY KEY | PRIMARY KEY (client_application_id) |
+| client_application_client_id_key | UNIQUE      | UNIQUE (client_id)                  |
 
 ## Indexes
 
-| Name                                 | Definition                                                                                                        |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| client_application_pkey              | CREATE UNIQUE INDEX client_application_pkey ON public.client_application USING btree (client_application_id)      |
-| client_application_client_id_key     | CREATE UNIQUE INDEX client_application_client_id_key ON public.client_application USING btree (client_id)         |
-| client_application_client_secret_key | CREATE UNIQUE INDEX client_application_client_secret_key ON public.client_application USING btree (client_secret) |
+| Name                             | Definition                                                                                                   |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| client_application_pkey          | CREATE UNIQUE INDEX client_application_pkey ON public.client_application USING btree (client_application_id) |
+| client_application_client_id_key | CREATE UNIQUE INDEX client_application_client_id_key ON public.client_application USING btree (client_id)    |
 
 ## Relations
 

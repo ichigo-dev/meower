@@ -67,6 +67,7 @@ impl MigrationTrait for Migration
                     .name("reset_password_token_user_id_fkey")
                     .from(ResetPasswordToken::Table, ResetPasswordToken::UserId)
                     .to(User::Table, User::UserId)
+                    .on_delete(ForeignKeyAction::Cascade)
             )
             .to_owned();
         manager.create_table(table).await?;

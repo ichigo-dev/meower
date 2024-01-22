@@ -21,6 +21,9 @@ setup:
 	$(MAKE) env --no-print-directory
 	$(MAKE) build --no-print-directory
 	$(MAKE) up --no-print-directory
+	$(MAKE) migrate-auth cmd=fresh --no-print-directory
+	$(MAKE) install-auth bin=install_initial_data --no-print-directory
+	$(MAKE) migrate-app cmd=fresh --no-print-directory
 
 # Build the containers
 build:

@@ -4,7 +4,7 @@
 
 | Name                                                          | Columns | Comment                   | Type       |
 | ------------------------------------------------------------- | ------- | ------------------------- | ---------- |
-| [public.user](public.user.md)                                 | 6       | User table                | BASE TABLE |
+| [public.user](public.user.md)                                 | 7       | User table                | BASE TABLE |
 | [public.user_auth](public.user_auth.md)                       | 5       | User authentication table | BASE TABLE |
 | [public.temporary_user](public.temporary_user.md)             | 5       | Temporary user table      | BASE TABLE |
 | [public.temporary_user_code](public.temporary_user_code.md)   | 5       | Temporary user code table | BASE TABLE |

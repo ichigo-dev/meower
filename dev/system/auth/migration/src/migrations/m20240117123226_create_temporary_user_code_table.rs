@@ -66,6 +66,7 @@ impl MigrationTrait for Migration
                     .name("temporary_user_code_temporary_user_id_fkey")
                     .from(TemporaryUserCode::Table, TemporaryUserCode::TemporaryUserId)
                     .to(TemporaryUser::Table, TemporaryUser::TemporaryUserId)
+                    .on_delete(ForeignKeyAction::Cascade)
             )
             .to_owned();
         manager.create_table(table).await?;

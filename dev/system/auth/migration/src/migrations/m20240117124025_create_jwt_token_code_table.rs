@@ -67,6 +67,7 @@ impl MigrationTrait for Migration
                     .name("jwt_token_code_user_id_fkey")
                     .from(JwtTokenCode::Table, JwtTokenCode::UserId)
                     .to(User::Table, User::UserId)
+                    .on_delete(ForeignKeyAction::Cascade)
             )
             .to_owned();
         manager.create_table(table).await?;

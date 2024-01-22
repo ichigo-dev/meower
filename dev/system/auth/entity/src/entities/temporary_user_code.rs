@@ -42,7 +42,7 @@ impl Model
         }
 
         let now = Utc::now().naive_utc();
-        if now <= self.expired_at
+        if now >= self.expired_at
         {
             return Err(Error::CodeExpired);
         }
