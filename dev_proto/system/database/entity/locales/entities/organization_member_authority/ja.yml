@@ -1,8 +1,0 @@
-entities:
-  organization_member_authority:
-    organization_member_authority_id:
-      name: "組織メンバー権限ID"
-    symbol:
-      name: "シンボル名"
-    value:
-      name: "値"

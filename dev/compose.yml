@@ -163,7 +163,6 @@ services:
       - ./system:/system
       - ./proto:/proto
     environment:
-      APP_URL: ${APP_URL}
       MEOWER_CLIENT_ID: ${MEOWER_CLIENT_ID}
       MEOWER_CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
       MEOWER_REDIRECT_URI: ${MEOWER_REDIRECT_URI}

@@ -1,8 +1,0 @@
-entities:
-  project_member_authority:
-    project_member_authority_id:
-      name: "プロジェクトメンバー権限ID"
-    symbol:
-      name: "シンボル名"
-    value:
-      name: "値"

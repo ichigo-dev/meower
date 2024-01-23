@@ -1,8 +1,0 @@
-entities:
-  user_account_workspace:
-    user_account_workspace_id:
-      name: "アカウントワークスペースID"
-    user_account_id:
-      name: "アカウントID"
-    workspace_id:
-      name: "ワークスペースID"

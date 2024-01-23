@@ -21,7 +21,6 @@ env:
 	@openssl rsa -in env/dev/${JWT_PRIVATE_KEY} -pubout > env/dev/${JWT_PUBLIC_KEY}
 	@echo "===== Finish ====="
 
-
 # Setup the project
 setup:
 	$(MAKE) env --no-print-directory

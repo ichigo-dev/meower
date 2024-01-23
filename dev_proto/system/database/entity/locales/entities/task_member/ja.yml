@@ -1,8 +1,0 @@
-entities:
-  task_member:
-    task_member_id:
-      name: "タスクメンバーID"
-    task_id:
-      name: "タスクID"
-    user_account_id:
-      name: "アカウントID"

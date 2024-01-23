@@ -1,8 +1,0 @@
-entities:
-  organization_workspace:
-    organization_workspace_id:
-      name: "組織ワークスペースID"
-    organization_id:
-      name: "組織ID"
-    workspace_id:
-      name: "ワークスペースID"
