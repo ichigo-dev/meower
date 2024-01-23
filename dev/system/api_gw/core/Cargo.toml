@@ -1,0 +1,14 @@
+[package]
+name = "meower_api_gw"
+version = "0.1.0"
+edition = "2021"
+authors = ["ichigo-dev <dev.honda.ichigo@gmail.com>"]
+description = "Meower API gateway"
+license = "MIT"
+documentation = ""
+repository = "https://github.com/ichigo-dev/meower"
+
+
+[dependencies]
+axum = "0.7.2"
+tokio = { version = "1.34.0", features = ["full"] }

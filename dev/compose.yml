@@ -128,6 +128,22 @@ services:
     command: "trunk watch --release"
     tty: true
 
+  # API Gateway
+  api_gw:
+    container_name: meower_api_gw
+    build:
+      context: .
+      dockerfile: ./docker/services/api_gw/Dockerfile
+    ports:
+      - ${API_GW_PORT}:${API_GW_PORT}
+    volumes:
+      - ./system/api_gw:/system/api_gw
+    environment:
+      PORT: ${API_GW_PORT}
+    working_dir: /system/api_gw/core
+    command: "cargo watch -x run"
+    tty: true
+
 
   ##############################################################################
   # Development tools

@@ -22,8 +22,9 @@ impl AppState
     //--------------------------------------------------------------------------
     /// Initializes the application state.
     //--------------------------------------------------------------------------
-    pub(crate) async fn init( config: Config ) -> Self
+    pub(crate) async fn init() -> Self
     {
+        let config = Config::init();
         let hdb = Database::connect(&config.database_url).await.unwrap();
         Self
         {

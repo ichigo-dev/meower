@@ -1,35 +1,37 @@
 //------------------------------------------------------------------------------
-//! Shared state.
+//! Configuration.
 //------------------------------------------------------------------------------
 
-use crate::Config;
-
-use sea_orm::{ Database, DbConn };
+use std::env;
 
 
 //------------------------------------------------------------------------------
-/// AppState.
+/// Config.
 //------------------------------------------------------------------------------
 #[derive(Clone)]
-pub(crate) struct AppState
+pub(crate) struct Config
 {
-    pub(crate) config: Config,
-    pub(crate) hdb: DbConn,
+    // Server config.
+    pub(crate) port: u16,
 }
 
-impl AppState
+impl Config
 {
     //--------------------------------------------------------------------------
-    /// Initializes the application state.
+    /// Initializes the configuration.
     //--------------------------------------------------------------------------
-    pub(crate) async fn init() -> Self
+    pub(crate) fn init() -> Self
     {
-        let config = Config::init();
-        let hdb = Database::connect(&config.database_url).await.unwrap();
+        // Server config.
+        let port = env::var("PORT")
+            .expect("PORT must be set")
+            .parse::<u16>()
+            .expect("PORT must be a number");
+
         Self
         {
-            config,
-            hdb,
+            // Server config.
+            port,
         }
     }
 }

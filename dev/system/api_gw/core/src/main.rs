@@ -3,17 +3,13 @@
 //------------------------------------------------------------------------------
 
 mod config;
-mod handlers;
-mod layers;
 mod state;
 
 pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
-use axum::{ Router, middleware };
-use axum::routing::get;
+use axum::Router;
 use tokio::net::TcpListener;
-use tower_http::services::{ ServeDir, ServeFile };
 
 
 //------------------------------------------------------------------------------
@@ -23,23 +19,8 @@ use tower_http::services::{ ServeDir, ServeFile };
 async fn main()
 {
     // Creates the application routes.
-    let state = AppState::init().await;
+    let state = AppState::init();
     let routes = Router::new()
-        .nest_service
-        (
-            "/",
-            ServeDir::new("public")
-                .fallback(ServeFile::new("public/index.html"))
-        )
-        .layer
-        (
-            middleware::from_fn_with_state
-            (
-                state.clone(),
-                layers::protected::layer
-            )
-        )
-        .route("/auth/callback", get(handlers::auth_callback::get_handler))
         .with_state(state.clone());
 
     // Starts the server.

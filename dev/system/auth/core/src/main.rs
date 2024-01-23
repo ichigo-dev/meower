@@ -27,10 +27,7 @@ rust_i18n::i18n!("locales");
 #[tokio::main]
 async fn main()
 {
-    // Initializes the configuration and state.
-    let config = Config::init();
-    let port = config.port;
-    let state = AppState::init(config).await;
+    let state = AppState::init().await;
 
     let auth_routes = Router::new()
         .route("/login", get(handlers::login::get_handler))
@@ -83,10 +80,10 @@ async fn main()
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
         .nest_service("/assets", ServeDir::new("assets"))
-        .with_state(state);
+        .with_state(state.clone());
 
     // Starts the server.
-    let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
+    let listener = TcpListener::bind(format!("0.0.0.0:{}", state.config.port))
         .await
         .unwrap();
     axum::serve(listener, routes).await.unwrap();
