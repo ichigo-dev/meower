@@ -13,6 +13,10 @@ pub(crate) struct Config
 {
     // Server config.
     pub(crate) port: u16,
+
+    // JWT config.
+    pub(crate) client_id_key: String,
+    pub(crate) jwt_public_key: String,
 }
 
 impl Config
@@ -28,10 +32,20 @@ impl Config
             .parse::<u16>()
             .expect("PORT must be a number");
 
+        // JWT config.
+        let client_id_key = env::var("CLIENT_ID_KEY")
+            .expect("CLIENT_ID_KEY must be set");
+        let jwt_public_key = env::var("JWT_PUBLIC_KEY")
+            .expect("JWT_PUBLIC_KEY must be set");
+
         Self
         {
             // Server config.
             port,
+
+            // JWT config.
+            client_id_key,
+            jwt_public_key,
         }
     }
 }

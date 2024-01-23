@@ -3,12 +3,13 @@
 //------------------------------------------------------------------------------
 
 mod config;
+mod layers;
 mod state;
 
 pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
-use axum::Router;
+use axum::{ Router, middleware };
 use tokio::net::TcpListener;
 
 
@@ -21,6 +22,14 @@ async fn main()
     // Creates the application routes.
     let state = AppState::init();
     let routes = Router::new()
+        .layer
+        (
+            middleware::from_fn_with_state
+            (
+                state.clone(),
+                layers::protected::layer
+            )
+        )
         .with_state(state.clone());
 
     // Starts the server.

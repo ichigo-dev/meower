@@ -79,6 +79,9 @@ fn redirect_to_auth( config: &Config ) -> impl IntoResponse
         config.client_id,
     );
 
+    let client_id_cookie = Cookie::build((&config.client_id_key, ""))
+        .expires(OffsetDateTime::now_utc() - Duration::days(1))
+        .to_string();
     let user_token_cookie = Cookie::build((&config.jwt_user_token_key, ""))
         .expires(OffsetDateTime::now_utc() - Duration::days(1))
         .to_string();
@@ -89,6 +92,7 @@ fn redirect_to_auth( config: &Config ) -> impl IntoResponse
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, url)
+        .header(header::SET_COOKIE, client_id_cookie)
         .header(header::SET_COOKIE, user_token_cookie)
         .header(header::SET_COOKIE, access_token_cookie)
         .body(Body::empty())

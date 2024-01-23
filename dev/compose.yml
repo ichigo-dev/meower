@@ -138,8 +138,12 @@ services:
       - ${API_GW_PORT}:${API_GW_PORT}
     volumes:
       - ./system/api_gw:/system/api_gw
+      - ./system/auth/shared:/system/auth/shared
+      - ./env/${ENV}/${JWT_PUBLIC_KEY}:/system/app/core/env/${JWT_PUBLIC_KEY}
     environment:
       PORT: ${API_GW_PORT}
+      CLIENT_ID_KEY: ${CLIENT_ID_KEY}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
     working_dir: /system/api_gw/core
     command: "cargo watch -x run"
     tty: true

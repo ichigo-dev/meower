@@ -35,16 +35,21 @@ everything.
 │   │   └ ui_catalog/      ... UI catalog
 │   │
 │   ├ system/              ... Contains system components
+│   │   ├ api_gw/          ... API gateway
+│   │   │   └ core/        ... Server core
+│   │   │
 │   │   ├ app/             ... Application server
 │   │   │   ├ core/        ... Server core
 │   │   │   ├ entity/      ... Database table entities
-│   │   │   └ migration/   ... Migration files
+│   │   │   ├ migration/   ... Migration files
+│   │   │   └ spa/         ... SPA
 │   │   │
 │   │   ├ auth/            ... Authentication server
 │   │   │   ├ core/        ... Server core
 │   │   │   ├ entity/      ... Database table entities
 │   │   │   ├ install/     ... Utility for installing test data and initial data
-│   │   │   └ migration/   ... Migration files
+│   │   │   ├ migration/   ... Migration files
+│   │   │   └ shared/      ... Shared resources
 │   │   │
 │   │   └ common/          ... Contains utility files for the entire application
 │   │       ├ entity_ext/  ... Entity extensions

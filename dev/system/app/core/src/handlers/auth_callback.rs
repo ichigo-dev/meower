@@ -81,21 +81,28 @@ pub(crate) async fn get_handler
         Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
     };
 
+    let client_id_cookie = Cookie::build
+        (
+            (&config.client_id_key, &config.client_id)
+        )
+        .path("/")
+        .to_string();
     let user_token_cookie = Cookie::build
         (
-            (&config.jwt_user_token_key, user_token.token)
+            (&config.jwt_user_token_key, &user_token.token)
         )
         .path("/")
         .to_string();
     let access_token_cookie = Cookie::build
         (
-            (&config.jwt_access_token_key, tokens.access_token)
+            (&config.jwt_access_token_key, &tokens.access_token)
         )
         .path("/")
         .to_string();
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, "/")
+        .header(header::SET_COOKIE, client_id_cookie)
         .header(header::SET_COOKIE, user_token_cookie)
         .header(header::SET_COOKIE, access_token_cookie)
         .body(Body::empty())

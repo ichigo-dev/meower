@@ -21,10 +21,6 @@ pub(crate) struct Config
     // Locale config.
     pub(crate) fallback_locale: String,
 
-    // Parameter config.
-    pub(crate) client_id_key: String,
-    pub(crate) client_secret_key: String,
-
     // Mail config.
     pub(crate) smtp_host: String,
     pub(crate) smtp_port: u16,
@@ -34,6 +30,8 @@ pub(crate) struct Config
     pub(crate) system_email_address: String,
 
     // JWT config.
+    pub(crate) client_id_key: String,
+    pub(crate) client_secret_key: String,
     pub(crate) jwt_private_key: String,
 }
 
@@ -60,12 +58,6 @@ impl Config
         let fallback_locale = env::var("FALLBACK_LOCALE")
             .unwrap_or_else(|_| "en".to_string());
 
-        // Parameter config.
-        let client_id_key = env::var("CLIENT_ID_KEY")
-            .expect("CLIENT_ID_KEY must be set");
-        let client_secret_key = env::var("CLIENT_SECRET_KEY")
-            .expect("CLIENT_SECRET_KEY must be set");
-
         // Mail config.
         let smtp_host = env::var("SMTP_HOST")
             .expect("SMTP_HOST must be set");
@@ -85,6 +77,10 @@ impl Config
             .expect("SYSTEM_EMAIL_ADDRESS must be set");
 
         // JWT config.
+        let client_id_key = env::var("CLIENT_ID_KEY")
+            .expect("CLIENT_ID_KEY must be set");
+        let client_secret_key = env::var("CLIENT_SECRET_KEY")
+            .expect("CLIENT_SECRET_KEY must be set");
         let jwt_private_key = env::var("JWT_PRIVATE_KEY")
             .expect("JWT_PRIVATE_KEY must be set");
 
@@ -100,10 +96,6 @@ impl Config
             // Locale config.
             fallback_locale,
 
-            // Parameter config.
-            client_id_key,
-            client_secret_key,
-
             // Mail config.
             smtp_host,
             smtp_port,
@@ -113,6 +105,8 @@ impl Config
             system_email_address,
 
             // JWT config.
+            client_id_key,
+            client_secret_key,
             jwt_private_key,
         }
     }
