@@ -13,7 +13,7 @@ pub(crate) use state::AppState;
 use axum::{ Router, middleware };
 use axum::routing::get;
 use tokio::net::TcpListener;
-use tower_http::services::{ ServeDir, ServeFile };
+use tower_http::services::ServeDir;
 
 
 //------------------------------------------------------------------------------
@@ -25,12 +25,7 @@ async fn main()
     // Creates the application routes.
     let state = AppState::init().await;
     let routes = Router::new()
-        .nest_service
-        (
-            "/",
-            ServeDir::new("public")
-                .fallback(ServeFile::new("public/index.html"))
-        )
+        .nest_service("/", ServeDir::new("public"))
         .layer
         (
             middleware::from_fn_with_state
