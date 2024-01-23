@@ -14,13 +14,14 @@ use axum::http::{ header, StatusCode };
 use axum::http::Request;
 use axum::middleware::Next;
 use axum::response::{ IntoResponse, Response };
-use axum_extra::extract::cookie::CookieJar;
+use axum_extra::extract::cookie::{ Cookie, CookieJar };
 use jsonwebtoken::{
     decode,
     Algorithm,
     DecodingKey,
     Validation,
 };
+use time::{ OffsetDateTime, Duration };
 
 
 //------------------------------------------------------------------------------
@@ -77,9 +78,19 @@ fn redirect_to_auth( config: &Config ) -> impl IntoResponse
         config.client_id_key,
         config.client_id,
     );
+
+    let user_token_cookie = Cookie::build((&config.jwt_user_token_key, ""))
+        .expires(OffsetDateTime::now_utc() - Duration::days(1))
+        .to_string();
+    let access_token_cookie = Cookie::build((&config.jwt_access_token_key, ""))
+        .expires(OffsetDateTime::now_utc() - Duration::days(1))
+        .to_string();
+
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, url)
+        .header(header::SET_COOKIE, user_token_cookie)
+        .header(header::SET_COOKIE, access_token_cookie)
         .body(Body::empty())
         .unwrap();
     response

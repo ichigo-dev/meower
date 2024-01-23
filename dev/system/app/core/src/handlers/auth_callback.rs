@@ -86,14 +86,12 @@ pub(crate) async fn get_handler
             (&config.jwt_user_token_key, user_token.token)
         )
         .path("/")
-        .http_only(true)
         .to_string();
     let access_token_cookie = Cookie::build
         (
             (&config.jwt_access_token_key, tokens.access_token)
         )
         .path("/")
-        .http_only(true)
         .to_string();
     let response = Response::builder()
         .status(StatusCode::SEE_OTHER)

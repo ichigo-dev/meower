@@ -27,6 +27,7 @@ use sea_orm::{
     TransactionTrait,
 };
 use serde::Deserialize;
+use time::{ OffsetDateTime, Duration };
 
 
 //------------------------------------------------------------------------------
@@ -170,7 +171,10 @@ pub(crate) async fn post_handler
         client_application.redirect_uri,
         user_jwt_token_code.code,
     );
-    let cookie = Cookie::build((&config.client_id_key, "")).to_string();
+    let cookie = Cookie::build((&config.client_id_key, ""))
+        .path("/")
+        .expires(OffsetDateTime::now_utc() - Duration::days(1))
+        .to_string();
     let res = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, redirect_uri)

@@ -83,7 +83,14 @@ pub(crate) async fn layer
     };
     req.extensions_mut().insert(client_application.clone());
 
+    // If the cookie is already set, skip resetting as the intent is to
+    // complete the login and delete the client_id cookie.
     let mut res = next.run(req).await;
+    if res.headers().get(header::SET_COOKIE).is_some()
+    {
+        return Ok(res);
+    }
+
     let now = OffsetDateTime::now_utc();
     let expire = now + Duration::minutes(COOKIE_EXPIERATION_MINUTES);
     res.headers_mut().insert
