@@ -1,19 +1,20 @@
 //------------------------------------------------------------------------------
-//! Table definition.
+//! Edit profile page.
 //------------------------------------------------------------------------------
 
-use sea_orm_migration::prelude::*;
+use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// UserToken.
+/// Component.
 //------------------------------------------------------------------------------
-#[derive(Iden)]
-pub(crate) enum UserToken
+#[component]
+pub fn EditProfile<G: Html>( cx: Scope ) -> View<G>
 {
-    Table,
-    UserTokenId,
-    Token,
-    RefreshToken,
-    CreatedAt,
+    view!
+    {
+        cx,
+        h1 { "Edit profile" }
+        a(href="/mypage", rel="external") { "Mypage" }
+    }
 }

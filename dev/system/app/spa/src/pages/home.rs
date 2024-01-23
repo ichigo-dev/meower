@@ -1,19 +1,20 @@
 //------------------------------------------------------------------------------
-//! Table definition.
+//! Home page.
 //------------------------------------------------------------------------------
 
-use sea_orm_migration::prelude::*;
+use rust_i18n::t;
+use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// UserToken.
+/// Component.
 //------------------------------------------------------------------------------
-#[derive(Iden)]
-pub(crate) enum UserToken
+#[component]
+pub fn Home<G: Html>( cx: Scope ) -> View<G>
 {
-    Table,
-    UserTokenId,
-    Token,
-    RefreshToken,
-    CreatedAt,
+    view!
+    {
+        cx,
+        h1(class="ui_heading h1") { (t!("pages.home.heading")) }
+    }
 }

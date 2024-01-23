@@ -43,13 +43,6 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(UserToken::AccessToken)
-                    .string()
-                    .string_len(255)
-                    .not_null()
-            )
-            .col
-            (
                 ColumnDef::new(UserToken::RefreshToken)
                     .string()
                     .string_len(255)
@@ -70,7 +63,6 @@ impl MigrationTrait for Migration
             "COMMENT ON TABLE \"user_token\" IS 'User token table'",
             "COMMENT ON COLUMN \"user_token\".\"user_token_id\" IS 'User token ID'",
             "COMMENT ON COLUMN \"user_token\".\"token\" IS 'Token'",
-            "COMMENT ON COLUMN \"user_token\".\"access_token\" IS 'Access token'",
             "COMMENT ON COLUMN \"user_token\".\"refresh_token\" IS 'Refresh token'",
             "COMMENT ON COLUMN \"user_token\".\"created_at\" IS 'Created at'",
         ];

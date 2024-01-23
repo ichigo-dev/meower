@@ -32,6 +32,9 @@ pub(crate) struct Config
     pub(crate) smtp_password: String,
     pub(crate) smtp_tls: bool,
     pub(crate) system_email_address: String,
+
+    // JWT config.
+    pub(crate) jwt_private_key: String,
 }
 
 impl Config
@@ -81,6 +84,10 @@ impl Config
         let system_email_address = env::var("SYSTEM_EMAIL_ADDRESS")
             .expect("SYSTEM_EMAIL_ADDRESS must be set");
 
+        // JWT config.
+        let jwt_private_key = env::var("JWT_PRIVATE_KEY")
+            .expect("JWT_PRIVATE_KEY must be set");
+
         Self
         {
             // Server config.
@@ -104,6 +111,9 @@ impl Config
             smtp_password,
             smtp_tls,
             system_email_address,
+
+            // JWT config.
+            jwt_private_key,
         }
     }
 }

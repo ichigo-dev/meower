@@ -24,6 +24,7 @@ services:
       - ./system/auth:/system/auth
       - ./system/common:/system/common
       - ./proto/ui_catalog/assets/css/style.css:/system/auth/core/assets/css/ui.css
+      - ./env/${ENV}/${JWT_PRIVATE_KEY}:/system/auth/core/env/${JWT_PRIVATE_KEY}
     environment:
       PORT: ${AUTH_PORT}
       URL: ${AUTH_URL}
@@ -37,6 +38,7 @@ services:
       SMTP_PASSWORD: ${AUTH_SMTP_PASSWORD}
       SMTP_TLS: ${AUTH_SMTP_TLS}
       SYSTEM_EMAIL_ADDRESS: ${AUTH_SYSTEM_EMAIL_ADDRESS}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
     working_dir: /system/auth/core
     command: "cargo watch -x run"
     depends_on:
@@ -72,7 +74,10 @@ services:
       - ${APP_PORT}:${APP_PORT}
     volumes:
       - ./system/app:/system/app
+      - ./system/app/spa/dist:/system/app/core/public
+      - ./system/auth/shared:/system/auth/shared
       - ./system/common:/system/common
+      - ./env/${ENV}/${JWT_PUBLIC_KEY}:/system/app/core/env/${JWT_PUBLIC_KEY}
     environment:
       PORT: ${APP_PORT}
       DATABASE_URL: ${APP_DB_URL}
@@ -82,6 +87,7 @@ services:
       CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
       AUTH_LOGIN_URL: ${APP_AUTH_LOGIN_URL}
       AUTH_REQUEST_TOKEN_URL: ${APP_AUTH_REQUEST_TOKEN_URL}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
     working_dir: /system/app/core
     command: "cargo watch -x run"
     depends_on:
@@ -105,6 +111,21 @@ services:
       POSTGRES_INITDB_ARGS: --encoding=UTF-8
     command: ["-c", "max_connections=200", "-p", "${APP_DB_PORT}"]
     restart: always
+    tty: true
+
+  # Application SPA
+  app_spa:
+    container_name: meower_app_spa
+    build:
+      context: .
+      dockerfile: ./docker/services/spa/Dockerfile
+    volumes:
+      - ./system/app/spa:/system/app/spa
+      - ./proto/ui_catalog/assets/scss:/system/app/spa/public/scss
+    environment:
+      API_URL: ${API_GW_URL}
+    working_dir: /system/app/spa
+    command: "trunk watch --release"
     tty: true
 
 

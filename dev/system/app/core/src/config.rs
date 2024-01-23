@@ -23,9 +23,14 @@ pub(crate) struct Config
     pub(crate) client_id: String,
     pub(crate) client_secret: String,
 
-    // Urls
+    // Urls.
     pub(crate) auth_login_url: String,
     pub(crate) auth_request_token_url: String,
+
+    // JWT config.
+    pub(crate) jwt_user_token_key: String,
+    pub(crate) jwt_access_token_key: String,
+    pub(crate) jwt_public_key: String,
 }
 
 impl Config
@@ -55,12 +60,18 @@ impl Config
         let client_secret = env::var("CLIENT_SECRET")
             .expect("CLIENT_SECRET must be set");
 
-        // Urls
+        // Urls.
         let auth_login_url = env::var("AUTH_LOGIN_URL")
             .expect("AUTH_LOGIN_URL must be set");
         let auth_request_token_url = env::var("AUTH_REQUEST_TOKEN_URL")
             .expect("AUTH_REQUEST_TOKEN_URL must be set");
-        
+
+        // JWT config.
+        let jwt_user_token_key = "jwt_user_token".to_string();
+        let jwt_access_token_key = "jwt_access_token".to_string();
+        let jwt_public_key = env::var("JWT_PUBLIC_KEY")
+            .expect("JWT_PUBLIC_KEY must be set");
+
         Self
         {
             // Server config.
@@ -75,9 +86,14 @@ impl Config
             client_id,
             client_secret,
 
-            // Urls
+            // Urls.
             auth_login_url,
             auth_request_token_url,
+
+            // JWT config.
+            jwt_user_token_key,
+            jwt_access_token_key,
+            jwt_public_key,
         }
     }
 }

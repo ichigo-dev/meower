@@ -1,19 +1,24 @@
 //------------------------------------------------------------------------------
-//! Table definition.
+//! Mypage.
 //------------------------------------------------------------------------------
 
-use sea_orm_migration::prelude::*;
+use crate::apis::mypage;
+
+use rust_i18n::t;
+use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// UserToken.
+/// Component.
 //------------------------------------------------------------------------------
-#[derive(Iden)]
-pub(crate) enum UserToken
+#[component]
+pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
-    Table,
-    UserTokenId,
-    Token,
-    RefreshToken,
-    CreatedAt,
+    let profile = mypage::get_profile(cx).await;
+
+    view!
+    {
+        cx,
+        h1(class="ui_heading h1") { (t!("pages.mypage.index.heading")) }
+    }
 }

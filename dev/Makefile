@@ -2,6 +2,7 @@
 # Makefile
 ################################################################################
 
+.PHONY: env
 include .env
 
 
@@ -14,7 +15,12 @@ env:
 	@echo "===== Initializing ====="
 	@echo "Copying .env.example to .env"
 	@cp .env.example .env
+	@echo "Generating JWT keys"
+	@mkdir env/dev -p
+	@openssl genrsa -out env/dev/${JWT_PRIVATE_KEY} 2048
+	@openssl rsa -in env/dev/${JWT_PRIVATE_KEY} -pubout > env/dev/${JWT_PUBLIC_KEY}
 	@echo "===== Finish ====="
+
 
 # Setup the project
 setup:
@@ -60,11 +66,11 @@ ps:
 
 auth_db:
 	@docker compose exec auth_db \
-		bash -c 'psql ${AUTH_DB_NAME} -U ${AUTH_DB_USER}'
+		bash -c 'psql ${AUTH_DB_NAME} -U ${AUTH_DB_USER} -p ${AUTH_DB_PORT}'
 
 app_db:
 	@docker compose exec app_db \
-		bash -c 'psql ${APP_DB_NAME} -U ${APP_DB_USER}'
+		bash -c 'psql ${APP_DB_NAME} -U ${APP_DB_USER} -p ${APP_DB_PORT}'
 
 dev:
 	@docker compose exec dev bash

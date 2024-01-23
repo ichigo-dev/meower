@@ -12,6 +12,9 @@ use meower_auth_entity::user::Entity as UserEntity;
 use meower_auth_shared::JwtClaims;
 use meower_entity_ext::ValidateExt;
 
+use std::fs::File;
+use std::io::Read;
+
 use axum::extract::{ Extension, Path, State };
 use axum::http::header::HeaderMap;
 use axum::http::StatusCode;
@@ -148,8 +151,14 @@ pub(crate) async fn get_handler
     // Encodes JWT claims.
     let mut header = Header::default();
     header.typ = Some("JWT".to_string());
-    header.alg = Algorithm::HS256;
-    let key = EncodingKey::from_secret("hoge".as_bytes());
+    header.alg = Algorithm::RS256;
+
+    let key_path = "./env/".to_string() + &config.jwt_private_key;
+    let mut key_data = String::new();
+    let mut file = File::open(&key_path).unwrap();
+    file.read_to_string(&mut key_data).unwrap();
+
+    let key = EncodingKey::from_rsa_pem(key_data.as_bytes()).unwrap();
     let access_token = encode(&header, &jwt_claims, &key).unwrap();
     let res = Response
     {

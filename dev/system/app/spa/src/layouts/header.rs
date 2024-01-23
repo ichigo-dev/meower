@@ -1,19 +1,22 @@
 //------------------------------------------------------------------------------
-//! Table definition.
+//! Header.
 //------------------------------------------------------------------------------
 
-use sea_orm_migration::prelude::*;
+use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// UserToken.
+/// Component.
 //------------------------------------------------------------------------------
-#[derive(Iden)]
-pub(crate) enum UserToken
+#[component]
+pub fn Header<G: Html>( cx: Scope ) -> View<G>
 {
-    Table,
-    UserTokenId,
-    Token,
-    RefreshToken,
-    CreatedAt,
+    view!
+    {
+        cx,
+        div(class="ui_box primary text_align_center padding_lg")
+        {
+            "Meower"
+        }
+    }
 }

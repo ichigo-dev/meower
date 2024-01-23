@@ -1,0 +1,6 @@
+pages:
+  mypage:
+    index:
+      heading: "マイページ"
+      profile_container:
+        display_name: "表示名"
