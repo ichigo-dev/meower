@@ -2,10 +2,6 @@
 //! Configuration.
 //------------------------------------------------------------------------------
 
-use std::collections::HashMap;
-
-use wasm_bindgen::JsCast;
-
 
 //------------------------------------------------------------------------------
 /// Config.
@@ -14,6 +10,7 @@ use wasm_bindgen::JsCast;
 pub(crate) struct Config
 {
     pub(crate) api_url: String,
+    pub(crate) client_id_key: String,
     pub(crate) client_id: String,
     pub(crate) access_token: String,
 }
@@ -38,12 +35,14 @@ impl Config
             .unwrap_or("".to_string());
 
         let api_url = std::env!("API_URL").to_string();
+        let client_id_key = std::env!("CLIENT_ID_KEY").to_string();
         let client_id = client_id;
         let access_token = access_token;
 
         Self
         {
             api_url,
+            client_id_key,
             client_id,
             access_token,
         }
