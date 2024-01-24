@@ -25,5 +25,4 @@ wasm-bindgen-futures = "0.4.39"
 web-sys = { version = "0.3.66", features = [
     "Window",
     "Navigator",
-    "HtmlDocument",
 ]}

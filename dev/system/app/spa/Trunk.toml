@@ -2,9 +2,10 @@
 target = "index.html"
 release = false
 dist = "dist"
-public_url = "/"
+public_url = "/_public/"
 filehash = true
 inject_scripts = true
+no_minification = true
 
 [watch]
 watch = []

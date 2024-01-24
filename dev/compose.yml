@@ -75,11 +75,10 @@ services:
     volumes:
       - ./system/app:/system/app
       - ./system/app/spa/dist:/system/app/core/public
-      - ./system/auth/shared:/system/auth/shared
       - ./system/common:/system/common
-      - ./env/${ENV}/${JWT_PUBLIC_KEY}:/system/app/core/env/${JWT_PUBLIC_KEY}
     environment:
       PORT: ${APP_PORT}
+      USER_TOKEN_KEY: ${APP_USER_TOKEN_KEY}
       DATABASE_URL: ${APP_DB_URL}
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}
       CLIENT_SECRET_KEY: ${CLIENT_SECRET_KEY}
@@ -87,7 +86,7 @@ services:
       CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
       AUTH_LOGIN_URL: ${APP_AUTH_LOGIN_URL}
       AUTH_REQUEST_TOKEN_URL: ${APP_AUTH_REQUEST_TOKEN_URL}
-      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
+      ACCESS_TOKEN_KEY: ${ACCESS_TOKEN_KEY}
     working_dir: /system/app/core
     command: "cargo watch -x run"
     depends_on:
@@ -124,6 +123,8 @@ services:
       - ./proto/ui_catalog/assets/scss:/system/app/spa/public/scss
     environment:
       API_URL: ${API_GW_URL}
+      CLIENT_ID_KEY: ${CLIENT_ID_KEY}
+      ACCESS_TOKEN_KEY: ${ACCESS_TOKEN_KEY}
     working_dir: /system/app/spa
     command: "trunk watch --release"
     tty: true

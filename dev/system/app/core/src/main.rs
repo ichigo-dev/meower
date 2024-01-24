@@ -25,7 +25,8 @@ async fn main()
     // Creates the application routes.
     let state = AppState::init().await;
     let routes = Router::new()
-        .nest_service("/", ServeDir::new("public"))
+        .nest_service("/_public", ServeDir::new("public"))
+        .fallback(handlers::index::handler)
         .layer
         (
             middleware::from_fn_with_state

@@ -43,6 +43,12 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(UserToken::AccessToken)
+                    .text()
+                    .not_null()
+            )
+            .col
+            (
                 ColumnDef::new(UserToken::RefreshToken)
                     .string()
                     .string_len(255)

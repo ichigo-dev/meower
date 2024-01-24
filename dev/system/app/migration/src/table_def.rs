@@ -14,6 +14,7 @@ pub(crate) enum UserToken
     Table,
     UserTokenId,
     Token,
+    AccessToken,
     RefreshToken,
     CreatedAt,
 }

@@ -7,9 +7,6 @@ use crate::AppState;
 use meower_app_entity::user_token::ActiveModel as UserTokenActiveModel;
 use meower_entity_ext::ValidateExt;
 
-use std::fs::File;
-use std::io::Read;
-
 use axum::body::Body;
 use axum::extract::{ Query, State };
 use axum::http::{ header, StatusCode };
@@ -75,6 +72,7 @@ pub(crate) async fn get_handler
 
     let user_token = UserTokenActiveModel
     {
+        access_token: ActiveValue::Set(tokens.access_token.into()),
         refresh_token: ActiveValue::Set(tokens.refresh_token.into()),
         ..Default::default()
     };
@@ -84,37 +82,17 @@ pub(crate) async fn get_handler
         Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
     };
 
-    let client_id_cookie = Cookie::build
-        (
-            (&config.client_id_key, &config.client_id)
-        )
+    // Sets the user token cookie.
+    let cookie = Cookie::build((&config.user_token_key, user_token.token))
         .path("/")
+        .secure(true)
+        .http_only(true)
         .to_string();
-    let user_token_cookie = Cookie::build
-        (
-            (&config.jwt_user_token_key, &user_token.token)
-        )
-        .path("/")
-        .to_string();
-    let access_token_cookie = Cookie::build
-        (
-            (&config.jwt_access_token_key, &tokens.access_token)
-        )
-        .path("/")
-        .to_string();
-
-    // Loads the index.html file.
-    let mut index_html = String::new();
-    let mut index_html_file = File::open("public/index.html").unwrap();
-    index_html_file.read_to_string(&mut index_html).unwrap();
-
-    let response = Response::builder()
+    let res = Response::builder()
         .status(StatusCode::SEE_OTHER)
         .header(header::LOCATION, "/")
-        .header(header::SET_COOKIE, client_id_cookie)
-        .header(header::SET_COOKIE, user_token_cookie)
-        .header(header::SET_COOKIE, access_token_cookie)
+        .header(header::SET_COOKIE, cookie)
         .body(Body::empty())
         .unwrap();
-    Ok(response)
+    Ok(res)
 }
