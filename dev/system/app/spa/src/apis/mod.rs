@@ -15,6 +15,7 @@ pub(crate) async fn get( state: &AppState, endpoint: &str ) -> String
 {
     let client = &state.client;
     let config = &state.config;
+    log::info!("client: {:#?}", client);
 
     let url = format!("{}/{}", config.api_url, endpoint);
     let response = match client.get(url).send().await

@@ -2,6 +2,8 @@
 //! Mypage.
 //------------------------------------------------------------------------------
 
+use crate::apis::get;
+
 use rust_i18n::t;
 use sycamore::prelude::*;
 
@@ -12,6 +14,9 @@ use sycamore::prelude::*;
 #[component]
 pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
+    let state = use_context(cx);
+    get(&state, "mypage").await;
+
     view!
     {
         cx,

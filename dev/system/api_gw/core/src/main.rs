@@ -30,6 +30,14 @@ async fn main()
                 layers::protected::layer
             )
         )
+        .layer
+        (
+            middleware::from_fn_with_state
+            (
+                state.clone(),
+                layers::cors::layer
+            )
+        )
         .with_state(state.clone());
 
     // Starts the server.

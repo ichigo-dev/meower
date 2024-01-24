@@ -13,7 +13,7 @@ use axum::extract::State;
 use axum::http::{ header, StatusCode };
 use axum::http::Request;
 use axum::middleware::Next;
-use axum::response::{ IntoResponse, Response };
+use axum::response::IntoResponse;
 use jsonwebtoken::{
     decode,
     Algorithm,
