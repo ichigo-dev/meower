@@ -5,6 +5,7 @@
 use crate::Config;
 
 use std::sync::Arc;
+
 use tokio::sync::RwLock;
 
 
@@ -26,7 +27,10 @@ impl AppState
     pub(crate) fn init() -> Self
     {
         let config = Config::init();
-        let cors_origins = Arc::new(RwLock::new(vec!["*".to_string()]));
+        let cors_origins = Arc::new(RwLock::new(vec!
+        [
+            "http://localhost:8080".to_string(),
+        ]));
         Self
         {
             config,

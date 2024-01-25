@@ -23,29 +23,24 @@ pub(crate) async fn layer
 ) -> impl IntoResponse
 {
     let cors_origins = state.cors_origins.read().await;
+    let origin = req
+        .headers()
+        .get(header::ORIGIN)
+        .unwrap_or(&"".parse().unwrap())
+        .clone();
 
     let mut res = next.run(req).await;
-    res.headers_mut().insert
-    (
-        header::ACCESS_CONTROL_ALLOW_ORIGIN,
-        cors_origins.join(",").parse().unwrap(),
-    );
-    res.headers_mut().insert
-    (
-        header::ACCESS_CONTROL_ALLOW_METHODS,
-        ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
-            .join(",")
-            .parse()
-            .unwrap(),
-    );
-    res.headers_mut().insert
-    (
-        header::ACCESS_CONTROL_ALLOW_HEADERS,
-        ["Authorization", "Content-Type", &config.client_id_key]
-            .join(",")
-            .parse()
-            .unwrap(),
-    );
-    println!("res: {:#?}", res);
+
+    if let Some(origin) = origin.to_str().ok()
+    {
+        if cors_origins.contains(&origin.to_string())
+        {
+            res.headers_mut().insert
+            (
+                header::ACCESS_CONTROL_ALLOW_ORIGIN,
+                origin.to_string().parse().unwrap()
+            );
+        }
+    }
     res
 }

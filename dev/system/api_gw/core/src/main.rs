@@ -10,7 +10,9 @@ pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
 use axum::{ Router, middleware };
+use axum::http::{ header, Method };
 use tokio::net::TcpListener;
+use tower_http::cors::CorsLayer;
 
 
 //------------------------------------------------------------------------------
@@ -32,10 +34,27 @@ async fn main()
         )
         .layer
         (
+            CorsLayer::new()
+                .allow_methods(
+                [
+                    Method::GET,
+                    Method::POST,
+                    Method::OPTIONS,
+                    Method::PUT,
+                    Method::DELETE,
+                ])
+                .allow_headers(
+                [
+                    header::AUTHORIZATION,
+                    state.config.client_id_key.clone().parse().unwrap(),
+                ])
+        )
+        .layer
+        (
             middleware::from_fn_with_state
             (
                 state.clone(),
-                layers::cors::layer
+                layers::cors_ext::layer
             )
         )
         .with_state(state.clone());
