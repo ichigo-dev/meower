@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use meower_auth_entity::client_application::ActiveModel as ClientApplicationActiveModel;
+use meower_auth_entity::client_application_allow_origin::ActiveModel as ClientApplicationAllowOriginActiveModel;
 use meower_entity_ext::ValidateExt;
 
 use std::env;
@@ -25,6 +26,7 @@ async fn main()
 
     println!("=== Installing initial data ===");
 
+    // Client application.
     let meower_redirect_uri = env::var("MEOWER_REDIRECT_URI").unwrap();
     let client_application = ClientApplicationActiveModel
     {
@@ -44,6 +46,7 @@ async fn main()
         },
     };
 
+    let client_application_id = client_application.client_application_id;
     let mut client_application: ClientApplicationActiveModel
         = client_application.into();
     let meower_client_id = env::var("MEOWER_CLIENT_ID").unwrap();
@@ -51,6 +54,22 @@ async fn main()
     client_application.client_id = ActiveValue::Set(meower_client_id);
     client_application.client_secret = ActiveValue::Set(meower_client_secret);
     client_application.update(&tsx).await.unwrap();
+
+    // Client application allow origin.
+    let allow_origin = env::var("MEOWER_ALLOW_ORIGIN").unwrap();
+    let client_application_allow_origin = ClientApplicationAllowOriginActiveModel
+    {
+        client_application_id: ActiveValue::Set(client_application_id),
+        allow_origin: ActiveValue::Set(allow_origin),
+        ..Default::default()
+    };
+    if let Err(e) = client_application_allow_origin
+        .validate_and_insert(&tsx)
+        .await
+    {
+        tsx.rollback().await.unwrap();
+        panic!("Failed to install initial data: {}", e.get_message());
+    }
 
     println!("=== Initial data installed ===");
 

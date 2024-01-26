@@ -19,8 +19,8 @@ pub(crate) struct Config
     pub(crate) database_url: String,
 
     // Urls.
-    pub(crate) auth_login_url: String,
-    pub(crate) auth_request_token_url: String,
+    pub(crate) auth_url: String,
+    pub(crate) auth_api_url: String,
 
     // JWT config.
     pub(crate) client_id_key: String,
@@ -50,10 +50,10 @@ impl Config
             .expect("DATABASE_URL must be set");
 
         // Urls.
-        let auth_login_url = env::var("AUTH_LOGIN_URL")
-            .expect("AUTH_LOGIN_URL must be set");
-        let auth_request_token_url = env::var("AUTH_REQUEST_TOKEN_URL")
-            .expect("AUTH_REQUEST_TOKEN_URL must be set");
+        let auth_url = env::var("AUTH_URL")
+            .expect("AUTH_URL must be set");
+        let auth_api_url = env::var("AUTH_API_URL")
+            .expect("AUTH_API_URL must be set");
 
         // JWT config.
         let client_id_key = env::var("CLIENT_ID_KEY")
@@ -77,8 +77,8 @@ impl Config
             database_url,
 
             // Urls.
-            auth_login_url,
-            auth_request_token_url,
+            auth_url,
+            auth_api_url,
 
             // JWT config.
             client_id_key,

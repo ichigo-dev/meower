@@ -1,0 +1,8 @@
+entities:
+  client_application_allow_origin:
+    client_application_allow_origin_id:
+      name: "クライアントアプリケーション許可オリジンID"
+    client_application_id:
+      name: "クライアントアプリケーションID"
+    allow_origin:
+      name: "許可オリジン"

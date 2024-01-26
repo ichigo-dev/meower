@@ -44,8 +44,8 @@ fn redirect_to_auth( config: &Config ) -> impl IntoResponse
 {
     let url = format!
     (
-        "{}?{}={}",
-        config.auth_login_url,
+        "{}/auth/login?{}={}",
+        config.auth_url,
         config.client_id_key,
         config.client_id,
     );

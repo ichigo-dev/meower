@@ -2,6 +2,7 @@
 //! Authentication server.
 //------------------------------------------------------------------------------
 
+mod apis;
 mod config;
 mod handlers;
 mod layers;
@@ -56,16 +57,26 @@ async fn main()
         (
             "/reset_password/:token",
             post(handlers::reset_password::post_handler)
-        )
+        );
+
+    let api_routes = Router::new()
         .route
         (
-            "/request_token/:code",
-            get(handlers::request_token::get_handler)
+            "/auth/request_token/:code",
+            get(apis::auth::request_token::get_handler)
+        );
+
+    let no_protected_api_routes = Router::new()
+        .route
+        (
+            "/client_application/get_allow_origins",
+            get(apis::client_application::get_allow_origins::get_handler)
         );
 
     // Creates the application routes.
     let routes = Router::new()
         .nest("/auth", auth_routes)
+        .nest("/api", api_routes)
         .fallback(Redirect::temporary("/auth/login"))
         .layer
         (
@@ -80,6 +91,7 @@ async fn main()
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
         .nest_service("/assets", ServeDir::new("assets"))
+        .nest("/api", no_protected_api_routes)
         .with_state(state.clone());
 
     // Starts the server.

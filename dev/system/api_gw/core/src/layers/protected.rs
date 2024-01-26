@@ -37,7 +37,8 @@ pub(crate) async fn layer
     let access_token = req.headers()
         .get(header::AUTHORIZATION)
         .map(|value| value.to_str().unwrap().to_string())
-        .unwrap_or_default();
+        .unwrap_or_default()
+        .replace("Bearer ", "");
     let client_id = req.headers()
         .get(&config.client_id_key)
         .map(|value| value.to_str().unwrap().to_string())
@@ -55,15 +56,9 @@ pub(crate) async fn layer
     let key = DecodingKey::from_rsa_pem(key_data.as_bytes()).unwrap();
     let mut validation = Validation::new(Algorithm::RS256);
     validation.set_audience(&[&client_id]);
-    let _access_token = match decode::<JwtClaims>
-    (
-        &access_token,
-        &key,
-        &validation,
-    )
+    if let Err(_) = decode::<JwtClaims>(&access_token, &key, &validation)
     {
-        Ok(token) => token,
-        Err(_) => return Err(StatusCode::UNAUTHORIZED),
+        return Err(StatusCode::UNAUTHORIZED);
     };
 
     Ok(next.run(req).await)

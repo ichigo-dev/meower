@@ -84,8 +84,8 @@ services:
       CLIENT_SECRET_KEY: ${CLIENT_SECRET_KEY}
       CLIENT_ID: ${MEOWER_CLIENT_ID}
       CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
-      AUTH_LOGIN_URL: ${APP_AUTH_LOGIN_URL}
-      AUTH_REQUEST_TOKEN_URL: ${APP_AUTH_REQUEST_TOKEN_URL}
+      AUTH_URL: ${AUTH_URL}
+      AUTH_API_URL: ${AUTH_API_URL}
       ACCESS_TOKEN_KEY: ${ACCESS_TOKEN_KEY}
     working_dir: /system/app/core
     command: "cargo watch -x run"
@@ -140,13 +140,16 @@ services:
     volumes:
       - ./system/api_gw:/system/api_gw
       - ./system/auth/shared:/system/auth/shared
-      - ./env/${ENV}/${JWT_PUBLIC_KEY}:/system/app/core/env/${JWT_PUBLIC_KEY}
+      - ./env/${ENV}/${JWT_PUBLIC_KEY}:/system/api_gw/core/env/${JWT_PUBLIC_KEY}
     environment:
       PORT: ${API_GW_PORT}
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}
       JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
+      AUTH_API_URL: ${AUTH_API_URL}
     working_dir: /system/api_gw/core
     command: "cargo watch -x run"
+    depends_on:
+      - auth
     tty: true
 
 
@@ -167,6 +170,7 @@ services:
       MEOWER_CLIENT_ID: ${MEOWER_CLIENT_ID}
       MEOWER_CLIENT_SECRET: ${MEOWER_CLIENT_SECRET}
       MEOWER_REDIRECT_URI: ${MEOWER_REDIRECT_URI}
+      MEOWER_ALLOW_ORIGIN: ${MEOWER_ALLOW_ORIGIN}
     tty: true
 
   # mailhog

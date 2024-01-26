@@ -57,7 +57,12 @@ pub(crate) async fn get_handler
 
     let client = Client::new();
     let config = &state.config;
-    let endpoint = format!("{}/{}", config.auth_request_token_url, code);
+    let endpoint = format!
+    (
+        "{}/auth/request_token/{}",
+        config.auth_api_url,
+        code,
+    );
     let res = client
         .get(&endpoint)
         .header(&config.client_id_key, &config.client_id)

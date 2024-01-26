@@ -129,7 +129,6 @@ pub(crate) async fn get_handler
             return Err(StatusCode::UNAUTHORIZED);
         }
     };
-
     tsx.commit().await.unwrap();
 
     // Creates JWT claims.

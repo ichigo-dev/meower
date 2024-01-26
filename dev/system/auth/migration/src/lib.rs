@@ -32,6 +32,7 @@ impl MigratorTrait for Migrator
             Box::new(m20240117124025_create_jwt_token_code_table::Migration),
             Box::new(m20240117124345_create_jwt_refresh_token_table::Migration),
             Box::new(m20240117124707_create_client_application_table::Migration),
+            Box::new(m20240126170310_create_client_application_allow_origin_table::Migration),
         ]
     }
 }

@@ -14,6 +14,8 @@ use axum::http::{ header, Method };
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
+use axum::routing::get;
+
 
 //------------------------------------------------------------------------------
 /// Main entry point.
@@ -22,8 +24,9 @@ use tower_http::cors::CorsLayer;
 async fn main()
 {
     // Creates the application routes.
-    let state = AppState::init();
+    let state = AppState::init().await;
     let routes = Router::new()
+        .route("/mypage", get(|| async { return "Hello" }))
         .layer
         (
             middleware::from_fn_with_state

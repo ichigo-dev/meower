@@ -64,6 +64,13 @@ everything.
 ```
 
 
+## Services
+
+- auth: Authentication server.
+- api_gw: API Gateway. 
+- app: Delivery SPA application.
+
+
 ## Note
 
 - Cargo does not currently support nested workspaces, but we would like to take

@@ -2,14 +2,13 @@
 //! Handlers.
 //------------------------------------------------------------------------------
 
-pub mod bad_request;
-pub mod forgot_password;
-pub mod forgot_password_success;
-pub mod login;
-pub mod request_token;
-pub mod resend_verify_code;
-pub mod reset_password;
-pub mod reset_password_success;
-pub mod signup;
-pub mod signup_success;
-pub mod verify_code;
+pub(crate) mod bad_request;
+pub(crate) mod forgot_password;
+pub(crate) mod forgot_password_success;
+pub(crate) mod login;
+pub(crate) mod resend_verify_code;
+pub(crate) mod reset_password;
+pub(crate) mod reset_password_success;
+pub(crate) mod signup;
+pub(crate) mod signup_success;
+pub(crate) mod verify_code;

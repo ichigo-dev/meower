@@ -17,6 +17,9 @@ pub(crate) struct Config
     // JWT config.
     pub(crate) client_id_key: String,
     pub(crate) jwt_public_key: String,
+
+    // Urls
+    pub(crate) auth_api_url: String,
 }
 
 impl Config
@@ -38,6 +41,10 @@ impl Config
         let jwt_public_key = env::var("JWT_PUBLIC_KEY")
             .expect("JWT_PUBLIC_KEY must be set");
 
+        // Urls.
+        let auth_api_url = env::var("AUTH_API_URL")
+            .expect("AUTH_API_URL must be set");
+
         Self
         {
             // Server config.
@@ -46,6 +53,9 @@ impl Config
             // JWT config.
             client_id_key,
             jwt_public_key,
+
+            // Urls
+            auth_api_url,
         }
     }
 }

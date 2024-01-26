@@ -127,3 +127,16 @@ pub(crate) enum ClientApplication
     CreatedAt,
     UpdatedAt,
 }
+
+
+//------------------------------------------------------------------------------
+/// ClientApplicationAllowOrigin.
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum ClientApplicationAllowOrigin
+{
+    Table,
+    ClientApplicationAllowOriginId,
+    ClientApplicationId,
+    AllowOrigin,
+}
