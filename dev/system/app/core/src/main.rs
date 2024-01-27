@@ -27,6 +27,11 @@ async fn main()
     let routes = Router::new()
         .nest_service("/_public", ServeDir::new("public"))
         .fallback(handlers::index::handler)
+        .route
+        (
+            "/auth/refresh_token",
+            get(handlers::auth::refresh_token::get_handler)
+        )
         .layer
         (
             middleware::from_fn_with_state
@@ -35,7 +40,7 @@ async fn main()
                 layers::protected::layer
             )
         )
-        .route("/auth/callback", get(handlers::auth_callback::get_handler))
+        .route("/auth/callback", get(handlers::auth::callback::get_handler))
         .with_state(state.clone());
 
     // Starts the server.

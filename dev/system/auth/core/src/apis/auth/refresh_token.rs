@@ -6,8 +6,8 @@ use crate::AppState;
 
 use meower_auth_entity::client_application::Model as ClientApplicationModel;
 use meower_auth_entity::jwt_refresh_token::ActiveModel as JwtRefreshTokenActiveModel;
-use meower_auth_entity::jwt_token_code::Column as JwtTokenCodeColumn;
-use meower_auth_entity::jwt_token_code::Entity as JwtTokenCodeEntity;
+use meower_auth_entity::jwt_refresh_token::Column as JwtRefreshTokenColumn;
+use meower_auth_entity::jwt_refresh_token::Entity as JwtRefreshTokenEntity;
 use meower_auth_entity::user::Entity as UserEntity;
 use meower_auth_shared::JwtClaims;
 use meower_entity_ext::ValidateExt;
@@ -58,7 +58,7 @@ pub(crate) async fn get_handler
 (
     State(state): State<AppState>,
     Extension(client_application): Extension<ClientApplicationModel>,
-    Path(code): Path<String>,
+    Path(refresh_token): Path<String>,
     headers: HeaderMap,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
@@ -74,29 +74,31 @@ pub(crate) async fn get_handler
     }
 
     let tsx = state.hdb.begin().await.unwrap();
-    let jwt_token_code = match JwtTokenCodeEntity::find()
-        .filter(JwtTokenCodeColumn::Code.eq(code))
-        .one(&tsx)
+    let jwt_refresh_token = match JwtRefreshTokenEntity::find()
+        .filter(JwtRefreshTokenColumn::Token.eq(refresh_token))
+        .one(&state.hdb)
         .await
         .unwrap()
     {
-        Some(jwt_token_code) => jwt_token_code,
+        Some(jwt_refresh_token) => jwt_refresh_token,
         None =>
         {
             tsx.rollback().await.unwrap();
             return Err(StatusCode::UNAUTHORIZED);
-        }
+        },
     };
 
-    if jwt_token_code.verify() == false
+    let user_id = jwt_refresh_token.user_id;
+    if jwt_refresh_token.verify() == false
     {
+        jwt_refresh_token.delete(&tsx).await.unwrap();
         tsx.rollback().await.unwrap();
         return Err(StatusCode::UNAUTHORIZED);
     }
 
     let jwt_refresh_token = JwtRefreshTokenActiveModel
     {
-        user_id: ActiveValue::set(jwt_token_code.user_id),
+        user_id: ActiveValue::set(user_id),
         ..Default::default()
     };
     let jwt_refresh_token = match jwt_refresh_token
@@ -110,12 +112,6 @@ pub(crate) async fn get_handler
             return Err(StatusCode::UNAUTHORIZED);
         }
     };
-
-    if jwt_token_code.delete(&tsx).await.is_err()
-    {
-        tsx.rollback().await.unwrap();
-        return Err(StatusCode::UNAUTHORIZED);
-    }
 
     let user = match UserEntity::find_by_id(jwt_refresh_token.user_id)
         .one(&tsx)

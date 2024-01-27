@@ -2,6 +2,8 @@
 //! Configuration.
 //------------------------------------------------------------------------------
 
+use std::sync::{ Arc, Mutex };
+
 
 //------------------------------------------------------------------------------
 /// Config.
@@ -9,10 +11,11 @@
 #[derive(Clone, Debug)]
 pub(crate) struct Config
 {
+    pub(crate) app_url: String,
     pub(crate) api_url: String,
     pub(crate) client_id_key: String,
     pub(crate) client_id: String,
-    pub(crate) access_token: String,
+    pub(crate) access_token: Arc<Mutex<String>>,
 }
 
 impl Config
@@ -34,13 +37,15 @@ impl Config
             .get_attribute("data-value")
             .unwrap_or("".to_string());
 
+        let app_url = std::env!("APP_URL").to_string();
         let api_url = std::env!("API_URL").to_string();
         let client_id_key = std::env!("CLIENT_ID_KEY").to_string();
         let client_id = client_id;
-        let access_token = access_token;
+        let access_token = Arc::new(Mutex::new(access_token));
 
         Self
         {
+            app_url,
             api_url,
             client_id_key,
             client_id,

@@ -62,8 +62,13 @@ async fn main()
     let api_routes = Router::new()
         .route
         (
-            "/auth/request_token/:code",
+            "/auth/request_token/:refresh_token",
             get(apis::auth::request_token::get_handler)
+        )
+        .route
+        (
+            "/auth/refresh_token/:code",
+            get(apis::auth::refresh_token::get_handler)
         );
 
     let no_protected_api_routes = Router::new()

@@ -26,7 +26,7 @@ impl AppState
     pub(crate) fn new() -> Self
     {
         let config = Config::init();
-        let auth = format!("Bearer {}", config.access_token);
+        let auth = format!("Bearer {}", config.access_token.lock().unwrap());
         let headers = HeaderMap::from_iter(vec!
         [
             (header::AUTHORIZATION, auth.parse().unwrap()),

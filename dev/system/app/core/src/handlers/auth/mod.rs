@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
-//! Auth application API.
+//! Auth handlers.
 //------------------------------------------------------------------------------
 
-pub(crate) mod refresh_token;
-pub(crate) mod request_token;
+pub mod callback;
+pub mod refresh_token;

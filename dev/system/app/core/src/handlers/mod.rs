@@ -2,5 +2,5 @@
 //! Handlers.
 //------------------------------------------------------------------------------
 
-pub mod auth_callback;
+pub mod auth;
 pub mod index;
