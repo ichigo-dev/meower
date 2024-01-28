@@ -5,7 +5,7 @@
 use crate::Config;
 
 use reqwest::Client;
-use reqwest::header::{ self, HeaderMap };
+use reqwest::header::HeaderMap;
 
 
 //------------------------------------------------------------------------------
@@ -26,10 +26,8 @@ impl AppState
     pub(crate) fn new() -> Self
     {
         let config = Config::init();
-        let auth = format!("Bearer {}", config.access_token.lock().unwrap());
         let headers = HeaderMap::from_iter(vec!
         [
-            (header::AUTHORIZATION, auth.parse().unwrap()),
             (
                 config.client_id_key.clone().parse().unwrap(),
                 config.client_id.clone().parse().unwrap(),
