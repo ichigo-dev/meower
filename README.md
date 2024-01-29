@@ -69,6 +69,7 @@ everything.
 - auth: Authentication server.
 - api_gw: API Gateway. 
 - app: Delivery SPA application.
+- profile: Profile API.
 
 
 ## Note

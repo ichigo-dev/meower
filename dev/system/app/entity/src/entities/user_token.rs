@@ -6,10 +6,12 @@ use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
 use async_trait::async_trait;
-use chrono::Utc;
+use chrono::{ Utc, Duration };
 use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
+
+const TOKEN_EXPIRATION_HOURS: i64 = 24;
 
 
 //------------------------------------------------------------------------------
@@ -26,6 +28,19 @@ pub struct Model
     pub access_token: String,
     pub refresh_token: String,
     pub created_at: DateTime,
+    pub expired_at: DateTime,
+}
+
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Verifies token.
+    //--------------------------------------------------------------------------
+    pub fn verify( &self ) -> bool
+    {
+        let now = Utc::now().naive_utc();
+        self.expired_at > now
+    }
 }
 
 
@@ -55,6 +70,9 @@ impl ActiveModelBehavior for ActiveModel
 
             let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
+
+            let expired_at = now + Duration::hours(TOKEN_EXPIRATION_HOURS);
+            self.set(Column::ExpiredAt, expired_at.into());
         }
 
         Ok(self)
@@ -82,6 +100,7 @@ impl Column
             Self::AccessToken => t!("entities.user_token.access_token.name"),
             Self::RefreshToken => t!("entities.user_token.refresh_token.name"),
             Self::CreatedAt => t!("entities.user_token.created_at.name"),
+            Self::ExpiredAt => t!("entities.user_token.expired_at.name"),
         }
     }
 }

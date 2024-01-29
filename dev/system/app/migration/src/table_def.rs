@@ -17,4 +17,5 @@ pub(crate) enum UserToken
     AccessToken,
     RefreshToken,
     CreatedAt,
+    ExpiredAt,
 }

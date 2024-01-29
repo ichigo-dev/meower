@@ -10,3 +10,5 @@ entities:
       name: "リフレッシュトークン"
     created_at:
       name: "作成日時"
+    expired_at:
+      name: "有効期限"

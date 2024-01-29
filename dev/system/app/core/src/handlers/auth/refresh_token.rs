@@ -23,9 +23,7 @@ use sea_orm::{
     TransactionTrait,
 };
 use serde::{ Deserialize, Serialize };
-use time::{ Duration, OffsetDateTime };
-
-const USER_TOKEN_EXPIRATION_HOURS: i64 = 24;
+use time::OffsetDateTime;
 
 
 //------------------------------------------------------------------------------
@@ -120,11 +118,7 @@ pub(crate) async fn get_handler
         .path("/")
         .secure(true)
         .http_only(true)
-        .expires
-        (
-            OffsetDateTime::now_utc() +
-            Duration::hours(USER_TOKEN_EXPIRATION_HOURS)
-        )
+        .expires(OffsetDateTime::from_unix_timestamp(user_token.expired_at.timestamp()).unwrap())
         .to_string();
     let res = Response::builder()
         .status(StatusCode::OK)

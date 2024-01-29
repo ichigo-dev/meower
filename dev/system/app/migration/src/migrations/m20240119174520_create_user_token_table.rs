@@ -61,6 +61,13 @@ impl MigrationTrait for Migration
                     .default(Expr::current_timestamp())
                     .not_null()
             )
+            .col
+            (
+                ColumnDef::new(UserToken::ExpiredAt)
+                    .timestamp()
+                    .default(Expr::current_timestamp())
+                    .not_null()
+            )
             .to_owned();
         manager.create_table(table).await?;
 
@@ -70,7 +77,8 @@ impl MigrationTrait for Migration
             "COMMENT ON COLUMN \"user_token\".\"user_token_id\" IS 'User token ID'",
             "COMMENT ON COLUMN \"user_token\".\"token\" IS 'Token'",
             "COMMENT ON COLUMN \"user_token\".\"refresh_token\" IS 'Refresh token'",
-            "COMMENT ON COLUMN \"user_token\".\"created_at\" IS 'Created at'",
+            "COMMENT ON COLUMN \"user_token\".\"created_at\" IS 'Create date'",
+            "COMMENT ON COLUMN \"user_token\".\"expired_at\" IS 'Expire date'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
