@@ -1,0 +1,8 @@
+entities:
+  group_workspace:
+    group_workspace_id:
+      name: "グループワークスペースID"
+    workspace_id:
+      name: "ワークスペースID"
+    group_id:
+      name: "グループID"
