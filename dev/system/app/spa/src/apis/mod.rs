@@ -18,7 +18,7 @@ pub(crate) async fn request
     state: &AppState,
     endpoint: &str,
     method: Method,
-) -> String
+) -> Result<String, ()>
 {
     let client = &state.client;
     let config = &state.config;
@@ -31,7 +31,7 @@ pub(crate) async fn request
         .await
     {
         Ok(response) => response,
-        Err(_) => return String::new(),
+        Err(_) => return Err(()),
     };
 
     // If the authentication status is invalid, refresh the token and try again.
@@ -41,10 +41,17 @@ pub(crate) async fn request
         let response = match client.get(refresh_url).send().await
         {
             Ok(response) => response,
-            Err(_) => return String::new(),
+            Err(_) => return Err(()),
         };
+
+        let body = response.text().await.unwrap_or_default();
+        if body.is_empty()
+        {
+            return Err(());
+        }
+
         let mut access_token = config.access_token.lock().unwrap();
-        *access_token = response.text().await.unwrap_or_default();
+        *access_token = body;
 
         match client
             .request(method, url)
@@ -52,36 +59,55 @@ pub(crate) async fn request
             .send()
             .await
         {
-            Ok(response) => return response.text().await.unwrap_or_default(),
-            Err(_) => return String::new(),
+            Ok(response) =>
+            {
+                return Ok(response.text().await.unwrap_or_default());
+            },
+            Err(_) => return Err(()),
         };
     }
 
-    response.text().await.unwrap_or_default()
+    Ok(response.text().await.unwrap_or_default())
 }
 
-pub(crate) async fn get( state: &AppState, endpoint: &str ) -> String
+pub(crate) async fn get
+(
+    state: &AppState,
+    endpoint: &str,
+) -> Result<String, ()>
 {
     request(state, endpoint, Method::GET).await
 }
 
 // POST
 #[allow(dead_code)]
-pub(crate) async fn post( state: &AppState, endpoint: &str ) -> String
+pub(crate) async fn post
+(
+    state: &AppState,
+    endpoint: &str,
+) -> Result<String, ()>
 {
     request(state, endpoint, Method::POST).await
 }
 
 // PUT
 #[allow(dead_code)]
-pub(crate) async fn put( state: &AppState, endpoint: &str ) -> String
+pub(crate) async fn put
+(
+    state: &AppState,
+    endpoint: &str,
+) -> Result<String, ()>
 {
     request(state, endpoint, Method::PUT).await
 }
 
 // DELETE
 #[allow(dead_code)]
-pub(crate) async fn delete( state: &AppState, endpoint: &str ) -> String
+pub(crate) async fn delete
+(
+    state: &AppState,
+    endpoint: &str,
+) -> Result<String, ()>
 {
     request(state, endpoint, Method::DELETE).await
 }

@@ -39,6 +39,8 @@ services:
       SMTP_TLS: ${AUTH_SMTP_TLS}
       SYSTEM_EMAIL_ADDRESS: ${AUTH_SYSTEM_EMAIL_ADDRESS}
       JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      API_KEY_KEY: ${AUTH_API_KEY_KEY}
+      API_KEY_VAL: ${AUTH_API_KEY_VAL}
     working_dir: /system/auth/core
     command: "cargo watch -x run"
     depends_on:
@@ -147,6 +149,8 @@ services:
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}
       JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
       AUTH_API_URL: ${AUTH_API_URL}
+      AUTH_API_KEY_KEY: ${AUTH_API_KEY_KEY}
+      AUTH_API_KEY_VAL: ${AUTH_API_KEY_VAL}
     working_dir: /system/api_gw/core
     command: "cargo watch -x run"
     depends_on:

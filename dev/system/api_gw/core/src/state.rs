@@ -49,6 +49,7 @@ impl AppState
         );
         let res = client
             .get(&endpoint)
+            .header(&config.auth_api_key_key, &config.auth_api_key_val)
             .send()
             .await
             .unwrap()

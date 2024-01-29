@@ -33,6 +33,10 @@ pub(crate) struct Config
     pub(crate) client_id_key: String,
     pub(crate) client_secret_key: String,
     pub(crate) jwt_private_key: String,
+
+    // API config.
+    pub(crate) api_key_key: String,
+    pub(crate) api_key_val: String,
 }
 
 impl Config
@@ -84,6 +88,12 @@ impl Config
         let jwt_private_key = env::var("JWT_PRIVATE_KEY")
             .expect("JWT_PRIVATE_KEY must be set");
 
+        // API config.
+        let api_key_key = env::var("API_KEY_KEY")
+            .expect("API_KEY_KEY must be set");
+        let api_key_val = env::var("API_KEY_VAL")
+            .expect("API_KEY_VAL must be set");
+
         Self
         {
             // Server config.
@@ -108,6 +118,10 @@ impl Config
             client_id_key,
             client_secret_key,
             jwt_private_key,
+
+            // API config.
+            api_key_key,
+            api_key_val,
         }
     }
 }

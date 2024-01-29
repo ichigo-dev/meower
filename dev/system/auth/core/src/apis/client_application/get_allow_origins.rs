@@ -6,7 +6,7 @@ use crate::AppState;
 
 use meower_auth_entity::client_application_allow_origin::Entity as ClientApplicationAllowOriginEntity;
 
-use axum::extract::State;
+use axum::extract::{ Request, State };
 use axum::http::StatusCode;
 use axum::response::{ IntoResponse, Json };
 use sea_orm::EntityTrait;
@@ -28,9 +28,16 @@ pub(crate) struct Response
 pub(crate) async fn get_handler
 (
     state: State<AppState>,
+    req: Request,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
-    if false
+    let config = &state.config;
+
+    let api_key = req.headers()
+        .get(&config.api_key_key)
+        .map(|value| value.to_str().unwrap().to_string())
+        .unwrap_or(String::new());
+    if api_key != config.api_key_val
     {
         return Err(StatusCode::UNAUTHORIZED);
     }
