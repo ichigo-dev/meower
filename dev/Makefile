@@ -71,6 +71,10 @@ app_db:
 	@docker compose exec app_db \
 		bash -c 'psql ${APP_DB_NAME} -U ${APP_DB_USER} -p ${APP_DB_PORT}'
 
+account_db:
+	@docker compose exec account_db \
+		bash -c 'psql ${ACCOUNT_DB_NAME} -U ${ACCOUNT_DB_USER} -p ${ACCOUNT_DB_PORT}'
+
 dev:
 	@docker compose exec dev bash
 
@@ -89,6 +93,11 @@ migrate-app:
 	@docker compose exec dev \
 		bash -c 'cd /system/app && \
 			sea-orm-cli migrate ${cmd} -u ${APP_DB_URL}'
+
+migrate-account:
+	@docker compose exec dev \
+		bash -c 'cd /system/apis/account && \
+			sea-orm-cli migrate ${cmd} -u ${ACCOUNT_DB_URL}'
 
 # Install data
 install-auth:

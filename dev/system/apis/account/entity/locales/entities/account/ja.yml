@@ -1,0 +1,12 @@
+entities:
+  account:
+    account_id:
+      name: "アカウントID"
+    account_name:
+      name: "アカウント名"
+      error:
+        already_exists: "そのアカウント名は既に使用されています"
+    user_subject:
+      name: "ユーザサブジェクト"
+    created_at:
+      name: "作成日時"

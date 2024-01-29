@@ -1,45 +1,31 @@
 //------------------------------------------------------------------------------
-//! JwtRefreshToken model.
+//! Account model.
 //------------------------------------------------------------------------------
 
 use meower_entity_ext::ValidateExt;
-use meower_validator::ValidationError;
+use meower_validator::{ Validator, ValidationError };
 
 use async_trait::async_trait;
-use chrono::{ Duration, Utc };
+use chrono::Utc;
 use rust_i18n::t;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
-
-const TOKEN_EXPIRATION_HOURS: i64 = 24;
 
 
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
-#[sea_orm(table_name = "jwt_refresh_token")]
+#[sea_orm(table_name = "account")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub jwt_refresh_token_id: i64,
-    pub user_id: i64,
+    pub account_id: i64,
     #[sea_orm(unique)]
-    pub token: String,
+    pub account_name: String,
+    #[sea_orm(unique)]
+    pub user_subject: String,
     pub created_at: DateTime,
-    pub expired_at: DateTime,
-}
-
-impl Model
-{
-    //--------------------------------------------------------------------------
-    /// Verifies token.
-    //--------------------------------------------------------------------------
-    pub fn verify( &self ) -> bool
-    {
-        let now = Utc::now().naive_utc();
-        self.expired_at > now
-    }
 }
 
 
@@ -55,37 +41,17 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         mut self,
-        hdb: &C,
+        _hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
     where
         C: ConnectionTrait,
     {
-        // Deletes the old datas.
-        if insert
-        {
-            let user_id = self
-                .user_id
-                .clone()
-                .take()
-                .unwrap_or(0);
-            Entity::delete_many()
-                .filter(Column::UserId.eq(user_id))
-                .exec(hdb)
-                .await?;
-        }
-
         // Sets the default values.
         if insert
         {
-            let token = meower_utility::get_random_str(64);
-            self.set(Column::Token, token.into());
-
             let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
-
-            let expired_at = now + Duration::hours(TOKEN_EXPIRATION_HOURS);
-            self.set(Column::ExpiredAt, expired_at.into());
         }
 
         Ok(self)
@@ -93,7 +59,54 @@ impl ActiveModelBehavior for ActiveModel
 }
 
 #[async_trait]
-impl ValidateExt for ActiveModel { type Error = Error; }
+impl ValidateExt for ActiveModel
+{
+    type Error = Error;
+
+    //--------------------------------------------------------------------------
+    /// Validates the data.
+    //--------------------------------------------------------------------------
+    async fn validate<C>( &self, hdb: &C ) -> Result<(), Self::Error>
+    where
+        C: ConnectionTrait,
+    {
+        let account_name = self
+            .account_name
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
+
+        // Checks if the user already exists.
+        if self.account_id.is_set() == false
+        {
+            if Entity::find()
+                .filter(Column::AccountName.contains(account_name.clone()))
+                .one(hdb)
+                .await
+                .unwrap_or(None)
+                .is_some()
+            {
+                return Err(Error::AccountNameAlreadyExists);
+            }
+        }
+
+        // Validates fields.
+        if let Err(e) = Validator::new()
+            .required()
+            .min_length(4)
+            .max_length(32)
+            .regex(r"^[a-zA-Z0-9_]+$")
+            .validate(&account_name)
+        {
+            return Err
+            (
+                Error::Validation { column: Column::AccountName, error: e }
+            );
+        }
+
+        Ok(())
+    }
+}
 
 
 //------------------------------------------------------------------------------
@@ -108,11 +121,10 @@ impl Column
     {
         match self
         {
-            Self::JwtRefreshTokenId => t!("entities.jwt_refresh_token.jwt_refresh_token_id.name"),
-            Self::UserId => t!("entities.jwt_refresh_token.user_id.name"),
-            Self::Token => t!("entities.jwt_refresh_token.token.name"),
-            Self::CreatedAt => t!("entities.jwt_refresh_token.created_at.name"),
-            Self::ExpiredAt => t!("entities.jwt_refresh_token.expired_at.name"),
+            Self::AccountId => t!("entities.account.account_id.name"),
+            Self::AccountName => t!("entities.account.account_name.name"),
+            Self::UserSubject => t!("entities.account.user_subject.name"),
+            Self::CreatedAt => t!("entities.account.created_at.name"),
         }
     }
 }
@@ -124,10 +136,13 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
-    #[error("JwtRefreshToken: {column:?} {error:?}")]
+    #[error("Account: The account_name already exists.")]
+    AccountNameAlreadyExists,
+
+    #[error("Account: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
-    #[error("JwtRefreshToken: Database error.")]
+    #[error("Account: Database error.")]
     DbError(#[from] DbErr),
 }
 
@@ -140,6 +155,7 @@ impl Error
     {
         match self
         {
+            Self::AccountNameAlreadyExists => Some(Column::AccountName),
             Self::Validation { column, .. } => Some(*column),
             Self::DbError(_) => None,
         }
@@ -152,6 +168,10 @@ impl Error
     {
         match self
         {
+            Self::AccountNameAlreadyExists =>
+            {
+                t!("entities.account.account_name.error.already_exists")
+            },
             Self::Validation { column, error } =>
             {
                 error.get_error_message(&column.get_name())
@@ -168,20 +188,14 @@ impl Error
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(
-        belongs_to = "super::user::Entity",
-        from = "Column::UserId",
-        to = "super::user::Column::UserId",
-        on_update = "NoAction",
-        on_delete = "Cascade"
-    )]
-    User,
+    #[sea_orm(has_many = "super::account_profile::Entity")]
+    AccountProfile,
 }
 
-impl Related<super::user::Entity> for Entity
+impl Related<super::account_profile::Entity> for Entity
 {
     fn to() -> RelationDef
     {
-        Relation::User.def()
+        Relation::AccountProfile.def()
     }
 }

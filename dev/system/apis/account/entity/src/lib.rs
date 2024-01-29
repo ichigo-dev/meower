@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------
-//! Pages.
+//! Database entities.
 //------------------------------------------------------------------------------
 
-pub(crate) mod home;
-pub(crate) mod profile;
-pub(crate) mod notfound;
+mod entities;
 
-pub(crate) use home::Home;
-pub(crate) use notfound::NotFound;
+pub use entities::*;
+
+rust_i18n::i18n!("locales");

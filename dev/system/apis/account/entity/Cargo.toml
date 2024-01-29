@@ -1,0 +1,21 @@
+[package]
+name = "meower_account_entity"
+version = "0.1.0"
+edition = "2021"
+authors = ["ichigo-dev <dev.honda.ichigo@gmail.com>"]
+description = "Meower account API entity"
+license = "MIT"
+documentation = ""
+repository = "https://github.com/ichigo-dev/meower"
+
+
+[dependencies]
+meower_entity_ext = { version = "0.1.0", path = "../../../common/entity_ext" }
+meower_utility = { version = "0.1.0", path = "../../../common/utility" }
+meower_validator = { version = "0.1.0", path = "../../../common/validator" }
+async-trait = "0.1.74"
+chrono = "0.4.31"
+sea-orm = "0.12.6"
+sea-query = "0.30.3"
+rust-i18n = "2.3.0"
+thiserror = "1.0.51"

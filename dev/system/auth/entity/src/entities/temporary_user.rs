@@ -2,9 +2,6 @@
 //! TemporaryUser model.
 //------------------------------------------------------------------------------
 
-use meower_entity_ext::ValidateExt;
-use meower_validator::ValidationError;
-
 use super::user::ActiveModel as UserActiveModel;
 use super::user::Error as UserError;
 use super::user::Model as UserModel;
@@ -12,6 +9,9 @@ use super::user_auth::ActiveModel as UserAuthActiveModel;
 use super::user_auth::Error as UserAuthError;
 use super::temporary_user_code::Entity as TemporaryUserCodeEntity;
 use super::temporary_user_code::Error as TemporaryUserCodeError;
+
+use meower_entity_ext::ValidateExt;
+use meower_validator::ValidationError;
 
 use async_trait::async_trait;
 use chrono::Utc;

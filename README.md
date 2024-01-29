@@ -38,6 +38,9 @@ everything.
 │   │   ├ api_gw/          ... API gateway
 │   │   │   └ core/        ... Server core
 │   │   │
+│   │   ├ apis/
+│   │   │   └ account/     ... Account API
+│   │   │
 │   │   ├ app/             ... Application server
 │   │   │   ├ core/        ... Server core
 │   │   │   ├ entity/      ... Database table entities
@@ -48,11 +51,11 @@ everything.
 │   │   │   ├ core/        ... Server core
 │   │   │   ├ entity/      ... Database table entities
 │   │   │   ├ install/     ... Utility for installing test data and initial data
-│   │   │   ├ migration/   ... Migration files
-│   │   │   └ shared/      ... Shared resources
+│   │   │   └ migration/   ... Migration files
 │   │   │
 │   │   └ common/          ... Contains utility files for the entire application
 │   │       ├ entity_ext/  ... Entity extensions
+│   │       ├ shared/      ... Shared resources
 │   │       ├ utility/     ... Utility functions
 │   │       └ validator/   ... Validation
 │   │

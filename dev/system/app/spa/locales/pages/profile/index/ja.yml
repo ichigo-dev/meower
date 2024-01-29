@@ -1,6 +1,6 @@
 pages:
-  mypage:
+  profile:
     index:
-      heading: "マイページ"
+      heading: "プロフィール"
       profile_container:
         display_name: "表示名"

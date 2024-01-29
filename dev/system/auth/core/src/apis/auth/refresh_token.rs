@@ -9,8 +9,8 @@ use meower_auth_entity::jwt_refresh_token::ActiveModel as JwtRefreshTokenActiveM
 use meower_auth_entity::jwt_refresh_token::Column as JwtRefreshTokenColumn;
 use meower_auth_entity::jwt_refresh_token::Entity as JwtRefreshTokenEntity;
 use meower_auth_entity::user::Entity as UserEntity;
-use meower_auth_shared::JwtClaims;
 use meower_entity_ext::ValidateExt;
+use meower_shared::JwtClaims;
 
 use std::fs::File;
 use std::io::Read;

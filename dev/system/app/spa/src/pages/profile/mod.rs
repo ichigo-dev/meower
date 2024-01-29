@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Mypage.
+//! Profile.
 //------------------------------------------------------------------------------
 
 mod edit_profile;
@@ -8,4 +8,4 @@ mod routes;
 
 pub(crate) use edit_profile::EditProfile;
 pub(crate) use index::Index;
-pub(crate) use routes::{ MypageRoutes, MypageRouter };
+pub(crate) use routes::{ Routes, Router };

@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Mypage routes.
+//! Profile routes.
 //------------------------------------------------------------------------------
 
 use super::*;
@@ -11,10 +11,10 @@ use sycamore_router::Route;
 
 
 //------------------------------------------------------------------------------
-/// Mypage routes.
+/// Routes.
 //------------------------------------------------------------------------------
 #[derive(Route, Clone)]
-pub(crate) enum MypageRoutes
+pub(crate) enum Routes
 {
     #[to("/")]
     Index,
@@ -28,21 +28,17 @@ pub(crate) enum MypageRoutes
 
 
 //------------------------------------------------------------------------------
-/// Mypage router.
+/// Router.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub(crate) fn MypageRouter<'cx, G: Html>
-(
-    cx: Scope<'cx>,
-    route: MypageRoutes,
-) -> View<G>
+pub(crate) fn Router<'cx, G: Html>( cx: Scope<'cx>, route: Routes ) -> View<G>
 {
     view!
     {
         cx,
         (match route
         {
-            MypageRoutes::Index =>
+            Routes::Index =>
             {
                 view!
                 {
@@ -50,8 +46,8 @@ pub(crate) fn MypageRouter<'cx, G: Html>
                     Suspense(fallback=view! { cx, "Loading..." }) { Index }
                 }
             },
-            MypageRoutes::EditProfile => view! { cx, EditProfile },
-            MypageRoutes::NotFound => view! { cx, NotFound },
+            Routes::EditProfile => view! { cx, EditProfile },
+            Routes::NotFound => view! { cx, NotFound },
         })
     }
 }

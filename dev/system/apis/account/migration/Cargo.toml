@@ -1,0 +1,21 @@
+[package]
+name = "meower_account_migration"
+version = "0.1.0"
+edition = "2021"
+authors = ["ichigo-dev <dev.honda.ichigo@gmail.com>"]
+description = "Meower account API migration"
+license = "MIT"
+documentation = ""
+repository = "https://github.com/ichigo-dev/meower"
+
+
+[dependencies]
+tokio = { version = "1.34.0", features = ["full"] }
+sea-orm-migration = { version = "0.12.6", features = [
+    "runtime-tokio-rustls",
+    "sqlx-postgres"
+]}
+sea-orm = { version = "0.12.6", features = [
+    "runtime-tokio-rustls",
+    "sqlx-postgres"
+]}

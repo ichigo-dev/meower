@@ -4,10 +4,11 @@
 
 use crate::AppState;
 
+use meower_shared::JwtClaims;
+
 use std::fs::File;
 use std::io::Read;
 
-use meower_auth_shared::JwtClaims;
 use axum::body::Body;
 use axum::extract::State;
 use axum::http::{ header, StatusCode };

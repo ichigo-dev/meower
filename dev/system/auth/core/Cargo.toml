@@ -11,8 +11,8 @@ repository = "https://github.com/ichigo-dev/meower"
 
 [dependencies]
 meower_auth_entity = { version = "0.1.0", path = "../entity" }
-meower_auth_shared = { version = "0.1.0", path = "../shared" }
 meower_entity_ext = { version = "0.1.0", path = "../../common/entity_ext" }
+meower_shared = { version = "0.1.0", path = "../../common/shared" }
 meower_utility = { version = "0.1.0", path = "../../common/utility" }
 accept-language = "3.1.0"
 askama = "0.12.1"

@@ -1,9 +1,9 @@
 [package]
-name = "meower_auth_shared"
+name = "meower_shared"
 version = "0.1.0"
 edition = "2021"
 authors = ["ichigo-dev <dev.honda.ichigo@gmail.com>"]
-description = "Meower authentication server shared datas"
+description = "Meower shared resources"
 license = "MIT"
 documentation = ""
 repository = "https://github.com/ichigo-dev/meower"

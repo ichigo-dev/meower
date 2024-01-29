@@ -17,8 +17,8 @@ enum AppRoutes
     #[to("/")]
     Home,
 
-    #[to("/mypage/<_..>")]
-    Mypage(mypage::MypageRoutes),
+    #[to("/profile/<_..>")]
+    Profile(profile::Routes),
 
     #[not_found]
     NotFound,
@@ -43,12 +43,12 @@ pub fn AppRouter<G: Html>( cx: Scope ) -> View<G>
                 match route.as_ref()
                 {
                     AppRoutes::Home => view! { cx, Home },
-                    AppRoutes::Mypage(mypage_route) =>
+                    AppRoutes::Profile(route) =>
                     {
                         view!
                         {
                             cx,
-                            mypage::MypageRouter(route=mypage_route.clone())
+                            profile::Router(route=route.clone())
                         }
                     },
                     AppRoutes::NotFound => view! { cx, NotFound },

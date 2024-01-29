@@ -48,7 +48,7 @@ pub fn Aside<G: Html>( cx: Scope ) -> View<G>
                 ul(class="ui_list primary simple")
                 {
                     AsideNavItem(href="/", text="Home")
-                    AsideNavItem(href="/mypage", text="Mypage")
+                    AsideNavItem(href="/profile", text="Profile")
                 }
             }
         }

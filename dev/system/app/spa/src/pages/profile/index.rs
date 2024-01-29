@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Mypage.
+//! Profile.
 //------------------------------------------------------------------------------
 
 use crate::apis::get;
@@ -20,6 +20,6 @@ pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
     view!
     {
         cx,
-        h1(class="ui_heading h1") { (t!("pages.mypage.index.heading")) }
+        h1(class="ui_heading h1") { (t!("pages.profile.index.heading")) }
     }
 }

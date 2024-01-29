@@ -10,7 +10,7 @@ repository = "https://github.com/ichigo-dev/meower"
 
 
 [dependencies]
-meower_auth_shared = { version = "0.1.0", path = "../../auth/shared" }
+meower_shared = { version = "0.1.0", path = "../../common/shared" }
 axum = "0.7.2"
 jsonwebtoken = "9.2.0"
 reqwest = "0.11.23"
