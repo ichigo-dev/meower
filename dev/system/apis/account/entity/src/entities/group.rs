@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Account model.
+//! Group model.
 //------------------------------------------------------------------------------
 
 use meower_entity_ext::ValidateExt;
@@ -16,16 +16,15 @@ use thiserror::Error;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
-#[sea_orm(table_name = "account")]
+#[sea_orm(table_name = "group")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub account_id: i64,
+    pub group_id: i64,
     #[sea_orm(unique)]
-    pub account_name: String,
-    #[sea_orm(unique)]
-    pub user_subject: String,
+    pub group_name: String,
     pub created_at: DateTime,
+    pub updated_at: DateTime,
 }
 
 
@@ -48,11 +47,12 @@ impl ActiveModelBehavior for ActiveModel
         C: ConnectionTrait,
     {
         // Sets the default values.
+        let now = Utc::now().naive_utc();
         if insert
         {
-            let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
         }
+        self.set(Column::UpdatedAt, now.into());
 
         Ok(self)
     }
@@ -70,23 +70,23 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let account_name = self
-            .account_name
+        let group_name = self
+            .group_name
             .clone()
             .take()
             .unwrap_or("".to_string());
 
         // Checks if the user already exists.
-        if self.account_id.is_set() == false
+        if self.group_id.is_set() == false
         {
             if Entity::find()
-                .filter(Column::AccountName.contains(account_name.clone()))
+                .filter(Column::GroupName.contains(group_name.clone()))
                 .one(hdb)
                 .await
                 .unwrap_or(None)
                 .is_some()
             {
-                return Err(Error::AccountNameAlreadyExists);
+                return Err(Error::GroupNameAlreadyExists);
             }
         }
 
@@ -96,11 +96,11 @@ impl ValidateExt for ActiveModel
             .min_length(4)
             .max_length(32)
             .regex(r"^[a-zA-Z0-9_]+$")
-            .validate(&account_name)
+            .validate(&group_name)
         {
             return Err
             (
-                Error::Validation { column: Column::AccountName, error: e }
+                Error::Validation { column: Column::GroupName, error: e }
             );
         }
 
@@ -121,10 +121,10 @@ impl Column
     {
         match self
         {
-            Self::AccountId => t!("entities.account.account_id.name"),
-            Self::AccountName => t!("entities.account.account_name.name"),
-            Self::UserSubject => t!("entities.account.user_subject.name"),
-            Self::CreatedAt => t!("entities.account.created_at.name"),
+            Self::GroupId => t!("entities.group.group_id.name"),
+            Self::GroupName => t!("entities.group.group_name.name"),
+            Self::CreatedAt => t!("entities.group.created_at.name"),
+            Self::UpdatedAt => t!("entities.group.updated_at.name"),
         }
     }
 }
@@ -136,13 +136,13 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
-    #[error("Account: The account_name already exists.")]
-    AccountNameAlreadyExists,
+    #[error("Group: The group_name already exists.")]
+    GroupNameAlreadyExists,
 
-    #[error("Account: {column:?} {error:?}")]
+    #[error("Group: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
-    #[error("Account: Database error.")]
+    #[error("Group: Database error.")]
     DbError(#[from] DbErr),
 }
 
@@ -155,7 +155,7 @@ impl Error
     {
         match self
         {
-            Self::AccountNameAlreadyExists => Some(Column::AccountName),
+            Self::GroupNameAlreadyExists => Some(Column::GroupName),
             Self::Validation { column, .. } => Some(*column),
             Self::DbError(_) => None,
         }
@@ -168,9 +168,9 @@ impl Error
     {
         match self
         {
-            Self::AccountNameAlreadyExists =>
+            Self::GroupNameAlreadyExists =>
             {
-                t!("entities.account.account_name.error.already_exists")
+                t!("entities.group.group_name.error.already_exists")
             },
             Self::Validation { column, error } =>
             {
@@ -188,30 +188,11 @@ impl Error
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
-    #[sea_orm(has_many = "super::account_profile::Entity")]
-    AccountProfile,
-
-    #[sea_orm(has_many = "super::account_workspace::Entity")]
-    AccountWorkspace,
-
     #[sea_orm(has_many = "super::group_member::Entity")]
     GroupMember,
-}
 
-impl Related<super::account_profile::Entity> for Entity
-{
-    fn to() -> RelationDef
-    {
-        Relation::AccountProfile.def()
-    }
-}
-
-impl Related<super::account_workspace::Entity> for Entity
-{
-    fn to() -> RelationDef
-    {
-        Relation::AccountWorkspace.def()
-    }
+    #[sea_orm(has_many = "super::group_workspace::Entity")]
+    GroupWorkspace,
 }
 
 impl Related<super::group_member::Entity> for Entity
@@ -219,5 +200,13 @@ impl Related<super::group_member::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::GroupMember.def()
+    }
+}
+
+impl Related<super::group_workspace::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::GroupWorkspace.def()
     }
 }

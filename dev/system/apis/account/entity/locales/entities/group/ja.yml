@@ -1,0 +1,12 @@
+entities:
+  group:
+    group_id:
+      name: "グループID"
+    group_name:
+      name: "グループ名"
+      error:
+        already_exists: "そのグループ名は既に使用されています"
+    created_at:
+      name: "作成日時"
+    updated_at:
+      name: "更新日時"

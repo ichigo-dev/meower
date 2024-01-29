@@ -13,7 +13,7 @@ use thiserror::Error;
 
 
 //------------------------------------------------------------------------------
-/// GenderMap.
+/// Gender.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, EnumIter, DeriveActiveEnum)]
 #[sea_orm(rs_type = "i8", db_type = "TinyInteger")]
@@ -238,6 +238,9 @@ pub enum Relation
         on_delete = "Cascade"
     )]
     Account,
+
+    #[sea_orm(has_many = "super::group_member::Entity")]
+    GroupMember,
 }
 
 impl Related<super::account::Entity> for Entity
@@ -245,5 +248,13 @@ impl Related<super::account::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::Account.def()
+    }
+}
+
+impl Related<super::group_member::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::GroupMember.def()
     }
 }

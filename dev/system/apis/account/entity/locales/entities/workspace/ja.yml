@@ -1,0 +1,12 @@
+entities:
+  workspace:
+    workspace_id:
+      name: "ワークスペースID"
+    workspace_name:
+      name: "ワークスペース名"
+      error:
+        already_exists: "そのアカウント名は既に使用されています"
+    created_at:
+      name: "作成日時"
+    updated_at:
+      name: "更新日時"

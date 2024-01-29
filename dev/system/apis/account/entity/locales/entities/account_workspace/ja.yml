@@ -1,0 +1,8 @@
+entities:
+  account_workspace:
+    account_workspace_id:
+      name: "アカウントワークスペースID"
+    workspace_id:
+      name: "ワークスペースID"
+    account_id:
+      name: "アカウントID"
