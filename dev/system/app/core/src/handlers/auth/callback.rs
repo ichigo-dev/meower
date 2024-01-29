@@ -15,6 +15,9 @@ use axum_extra::extract::cookie::Cookie;
 use reqwest::Client;
 use sea_orm::ActiveValue;
 use serde::Deserialize;
+use time::{ Duration, OffsetDateTime };
+
+const USER_TOKEN_EXPIRATION_HOURS: i64 = 24;
 
 
 //------------------------------------------------------------------------------
@@ -74,6 +77,10 @@ pub(crate) async fn get_handler
         .await
         .unwrap();
     let tokens: Tokens = serde_json::from_str(&res).unwrap_or_default();
+    if tokens.access_token.len() <= 0 || tokens.refresh_token.len() <= 0
+    {
+        return Err(StatusCode::INTERNAL_SERVER_ERROR);
+    }
 
     let user_token = UserTokenActiveModel
     {
@@ -92,6 +99,11 @@ pub(crate) async fn get_handler
         .path("/")
         .secure(true)
         .http_only(true)
+        .expires
+        (
+            OffsetDateTime::now_utc() +
+            Duration::hours(USER_TOKEN_EXPIRATION_HOURS)
+        )
         .to_string();
     let res = Response::builder()
         .status(StatusCode::SEE_OTHER)

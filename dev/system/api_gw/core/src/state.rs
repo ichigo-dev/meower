@@ -44,7 +44,7 @@ impl AppState
         let client = Client::new();
         let endpoint = format!
         (
-            "{}/client_application/get_allow_origins",
+            "{}/api/client_application/get_allow_origins",
             config.auth_api_url,
         );
         let res = client
