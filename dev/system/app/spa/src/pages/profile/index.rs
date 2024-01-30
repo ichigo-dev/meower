@@ -3,10 +3,9 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use crate::apis::post;
+use crate::apis::graphql::post_graphql;
 use crate::apis::graphql::account::{ Accounts, accounts };
 
-use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
 
@@ -18,11 +17,11 @@ use sycamore::prelude::*;
 pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
     let state: &AppState = use_context(cx);
-    let response = post
+    let response = post_graphql::<Accounts>
     (
         state,
         "/account/graphql",
-        Accounts::build_query(accounts::Variables).query
+         accounts::Variables
     ).await;
     log::info!("response: {:?}", response);
 

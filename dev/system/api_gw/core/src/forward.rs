@@ -22,10 +22,12 @@ pub(crate) async fn handler
     let client = Client::new();
     let method = ReqMethod::from_bytes(method.to_string().as_bytes()).unwrap();
     let uri = format!("{}/{}", api_url, path);
+    println!("body: {}", body);
 
     let res = client
         .request(method, uri)
-        .json(&body)
+        .body(body)
+//.body(r#"{"query":"\nquery Accounts {\n  accounts {\n    accountName\n  }\n}"}"#)
         .send()
         .await
         .unwrap()

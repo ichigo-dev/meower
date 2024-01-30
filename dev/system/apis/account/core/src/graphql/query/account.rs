@@ -25,6 +25,7 @@ impl AccountQuery
     //--------------------------------------------------------------------------
     async fn accounts( &self, ctx: &Context<'_> ) -> Vec<AccountModel>
     {
+        println!("AccountQuery::accounts");
         let state = ctx.data::<AppState>().unwrap();
         let hdb = &state.hdb;
         AccountEntity::find()
