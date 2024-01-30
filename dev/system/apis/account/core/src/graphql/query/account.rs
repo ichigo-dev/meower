@@ -2,13 +2,13 @@
 //! Account query.
 //------------------------------------------------------------------------------
 
-use crate::state::AppState;
-
+use meower_account_entity::account::Column as AccountColumn;
 use meower_account_entity::account::Entity as AccountEntity;
 use meower_account_entity::account::Model as AccountModel;
+use meower_shared::JwtClaims;
 
 use async_graphql::{ Context, Object };
-use sea_orm::EntityTrait;
+use sea_orm::{ ColumnTrait, DbConn, EntityTrait, QueryFilter };
 
 
 //------------------------------------------------------------------------------
@@ -29,9 +29,10 @@ impl AccountQuery
         ctx: &Context<'_>,
     ) -> Vec<AccountModel>
     {
-        let state = ctx.data::<AppState>().unwrap();
-        let hdb = &state.hdb;
+        let hdb = ctx.data::<DbConn>().unwrap();
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         AccountEntity::find()
+            .filter(AccountColumn::UserSubject.eq(&jwt_claims.sub))
             .all(hdb)
             .await
             .unwrap()

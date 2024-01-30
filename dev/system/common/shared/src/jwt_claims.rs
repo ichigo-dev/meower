@@ -8,7 +8,7 @@ use serde::{ Serialize, Deserialize };
 //------------------------------------------------------------------------------
 /// JWT claims.
 //------------------------------------------------------------------------------
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct JwtClaims
 {
     pub jti: String,

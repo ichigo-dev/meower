@@ -7,16 +7,11 @@ mod graphql;
 mod state;
 
 pub(crate) use config::Config;
-use graphql::{ QueryRoot, MutationRoot };
 pub(crate) use state::AppState;
 
 use std::fs::File;
 use std::io::Write;
 
-use async_graphql::{
-    EmptySubscription,
-    Schema,
-};
 use axum::Router;
 use axum::routing::post;
 use tokio::net::TcpListener;
@@ -32,17 +27,9 @@ async fn main()
     let state = AppState::init().await;
 
     // Exports the GraphQL schema.
-    let schema = Schema::build
-        (
-            QueryRoot::default(),
-            MutationRoot,
-            EmptySubscription
-        )
-        .data(state.clone())
-        .finish();
     File::create("schema.graphql")
         .unwrap()
-        .write_all(schema.sdl().as_bytes())
+        .write_all(state.schema.sdl().as_bytes())
         .unwrap();
 
     // Creates the application routes.

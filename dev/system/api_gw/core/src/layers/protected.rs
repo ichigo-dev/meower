@@ -29,7 +29,7 @@ use jsonwebtoken::{
 pub(crate) async fn layer
 (
     state: State<AppState>,
-    req: Request<Body>,
+    mut req: Request<Body>,
     next: Next,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
@@ -57,10 +57,12 @@ pub(crate) async fn layer
     let key = DecodingKey::from_rsa_pem(key_data.as_bytes()).unwrap();
     let mut validation = Validation::new(Algorithm::RS256);
     validation.set_audience(&[&client_id]);
-    if let Err(_) = decode::<JwtClaims>(&access_token, &key, &validation)
+    let jwt_claims = match decode::<JwtClaims>(&access_token, &key, &validation)
     {
-        return Err(StatusCode::UNAUTHORIZED);
+        Ok(claims) => claims.claims,
+        Err(_) => return Err(StatusCode::UNAUTHORIZED),
     };
 
+    req.extensions_mut().insert(jwt_claims.clone());
     Ok(next.run(req).await)
 }

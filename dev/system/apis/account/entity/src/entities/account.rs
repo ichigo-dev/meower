@@ -25,7 +25,6 @@ pub struct Model
     pub account_id: i64,
     #[sea_orm(unique)]
     pub account_name: String,
-    #[sea_orm(unique)]
     pub user_subject: String,
     pub created_at: DateTime,
 }
