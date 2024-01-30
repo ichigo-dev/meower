@@ -15,7 +15,7 @@ use sycamore::prelude::*;
 pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
     let state = use_context(cx);
-    log::info!("{:?}", get(&state, "mypage").await);
+    log::info!("{:?}", get(&state, "account/graphql").await);
 
     view!
     {

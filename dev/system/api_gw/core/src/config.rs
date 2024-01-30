@@ -20,6 +20,7 @@ pub(crate) struct Config
 
     // Urls
     pub(crate) auth_api_url: String,
+    pub(crate) account_api_url: String,
 
     // API config.
     pub(crate) auth_api_key_key: String,
@@ -48,6 +49,8 @@ impl Config
         // Urls.
         let auth_api_url = env::var("AUTH_API_URL")
             .expect("AUTH_API_URL must be set");
+        let account_api_url = env::var("ACCOUNT_API_URL")
+            .expect("ACCOUNT_API_URL must be set");
 
         // API config.
         let auth_api_key_key = env::var("AUTH_API_KEY_KEY")
@@ -66,6 +69,7 @@ impl Config
 
             // Urls.
             auth_api_url,
+            account_api_url,
 
             // API config.
             auth_api_key_key,

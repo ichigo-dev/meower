@@ -5,47 +5,21 @@
 mod query;
 
 use query::account::AccountQuery;
-use crate::AppState;
 
-use async_graphql::{
-    EmptySubscription,
-    MergedObject,
-    Object,
-    Request,
-    Response,
-    Schema,
-};
-use axum::extract::{ Extension, State };
-use axum::response::Json;
-
-
-//------------------------------------------------------------------------------
-/// GraphQL root.
-//------------------------------------------------------------------------------
-pub type GraphqlRoot = Schema<QueryRoot, MutationRoot, EmptySubscription>;
-
-pub async fn graphql_handler
-(
-    state: State<AppState>,
-    schema: Extension<GraphqlRoot>,
-    req: Json<Request>,
-) -> Json<Response>
-{
-    schema.execute(req.0.data(state)).await.into()
-}
+use async_graphql::{ MergedObject, Object };
 
 
 //------------------------------------------------------------------------------
 /// Query root.
 //------------------------------------------------------------------------------
-#[derive(MergedObject)]
-pub struct QueryRoot(AccountQuery);
+#[derive(MergedObject, Default)]
+pub(crate) struct QueryRoot(AccountQuery);
 
 
 //------------------------------------------------------------------------------
 /// Mutation root.
 //------------------------------------------------------------------------------
-pub struct MutationRoot;
+pub(crate) struct MutationRoot;
 
 #[Object]
 impl MutationRoot

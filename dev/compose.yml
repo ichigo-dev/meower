@@ -151,6 +151,7 @@ services:
       AUTH_API_URL: ${AUTH_API_URL}
       AUTH_API_KEY_KEY: ${AUTH_API_KEY_KEY}
       AUTH_API_KEY_VAL: ${AUTH_API_KEY_VAL}
+      ACCOUNT_API_URL: ${ACCOUNT_API_URL}
     working_dir: /system/api_gw/core
     command: "cargo watch -x run"
     depends_on:

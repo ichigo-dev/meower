@@ -13,6 +13,7 @@ repository = "https://github.com/ichigo-dev/meower"
 meower_account_entity = { version = "0.1.0", path = "../entity" }
 meower_entity_ext = { version = "0.1.0", path = "../../../common/entity_ext" }
 async-graphql = { version = "7.0.1", features = ["chrono"] }
+async-graphql-axum = "7.0.1"
 axum = "0.7.2"
 sea-orm = { version = "0.12.6", features = [
     "runtime-tokio-rustls",

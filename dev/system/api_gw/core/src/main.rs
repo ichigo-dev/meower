@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 mod config;
+mod forward;
 mod layers;
 mod state;
 
@@ -14,7 +15,7 @@ use axum::http::{ header, Method };
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
-use axum::routing::get;
+use axum::routing::any;
 
 
 //------------------------------------------------------------------------------
@@ -26,7 +27,12 @@ async fn main()
     // Creates the application routes.
     let state = AppState::init().await;
     let routes = Router::new()
-        .route("/mypage", get(|| async { return "Hello" }))
+        .route
+        (
+            "/account/*path",
+            any(forward::handler)
+                .with_state(state.config.account_api_url.clone())
+        )
         .layer
         (
             middleware::from_fn_with_state
