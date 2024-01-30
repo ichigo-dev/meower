@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Profile routes.
+//! Account routes.
 //------------------------------------------------------------------------------
 
 use super::*;
@@ -19,8 +19,8 @@ pub(crate) enum Routes
     #[to("/")]
     Index,
 
-    #[to("/edit_profile")]
-    EditProfile,
+    #[to("/edit_account")]
+    EditAccount,
 
     #[not_found]
     NotFound,
@@ -46,7 +46,7 @@ pub(crate) fn Router<'cx, G: Html>( cx: Scope<'cx>, route: Routes ) -> View<G>
                     Suspense(fallback=view! { cx, "Loading..." }) { Index }
                 }
             },
-            Routes::EditProfile => view! { cx, EditProfile },
+            Routes::EditAccount => view! { cx, EditAccount },
             Routes::NotFound => view! { cx, NotFound },
         })
     }

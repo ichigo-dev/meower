@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
-//! Profile.
+//! Account.
 //------------------------------------------------------------------------------
 
 use crate::AppState;
 use crate::apis::graphql::post_graphql;
-use crate::apis::graphql::account::{ Accounts, accounts };
+use crate::apis::graphql::account::{ GetMyAccounts, get_my_accounts };
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -17,17 +17,16 @@ use sycamore::prelude::*;
 pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
     let state: &AppState = use_context(cx);
-    let response = post_graphql::<Accounts>
+    let _response = post_graphql::<GetMyAccounts>
     (
         state,
         "/account/graphql",
-         accounts::Variables
+         get_my_accounts::Variables
     ).await;
-    log::info!("response: {:?}", response);
 
     view!
     {
         cx,
-        h1(class="ui_heading h1") { (t!("pages.profile.index.heading")) }
+        h1(class="ui_heading h1") { (t!("pages.account.index.heading")) }
     }
 }

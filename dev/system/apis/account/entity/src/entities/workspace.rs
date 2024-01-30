@@ -18,6 +18,7 @@ use thiserror::Error;
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
 #[sea_orm(table_name = "workspace")]
+#[graphql(concrete(name = "Workspace", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]

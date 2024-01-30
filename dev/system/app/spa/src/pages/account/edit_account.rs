@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Edit profile page.
+//! Edit account page.
 //------------------------------------------------------------------------------
 
 use sycamore::prelude::*;
@@ -9,12 +9,12 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn EditProfile<G: Html>( cx: Scope ) -> View<G>
+pub fn EditAccount<G: Html>( cx: Scope ) -> View<G>
 {
     view!
     {
         cx,
-        h1 { "Edit profile" }
-        a(href="/mypage", rel="external") { "Mypage" }
+        h1 { "Edit account" }
+        a(href="/account", rel="external") { "Account" }
     }
 }

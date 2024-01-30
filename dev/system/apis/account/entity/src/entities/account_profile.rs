@@ -31,6 +31,7 @@ pub enum Gender
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
 #[sea_orm(table_name = "account_profile")]
+#[graphql(concrete(name = "AccountProfile", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]

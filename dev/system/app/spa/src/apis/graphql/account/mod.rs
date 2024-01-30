@@ -6,12 +6,11 @@ use graphql_client::GraphQLQuery;
 
 
 //------------------------------------------------------------------------------
-/// Gets all accounts.
+/// Gets my accounts.
 //------------------------------------------------------------------------------
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "graphql/account/schema.graphql",
-    query_path = "graphql/account/accounts.graphql",
-    response_derives = "Debug"
+    query_path = "graphql/account/get_my_accounts.graphql",
 )]
-pub struct Accounts;
+pub struct GetMyAccounts;

@@ -1,16 +1,16 @@
-
-
-
-
 """
 Model.
 """
-type Model {
+type Account {
 	accountId: Int!
 	accountName: String!
 	userSubject: String!
 	createdAt: NaiveDateTime!
 }
+
+
+
+
 
 type MutationRoot {
 	hello: String!
@@ -32,7 +32,7 @@ type QueryRoot {
 	"""
 	Gets all accounts.
 	"""
-	accounts: [Model!]!
+	accounts: [Account!]!
 }
 
 

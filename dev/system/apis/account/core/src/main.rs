@@ -17,9 +17,8 @@ use async_graphql::{
     EmptySubscription,
     Schema,
 };
-use async_graphql_axum::GraphQL;
 use axum::Router;
-use axum::routing::post_service;
+use axum::routing::post;
 use tokio::net::TcpListener;
 
 
@@ -31,6 +30,8 @@ async fn main()
 {
     // Creates the application routes.
     let state = AppState::init().await;
+
+    // Exports the GraphQL schema.
     let schema = Schema::build
         (
             QueryRoot::default(),
@@ -44,8 +45,9 @@ async fn main()
         .write_all(schema.sdl().as_bytes())
         .unwrap();
 
+    // Creates the application routes.
     let routes = Router::new()
-        .route("/graphql", post_service(GraphQL::new(schema)))
+        .route("/graphql", post(graphql::handler))
         .with_state(state.clone());
 
     // Starts the server.

@@ -1,6 +1,0 @@
-pages:
-  profile:
-    index:
-      heading: "プロフィール"
-      profile_container:
-        display_name: "表示名"

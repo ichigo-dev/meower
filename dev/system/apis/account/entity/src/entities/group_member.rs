@@ -29,6 +29,7 @@ pub enum Role
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
 #[sea_orm(table_name = "group_member")]
+#[graphql(concrete(name = "GroupMember", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
