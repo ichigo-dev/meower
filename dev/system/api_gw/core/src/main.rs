@@ -55,6 +55,7 @@ async fn main()
                 .allow_headers(
                 [
                     header::AUTHORIZATION,
+                    header::CONTENT_TYPE,
                     state.config.client_id_key.clone().parse().unwrap(),
                 ])
         )

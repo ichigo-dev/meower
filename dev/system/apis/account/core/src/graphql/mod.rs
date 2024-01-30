@@ -2,7 +2,7 @@
 //! GraphQL.
 //------------------------------------------------------------------------------
 
-mod query;
+pub(crate) mod query;
 
 use query::account::AccountQuery;
 

@@ -2,7 +2,6 @@
 //! HTTP forward.
 //------------------------------------------------------------------------------
 
-use axum::body::Bytes;
 use axum::extract::{ Path, State };
 use axum::http::Method;
 use axum::response::IntoResponse;
@@ -17,7 +16,7 @@ pub(crate) async fn handler
     State(api_url): State<String>,
     Path(path): Path<String>,
     method: Method,
-    body: Bytes,
+    body: String,
 ) -> impl IntoResponse
 {
     let client = Client::new();
@@ -26,7 +25,7 @@ pub(crate) async fn handler
 
     let res = client
         .request(method, uri)
-        .body(body)
+        .json(&body)
         .send()
         .await
         .unwrap()

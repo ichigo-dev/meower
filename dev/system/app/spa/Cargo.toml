@@ -12,8 +12,9 @@ repository = "https://github.com/ichigo-dev/meower"
 [dependencies]
 console_error_panic_hook = "0.1.7"
 console_log = "0.2.0"
+graphql_client = "0.13.0"
 log = "0.4.17"
-reqwest = "0.11.23"
+reqwest = { version = "0.11.23", features = ["json"] }
 rust-i18n = "2.3.0"
 serde = "1.0.192"
 serde-wasm-bindgen = "0.6.3"

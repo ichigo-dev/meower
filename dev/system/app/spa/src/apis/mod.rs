@@ -2,6 +2,8 @@
 //! APIs.
 //------------------------------------------------------------------------------
 
+pub mod graphql;
+
 use crate::AppState;
 
 use reqwest::{ StatusCode, Method };
@@ -17,16 +19,19 @@ pub(crate) async fn request
 (
     state: &AppState,
     endpoint: &str,
+    body: &str,
     method: Method,
 ) -> Result<String, ()>
 {
     let client = &state.client;
     let config = &state.config;
 
+    let endpoint = endpoint.trim_start_matches('/');
     let url = format!("{}/{}", config.api_url, endpoint);
     let response = match client
         .request(method.clone(), url.clone())
         .bearer_auth(config.access_token.lock().unwrap().clone())
+        .json(&body)
         .send()
         .await
     {
@@ -44,18 +49,19 @@ pub(crate) async fn request
             Err(_) => return Err(()),
         };
 
-        let body = response.text().await.unwrap_or_default();
-        if body.is_empty()
+        let token = response.text().await.unwrap_or_default();
+        if token.is_empty()
         {
             return Err(());
         }
 
         let mut access_token = config.access_token.lock().unwrap();
-        *access_token = body;
+        *access_token = token;
 
         match client
             .request(method, url)
             .bearer_auth(access_token)
+            .json(&body)
             .send()
             .await
         {
@@ -70,13 +76,16 @@ pub(crate) async fn request
     Ok(response.text().await.unwrap_or_default())
 }
 
+// GET
+#[allow(dead_code)]
 pub(crate) async fn get
 (
     state: &AppState,
     endpoint: &str,
+    body: &str,
 ) -> Result<String, ()>
 {
-    request(state, endpoint, Method::GET).await
+    request(state, endpoint, body, Method::GET).await
 }
 
 // POST
@@ -85,9 +94,10 @@ pub(crate) async fn post
 (
     state: &AppState,
     endpoint: &str,
+    body: &str,
 ) -> Result<String, ()>
 {
-    request(state, endpoint, Method::POST).await
+    request(state, endpoint, body, Method::POST).await
 }
 
 // PUT
@@ -96,9 +106,10 @@ pub(crate) async fn put
 (
     state: &AppState,
     endpoint: &str,
+    body: &str,
 ) -> Result<String, ()>
 {
-    request(state, endpoint, Method::PUT).await
+    request(state, endpoint, body, Method::PUT).await
 }
 
 // DELETE
@@ -107,7 +118,8 @@ pub(crate) async fn delete
 (
     state: &AppState,
     endpoint: &str,
+    body: &str,
 ) -> Result<String, ()>
 {
-    request(state, endpoint, Method::DELETE).await
+    request(state, endpoint, body, Method::DELETE).await
 }

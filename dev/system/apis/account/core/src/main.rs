@@ -10,6 +10,9 @@ pub(crate) use config::Config;
 use graphql::{ QueryRoot, MutationRoot };
 pub(crate) use state::AppState;
 
+use std::fs::File;
+use std::io::Write;
+
 use async_graphql::{
     EmptySubscription,
     Schema,
@@ -36,6 +39,10 @@ async fn main()
         )
         .data(state.clone())
         .finish();
+    File::create("schema.graphql")
+        .unwrap()
+        .write_all(schema.sdl().as_bytes())
+        .unwrap();
 
     let routes = Router::new()
         .route("/graphql", post_service(GraphQL::new(schema)))

@@ -123,6 +123,7 @@ services:
     volumes:
       - ./system/app/spa:/system/app/spa
       - ./proto/ui_catalog/assets/scss:/system/app/spa/public/scss
+      - ./system/apis/account/core/schema.graphql:/system/app/spa/graphql/account/schema.graphql
     environment:
       APP_URL: ${APP_URL}
       API_URL: ${API_GW_URL}
@@ -178,7 +179,7 @@ services:
       PORT: ${ACCOUNT_PORT}
       DATABASE_URL: ${ACCOUNT_DB_URL}
     working_dir: /system/apis/account/core
-    command: "cargo watch -x run"
+    command: "cargo watch -x run --ignore 'schema.graphql'"
     depends_on:
       - account_db
     tty: true
