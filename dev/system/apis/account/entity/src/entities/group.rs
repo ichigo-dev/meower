@@ -5,6 +5,7 @@
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
+use async_graphql::SimpleObject;
 use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
@@ -15,7 +16,7 @@ use thiserror::Error;
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
 #[sea_orm(table_name = "group")]
 pub struct Model
 {

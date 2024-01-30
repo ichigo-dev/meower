@@ -5,6 +5,7 @@
 use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
+use async_graphql::{ Enum, SimpleObject };
 use async_trait::async_trait;
 use rust_i18n::t;
 use sea_orm::entity::prelude::*;
@@ -14,7 +15,7 @@ use thiserror::Error;
 //------------------------------------------------------------------------------
 /// Role.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, EnumIter, DeriveActiveEnum)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, EnumIter, DeriveActiveEnum, Enum)]
 #[sea_orm(rs_type = "i8", db_type = "TinyInteger")]
 pub enum Role
 {
@@ -26,7 +27,7 @@ pub enum Role
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
 #[sea_orm(table_name = "group_member")]
 pub struct Model
 {
