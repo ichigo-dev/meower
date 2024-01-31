@@ -1,5 +1,5 @@
 query GetAccountList {
-  getLoginedUserAccounts {
+  getLoggedInUserAccounts {
     accountName
   }
 }

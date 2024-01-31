@@ -20,7 +20,7 @@ use sycamore::prelude::*;
     query_path = "graphql/pages/account/index/get_account_list.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
-pub struct GetAccountList;
+struct GetAccountList;
 
 
 //------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ pub(crate) async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
     };
 
     // Gets accounts.
-    let accounts = create_signal(cx, data.get_logined_user_accounts);
+    let accounts = create_signal(cx, data.get_logged_in_user_accounts);
     if accounts.get().len() <= 0
     {
         return view!

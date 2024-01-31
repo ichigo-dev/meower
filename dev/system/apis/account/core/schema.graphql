@@ -32,7 +32,7 @@ type QueryRoot {
 	"""
 	Gets logined user accounts.
 	"""
-	getLoginedUserAccounts: [Account!]!
+	getLoggedInUserAccounts: [Account!]!
 }
 
 

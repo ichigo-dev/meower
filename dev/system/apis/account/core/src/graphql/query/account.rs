@@ -23,7 +23,7 @@ impl AccountQuery
     //--------------------------------------------------------------------------
     /// Gets logined user accounts.
     //--------------------------------------------------------------------------
-    async fn get_logined_user_accounts
+    async fn get_logged_in_user_accounts
     (
         &self,
         ctx: &Context<'_>,
