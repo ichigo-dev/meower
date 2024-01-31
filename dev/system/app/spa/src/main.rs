@@ -2,7 +2,6 @@
 //! SPA frontend for the Meower.
 //------------------------------------------------------------------------------
 
-mod apis;
 mod components;
 mod features;
 mod layouts;
@@ -10,6 +9,7 @@ mod pages;
 mod routes;
 mod config;
 mod state;
+mod utils;
 
 use components::root::Root;
 pub(crate) use config::Config;

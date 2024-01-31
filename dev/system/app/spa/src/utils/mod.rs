@@ -1,7 +1,6 @@
 //------------------------------------------------------------------------------
-//! Components.
+//! Utils.
 //------------------------------------------------------------------------------
 
-mod account_list;
-
-pub(crate) use account_list::AccountList;
+pub(crate) mod request;
+pub(crate) mod request_graphql;

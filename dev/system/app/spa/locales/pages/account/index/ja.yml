@@ -2,3 +2,5 @@ pages:
   account:
     index:
       heading: "アカウント"
+      account_list:
+        no_accounts: "アカウントが登録されていません"

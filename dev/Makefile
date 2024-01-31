@@ -7,7 +7,7 @@ include .env
 
 
 ################################################################################
-# Service commands
+# Setup
 ################################################################################
 
 # Copy .env.example to .env
@@ -37,6 +37,11 @@ build:
 	@docker compose build
 	@echo "===== Finish ====="
 
+
+################################################################################
+# Docker
+################################################################################
+
 # Start the containers
 up:
 	@docker compose up -d --remove-orphans
@@ -47,8 +52,7 @@ down:
 
 # Restart the containers
 restart:
-	$(MAKE) down --no-print-directory
-	$(MAKE) up --no-print-directory
+	@docker compose restart
 
 # Watch the logs
 logs:

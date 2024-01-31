@@ -1,17 +1,16 @@
 //------------------------------------------------------------------------------
-//! APIs.
+//! GraphQL request.
 //------------------------------------------------------------------------------
-
-pub mod graphql;
 
 use crate::AppState;
 
 use reqwest::{ StatusCode, Method };
+use graphql_client::{ Response, GraphQLQuery };
 use thiserror::Error;
 
 
 //------------------------------------------------------------------------------
-/// API requests.
+/// GraphQL requests.
 //------------------------------------------------------------------------------
 
 // Error
@@ -27,24 +26,24 @@ pub(crate) enum Error
 
 // Request
 #[allow(dead_code)]
-pub(crate) async fn request
+pub(crate) async fn request_graphql<Q: GraphQLQuery>
 (
     state: &AppState,
     endpoint: &str,
-    body: &str,
+    variables: Q::Variables,
     method: Method,
-) -> Result<String, Error>
+) -> Result<Response<Q::ResponseData>, Error>
 {
     let client = &state.client;
     let config = &state.config;
-    let body = body.to_string();
 
     let endpoint = endpoint.trim_start_matches('/');
     let url = format!("{}/{}", config.api_url, endpoint);
+    let body = Q::build_query(variables);
     let response = client
         .request(method.clone(), url.clone())
         .bearer_auth(config.access_token.lock().unwrap().clone())
-        .body(body.clone())
+        .json(&body)
         .send()
         .await?;
 
@@ -61,65 +60,29 @@ pub(crate) async fn request
         let mut access_token = config.access_token.lock().unwrap();
         *access_token = token;
 
-        let response = client
+        let graphql_response = client
             .request(method, url)
             .bearer_auth(access_token)
-            .body(body)
+            .json(&body)
             .send()
             .await?
-            .text()
+            .json()
             .await?;
-        return Ok(response);
+        return Ok(graphql_response);
     }
 
-    let response = response.text().await?;
-    Ok(response)
-}
-
-// GET
-#[allow(dead_code)]
-pub(crate) async fn get
-(
-    state: &AppState,
-    endpoint: &str,
-    body: &str,
-) -> Result<String, Error>
-{
-    request(state, endpoint, body, Method::GET).await
+    let graphql_response = response.json().await?;
+    Ok(graphql_response)
 }
 
 // POST
 #[allow(dead_code)]
-pub(crate) async fn post
+pub(crate) async fn post_graphql<Q: GraphQLQuery>
 (
     state: &AppState,
     endpoint: &str,
-    body: &str,
-) -> Result<String, Error>
+    variables: Q::Variables,
+) -> Result<Response<Q::ResponseData>, Error>
 {
-    request(state, endpoint, body, Method::POST).await
-}
-
-// PUT
-#[allow(dead_code)]
-pub(crate) async fn put
-(
-    state: &AppState,
-    endpoint: &str,
-    body: &str,
-) -> Result<String, Error>
-{
-    request(state, endpoint, body, Method::PUT).await
-}
-
-// DELETE
-#[allow(dead_code)]
-pub(crate) async fn delete
-(
-    state: &AppState,
-    endpoint: &str,
-    body: &str,
-) -> Result<String, Error>
-{
-    request(state, endpoint, body, Method::DELETE).await
+    request_graphql::<Q>(state, endpoint, variables, Method::POST).await
 }
