@@ -16,11 +16,11 @@ JWT token code table
 
 ## Constraints
 
-| Name                        | Type        | Definition                                       |
-| --------------------------- | ----------- | ------------------------------------------------ |
-| jwt_token_code_user_id_fkey | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES "user"(user_id) |
-| jwt_token_code_pkey         | PRIMARY KEY | PRIMARY KEY (jwt_token_code_id)                  |
-| jwt_token_code_code_key     | UNIQUE      | UNIQUE (code)                                    |
+| Name                        | Type        | Definition                                                         |
+| --------------------------- | ----------- | ------------------------------------------------------------------ |
+| jwt_token_code_user_id_fkey | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES "user"(user_id) ON DELETE CASCADE |
+| jwt_token_code_pkey         | PRIMARY KEY | PRIMARY KEY (jwt_token_code_id)                                    |
+| jwt_token_code_code_key     | UNIQUE      | UNIQUE (code)                                                      |
 
 ## Indexes
 

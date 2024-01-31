@@ -16,11 +16,11 @@ JWT refresh token table
 
 ## Constraints
 
-| Name                           | Type        | Definition                                       |
-| ------------------------------ | ----------- | ------------------------------------------------ |
-| jwt_refresh_token_user_id_fkey | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES "user"(user_id) |
-| jwt_refresh_token_pkey         | PRIMARY KEY | PRIMARY KEY (jwt_refresh_token_id)               |
-| jwt_refresh_token_token_key    | UNIQUE      | UNIQUE (token)                                   |
+| Name                           | Type        | Definition                                                         |
+| ------------------------------ | ----------- | ------------------------------------------------------------------ |
+| jwt_refresh_token_user_id_fkey | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES "user"(user_id) ON DELETE CASCADE |
+| jwt_refresh_token_pkey         | PRIMARY KEY | PRIMARY KEY (jwt_refresh_token_id)                                 |
+| jwt_refresh_token_token_key    | UNIQUE      | UNIQUE (token)                                                     |
 
 ## Indexes
 

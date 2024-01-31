@@ -2,8 +2,9 @@
 
 ## Tables
 
-| Name | Columns | Comment | Type |
-| ---- | ------- | ------- | ---- |
+| Name                                      | Columns | Comment          | Type       |
+| ----------------------------------------- | ------- | ---------------- | ---------- |
+| [public.user_token](public.user_token.md) | 6       | User token table | BASE TABLE |
 
 ## Relations
 

@@ -6,15 +6,15 @@ Client application table
 
 ## Columns
 
-| Name                  | Type                        | Default                                                           | Nullable | Children | Parents | Comment                 |
-| --------------------- | --------------------------- | ----------------------------------------------------------------- | -------- | -------- | ------- | ----------------------- |
-| client_application_id | bigint                      | nextval('client_application_client_application_id_seq'::regclass) | false    |          |         | Client application ID   |
-| name                  | varchar(255)                |                                                                   | false    |          |         | Client application name |
-| client_id             | varchar(255)                |                                                                   | false    |          |         | Client ID               |
-| client_secret         | varchar(255)                |                                                                   | false    |          |         | Client secret           |
-| redirect_uri          | varchar(255)                |                                                                   | false    |          |         | Redirect URI            |
-| created_at            | timestamp without time zone | CURRENT_TIMESTAMP                                                 | false    |          |         | Create date             |
-| updated_at            | timestamp without time zone | CURRENT_TIMESTAMP                                                 | false    |          |         | Update date             |
+| Name                  | Type                        | Default                                                           | Nullable | Children                                                                            | Parents | Comment                 |
+| --------------------- | --------------------------- | ----------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------- | ------- | ----------------------- |
+| client_application_id | bigint                      | nextval('client_application_client_application_id_seq'::regclass) | false    | [public.client_application_allow_origin](public.client_application_allow_origin.md) |         | Client application ID   |
+| name                  | varchar(255)                |                                                                   | false    |                                                                                     |         | Client application name |
+| client_id             | varchar(255)                |                                                                   | false    |                                                                                     |         | Client ID               |
+| client_secret         | varchar(255)                |                                                                   | false    |                                                                                     |         | Client secret           |
+| redirect_uri          | varchar(255)                |                                                                   | false    |                                                                                     |         | Redirect URI            |
+| created_at            | timestamp without time zone | CURRENT_TIMESTAMP                                                 | false    |                                                                                     |         | Create date             |
+| updated_at            | timestamp without time zone | CURRENT_TIMESTAMP                                                 | false    |                                                                                     |         | Update date             |
 
 ## Constraints
 

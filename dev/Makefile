@@ -118,3 +118,4 @@ install-auth:
 tbls:
 	@docker compose run --rm tbls doc ${AUTH_DB_URL} ./auth --force
 	@docker compose run --rm tbls doc ${APP_DB_URL} ./app --force
+	@docker compose run --rm tbls doc ${ACCOUNT_DB_URL} ./apis/account --force

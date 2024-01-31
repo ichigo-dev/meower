@@ -16,10 +16,10 @@ User authentication table
 
 ## Constraints
 
-| Name                   | Type        | Definition                                       |
-| ---------------------- | ----------- | ------------------------------------------------ |
-| user_auth_user_id_fkey | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES "user"(user_id) |
-| user_auth_pkey         | PRIMARY KEY | PRIMARY KEY (user_auth_id)                       |
+| Name                   | Type        | Definition                                                         |
+| ---------------------- | ----------- | ------------------------------------------------------------------ |
+| user_auth_user_id_fkey | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES "user"(user_id) ON DELETE CASCADE |
+| user_auth_pkey         | PRIMARY KEY | PRIMARY KEY (user_auth_id)                                         |
 
 ## Indexes
 

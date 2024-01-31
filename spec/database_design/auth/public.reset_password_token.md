@@ -16,11 +16,11 @@ Reset password table
 
 ## Constraints
 
-| Name                              | Type        | Definition                                       |
-| --------------------------------- | ----------- | ------------------------------------------------ |
-| reset_password_token_user_id_fkey | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES "user"(user_id) |
-| reset_password_token_pkey         | PRIMARY KEY | PRIMARY KEY (reset_password_token_id)            |
-| reset_password_token_token_key    | UNIQUE      | UNIQUE (token)                                   |
+| Name                              | Type        | Definition                                                         |
+| --------------------------------- | ----------- | ------------------------------------------------------------------ |
+| reset_password_token_user_id_fkey | FOREIGN KEY | FOREIGN KEY (user_id) REFERENCES "user"(user_id) ON DELETE CASCADE |
+| reset_password_token_pkey         | PRIMARY KEY | PRIMARY KEY (reset_password_token_id)                              |
+| reset_password_token_token_key    | UNIQUE      | UNIQUE (token)                                                     |
 
 ## Indexes
 

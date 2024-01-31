@@ -1,6 +1,7 @@
 # Development
 env
 .env
+.obsidian
 
 # Node ignores
 package-lock.json

@@ -16,10 +16,10 @@ Temporary user code table
 
 ## Constraints
 
-| Name                                       | Type        | Definition                                                                   |
-| ------------------------------------------ | ----------- | ---------------------------------------------------------------------------- |
-| temporary_user_code_temporary_user_id_fkey | FOREIGN KEY | FOREIGN KEY (temporary_user_id) REFERENCES temporary_user(temporary_user_id) |
-| temporary_user_code_pkey                   | PRIMARY KEY | PRIMARY KEY (temporary_user_code_id)                                         |
+| Name                                       | Type        | Definition                                                                                     |
+| ------------------------------------------ | ----------- | ---------------------------------------------------------------------------------------------- |
+| temporary_user_code_temporary_user_id_fkey | FOREIGN KEY | FOREIGN KEY (temporary_user_id) REFERENCES temporary_user(temporary_user_id) ON DELETE CASCADE |
+| temporary_user_code_pkey                   | PRIMARY KEY | PRIMARY KEY (temporary_user_code_id)                                                           |
 
 ## Indexes
 
