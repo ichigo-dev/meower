@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Account.
+//! Account index page.
 //------------------------------------------------------------------------------
 
 mod account_list;
@@ -24,7 +24,19 @@ pub(crate) async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
             {
                 (t!("pages.account.index.heading"))
             }
-            AccountList()
+            div(class="ui_box surface radius padding_lg flex flex_column flex_align_start flex_gap_md")
+            {
+                a
+                (
+                    href="/account/create",
+                    rel="external",
+                    class="ui_button primary"
+                )
+                {
+                    (t!("pages.account.index.button.create_account"))
+                }
+                AccountList()
+            }
         }
     }
 }

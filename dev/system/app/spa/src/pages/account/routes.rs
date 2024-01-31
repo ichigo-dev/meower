@@ -19,6 +19,9 @@ pub(crate) enum Routes
     #[to("/")]
     Index,
 
+    #[to("/create")]
+    Create,
+
     #[not_found]
     NotFound,
 }
@@ -41,6 +44,14 @@ pub(crate) fn Router<'cx, G: Html>( cx: Scope<'cx>, route: Routes ) -> View<G>
                 {
                     cx,
                     Suspense(fallback=view! { cx, "Loading..." }) { Index }
+                }
+            },
+            Routes::Create =>
+            {
+                view!
+                {
+                    cx,
+                    Suspense(fallback=view! { cx, "Loading..." }) { Create }
                 }
             },
             Routes::NotFound => view! { cx, NotFound },

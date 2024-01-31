@@ -1,0 +1,4 @@
+pages:
+  account:
+    create:
+      heading: "アカウント新規作成"

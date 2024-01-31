@@ -1,7 +1,8 @@
 //------------------------------------------------------------------------------
-//! Header.
+//! Account create page.
 //------------------------------------------------------------------------------
 
+use rust_i18n::t;
 use sycamore::prelude::*;
 
 
@@ -9,14 +10,17 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Header<G: Html>( cx: Scope ) -> View<G>
+pub(crate) async fn Create<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
     view!
     {
         cx,
-        div(class="ui_box primary text_align_center padding_lg")
+        div(class="flex flex_column flex_gap_lg")
         {
-            "Meower"
+            h1(class="ui_heading h1 divider")
+            {
+                (t!("pages.account.create.heading"))
+            }
         }
     }
 }

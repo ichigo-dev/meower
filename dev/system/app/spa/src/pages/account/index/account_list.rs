@@ -73,36 +73,33 @@ pub(crate) async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
     view!
     {
         cx,
-        div(class="ui_box surface radius padding_lg")
+        ul(class="ui_list primary simple width_full")
         {
-            ul(class="ui_list primary simple")
-            {
-                Indexed
-                (
-                    iterable=accounts,
-                    view=|cx, account|
+            Indexed
+            (
+                iterable=accounts,
+                view=|cx, account|
+                {
+                    let href = format!("/account/{}", account.account_name);
+                    let account_name = account.account_name.clone();
+                    return view!
                     {
-                        let href = format!("/account/{}", account.account_name);
-                        let account_name = account.account_name.clone();
-                        return view!
+                        cx,
+                        li(class="clickable padding_zero")
                         {
-                            cx,
-                            li(class="clickable padding_zero")
+                            a
+                            (
+                                href=href,
+                                rel="external",
+                                class="display_block padding_vertical_sm padding_horizontal_md",
+                            )
                             {
-                                a
-                                (
-                                    href=href,
-                                    rel="external",
-                                    class="display_block padding_vertical_sm padding_horizontal_md",
-                                )
-                                {
-                                    (account_name)
-                                }
+                                (account_name)
                             }
-                        };
-                    }
-                )
-            }
+                        }
+                    };
+                }
+            )
         }
     }
 }

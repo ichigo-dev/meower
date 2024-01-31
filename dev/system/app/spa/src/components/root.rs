@@ -2,7 +2,7 @@
 //! Application root component.
 //------------------------------------------------------------------------------
 
-use crate::layouts::Layout;
+use crate::layouts::application::Layout;
 use crate::routes::AppRouter;
 use crate::state::AppState;
 
