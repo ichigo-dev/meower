@@ -12,5 +12,6 @@ use graphql_client::GraphQLQuery;
 #[graphql(
     schema_path = "graphql/account/schema.graphql",
     query_path = "graphql/account/get_my_accounts.graphql",
+    response_derives = "Debug",
 )]
 pub struct GetMyAccounts;

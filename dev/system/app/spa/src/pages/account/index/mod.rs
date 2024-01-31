@@ -1,7 +1,11 @@
 //------------------------------------------------------------------------------
-//! Edit account page.
+//! Account.
 //------------------------------------------------------------------------------
 
+mod components;
+use components::*;
+
+use rust_i18n::t;
 use sycamore::prelude::*;
 
 
@@ -9,12 +13,12 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn EditAccount<G: Html>( cx: Scope ) -> View<G>
+pub(crate) async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
     view!
     {
         cx,
-        h1 { "Edit account" }
-        a(href="/account", rel="external") { "Account" }
+        h1(class="ui_heading h1") { (t!("pages.account.index.heading")) }
+        AccountList()
     }
 }

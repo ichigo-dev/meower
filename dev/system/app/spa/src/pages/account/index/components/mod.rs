@@ -2,7 +2,6 @@
 //! Components.
 //------------------------------------------------------------------------------
 
-pub(crate) mod graphql_error_alert;
-pub(crate) mod root;
+mod account_list;
 
-pub(crate) use graphql_error_alert::GraphQLErrorAlert;
+pub(crate) use account_list::AccountList;

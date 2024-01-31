@@ -26,44 +26,47 @@ everything.
 
 ```
 .
-├ dev/                     ... Source files
-│   ├ docker/              ... Contains Dockerfiles for containers
-│   │   ├ base/            ... Docker base images for service containers
-│   │   └ service/         ... Docker images for service containers
+├ dev/                         ... Source files
+│   ├ docker/                  ... Contains Dockerfiles for containers
+│   │   ├ base/                ... Docker base images for service containers
+│   │   └ service/             ... Docker images for service containers
 │   │
-│   ├ proto/               ... Prototypes
-│   │   └ ui_catalog/      ... UI catalog
+│   ├ proto/                   ... Prototypes
+│   │   └ ui_catalog/          ... UI catalog
 │   │
-│   ├ system/              ... Contains system components
-│   │   ├ api_gw/          ... API gateway
-│   │   │   └ core/        ... Server core
+│   ├ system/                  ... Contains system components
+│   │   ├ api_gw/              ... API gateway
+│   │   │   └ core/            ... Server core
 │   │   │
 │   │   ├ apis/
-│   │   │   └ account/     ... Account API
+│   │   │   └ account/         ... Account API
+│   │   │       ├ core/        ... Server core
+│   │   │       ├ entity/      ... Database table entities
+│   │   │       └ migration/   ... Migration files
 │   │   │
-│   │   ├ app/             ... Application server
-│   │   │   ├ core/        ... Server core
-│   │   │   ├ entity/      ... Database table entities
-│   │   │   ├ migration/   ... Migration files
-│   │   │   └ spa/         ... SPA
+│   │   ├ app/                 ... Application server
+│   │   │   ├ core/            ... Server core
+│   │   │   ├ entity/          ... Database table entities
+│   │   │   ├ migration/       ... Migration files
+│   │   │   └ spa/             ... SPA
 │   │   │
-│   │   ├ auth/            ... Authentication server
-│   │   │   ├ core/        ... Server core
-│   │   │   ├ entity/      ... Database table entities
-│   │   │   ├ install/     ... Utility for installing test data and initial data
-│   │   │   └ migration/   ... Migration files
+│   │   ├ auth/                ... Authentication server
+│   │   │   ├ core/            ... Server core
+│   │   │   ├ entity/          ... Database table entities
+│   │   │   ├ install/         ... Data installer
+│   │   │   └ migration/       ... Migration files
 │   │   │
-│   │   └ common/          ... Contains utility files for the entire application
-│   │       ├ entity_ext/  ... Entity extensions
-│   │       ├ shared/      ... Shared resources
-│   │       ├ utility/     ... Utility functions
-│   │       └ validator/   ... Validation
+│   │   └ common/              ... Utilities
+│   │       ├ entity_ext/      ... Entity extensions
+│   │       ├ shared/          ... Shared resources
+│   │       ├ utility/         ... Utility functions
+│   │       └ validator/       ... Validation
 │   │
-│   ├ .env                 ... Definition of various environment variables
-│   ├ .env.example         ... Example of .env
-│   └ compose.yml          ... Management docker containers
+│   ├ .env                     ... Definition of various environment variables
+│   ├ .env.example             ... Example of .env
+│   └ compose.yml              ... Management docker containers
 │
-└ spec/                    ... Specifications
+└ spec/                        ... Specifications
 ```
 
 
