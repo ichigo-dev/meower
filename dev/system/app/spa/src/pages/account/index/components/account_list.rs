@@ -3,13 +3,24 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use crate::apis::graphql::{ Error, post_graphql };
-use crate::apis::graphql::account::{ GetMyAccounts, get_my_accounts };
+use crate::apis::graphql::post_graphql;
 use crate::components::GraphQLErrorAlert;
 
-use graphql_client::Response;
+use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
+
+
+//------------------------------------------------------------------------------
+/// Gets my accounts.
+//------------------------------------------------------------------------------
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/account/schema.graphql",
+    query_path = "graphql/account/get_account_list.graphql",
+    response_derives = "Debug",
+)]
+pub struct GetAccountList;
 
 
 //------------------------------------------------------------------------------
@@ -19,11 +30,11 @@ use sycamore::prelude::*;
 pub(crate) async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
 {
     let state: &AppState = use_context(cx);
-    let response = post_graphql::<GetMyAccounts>
+    let response = post_graphql::<GetAccountList>
     (
         state,
         "/account/graphql",
-         get_my_accounts::Variables
+         get_account_list::Variables
     ).await;
 
     let response = match response

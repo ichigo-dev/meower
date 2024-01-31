@@ -30,9 +30,9 @@ Query root.
 """
 type QueryRoot {
 	"""
-	Gets all accounts.
+	Gets logined user accounts.
 	"""
-	accounts: [Account!]!
+	getLoginedUserAccounts: [Account!]!
 }
 
 

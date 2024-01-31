@@ -21,9 +21,9 @@ pub(crate) struct AccountQuery;
 impl AccountQuery
 {
     //--------------------------------------------------------------------------
-    /// Gets all accounts.
+    /// Gets logined user accounts.
     //--------------------------------------------------------------------------
-    async fn accounts
+    async fn get_logined_user_accounts
     (
         &self,
         ctx: &Context<'_>,

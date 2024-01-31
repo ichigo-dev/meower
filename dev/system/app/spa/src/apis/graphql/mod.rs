@@ -2,8 +2,6 @@
 //! GraphQL.
 //------------------------------------------------------------------------------
 
-pub mod account;
-
 use crate::AppState;
 
 use reqwest::{ StatusCode, Method };
