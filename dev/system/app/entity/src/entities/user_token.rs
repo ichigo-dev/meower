@@ -25,6 +25,8 @@ pub struct Model
     pub user_token_id: i64,
     #[sea_orm(unique)]
     pub token: String,
+    #[sea_orm(unique)]
+    pub public_user_id: String,
     pub access_token: String,
     pub refresh_token: String,
     pub created_at: DateTime,
@@ -56,16 +58,30 @@ impl ActiveModelBehavior for ActiveModel
     async fn before_save<C>
     (
         mut self,
-        _hdb: &C,
+        hdb: &C,
         insert: bool,
     ) -> Result<Self, DbErr>
     where
         C: ConnectionTrait,
     {
+        // Deletes the old datas.
+        if insert
+        {
+            let public_user_id = self
+                .public_user_id
+                .clone()
+                .take()
+                .unwrap_or("".to_string());
+            Entity::delete_many()
+                .filter(Column::PublicUserId.eq(public_user_id))
+                .exec(hdb)
+                .await?;
+        }
+
         // Sets the default values.
         if insert
         {
-            let token = meower_utility::get_random_str(64);
+            let token = meower_utility::get_random_str(128);
             self.set(Column::Token, token.into());
 
             let now = Utc::now().naive_utc();
@@ -97,6 +113,7 @@ impl Column
         {
             Self::UserTokenId => t!("entities.user_token.user_token_id.name"),
             Self::Token => t!("entities.user_token.token.name"),
+            Self::PublicUserId => t!("entities.user_token.public_user_id.name"),
             Self::AccessToken => t!("entities.user_token.access_token.name"),
             Self::RefreshToken => t!("entities.user_token.refresh_token.name"),
             Self::CreatedAt => t!("entities.user_token.created_at.name"),

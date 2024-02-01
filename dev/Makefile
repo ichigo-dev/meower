@@ -88,6 +88,11 @@ dev:
 ################################################################################
 
 # Migrate database
+migrate:
+	$(MAKE) migrate-auth cmd=${cmd} --no-print-directory
+	$(MAKE) migrate-app cmd=${cmd} --no-print-directory
+	$(MAKE) migrate-account cmd=${cmd} --no-print-directory
+
 migrate-auth:
 	@docker compose exec dev \
 		bash -c 'cd /system/auth && \

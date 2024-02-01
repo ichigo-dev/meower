@@ -15,6 +15,7 @@ pub(crate) struct Config
     pub(crate) api_url: String,
     pub(crate) client_id_key: String,
     pub(crate) client_id: String,
+    pub(crate) public_user_id: String,
     pub(crate) access_token: Arc<Mutex<String>>,
 }
 
@@ -28,6 +29,11 @@ impl Config
         let document = web_sys::window().unwrap().document().unwrap();
         let client_id = document
             .get_element_by_id(std::env!("CLIENT_ID_KEY"))
+            .unwrap()
+            .get_attribute("data-value")
+            .unwrap_or("".to_string());
+        let public_user_id = document
+            .get_element_by_id(std::env!("PUBLIC_USER_ID_KEY"))
             .unwrap()
             .get_attribute("data-value")
             .unwrap_or("".to_string());
@@ -49,6 +55,7 @@ impl Config
             api_url,
             client_id_key,
             client_id,
+            public_user_id,
             access_token,
         }
     }

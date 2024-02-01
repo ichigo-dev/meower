@@ -24,9 +24,11 @@ pub struct Model
     #[sea_orm(primary_key)]
     pub user_id: i64,
     #[sea_orm(unique)]
-    pub email: String,
+    pub public_user_id: String,
     #[sea_orm(unique)]
     pub jwt_subject: String,
+    #[sea_orm(unique)]
+    pub email: String,
     pub last_logined_at: DateTime,
     pub created_at: DateTime,
     pub updated_at: DateTime,
@@ -77,7 +79,9 @@ impl ActiveModelBehavior for ActiveModel
         let now = Utc::now().naive_utc();
         if insert
         {
-            let jwt_subject = meower_utility::get_random_str(64);
+            let public_user_id = meower_utility::get_random_str(128);
+            let jwt_subject = meower_utility::get_random_str(128);
+            self.set(Column::PublicUserId, public_user_id.into());
             self.set(Column::JwtSubject, jwt_subject.into());
             self.set(Column::CreatedAt, now.into());
             self.set(Column::LastLoginedAt, now.into());
@@ -145,8 +149,9 @@ impl Column
         match self
         {
             Self::UserId => t!("entities.user.user_id.name"),
-            Self::Email => t!("entities.user.email.name"),
+            Self::PublicUserId => t!("entities.user.public_user_id.name"),
             Self::JwtSubject => t!("entities.user.jwt_subject.name"),
+            Self::Email => t!("entities.user.email.name"),
             Self::CreatedAt => t!("entities.user.created_at.name"),
             Self::UpdatedAt => t!("entities.user.updated_at.name"),
             Self::LastLoginedAt => t!("entities.user.last_logined_at.name"),

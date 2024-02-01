@@ -4,7 +4,7 @@ Model.
 type Account {
 	accountId: Int!
 	accountName: String!
-	userSubject: String!
+	userPublicId: String!
 	createdAt: NaiveDateTime!
 }
 
@@ -30,9 +30,9 @@ Query root.
 """
 type QueryRoot {
 	"""
-	Gets logined user accounts.
+	Gets accounts.
 	"""
-	getLoggedInUserAccounts: [Account!]!
+	accounts(userPublicId: String!): [Account!]!
 }
 
 

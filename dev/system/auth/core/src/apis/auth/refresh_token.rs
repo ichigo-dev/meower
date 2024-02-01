@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
+use crate::utils::jwt::create_jwt_token;
 
 use meower_auth_entity::client_application::Model as ClientApplicationModel;
 use meower_auth_entity::jwt_refresh_token::ActiveModel as JwtRefreshTokenActiveModel;
@@ -10,22 +11,11 @@ use meower_auth_entity::jwt_refresh_token::Column as JwtRefreshTokenColumn;
 use meower_auth_entity::jwt_refresh_token::Entity as JwtRefreshTokenEntity;
 use meower_auth_entity::user::Entity as UserEntity;
 use meower_entity_ext::ValidateExt;
-use meower_shared::JwtClaims;
-
-use std::fs::File;
-use std::io::Read;
 
 use axum::extract::{ Extension, Path, State };
 use axum::http::header::HeaderMap;
 use axum::http::StatusCode;
 use axum::response::{ IntoResponse, Json };
-use chrono::{ Utc, Duration };
-use jsonwebtoken::{
-    encode,
-    Header,
-    Algorithm,
-    EncodingKey,
-};
 use sea_orm::{
     ActiveValue,
     ColumnTrait,
@@ -34,8 +24,6 @@ use sea_orm::{
     QueryFilter,
     TransactionTrait,
 };
-
-const JWT_EXPIRATION_MINUTES: i64 = 10;
 
 
 //------------------------------------------------------------------------------
@@ -127,34 +115,7 @@ pub(crate) async fn get_handler
     };
     tsx.commit().await.unwrap();
 
-    // Creates JWT claims.
-    let now = Utc::now();
-    let iat = now.timestamp();
-    let duration = Duration::minutes(JWT_EXPIRATION_MINUTES);
-    let exp = (now + duration).timestamp();
-    let jwt_claims = JwtClaims
-    {
-        jti: meower_utility::get_random_str(64),
-        iss: config.url.clone(),
-        sub: user.jwt_subject.clone(),
-        aud: client_application.client_id.clone(),
-        iat,
-        exp,
-        nbf: iat,
-    };
-
-    // Encodes JWT claims.
-    let mut header = Header::default();
-    header.typ = Some("JWT".to_string());
-    header.alg = Algorithm::RS256;
-
-    let key_path = "./env/".to_string() + &config.jwt_private_key;
-    let mut key_data = String::new();
-    let mut file = File::open(&key_path).unwrap();
-    file.read_to_string(&mut key_data).unwrap();
-
-    let key = EncodingKey::from_rsa_pem(key_data.as_bytes()).unwrap();
-    let access_token = encode(&header, &jwt_claims, &key).unwrap();
+    let access_token = create_jwt_token(&config, &user, &client_application);
     let res = Response
     {
         access_token: access_token,

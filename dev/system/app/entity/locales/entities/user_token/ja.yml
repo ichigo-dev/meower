@@ -4,6 +4,8 @@ entities:
       name: "ユーザトークンID"
     token:
       name: "トークン"
+    public_user_id:
+      name: "パブリックユーザID"
     access_token:
       name: "アクセストークン"
     refresh_token:

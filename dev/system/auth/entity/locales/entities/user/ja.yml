@@ -2,12 +2,14 @@ entities:
   user:
     user_id:
       name: "ユーザID"
+    public_user_id:
+      name: "パブリックユーザID"
+    jwt_subject:
+      name: "JWT sub"
     email:
       name: "メールアドレス"
       error:
         already_exists: "そのメールアドレスは既に登録されています"
-    jwt_subject:
-      name: "JWT sub"
     created_at:
       name: "登録日時"
     updated_at:

@@ -21,18 +21,24 @@ pub(crate) struct AccountQuery;
 impl AccountQuery
 {
     //--------------------------------------------------------------------------
-    /// Gets logined user accounts.
+    /// Gets accounts.
     //--------------------------------------------------------------------------
-    async fn get_logged_in_user_accounts
+    async fn accounts
     (
         &self,
         ctx: &Context<'_>,
+        public_user_id: String,
     ) -> Vec<AccountModel>
     {
         let hdb = ctx.data::<DbConn>().unwrap();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+        if jwt_claims.public_user_id != public_user_id
+        {
+            return vec![];
+        }
+
         AccountEntity::find()
-            .filter(AccountColumn::UserSubject.eq(&jwt_claims.sub))
+            .filter(AccountColumn::UserPublicId.eq(&public_user_id))
             .all(hdb)
             .await
             .unwrap()

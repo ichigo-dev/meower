@@ -25,7 +25,7 @@ pub struct Model
     pub account_id: i64,
     #[sea_orm(unique)]
     pub account_name: String,
-    pub user_subject: String,
+    pub public_user_id: String,
     pub created_at: DateTime,
 }
 
@@ -124,7 +124,7 @@ impl Column
         {
             Self::AccountId => t!("entities.account.account_id.name"),
             Self::AccountName => t!("entities.account.account_name.name"),
-            Self::UserSubject => t!("entities.account.user_subject.name"),
+            Self::PublicUserId => t!("entities.account.public_user_id.name"),
             Self::CreatedAt => t!("entities.account.created_at.name"),
         }
     }

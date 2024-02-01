@@ -60,6 +60,11 @@ pub(crate) async fn handler
             ("id", &config.access_token_key),
             ("data-value", &user_token.access_token),
         ], vec![]),
+        Node::new_element("span", vec!
+        [
+            ("id", &config.public_user_id_key),
+            ("data-value", &user.public_user_id),
+        ], vec![]),
     ]);
     let html = dom
         .insert_to(&Selector::from("body"), elm_values)

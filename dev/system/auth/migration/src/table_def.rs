@@ -13,8 +13,9 @@ pub(crate) enum User
 {
     Table,
     UserId,
-    Email,
+    PublicUserId,
     JwtSubject,
+    Email,
     CreatedAt,
     UpdatedAt,
     LastLoginedAt,

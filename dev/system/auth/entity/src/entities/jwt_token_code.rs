@@ -78,7 +78,7 @@ impl ActiveModelBehavior for ActiveModel
         // Sets the default values.
         if insert
         {
-            let code = meower_utility::get_random_str(64);
+            let code = meower_utility::get_random_str(128);
             self.set(Column::Code, code.into());
 
             let now = Utc::now().naive_utc();

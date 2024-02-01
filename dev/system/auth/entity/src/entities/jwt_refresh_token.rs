@@ -78,7 +78,7 @@ impl ActiveModelBehavior for ActiveModel
         // Sets the default values.
         if insert
         {
-            let token = meower_utility::get_random_str(64);
+            let token = meower_utility::get_random_str(128);
             self.set(Column::Token, token.into());
 
             let now = Utc::now().naive_utc();

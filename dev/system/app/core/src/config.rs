@@ -28,6 +28,8 @@ pub(crate) struct Config
     pub(crate) client_id: String,
     pub(crate) client_secret: String,
     pub(crate) access_token_key: String,
+
+    pub(crate) public_user_id_key: String,
 }
 
 impl Config
@@ -67,6 +69,9 @@ impl Config
         let access_token_key = env::var("ACCESS_TOKEN_KEY")
             .expect("JWT_ACCESS_TOKEN_KEY must be set");
 
+        let public_user_id_key = env::var("PUBLIC_USER_ID_KEY")
+            .expect("PUBLIC_USER_ID_KEY must be set");
+
         Self
         {
             // Server config.
@@ -86,6 +91,8 @@ impl Config
             client_id,
             client_secret,
             access_token_key,
+
+            public_user_id_key,
         }
     }
 }

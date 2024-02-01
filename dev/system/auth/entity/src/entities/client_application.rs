@@ -54,10 +54,10 @@ impl ActiveModelBehavior for ActiveModel
         let now = Utc::now().naive_utc();
         if insert
         {
-            let client_id = meower_utility::get_random_str(32);
+            let client_id = meower_utility::get_random_str(64);
             self.set(Column::ClientId, client_id.into());
 
-            let client_secret = meower_utility::get_random_str(64);
+            let client_secret = meower_utility::get_random_str(128);
             self.set(Column::ClientSecret, client_secret.into());
 
             self.set(Column::CreatedAt, now.into());

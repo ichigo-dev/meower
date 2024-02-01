@@ -43,6 +43,14 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(UserToken::PublicUserId)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+                    .unique_key()
+            )
+            .col
+            (
                 ColumnDef::new(UserToken::AccessToken)
                     .text()
                     .not_null()
@@ -76,6 +84,7 @@ impl MigrationTrait for Migration
             "COMMENT ON TABLE \"user_token\" IS 'User token table'",
             "COMMENT ON COLUMN \"user_token\".\"user_token_id\" IS 'User token ID'",
             "COMMENT ON COLUMN \"user_token\".\"token\" IS 'Token'",
+            "COMMENT ON COLUMN \"user_token\".\"public_user_id\" IS 'User public ID (auth server user(public_user_id))'",
             "COMMENT ON COLUMN \"user_token\".\"refresh_token\" IS 'Refresh token'",
             "COMMENT ON COLUMN \"user_token\".\"created_at\" IS 'Create date'",
             "COMMENT ON COLUMN \"user_token\".\"expired_at\" IS 'Expire date'",

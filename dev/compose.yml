@@ -89,6 +89,7 @@ services:
       AUTH_URL: ${AUTH_URL}
       AUTH_API_URL: ${AUTH_API_URL}
       ACCESS_TOKEN_KEY: ${ACCESS_TOKEN_KEY}
+      PUBLIC_USER_ID_KEY: ${PUBLIC_USER_ID_KEY}
     working_dir: /system/app/core
     command: "cargo watch -x run"
     depends_on:
@@ -129,6 +130,7 @@ services:
       API_URL: ${API_GW_URL}
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}
       ACCESS_TOKEN_KEY: ${ACCESS_TOKEN_KEY}
+      PUBLIC_USER_ID_KEY: ${PUBLIC_USER_ID_KEY}
     working_dir: /system/app/spa
     command: "trunk watch --release"
     tty: true

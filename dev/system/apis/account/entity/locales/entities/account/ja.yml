@@ -6,7 +6,7 @@ entities:
       name: "アカウント名"
       error:
         already_exists: "そのアカウント名は既に使用されています"
-    user_subject:
-      name: "ユーザサブジェクト"
+    public_user_id:
+      name: "パブリックユーザID"
     created_at:
       name: "作成日時"

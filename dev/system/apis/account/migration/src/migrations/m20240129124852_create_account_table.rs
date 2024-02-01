@@ -43,7 +43,7 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(Account::UserSubject)
+                ColumnDef::new(Account::PublicUserId)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -63,7 +63,7 @@ impl MigrationTrait for Migration
             "COMMENT ON TABLE \"account\" IS 'Account table'",
             "COMMENT ON COLUMN \"account\".\"account_id\" IS 'Account ID'",
             "COMMENT ON COLUMN \"account\".\"account_name\" IS 'Account name'",
-            "COMMENT ON COLUMN \"account\".\"user_subject\" IS 'User subject'",
+            "COMMENT ON COLUMN \"account\".\"public_user_id\" IS 'User public ID (auth server user(public_user_id))'",
             "COMMENT ON COLUMN \"account\".\"created_at\" IS 'Create date'",
         ];
         let hdb = manager.get_connection();

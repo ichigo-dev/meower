@@ -35,7 +35,7 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(User::Email)
+                ColumnDef::new(User::PublicUserId)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -44,6 +44,14 @@ impl MigrationTrait for Migration
             .col
             (
                 ColumnDef::new(User::JwtSubject)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+                    .unique_key()
+            )
+            .col
+            (
+                ColumnDef::new(User::Email)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -84,8 +92,9 @@ impl MigrationTrait for Migration
         [
             "COMMENT ON TABLE \"user\" IS 'User table'",
             "COMMENT ON COLUMN \"user\".\"user_id\" IS 'User ID'",
-            "COMMENT ON COLUMN \"user\".\"email\" IS 'Email address'",
+            "COMMENT ON COLUMN \"user\".\"public_user_id\" IS 'Public user ID'",
             "COMMENT ON COLUMN \"user\".\"jwt_subject\" IS 'JWT subject'",
+            "COMMENT ON COLUMN \"user\".\"email\" IS 'Email address'",
             "COMMENT ON COLUMN \"user\".\"created_at\" IS 'Create date'",
             "COMMENT ON COLUMN \"user\".\"updated_at\" IS 'Update date'",
             "COMMENT ON COLUMN \"user\".\"last_logined_at\" IS 'Last logined date'",

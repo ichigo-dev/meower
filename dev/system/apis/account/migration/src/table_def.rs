@@ -14,7 +14,7 @@ pub(crate) enum Account
     Table,
     AccountId,
     AccountName,
-    UserSubject,
+    PublicUserId,
     CreatedAt,
 }
 

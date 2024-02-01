@@ -18,4 +18,7 @@ pub struct JwtClaims
     pub iat: i64,
     pub exp: i64,
     pub nbf: i64,
+
+    // Private claims.
+    pub public_user_id: String,
 }
