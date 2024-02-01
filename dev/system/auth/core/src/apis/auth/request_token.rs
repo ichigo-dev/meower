@@ -27,11 +27,12 @@ use sea_orm::{
 
 
 //------------------------------------------------------------------------------
-/// Response.
+/// Tokens.
 //------------------------------------------------------------------------------
 #[derive(serde::Serialize)]
 pub(crate) struct Response
 {
+    public_user_id: String,
     access_token: String,
     refresh_token: String,
 }
@@ -122,6 +123,7 @@ pub(crate) async fn get_handler
     let access_token = create_jwt_token(&config, &user, &client_application);
     let res = Response
     {
+        public_user_id: user.public_user_id,
         access_token: access_token,
         refresh_token: jwt_refresh_token.token,
     };

@@ -38,7 +38,7 @@ impl AccountQuery
         }
 
         AccountEntity::find()
-            .filter(AccountColumn::UserPublicId.eq(&public_user_id))
+            .filter(AccountColumn::PublicUserId.eq(&public_user_id))
             .all(hdb)
             .await
             .unwrap()

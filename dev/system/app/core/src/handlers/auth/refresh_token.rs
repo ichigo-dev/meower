@@ -114,11 +114,15 @@ pub(crate) async fn get_handler
     tsx.commit().await.unwrap();
 
     // Sets the user token cookie.
+    let expire = OffsetDateTime::from_unix_timestamp
+    (
+        user_token.expired_at.timestamp()
+    ).unwrap();
     let cookie = Cookie::build((&config.user_token_key, user_token.token))
         .path("/")
         .secure(true)
         .http_only(true)
-        .expires(OffsetDateTime::from_unix_timestamp(user_token.expired_at.timestamp()).unwrap())
+        .expires(expire)
         .to_string();
     let res = Response::builder()
         .status(StatusCode::OK)

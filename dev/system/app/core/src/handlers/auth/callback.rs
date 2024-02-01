@@ -32,8 +32,9 @@ pub(crate) struct Params
 /// Tokens.
 //------------------------------------------------------------------------------
 #[derive(Debug, Deserialize, Default)]
-pub(crate) struct Tokens
+pub(crate) struct AuthResponse
 {
+    public_user_id: String,
     access_token: String,
     refresh_token: String,
 }
@@ -74,16 +75,17 @@ pub(crate) async fn get_handler
         .text()
         .await
         .unwrap();
-    let tokens: Tokens = serde_json::from_str(&res).unwrap_or_default();
-    if tokens.access_token.len() <= 0 || tokens.refresh_token.len() <= 0
+    let res: AuthResponse = serde_json::from_str(&res).unwrap_or_default();
+    if res.access_token.len() <= 0 || res.refresh_token.len() <= 0
     {
         return Err(StatusCode::INTERNAL_SERVER_ERROR);
     }
 
     let user_token = UserTokenActiveModel
     {
-        access_token: ActiveValue::Set(tokens.access_token.into()),
-        refresh_token: ActiveValue::Set(tokens.refresh_token.into()),
+        public_user_id: ActiveValue::Set(res.public_user_id.into()),
+        access_token: ActiveValue::Set(res.access_token.into()),
+        refresh_token: ActiveValue::Set(res.refresh_token.into()),
         ..Default::default()
     };
     let user_token = match user_token.validate_and_insert(&state.hdb).await
@@ -93,11 +95,15 @@ pub(crate) async fn get_handler
     };
 
     // Sets the user token cookie.
+    let expire = OffsetDateTime::from_unix_timestamp
+    (
+        user_token.expired_at.timestamp()
+    ).unwrap();
     let cookie = Cookie::build((&config.user_token_key, user_token.token))
         .path("/")
         .secure(true)
         .http_only(true)
-        .expires(OffsetDateTime::from_unix_timestamp(user_token.expired_at.timestamp()).unwrap())
+        .expires(expire)
         .to_string();
     let res = Response::builder()
         .status(StatusCode::SEE_OTHER)

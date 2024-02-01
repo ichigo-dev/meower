@@ -4,7 +4,7 @@ Model.
 type Account {
 	accountId: Int!
 	accountName: String!
-	userPublicId: String!
+	publicUserId: String!
 	createdAt: NaiveDateTime!
 }
 
@@ -32,7 +32,7 @@ type QueryRoot {
 	"""
 	Gets accounts.
 	"""
-	accounts(userPublicId: String!): [Account!]!
+	accounts(publicUserId: String!): [Account!]!
 }
 
 

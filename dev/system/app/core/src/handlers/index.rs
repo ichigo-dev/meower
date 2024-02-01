@@ -63,7 +63,7 @@ pub(crate) async fn handler
         Node::new_element("span", vec!
         [
             ("id", &config.public_user_id_key),
-            ("data-value", &user.public_user_id),
+            ("data-value", &user_token.public_user_id),
         ], vec![]),
     ]);
     let html = dom

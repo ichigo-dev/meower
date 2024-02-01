@@ -1,5 +1,5 @@
-query GetAccountList {
-  getLoggedInUserAccounts {
+query GetAccountList($publicUserId: String!) {
+  accounts(publicUserId: $publicUserId) {
     accountName
   }
 }

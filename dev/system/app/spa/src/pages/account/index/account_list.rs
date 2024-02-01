@@ -35,6 +35,9 @@ pub(crate) async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
         state,
         "/account/graphql",
          get_account_list::Variables
+         {
+             public_user_id: state.config.public_user_id.clone()
+         },
     ).await;
 
     // Error handling.
@@ -54,7 +57,7 @@ pub(crate) async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
     };
 
     // Gets accounts.
-    let accounts = create_signal(cx, data.get_logged_in_user_accounts);
+    let accounts = create_signal(cx, data.accounts);
     if accounts.get().len() <= 0
     {
         return view!
