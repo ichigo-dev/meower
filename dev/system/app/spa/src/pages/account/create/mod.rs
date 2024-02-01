@@ -13,9 +13,9 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub async fn Create<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
+pub async fn Create<G: Html>() -> View<G>
 {
-    let fields = create_signal(cx, vec!
+    let fields = create_signal(vec!
     [
         TextFieldProps
         {
@@ -37,22 +37,19 @@ pub async fn Create<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 
     view!
     {
-        cx,
         Main
         (
             heading=t!("pages.account.create.heading"),
-            child=view!
+            children=view!
             {
-                cx,
                 form(class="flex flex_column flex_gap_md width_full")
                 {
                     Indexed
                     (
-                        iterable=fields,
-                        view=|cx, field| view!
+                        iterable=*fields,
+                        view=|field| view!
                         {
-                            cx,
-                            TextField(field)
+                            TextField(id=field.id, label=field.label, placeholder=field.placeholder, required=field.required, textarea=field.textarea)
                         }
                     )
                 }

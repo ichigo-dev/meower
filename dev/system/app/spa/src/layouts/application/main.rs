@@ -11,14 +11,12 @@ use sycamore::prelude::*;
 #[component(inline_props)]
 pub fn Main<G: Html>
 (
-    cx: Scope,
     heading: String,
-    child: View<G>,
+    children: View<G>,
 ) -> View<G>
 {
     view!
     {
-        cx,
         div(class="flex flex_justify_center")
         {
             div(class="flex flex_column flex_gap_lg max_width_breakpoint_lg width_full")
@@ -26,7 +24,7 @@ pub fn Main<G: Html>
                 h1(class="ui_heading h1 divider") { (heading) }
                 div(class="ui_box surface radius padding_lg flex flex_column flex_align_start flex_gap_md")
                 {
-                    (child)
+                    (children)
                 }
             }
         }

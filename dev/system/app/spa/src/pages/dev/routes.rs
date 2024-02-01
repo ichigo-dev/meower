@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Account routes.
+//! Dev routes.
 //------------------------------------------------------------------------------
 
 use super::*;
@@ -18,8 +18,8 @@ pub enum Routes
     #[to("/")]
     Index,
 
-    #[to("/create")]
-    Create,
+    #[to("/ui_catalog")]
+    UiCatalog,
 
     #[not_found]
     NotFound,
@@ -37,7 +37,7 @@ pub fn Router<G: Html>( route: Routes ) -> View<G>
         (match route
         {
             Routes::Index => view! { Index },
-            Routes::Create => view! { Create },
+            Routes::UiCatalog => view! { UiCatalog },
             Routes::NotFound => view! { NotFound },
         })
     }

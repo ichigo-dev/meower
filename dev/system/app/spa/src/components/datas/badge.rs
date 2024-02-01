@@ -8,21 +8,21 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 /// Props.
 //------------------------------------------------------------------------------
-#[derive(Prop)]
+#[derive(Props)]
 pub struct BadgeProps<G: Html>
 {
-    #[builder(default)]
+    #[prop(default)]
     pub badge_content: String,
 
     pub children: View<G>,
 
-    #[builder(default)]
+    #[prop(default)]
     pub classes: String,
 
-    #[builder(default)]
+    #[prop(default)]
     pub color: String,
 
-    #[builder(default)]
+    #[prop(default)]
     pub invisible: bool,
 }
 
@@ -31,20 +31,19 @@ pub struct BadgeProps<G: Html>
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Badge<G: Html>( cx: Scope, props: BadgeProps<G> ) -> View<G>
+pub fn Badge<G: Html>( props: BadgeProps<G> ) -> View<G>
 {
     let badge_content = if props.badge_content.len() > 0
     {
-        view! { cx, span(class="badge_content") { (props.badge_content) } }
+        view! { span(class="badge_content") { (props.badge_content) } }
     }
     else
     {
-        view! { cx, "" }
+        view! { "" }
     };
 
     view!
     {
-        cx,
         span(class="ui_badge")
         {
             (badge_content)

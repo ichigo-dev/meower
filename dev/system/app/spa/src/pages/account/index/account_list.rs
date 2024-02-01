@@ -27,9 +27,9 @@ struct GetAccountList;
 /// AccountList.
 //------------------------------------------------------------------------------
 #[component]
-pub async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
+pub async fn AccountList<G: Html>() -> View<G>
 {
-    let state: &AppState = use_context(cx);
+    let state: &AppState = use_context();
     let response = post_graphql::<GetAccountList>
     (
         state,
@@ -44,25 +44,23 @@ pub async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
     let response = match response
     {
         Ok(response) => response,
-        Err(_) => return view! { cx, GraphQLErrorAlert() },
+        Err(_) => return view! { GraphQLErrorAlert() },
     };
     if let Some(_) = response.errors
     {
-        return view! { cx, GraphQLErrorAlert() };
+        return view! { GraphQLErrorAlert() };
     }
     let data = match response.data
     {
         Some(data) => data,
-        None => return view! { cx, GraphQLErrorAlert() },
+        None => return view! { GraphQLErrorAlert() },
     };
 
     // Gets accounts.
-    let accounts = create_signal(cx, data.accounts);
-    if accounts.get().len() <= 0
+    if data.accounts.len() <= 0
     {
         return view!
         {
-            cx,
             div(class="ui_box surface radius padding_lg")
             {
                 p(class="ui_text ui_text_size_md")
@@ -72,22 +70,21 @@ pub async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
             }
         };
     }
+    let accounts = create_signal(data.accounts);
 
     view!
     {
-        cx,
         ul(class="ui_list primary simple width_full")
         {
             Indexed
             (
-                iterable=accounts,
-                view=|cx, account|
+                iterable=*accounts,
+                view=|account|
                 {
                     let href = format!("/account/{}", account.account_name);
                     let account_name = account.account_name.clone();
                     return view!
                     {
-                        cx,
                         li(class="clickable padding_zero")
                         {
                             a

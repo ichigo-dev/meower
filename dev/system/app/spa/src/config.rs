@@ -11,6 +11,7 @@ use std::sync::{ Arc, Mutex };
 #[derive(Clone, Debug)]
 pub struct Config
 {
+    pub dev_mode: bool,
     pub app_url: String,
     pub api_url: String,
     pub client_id_key: String,
@@ -43,6 +44,7 @@ impl Config
             .get_attribute("data-value")
             .unwrap_or("".to_string());
 
+        let dev_mode = std::env!("DEV_MODE") == "true";
         let app_url = std::env!("APP_URL").to_string();
         let api_url = std::env!("API_URL").to_string();
         let client_id_key = std::env!("CLIENT_ID_KEY").to_string();
@@ -51,6 +53,7 @@ impl Config
 
         Self
         {
+            dev_mode,
             app_url,
             api_url,
             client_id_key,

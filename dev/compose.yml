@@ -126,6 +126,7 @@ services:
       - ./proto/ui_catalog/assets/scss:/system/app/spa/public/scss
       - ./system/apis/account/core/schema.graphql:/system/app/spa/graphql/schema/account.graphql
     environment:
+      DEV_MODE: ${DEV_MODE}
       APP_URL: ${APP_URL}
       API_URL: ${API_GW_URL}
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}

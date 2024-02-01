@@ -1,9 +1,6 @@
 //------------------------------------------------------------------------------
-//! Account index page.
+//! Dev page.
 //------------------------------------------------------------------------------
-
-mod account_list;
-use account_list::AccountList;
 
 use crate::layouts::application::Main;
 
@@ -15,25 +12,24 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Index<G: Html>() -> View<G>
+pub async fn Index<G: Html>() -> View<G>
 {
     view!
     {
         Main
         (
-            heading=t!("pages.account.index.heading"),
+            heading=t!("pages.dev.index.heading"),
             children=view!
             {
                 a
                 (
-                    href="/account/create",
+                    href="/dev/ui_catalog",
                     rel="external",
                     class="ui_button primary",
                 )
                 {
-                    (t!("pages.account.index.button.add_account"))
+                    (t!("pages.dev.index.button.ui_catalog"))
                 }
-                AccountList()
             }
         )
     }

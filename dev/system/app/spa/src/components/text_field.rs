@@ -8,7 +8,7 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 /// Props.
 //------------------------------------------------------------------------------
-#[derive(Clone, PartialEq, Prop)]
+#[derive(Clone, PartialEq, Props)]
 pub struct TextFieldProps
 {
     pub id: String,
@@ -23,14 +23,13 @@ pub struct TextFieldProps
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn TextField<G: Html>( cx: Scope, props: TextFieldProps ) -> View<G>
+pub fn TextField<G: Html>( props: TextFieldProps ) -> View<G>
 {
-    let id = create_signal(cx, props.id);
+    let id = create_signal(props.id);
     if props.textarea
     {
         return view!
         {
-            cx,
             label(for=id) { (props.label) }
             textarea
             (
@@ -46,7 +45,6 @@ pub fn TextField<G: Html>( cx: Scope, props: TextFieldProps ) -> View<G>
     {
         return view!
         {
-            cx,
             label(for=id) { (props.label) }
             input
             (

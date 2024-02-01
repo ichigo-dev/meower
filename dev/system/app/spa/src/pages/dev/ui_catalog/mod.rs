@@ -1,7 +1,11 @@
 //------------------------------------------------------------------------------
-//! Footer.
+//! UI catalog page.
 //------------------------------------------------------------------------------
 
+use crate::components::*;
+use crate::layouts::application::Main;
+
+use rust_i18n::t;
 use sycamore::prelude::*;
 
 
@@ -9,13 +13,14 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Footer<G: Html>() -> View<G>
+pub async fn UiCatalog<G: Html>() -> View<G>
 {
     view!
     {
-        div(class="ui_box filled text_align_center padding_sm fs_sm")
-        {
-            "© 2024 Meower."
-        }
+        Main
+        (
+            heading=t!("pages.dev.ui_catalog.heading"),
+            children=view! { "UI catalog" }
+        )
     }
 }

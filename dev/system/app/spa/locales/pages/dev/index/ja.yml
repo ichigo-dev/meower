@@ -1,0 +1,6 @@
+pages:
+  dev:
+    index:
+      heading: "開発ツール"
+      button:
+        ui_catalog: "UIカタログ"

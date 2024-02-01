@@ -10,11 +10,10 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Home<G: Html>( cx: Scope ) -> View<G>
+pub fn Home<G: Html>() -> View<G>
 {
     view!
     {
-        cx,
         h1(class="ui_heading h1") { (t!("pages.home.heading")) }
     }
 }

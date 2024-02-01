@@ -10,11 +10,10 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn NotFound<G: Html>( cx: Scope ) -> View<G>
+pub fn NotFound<G: Html>() -> View<G>
 {
     view!
     {
-        cx,
         h1(class="ui_heading h1") { (t!("pages.notfound.heading")) }
     }
 }

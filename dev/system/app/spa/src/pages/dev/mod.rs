@@ -1,11 +1,11 @@
 //------------------------------------------------------------------------------
-//! Pages.
+//! Dev.
 //------------------------------------------------------------------------------
 
-pub mod dev;
-pub mod home;
-pub mod account;
-pub mod notfound;
+mod index;
+mod ui_catalog;
+mod routes;
 
-pub use home::Home;
-pub use notfound::NotFound;
+pub use index::Index;
+pub use ui_catalog::UiCatalog;
+pub use routes::{ Routes, Router };

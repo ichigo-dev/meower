@@ -9,11 +9,10 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Header<G: Html>( cx: Scope ) -> View<G>
+pub fn Header<G: Html>() -> View<G>
 {
     view!
     {
-        cx,
         div(class="ui_box primary text_align_center padding_sm fs_2xl")
         {
             "Meower"

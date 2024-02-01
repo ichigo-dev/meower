@@ -13,7 +13,7 @@ use sycamore::prelude::*;
 /// Application root.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Root<G: Html>( cx: Scope ) -> View<G>
+pub fn Root<G: Html>() -> View<G>
 {
     // Sets the locale.
     let window = web_sys::window().unwrap();
@@ -23,11 +23,10 @@ pub fn Root<G: Html>( cx: Scope ) -> View<G>
 
     // Initializes the application state.
     let app_state = AppState::new();
-    provide_context(cx, app_state);
+    provide_context(app_state);
 
     view!
     {
-        cx,
-        Layout(child=view!{ cx, AppRouter })
+        Layout(children=view!{ AppRouter })
     }
 }
