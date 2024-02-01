@@ -10,7 +10,7 @@ use sycamore::prelude::*;
 /// GraphQLErrorAlert
 //------------------------------------------------------------------------------
 #[component]
-pub(crate) fn GraphQLErrorAlert<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
+pub fn GraphQLErrorAlert<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
 {
     view!
     {

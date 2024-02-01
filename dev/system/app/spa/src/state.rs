@@ -12,10 +12,10 @@ use reqwest::header::HeaderMap;
 /// Application state.
 //------------------------------------------------------------------------------
 #[derive(Clone)]
-pub(crate) struct AppState
+pub struct AppState
 {
-    pub(crate) config: Config,
-    pub(crate) client: Client,
+    pub config: Config,
+    pub client: Client,
 }
 
 impl AppState
@@ -23,7 +23,7 @@ impl AppState
     //--------------------------------------------------------------------------
     /// Creates a new application state.
     //--------------------------------------------------------------------------
-    pub(crate) fn new() -> Self
+    pub fn new() -> Self
     {
         let config = Config::init();
         let headers = HeaderMap::from_iter(vec!

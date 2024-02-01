@@ -14,7 +14,7 @@ use thiserror::Error;
 
 // Error
 #[derive(Debug, Error)]
-pub(crate) enum Error
+pub enum Error
 {
     #[error("Reqwest error")]
     Reqwest(#[from] reqwest::Error),
@@ -25,7 +25,7 @@ pub(crate) enum Error
 
 // Request
 #[allow(dead_code)]
-pub(crate) async fn request
+pub async fn request
 (
     state: &AppState,
     endpoint: &str,
@@ -76,7 +76,7 @@ pub(crate) async fn request
 
 // GET
 #[allow(dead_code)]
-pub(crate) async fn get
+pub async fn get
 (
     state: &AppState,
     endpoint: &str,
@@ -88,7 +88,7 @@ pub(crate) async fn get
 
 // POST
 #[allow(dead_code)]
-pub(crate) async fn post
+pub async fn post
 (
     state: &AppState,
     endpoint: &str,
@@ -100,7 +100,7 @@ pub(crate) async fn post
 
 // PUT
 #[allow(dead_code)]
-pub(crate) async fn put
+pub async fn put
 (
     state: &AppState,
     endpoint: &str,
@@ -112,7 +112,7 @@ pub(crate) async fn put
 
 // DELETE
 #[allow(dead_code)]
-pub(crate) async fn delete
+pub async fn delete
 (
     state: &AppState,
     endpoint: &str,

@@ -6,14 +6,15 @@ mod components;
 mod features;
 mod layouts;
 mod pages;
+mod root;
 mod routes;
 mod config;
 mod state;
 mod utils;
 
-use components::root::Root;
-pub(crate) use config::Config;
-pub(crate) use state::AppState;
+use root::Root;
+pub use config::Config;
+pub use state::AppState;
 
 // Loads the locales.
 rust_i18n::i18n!("locales");

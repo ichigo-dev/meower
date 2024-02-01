@@ -14,7 +14,7 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub(crate) async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
+pub async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
     view!
     {

@@ -23,7 +23,7 @@ pub struct TextFieldProps
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub(crate) fn TextField<G: Html>( cx: Scope, props: TextFieldProps ) -> View<G>
+pub fn TextField<G: Html>( cx: Scope, props: TextFieldProps ) -> View<G>
 {
     let id = create_signal(cx, props.id);
     if props.textarea

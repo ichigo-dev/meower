@@ -1,11 +1,7 @@
 //------------------------------------------------------------------------------
-//! Pages.
+//! Data Components.
 //------------------------------------------------------------------------------
 
-pub mod home;
-pub mod account;
-pub mod notfound;
+mod badge;
 
-pub use home::Home;
-pub use home::Home;
-pub use notfound::NotFound;
+pub use badge::Badge;

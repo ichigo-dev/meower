@@ -13,7 +13,7 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub(crate) async fn Create<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
+pub async fn Create<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
     let fields = create_signal(cx, vec!
     [

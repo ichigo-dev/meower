@@ -9,7 +9,7 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub(crate) fn Main<G: Html>
+pub fn Main<G: Html>
 (
     cx: Scope,
     heading: String,

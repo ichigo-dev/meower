@@ -15,7 +15,7 @@ use thiserror::Error;
 
 // Error
 #[derive(Debug, Error)]
-pub(crate) enum Error
+pub enum Error
 {
     #[error("Reqwest error")]
     Reqwest(#[from] reqwest::Error),
@@ -26,7 +26,7 @@ pub(crate) enum Error
 
 // Request
 #[allow(dead_code)]
-pub(crate) async fn request_graphql<Q: GraphQLQuery>
+pub async fn request_graphql<Q: GraphQLQuery>
 (
     state: &AppState,
     endpoint: &str,
@@ -77,7 +77,7 @@ pub(crate) async fn request_graphql<Q: GraphQLQuery>
 
 // POST
 #[allow(dead_code)]
-pub(crate) async fn post_graphql<Q: GraphQLQuery>
+pub async fn post_graphql<Q: GraphQLQuery>
 (
     state: &AppState,
     endpoint: &str,

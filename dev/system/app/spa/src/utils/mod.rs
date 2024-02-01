@@ -2,5 +2,5 @@
 //! Utils.
 //------------------------------------------------------------------------------
 
-pub(crate) mod request;
-pub(crate) mod request_graphql;
+pub mod request;
+pub mod request_graphql;

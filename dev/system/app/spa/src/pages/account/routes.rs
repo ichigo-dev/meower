@@ -14,7 +14,7 @@ use sycamore_router::Route;
 /// Routes.
 //------------------------------------------------------------------------------
 #[derive(Route, Clone)]
-pub(crate) enum Routes
+pub enum Routes
 {
     #[to("/")]
     Index,
@@ -31,7 +31,7 @@ pub(crate) enum Routes
 /// Router.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub(crate) fn Router<'cx, G: Html>( cx: Scope<'cx>, route: Routes ) -> View<G>
+pub fn Router<'cx, G: Html>( cx: Scope<'cx>, route: Routes ) -> View<G>
 {
     view!
     {

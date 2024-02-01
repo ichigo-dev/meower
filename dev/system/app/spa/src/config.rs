@@ -9,14 +9,14 @@ use std::sync::{ Arc, Mutex };
 /// Config.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug)]
-pub(crate) struct Config
+pub struct Config
 {
-    pub(crate) app_url: String,
-    pub(crate) api_url: String,
-    pub(crate) client_id_key: String,
-    pub(crate) client_id: String,
-    pub(crate) public_user_id: String,
-    pub(crate) access_token: Arc<Mutex<String>>,
+    pub app_url: String,
+    pub api_url: String,
+    pub client_id_key: String,
+    pub client_id: String,
+    pub public_user_id: String,
+    pub access_token: Arc<Mutex<String>>,
 }
 
 impl Config
@@ -24,7 +24,7 @@ impl Config
     //--------------------------------------------------------------------------
     /// Initializes the configuration.
     //--------------------------------------------------------------------------
-    pub(crate) fn init() -> Self
+    pub fn init() -> Self
     {
         let document = web_sys::window().unwrap().document().unwrap();
         let client_id = document

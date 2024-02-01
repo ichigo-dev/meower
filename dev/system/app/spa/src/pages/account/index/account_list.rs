@@ -27,7 +27,7 @@ struct GetAccountList;
 /// AccountList.
 //------------------------------------------------------------------------------
 #[component]
-pub(crate) async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
+pub async fn AccountList<G: Html, 'cx>( cx: Scope<'cx> ) -> View<G>
 {
     let state: &AppState = use_context(cx);
     let response = post_graphql::<GetAccountList>
