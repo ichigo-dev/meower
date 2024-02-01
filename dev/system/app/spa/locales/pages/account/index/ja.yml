@@ -5,4 +5,4 @@ pages:
       account_list:
         no_accounts: "アカウントが登録されていません"
       button:
-        create_account: "アカウント新規作成"
+        add_account: "アカウント追加"

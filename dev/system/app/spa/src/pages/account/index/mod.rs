@@ -2,6 +2,7 @@
 //! Account index page.
 //------------------------------------------------------------------------------
 
+use crate::layouts::application::Main;
 mod account_list;
 use account_list::AccountList;
 
@@ -18,25 +19,23 @@ pub(crate) async fn Index<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
     view!
     {
         cx,
-        div(class="flex flex_column flex_gap_lg")
-        {
-            h1(class="ui_heading h1 divider")
+        Main
+        (
+            heading=t!("pages.account.index.heading"),
+            child=view!
             {
-                (t!("pages.account.index.heading"))
-            }
-            div(class="ui_box surface radius padding_lg flex flex_column flex_align_start flex_gap_md")
-            {
+                cx,
                 a
                 (
                     href="/account/create",
                     rel="external",
-                    class="ui_button primary"
+                    class="ui_button primary",
                 )
                 {
-                    (t!("pages.account.index.button.create_account"))
+                    (t!("pages.account.index.button.add_account"))
                 }
                 AccountList()
             }
-        }
+        )
     }
 }

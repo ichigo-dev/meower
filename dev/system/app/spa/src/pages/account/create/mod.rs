@@ -2,6 +2,9 @@
 //! Account create page.
 //------------------------------------------------------------------------------
 
+use crate::components::{ TextField, TextFieldProps };
+use crate::layouts::application::Main;
+
 use rust_i18n::t;
 use sycamore::prelude::*;
 
@@ -12,15 +15,48 @@ use sycamore::prelude::*;
 #[component]
 pub(crate) async fn Create<'cx, G: Html>( cx: Scope<'cx> ) -> View<G>
 {
+    let fields = create_signal(cx, vec!
+    [
+        TextFieldProps
+        {
+            id: "account_name".to_string(),
+            label: t!("pages.account.create.form.account_name.label"),
+            placeholder: t!("pages.account.create.form.account_name.placeholder"),
+            required: true,
+            textarea: false,
+        },
+        TextFieldProps
+        {
+            id: "name".to_string(),
+            label: t!("pages.account.create.form.name.label"),
+            placeholder: t!("pages.account.create.form.name.placeholder"),
+            required: true,
+            textarea: false,
+        },
+    ]);
+
     view!
     {
         cx,
-        div(class="flex flex_column flex_gap_lg")
-        {
-            h1(class="ui_heading h1 divider")
+        Main
+        (
+            heading=t!("pages.account.create.heading"),
+            child=view!
             {
-                (t!("pages.account.create.heading"))
+                cx,
+                form(class="flex flex_column flex_gap_md width_full")
+                {
+                    Indexed
+                    (
+                        iterable=fields,
+                        view=|cx, field| view!
+                        {
+                            cx,
+                            TextField(field)
+                        }
+                    )
+                }
             }
-        }
+        )
     }
 }

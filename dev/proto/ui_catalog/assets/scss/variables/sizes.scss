@@ -2,7 +2,7 @@
 //	Common sizes
 //------------------------------------------------------------------------------
 
-$sizes: "zero", "5xs", "4xs", "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl", "9xl", "10xl";
+$sizes: "zero", "5xs", "4xs", "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl", "9xl", "10xl", "breakpoint-xs", "breakpoint-sm", "breakpoint-md", "breakpoint-lg", "breakpoint-xl";
 
 :root
 {
@@ -25,4 +25,9 @@ $sizes: "zero", "5xs", "4xs", "3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl",
 	--size-8xl: 320px;
 	--size-9xl: 460px;
 	--size-10xl: 640px;
+	--size-breakpoint-xs: 0;
+	--size-breakpoint-sm: 600px;
+	--size-breakpoint-md: 900px;
+	--size-breakpoint-lg: 1200px;
+	--size-breakpoint-xl: 1536px;
 }
