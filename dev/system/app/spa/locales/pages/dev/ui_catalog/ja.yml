@@ -2,3 +2,5 @@ pages:
   dev:
     ui_catalog:
       heading: "UIカタログ"
+      badge:
+        heading: "Badge"

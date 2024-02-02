@@ -12,7 +12,7 @@ use sycamore::prelude::*;
 pub struct BadgeProps<G: Html>
 {
     #[prop(default)]
-    pub badge_content: String,
+    pub badge_content: ReadSignal<usize>,
 
     pub children: View<G>,
 
@@ -24,6 +24,9 @@ pub struct BadgeProps<G: Html>
 
     #[prop(default)]
     pub invisible: bool,
+
+    #[prop(default)]
+    pub max: usize,
 }
 
 
@@ -33,20 +36,30 @@ pub struct BadgeProps<G: Html>
 #[component]
 pub fn Badge<G: Html>( props: BadgeProps<G> ) -> View<G>
 {
-    let badge_content = if props.badge_content.len() > 0
+    let max = props.max.clone();
+    let badge_content_view = if true
     {
-        view! { span(class="badge_content") { (props.badge_content) } }
+            view!
+            {
+                span(class="badge_content") { (props.badge_content.get()) }
+            }
     }
     else
     {
         view! { "" }
     };
 
+    if props.invisible
+    {
+        return view! { (props.children) };
+    }
+
+    let classes = "ui_badge ".to_string() + &props.classes;
     view!
     {
-        span(class="ui_badge")
+        span(class=classes)
         {
-            (badge_content)
+            (badge_content_view)
             (props.children)
         }
     }

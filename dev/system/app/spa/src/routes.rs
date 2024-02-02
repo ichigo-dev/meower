@@ -47,7 +47,7 @@ pub fn AppRouter<G: Html>() -> View<G>
                     AppRoutes::Home => view! { Home },
                     AppRoutes::Dev(route) =>
                     {
-                        let state: &AppState = use_context();
+                        let state: AppState = use_context();
                         if state.config.dev_mode
                         {
                             return view!{ dev::Router(route=route.clone()) };
