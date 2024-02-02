@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Data Components.
+//! UI catalog examples.
 //------------------------------------------------------------------------------
 
 mod badge;
@@ -7,7 +7,7 @@ mod chip;
 mod heading;
 mod icon;
 
-pub use badge::Badge;
-pub use chip::Chip;
-pub use heading::Heading;
-pub use icon::Icon;
+pub use badge::BadgeExamples;
+pub use chip::ChipExamples;
+pub use heading::HeadingExamples;
+pub use icon::IconExamples;

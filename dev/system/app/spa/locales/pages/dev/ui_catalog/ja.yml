@@ -8,3 +8,5 @@ pages:
         heading: "Chip"
       heading:
         heading: "Heading"
+      icon:
+        heading: "Icon"
