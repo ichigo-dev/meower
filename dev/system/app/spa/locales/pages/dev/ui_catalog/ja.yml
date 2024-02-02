@@ -4,3 +4,5 @@ pages:
       heading: "UIカタログ"
       badge:
         heading: "Badge"
+      chip:
+        heading: "Chip"

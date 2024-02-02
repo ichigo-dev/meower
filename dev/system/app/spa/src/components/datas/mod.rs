@@ -3,5 +3,7 @@
 //------------------------------------------------------------------------------
 
 mod badge;
+mod chip;
 
 pub use badge::Badge;
+pub use chip::Chip;
