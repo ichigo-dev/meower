@@ -20,7 +20,7 @@ pub fn Main<G: Html>
     {
         div(class="flex flex_justify_center")
         {
-            div(class="flex flex_column flex_gap_lg max_width_breakpoint_lg width_full")
+            div(class="flex flex_column flex_gap_lg max_width_breakpoint_lg width_full overflow_hidden")
             {
                 h1(class="ui_heading h1 divider") { (heading) }
                 (children)

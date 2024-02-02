@@ -25,7 +25,7 @@ pub fn Index<G: Html>() -> View<G>
             (
                 href="/account/create",
                 rel="external",
-                class="ui_button primary",
+                class="ui_button primary flex_align_self_start",
             )
             {
                 (t!("pages.account.index.button.add_account"))

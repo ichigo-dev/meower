@@ -21,7 +21,7 @@ pub fn Layout<G: Html>( children: Children<G> ) -> View<G>
             div(class="theme_meower_light flex_grow flex flex_row")
             {
                 Aside()
-                div(class="flex_grow flex flex_column")
+                div(class="flex_grow flex flex_column overflow_auto_x")
                 {
                     Header()
                     div(class="flex_grow padding_xl")

@@ -16,6 +16,7 @@ use sycamore::prelude::*;
 pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
 {
     let iter = create_signal((1..=5).collect::<Vec<_>>());
+    let iter_large = create_signal((1..=20).collect::<Vec<_>>());
     view!
     {
         h3(class="ui_heading h3")
@@ -164,6 +165,23 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                             }
                         )
                     }
+                    TableFoot
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Footer " (index)
+                                    }
+                                }
+                            )
+                        }
+                    }
                 }
                 Table
                 {
@@ -208,6 +226,23 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                             }
                         )
                     }
+                    TableFoot
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Footer " (index)
+                                    }
+                                }
+                            )
+                        }
+                    }
                 }
                 Table(size=*create_signal("large".to_string()))
                 {
@@ -251,6 +286,23 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                                 }
                             }
                         )
+                    }
+                    TableFoot
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Footer " (index)
+                                    }
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -299,6 +351,84 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                             }
                         )
                     }
+                    TableFoot
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Footer " (index)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+                Table(variant=*create_signal("stripe_vertical".to_string()))
+                {
+                    TableHead
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Header " (index)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    TableBody
+                    {
+                        Indexed
+                        (
+                            iterable=*iter,
+                            view=move |i| view!
+                            {
+                                TableRow
+                                {
+                                    Indexed
+                                    (
+                                        iterable=*iter,
+                                        view=move |j| view!
+                                        {
+                                            TableCell
+                                            {
+                                                "Data " (i) "-" (j)
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        )
+                    }
+                    TableFoot
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Footer " (index)
+                                    }
+                                }
+                            )
+                        }
+                    }
                 }
                 Table(variant=*create_signal("tiled".to_string()))
                 {
@@ -342,6 +472,23 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                                 }
                             }
                         )
+                    }
+                    TableFoot
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Footer " (index)
+                                    }
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -434,6 +581,104 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     }
                 }
             )
+            div(class="flex flex_row flex_gap_md overflow_auto max_height_8xl")
+            {
+                Table(sticky=*create_signal(true))
+                {
+                    TableHead
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Header " (index)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    TableBody
+                    {
+                        Indexed
+                        (
+                            iterable=*iter_large,
+                            view=move |i| view!
+                            {
+                                TableRow
+                                {
+                                    Indexed
+                                    (
+                                        iterable=*iter,
+                                        view=move |j| view!
+                                        {
+                                            TableCell
+                                            {
+                                                "Data " (i) "-" (j)
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        )
+                    }
+                    TableFoot
+                    {
+                        TableRow
+                        {
+                            Indexed
+                            (
+                                iterable=*iter,
+                                view=|index| view!
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Footer " (index)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+            div(class="flex flex_row flex_gap_md overflow_auto max_width_10xl")
+            {
+                Table(sticky=*create_signal(true))
+                {
+                    TableBody
+                    {
+                        Indexed
+                        (
+                            iterable=*iter,
+                            view=move |i| view!
+                            {
+                                TableRow
+                                {
+                                    TableCell(is_head=*create_signal(true))
+                                    {
+                                        "Header " (i)
+                                    }
+                                    Indexed
+                                    (
+                                        iterable=*iter_large,
+                                        view=move |j| view!
+                                        {
+                                            TableCell
+                                            {
+                                                "Data " (i) "-" (j)
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 }
