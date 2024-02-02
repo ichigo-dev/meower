@@ -19,6 +19,11 @@
 {
 	position: relative;
 
+	&.hidden:after
+	{
+		display: none;
+	}
+
 	&:after
 	{
 		content: "";

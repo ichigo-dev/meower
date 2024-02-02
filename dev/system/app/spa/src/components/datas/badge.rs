@@ -12,21 +12,24 @@ use sycamore::prelude::*;
 pub struct BadgeProps<G: Html>
 {
     #[prop(default)]
-    pub badge_content: ReadSignal<usize>,
+    pub badge_content: ReadSignal<String>,
 
     pub children: View<G>,
 
     #[prop(default)]
-    pub classes: String,
+    pub classes: ReadSignal<String>,
 
     #[prop(default)]
-    pub color: String,
+    pub color: ReadSignal<String>,
 
     #[prop(default)]
-    pub invisible: bool,
+    pub invisible: ReadSignal<bool>,
+
+    #[prop(default = *create_signal(0))]
+    pub max: ReadSignal<usize>,
 
     #[prop(default)]
-    pub max: usize,
+    pub show_zero: ReadSignal<bool>,
 }
 
 
@@ -36,30 +39,66 @@ pub struct BadgeProps<G: Html>
 #[component]
 pub fn Badge<G: Html>( props: BadgeProps<G> ) -> View<G>
 {
-    let max = props.max.clone();
-    let badge_content_view = if true
+    let badge_content = move ||
     {
-            view!
+        if props.badge_content.get_clone() == "0" && !props.show_zero.get()
+        {
+            return "".to_string();
+        }
+
+        if props.max.get() > 0
+        {
+            if let Ok(num) = props.badge_content.get_clone().parse::<usize>()
             {
-                span(class="badge_content") { (props.badge_content.get()) }
+                if num > props.max.get()
+                {
+                    return props.max.get().to_string() + "+";
+                }
+                else
+                {
+                    return num.to_string();
+                }
             }
-    }
-    else
-    {
-        view! { "" }
+
+            let content = props.badge_content.get_clone();
+            let max_len = props.max.get().to_string().len();
+            if content.len() > max_len
+            {
+                content.chars().take(max_len).collect::<String>() + "+"
+            }
+            else
+            {
+                content
+            }
+        }
+        else
+        {
+            props.badge_content.get_clone()
+        }
     };
 
-    if props.invisible
+    let classes = move ||
     {
-        return view! { (props.children) };
-    }
+        return "ui_badge ".to_string()
+            + &props.classes.get_clone() + " "
+            + &props.color.get_clone() + " "
+            + if props.invisible.get() { "hidden" } else { "" };
+    };
 
-    let classes = "ui_badge ".to_string() + &props.classes;
     view!
     {
-        span(class=classes)
+        span(class=classes())
         {
-            (badge_content_view)
+            (
+                if badge_content().len() > 0
+                {
+                    view! { span(class="badge_content") { (badge_content()) } }
+                }
+                else
+                {
+                    view! {}
+                }
+            )
             (props.children)
         }
     }
