@@ -1,8 +1,10 @@
 pages:
   dev:
     ui_catalog:
-      heading: "UIカタログ"
+      heading_top: "UIカタログ"
       badge:
         heading: "Badge"
       chip:
         heading: "Chip"
+      heading:
+        heading: "Heading"
