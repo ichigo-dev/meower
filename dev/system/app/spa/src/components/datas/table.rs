@@ -40,12 +40,12 @@ pub fn Table<G: Html>( props: TableProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        return "ui_table ".to_string()
+        "ui_table ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone() + " "
             + &props.size.get_clone() + " "
             + &props.variant.get_clone() + " "
-            + if props.sticky.get() { "sticky " } else { "" };
+            + if props.sticky.get() { "sticky " } else { "" }
     };
 
     let children = props.children.call();

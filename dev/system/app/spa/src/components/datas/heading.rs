@@ -43,13 +43,13 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        return "ui_heading ".to_string()
+        "ui_heading ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone() + " "
             + &props.level.get_clone() + " "
             + &props.variant.get_clone() + " "
             + &props.thickness.get_clone() + " "
-            + &props.align.get_clone();
+            + &props.align.get_clone()
     };
 
     let children = props.children.call();

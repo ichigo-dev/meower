@@ -50,13 +50,13 @@ pub fn Chip<G: Html>( props: ChipProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        return "ui_chip ".to_string()
+        "ui_chip ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone() + " "
             + &props.size.get_clone() + " "
             + &props.variant.get_clone() + " "
             + if props.clickable.get() { "clickable " } else { "" }
-            + if props.disabled.get() { "disabled " } else { "" };
+            + if props.disabled.get() { "disabled " } else { "" }
     };
 
     view!

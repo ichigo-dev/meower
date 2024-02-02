@@ -81,10 +81,10 @@ pub fn Badge<G: Html>( props: BadgeProps<G> ) -> View<G>
 
     let classes = move ||
     {
-        return "ui_badge ".to_string()
+        "ui_badge ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone() + " "
-            + if props.invisible.get() { "hidden" } else { "" };
+            + if props.invisible.get() { "hidden" } else { "" }
     };
 
     let children = props.children.call();

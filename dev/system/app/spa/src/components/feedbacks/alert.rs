@@ -15,7 +15,7 @@ pub struct AlertProps<G: Html>
     #[prop(default)]
     pub classes: ReadSignal<String>,
 
-    children: Children<G>,
+    pub children: Children<G>,
 
     #[prop(default)]
     pub severity: ReadSignal<String>,
@@ -34,10 +34,10 @@ pub fn Alert<G: Html>( props: AlertProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        return "ui_alert ".to_string()
+        "ui_alert ".to_string()
             + &props.classes.get_clone() + " "
             + &props.severity.get_clone() + " "
-            + &props.variant.get_clone();
+            + &props.variant.get_clone()
     };
 
     let children = props.children.call();

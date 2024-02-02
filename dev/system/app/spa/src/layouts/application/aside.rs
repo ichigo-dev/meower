@@ -41,7 +41,7 @@ pub fn Aside<G: Html>() -> View<G>
 {
     view!
     {
-        div(class="ui_sidebar ui_box border_right z_index_front padding_zero min_width_7xl")
+        div(class="ui_sidebar ui_box border_right z_index_drawer padding_zero min_width_7xl")
         {
             nav(class="ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden width_full")
             {

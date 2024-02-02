@@ -5,6 +5,7 @@
 mod alert;
 mod badge;
 mod chip;
+mod dialog;
 mod heading;
 mod icon;
 mod list;
@@ -14,6 +15,7 @@ mod tooltip;
 pub use alert::AlertExamples;
 pub use badge::BadgeExamples;
 pub use chip::ChipExamples;
+pub use dialog::DialogExamples;
 pub use heading::HeadingExamples;
 pub use icon::IconExamples;
 pub use list::ListExamples;

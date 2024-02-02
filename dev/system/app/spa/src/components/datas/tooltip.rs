@@ -39,10 +39,10 @@ pub fn Tooltip<G: Html>( props: TooltipProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        return "ui_tooltip ".to_string()
+        "ui_tooltip ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone() + " "
-            + &props.position.get_clone();
+            + &props.position.get_clone()
     };
 
     let children = props.children.call();

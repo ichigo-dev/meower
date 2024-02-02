@@ -31,9 +31,9 @@ pub fn ListItem<G: Html>( props: ListItemProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        return "ui_list_item ".to_string()
+        "ui_list_item ".to_string()
             + &props.classes.get_clone() + " "
-            + if props.clickable.get() { "clickable " } else { "" };
+            + if props.clickable.get() { "clickable " } else { "" }
     };
 
     let children = props.children.call();

@@ -18,3 +18,5 @@ pages:
         heading: "Tooltip"
       alert:
         heading: "Alert"
+      dialog:
+        heading: "Dialog"

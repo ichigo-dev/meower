@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Icon.
+//! DialogHead.
 //------------------------------------------------------------------------------
 
 use sycamore::prelude::*;
@@ -10,18 +10,12 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct IconProps
+pub struct DialogHeadProps<G: Html>
 {
-    pub icon: ReadSignal<String>,
-
     #[prop(default)]
     pub classes: ReadSignal<String>,
 
-    #[prop(default)]
-    pub color: ReadSignal<String>,
-
-    #[prop(default)]
-    pub size: ReadSignal<String>,
+    pub children: Children<G>,
 }
 
 
@@ -30,19 +24,19 @@ pub struct IconProps
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn Icon<G: Html>( props: IconProps ) -> View<G>
+pub fn DialogHead<G: Html>( props: DialogHeadProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_icon ".to_string()
-            + &props.classes.get_clone() + " "
-            + "icon_" + &props.icon.get_clone() + " "
-            + &props.color.get_clone() + " "
-            + &props.size.get_clone()
+        "head ".to_string() + &props.classes.get_clone()
     };
 
+    let children = props.children.call();
     view!
     {
-        span(class=classes())
+        div(class=classes())
+        {
+            (children)
+        }
     }
 }

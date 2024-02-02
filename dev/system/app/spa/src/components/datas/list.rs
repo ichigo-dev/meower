@@ -37,11 +37,11 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        return "ui_list ".to_string()
+        "ui_list ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone() + " "
             + &props.variant.get_clone() + " "
-            + if props.ordered.get() { "ordered " } else { "" };
+            + if props.ordered.get() { "ordered " } else { " " }
     };
 
     let children = props.children.call();
