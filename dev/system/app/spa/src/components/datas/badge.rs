@@ -14,7 +14,7 @@ pub struct BadgeProps<G: Html>
     #[prop(default)]
     pub badge_content: ReadSignal<String>,
 
-    pub children: View<G>,
+    pub children: Children<G>,
 
     #[prop(default)]
     pub classes: ReadSignal<String>,
@@ -85,6 +85,7 @@ pub fn Badge<G: Html>( props: BadgeProps<G> ) -> View<G>
             + if props.invisible.get() { "hidden" } else { "" };
     };
 
+    let children = props.children.call();
     view!
     {
         span(class=classes())
@@ -99,7 +100,7 @@ pub fn Badge<G: Html>( props: BadgeProps<G> ) -> View<G>
                     view! {}
                 }
             )
-            (props.children)
+            (children)
         }
     }
 }

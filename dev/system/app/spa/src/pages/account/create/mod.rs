@@ -37,23 +37,19 @@ pub async fn Create<G: Html>() -> View<G>
 
     view!
     {
-        Main
-        (
-            heading=t!("pages.account.create.heading"),
-            children=view!
+        Main(heading=t!("pages.account.create.heading"))
+        {
+            form(class="flex flex_column flex_gap_md width_full")
             {
-                form(class="flex flex_column flex_gap_md width_full")
-                {
-                    Indexed
-                    (
-                        iterable=*fields,
-                        view=|field| view!
-                        {
-                            TextField(id=field.id, label=field.label, placeholder=field.placeholder, required=field.required, textarea=field.textarea)
-                        }
-                    )
-                }
+                Indexed
+                (
+                    iterable=*fields,
+                    view=|field| view!
+                    {
+                        TextField(id=field.id, label=field.label, placeholder=field.placeholder, required=field.required, textarea=field.textarea)
+                    }
+                )
             }
-        )
+        }
     }
 }

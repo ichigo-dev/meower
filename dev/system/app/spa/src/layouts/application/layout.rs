@@ -11,8 +11,9 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub fn Layout<G: Html>( children: View<G> ) -> View<G>
+pub fn Layout<G: Html>( children: Children<G> ) -> View<G>
 {
+    let children = children.call();
     view!
     {
         div(class="flex flex_column min_height_full_viewport")

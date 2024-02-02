@@ -21,7 +21,7 @@ pub fn IconExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
         {
             (t!("pages.dev.ui_catalog.icon.heading"))
         }
-        MainPanel(children=view!
+        MainPanel
         {
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
@@ -101,6 +101,6 @@ pub fn IconExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     }
                 }
             )
-        })
+        }
     }
 }

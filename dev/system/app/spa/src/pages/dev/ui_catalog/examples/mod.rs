@@ -7,9 +7,11 @@ mod chip;
 mod heading;
 mod icon;
 mod list;
+mod table;
 
 pub use badge::BadgeExamples;
 pub use chip::ChipExamples;
 pub use heading::HeadingExamples;
 pub use icon::IconExamples;
 pub use list::ListExamples;
+pub use table::TableExamples;

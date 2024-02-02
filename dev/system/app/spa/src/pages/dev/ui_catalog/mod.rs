@@ -29,17 +29,14 @@ pub fn UiCatalog<G: Html>() -> View<G>
 
     view!
     {
-        Main
-        (
-            heading=t!("pages.dev.ui_catalog.heading_top"),
-            children=view!
-            {
-                BadgeExamples(colors=*theme_colors)
-                ChipExamples(colors=*theme_colors)
-                HeadingExamples(colors=*theme_colors)
-                IconExamples(colors=*theme_colors)
-                ListExamples(colors=*theme_colors)
-            }
-        )
+        Main(heading=t!("pages.dev.ui_catalog.heading_top"))
+        {
+            BadgeExamples(colors=*theme_colors)
+            ChipExamples(colors=*theme_colors)
+            HeadingExamples(colors=*theme_colors)
+            IconExamples(colors=*theme_colors)
+            ListExamples(colors=*theme_colors)
+            TableExamples(colors=*theme_colors)
+        }
     }
 }

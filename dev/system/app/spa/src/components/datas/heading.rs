@@ -14,7 +14,7 @@ pub struct HeadingProps<G: Html>
     #[prop(default)]
     pub align: ReadSignal<String>,
 
-    pub children: View<G>,
+    pub children: Children<G>,
 
     #[prop(default)]
     pub classes: ReadSignal<String>,
@@ -50,6 +50,7 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
             + &props.align.get_clone();
     };
 
+    let children = props.children.call();
     view!
     {
         (
@@ -57,37 +58,37 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
             {
                 s if s == "h1".to_string() =>
                 {
-                    let children = props.children.clone();
+                    let children = children.clone();
                     view! { h1(class=classes()) { (children) } }
                 },
                 s if s == "h2".to_string() =>
                 {
-                    let children = props.children.clone();
+                    let children = children.clone();
                     view! { h2(class=classes()) { (children) } }
                 },
                 s if s == "h3".to_string() =>
                 {
-                    let children = props.children.clone();
+                    let children = children.clone();
                     view! { h3(class=classes()) { (children) } }
                 },
                 s if s == "h4".to_string() =>
                 {
-                    let children = props.children.clone();
+                    let children = children.clone();
                     view! { h4(class=classes()) { (children) } }
                 },
                 s if s == "h5".to_string() =>
                 {
-                    let children = props.children.clone();
+                    let children = children.clone();
                     view! { h5(class=classes()) { (children) } }
                 },
                 s if s == "h6".to_string() =>
                 {
-                    let children = props.children.clone();
+                    let children = children.clone();
                     view! { h6(class=classes()) { (children) } }
                 },
                 _ =>
                 {
-                    let children = props.children.clone();
+                    let children = children.clone();
                     view! { h3(class=classes()) { (children) } }
                 },
             }

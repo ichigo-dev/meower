@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! List.
+//! TableCell.
 //------------------------------------------------------------------------------
 
 use sycamore::prelude::*;
@@ -9,7 +9,7 @@ use sycamore::prelude::*;
 /// Props.
 //------------------------------------------------------------------------------
 #[derive(Props)]
-pub struct ListProps<G: Html>
+pub struct TableCellProps<G: Html>
 {
     children: Children<G>,
 
@@ -17,13 +17,7 @@ pub struct ListProps<G: Html>
     pub classes: ReadSignal<String>,
 
     #[prop(default)]
-    pub color: ReadSignal<String>,
-
-    #[prop(default)]
-    pub ordered: ReadSignal<bool>,
-
-    #[prop(default)]
-    pub variant: ReadSignal<String>,
+    pub is_head: ReadSignal<bool>,
 }
 
 
@@ -31,30 +25,21 @@ pub struct ListProps<G: Html>
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
+pub fn TableCell<G: Html>( props: TableCellProps<G> ) -> View<G>
 {
-    let classes = move ||
-    {
-        return "ui_list ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.color.get_clone() + " "
-            + &props.variant.get_clone() + " "
-            + if props.ordered.get() { "ordered " } else { "" };
-    };
-
     let children = props.children.call();
     view!
     {
         (
-            if props.ordered.get()
+            if props.is_head.get()
             {
                 let children = children.clone();
-                view! { ol(class=classes()) { (children) } }
+                view! { th(class=props.classes) { (children) } }
             }
             else
             {
                 let children = children.clone();
-                view! { ul(class=classes()) { (children) } }
+                view! { td(class=props.classes) { (children) } }
             }
         )
     }

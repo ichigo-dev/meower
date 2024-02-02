@@ -27,6 +27,6 @@ pub fn Root<G: Html>() -> View<G>
 
     view!
     {
-        Layout(children=view!{ AppRouter })
+        Layout { AppRouter }
     }
 }

@@ -12,9 +12,10 @@ use sycamore::prelude::*;
 pub fn Main<G: Html>
 (
     heading: String,
-    children: View<G>,
+    children: Children<G>,
 ) -> View<G>
 {
+    let children = children.call();
     view!
     {
         div(class="flex flex_justify_center")

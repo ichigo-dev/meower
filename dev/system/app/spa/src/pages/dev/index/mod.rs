@@ -16,21 +16,17 @@ pub async fn Index<G: Html>() -> View<G>
 {
     view!
     {
-        Main
-        (
-            heading=t!("pages.dev.index.heading"),
-            children=view!
+        Main(heading=t!("pages.dev.index.heading"))
+        {
+            a
+            (
+                href="/dev/ui_catalog",
+                rel="external",
+                class="ui_button primary",
+            )
             {
-                a
-                (
-                    href="/dev/ui_catalog",
-                    rel="external",
-                    class="ui_button primary",
-                )
-                {
-                    (t!("pages.dev.index.button.ui_catalog"))
-                }
+                (t!("pages.dev.index.button.ui_catalog"))
             }
-        )
+        }
     }
 }

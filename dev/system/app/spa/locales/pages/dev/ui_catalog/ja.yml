@@ -10,3 +10,7 @@ pages:
         heading: "Heading"
       icon:
         heading: "Icon"
+      list:
+        heading: "List"
+      table:
+        heading: "Table"

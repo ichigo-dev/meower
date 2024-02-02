@@ -19,22 +19,18 @@ pub fn Index<G: Html>() -> View<G>
 {
     view!
     {
-        Main
-        (
-            heading=t!("pages.account.index.heading"),
-            children=view!
+        Main(heading=t!("pages.account.index.heading"))
+        {
+            a
+            (
+                href="/account/create",
+                rel="external",
+                class="ui_button primary",
+            )
             {
-                a
-                (
-                    href="/account/create",
-                    rel="external",
-                    class="ui_button primary",
-                )
-                {
-                    (t!("pages.account.index.button.add_account"))
-                }
-                AccountList()
+                (t!("pages.account.index.button.add_account"))
             }
-        )
+            AccountList()
+        }
     }
 }

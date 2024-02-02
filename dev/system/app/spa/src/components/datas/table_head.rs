@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! ListItem.
+//! TableHead.
 //------------------------------------------------------------------------------
 
 use sycamore::prelude::*;
@@ -9,15 +9,12 @@ use sycamore::prelude::*;
 /// Props.
 //------------------------------------------------------------------------------
 #[derive(Props)]
-pub struct ListItemProps<G: Html>
+pub struct TableHeadProps<G: Html>
 {
     children: Children<G>,
 
     #[prop(default)]
     pub classes: ReadSignal<String>,
-
-    #[prop(default)]
-    pub clickable: ReadSignal<bool>,
 }
 
 
@@ -25,19 +22,12 @@ pub struct ListItemProps<G: Html>
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn ListItem<G: Html>( props: ListItemProps<G> ) -> View<G>
+pub fn TableHead<G: Html>( props: TableHeadProps<G> ) -> View<G>
 {
-    let classes = move ||
-    {
-        return "ui_list_item ".to_string()
-            + &props.classes.get_clone() + " "
-            + if props.clickable.get() { "clickable " } else { "" };
-    };
-
     let children = props.children.call();
     view!
     {
-        li(class=classes())
+        thead(class=props.classes)
         {
             (children)
         }

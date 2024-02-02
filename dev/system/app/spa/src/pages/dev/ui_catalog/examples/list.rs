@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! IconExamples.
+//! ListExamples.
 //------------------------------------------------------------------------------
 
 use crate::components::*;
@@ -19,100 +19,60 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
     {
         h3(class="ui_heading h3")
         {
-            (t!("pages.dev.ui_catalog.icon.heading"))
+            (t!("pages.dev.ui_catalog.list.heading"))
         }
-        MainPanel(children=view!
+        MainPanel
         {
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 List
-                (
-                    children=view!
-                    {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                    }
-                )
-                List
-                (
-                    variant=*create_signal("boxed".to_string()),
-                    children=view!
-                    {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                    }
-                )
-                List
-                (
-                    variant=*create_signal("simple".to_string()),
-                    children=view!
-                    {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                    }
-                )
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                }
+                List(variant=*create_signal("boxed".to_string()))
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                }
+                List(variant=*create_signal("simple".to_string()))
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                }
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                List
-                (
-                    ordered=*create_signal(true),
-                    children=view!
-                    {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                    }
-                )
+                List(ordered=*create_signal(true))
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                }
                 List
                 (
                     ordered=*create_signal(true),
                     variant=*create_signal("boxed".to_string()),
-                    children=view!
-                    {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                    }
                 )
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                }
                 List
                 (
                     ordered=*create_signal(true),
                     variant=*create_signal("simple".to_string()),
-                    children=view!
-                    {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                    }
                 )
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                }
+
             }
             Indexed
             (
@@ -125,50 +85,41 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     {
                         div(class="flex flex_row flex_gap_md flex_align_center width_full")
                         {
-                            List
-                            (
-                                color=*create_signal(cloned_color_1),
-                                children=view!
+                            List(color=*create_signal(cloned_color_1))
+                            {
+                                ListItem(clickable=*create_signal(true))
                                 {
-                                    ListItem
-                                    (
-                                        clickable=*create_signal(true),
-                                        children=view! { "Item 1" }
-                                    )
-                                    ListItem(children=view! { "Item 2" })
-                                    ListItem(children=view! { "Item 3" })
+                                    "Item 1"
                                 }
-                            )
+                                ListItem { "Item 2" }
+                                ListItem { "Item 3" }
+                            }
                             List
                             (
                                 color=*create_signal(cloned_color_2),
                                 variant=*create_signal("boxed".to_string()),
-                                children=view!
-                                {
-                                    ListItem
-                                    (
-                                        clickable=*create_signal(true),
-                                        children=view! { "Item 1" }
-                                    )
-                                    ListItem(children=view! { "Item 2" })
-                                    ListItem(children=view! { "Item 3" })
-                                }
                             )
+                            {
+                                ListItem(clickable=*create_signal(true))
+                                {
+                                    "Item 1"
+                                }
+                                ListItem { "Item 2" }
+                                ListItem { "Item 3" }
+                            }
                             List
                             (
                                 color=*create_signal(color),
                                 variant=*create_signal("simple".to_string()),
-                                children=view!
-                                {
-                                    ListItem
-                                    (
-                                        clickable=*create_signal(true),
-                                        children=view! { "Item 1" }
-                                    )
-                                    ListItem(children=view! { "Item 2" })
-                                    ListItem(children=view! { "Item 3" })
-                                }
                             )
+                            {
+                                ListItem(clickable=*create_signal(true))
+                                {
+                                    "Item 1"
+                                }
+                                ListItem { "Item 2" }
+                                ListItem { "Item 3" }
+                            }
                         }
                     }
                 }
@@ -176,89 +127,42 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 List
-                (
-                    children=view!
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                    List(ordered=*create_signal(true))
                     {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                        List
-                        (
-                            ordered=*create_signal(true),
-                            children=view!
-                            {
-                                ListItem
-                                (
-                                    clickable=*create_signal(true),
-                                    children=view! { "Item 1" }
-                                )
-                                ListItem(children=view! { "Item 2" })
-                                ListItem(children=view! { "Item 3" })
-                            }
-                        )
+                        ListItem(clickable=*create_signal(true)) { "Item 1" }
+                        ListItem { "Item 2" }
+                        ListItem { "Item 3" }
                     }
-                )
-                List
-                (
-                    variant=*create_signal("boxed".to_string()),
-                    children=view!
+                }
+                List(variant=*create_signal("boxed".to_string()))
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                    List(ordered=*create_signal(true))
                     {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                        List
-                        (
-                            ordered=*create_signal(true),
-                            children=view!
-                            {
-                                ListItem
-                                (
-                                    clickable=*create_signal(true),
-                                    children=view! { "Item 1" }
-                                )
-                                ListItem(children=view! { "Item 2" })
-                                ListItem(children=view! { "Item 3" })
-                            }
-                        )
+                        ListItem(clickable=*create_signal(true)) { "Item 1" }
+                        ListItem { "Item 2" }
+                        ListItem { "Item 3" }
                     }
-                )
-                List
-                (
-                    variant=*create_signal("simple".to_string()),
-                    children=view!
+                }
+                List(variant=*create_signal("simple".to_string()))
+                {
+                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem { "Item 2" }
+                    ListItem { "Item 3" }
+                    List(ordered=*create_signal(true))
                     {
-                        ListItem
-                        (
-                            clickable=*create_signal(true),
-                            children=view! { "Item 1" }
-                        )
-                        ListItem(children=view! { "Item 2" })
-                        ListItem(children=view! { "Item 3" })
-                        List
-                        (
-                            ordered=*create_signal(true),
-                            children=view!
-                            {
-                                ListItem
-                                (
-                                    clickable=*create_signal(true),
-                                    children=view! { "Item 1" }
-                                )
-                                ListItem(children=view! { "Item 2" })
-                                ListItem(children=view! { "Item 3" })
-                            }
-                        )
+                        ListItem(clickable=*create_signal(true)) { "Item 1" }
+                        ListItem { "Item 2" }
+                        ListItem { "Item 3" }
                     }
-                )
+                }
             }
-        })
+        }
     }
 }
