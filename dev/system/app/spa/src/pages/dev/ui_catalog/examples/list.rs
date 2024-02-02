@@ -23,6 +23,10 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
         }
         MainPanel
         {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.list.basic.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 List
@@ -74,6 +78,13 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 }
 
             }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.list.colors.heading"))
+            }
             Indexed
             (
                 iterable=colors,
@@ -124,6 +135,13 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     }
                 }
             )
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.list.nested.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 List

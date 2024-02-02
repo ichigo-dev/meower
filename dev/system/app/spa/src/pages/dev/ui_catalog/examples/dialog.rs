@@ -23,6 +23,8 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
     let open_dialog_6 = create_signal(false);
     let open_dialog_7 = create_signal(false);
     let open_dialog_8 = create_signal(false);
+    let open_dialog_9 = create_signal(false);
+
     view!
     {
         h3(class="ui_heading h3")
@@ -31,6 +33,10 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
         }
         MainPanel
         {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.dialog.basic.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 button
@@ -57,6 +63,16 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         }
                     }
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.dialog.animations.heading"))
+            }
+            div(class="flex flex_row flex_gap_md flex_align_center width_full")
+            {
                 button
                 (
                     class="ui_button primary",
@@ -65,11 +81,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 {
                     "Open dialog"
                 }
-                Dialog
-                (
-                    animation=*create_signal("slidein".to_string()),
-                    open=open_dialog_2,
-                )
+                Dialog(open=open_dialog_2)
                 {
                     DialogHead { "Dialog" }
                     DialogBody { "Content" }
@@ -95,7 +107,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 }
                 Dialog
                 (
-                    animation=*create_signal("grow".to_string()),
+                    animation=*create_signal("slidein".to_string()),
                     open=open_dialog_3,
                 )
                 {
@@ -113,9 +125,6 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         }
                     }
                 }
-            }
-            div(class="flex flex_row flex_gap_md flex_align_center width_full")
-            {
                 button
                 (
                     class="ui_button primary",
@@ -126,7 +135,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 }
                 Dialog
                 (
-                    size=*create_signal("small".to_string()),
+                    animation=*create_signal("grow".to_string()),
                     open=open_dialog_4,
                 )
                 {
@@ -144,6 +153,16 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         }
                     }
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.dialog.sizes.heading"))
+            }
+            div(class="flex flex_row flex_gap_md flex_align_center width_full")
+            {
                 button
                 (
                     class="ui_button primary",
@@ -152,7 +171,11 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 {
                     "Open dialog"
                 }
-                Dialog(open=open_dialog_5)
+                Dialog
+                (
+                    size=*create_signal("small".to_string()),
+                    open=open_dialog_5,
+                )
                 {
                     DialogHead { "Dialog" }
                     DialogBody { "Content" }
@@ -176,11 +199,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 {
                     "Open dialog"
                 }
-                Dialog
-                (
-                    size=*create_signal("large".to_string()),
-                    open=open_dialog_6,
-                )
+                Dialog(open=open_dialog_6)
                 {
                     DialogHead { "Dialog" }
                     DialogBody { "Content" }
@@ -206,7 +225,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 }
                 Dialog
                 (
-                    size=*create_signal("full".to_string()),
+                    size=*create_signal("large".to_string()),
                     open=open_dialog_7,
                 )
                 {
@@ -224,9 +243,6 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         }
                     }
                 }
-            }
-            div(class="flex flex_row flex_gap_md flex_align_center width_full")
-            {
                 button
                 (
                     class="ui_button primary",
@@ -235,7 +251,45 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 {
                     "Open dialog"
                 }
-                Dialog(open=open_dialog_8)
+                Dialog
+                (
+                    size=*create_signal("full".to_string()),
+                    open=open_dialog_8,
+                )
+                {
+                    DialogHead { "Dialog" }
+                    DialogBody { "Content" }
+                    DialogFoot
+                    {
+                        button
+                        (
+                            class="ui_button primary",
+                            on:click=move |_| { open_dialog_8.set(false) },
+                        )
+                        {
+                            "Close"
+                        }
+                    }
+                }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.dialog.scroll.heading"))
+            }
+            div(class="flex flex_row flex_gap_md flex_align_center width_full")
+            {
+                button
+                (
+                    class="ui_button primary",
+                    on:click=move |_| { open_dialog_9.set(true) },
+                )
+                {
+                    "Open dialog"
+                }
+                Dialog(open=open_dialog_9)
                 {
                     DialogHead { "Dialog" }
                     DialogBody
@@ -257,13 +311,20 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         button
                         (
                             class="ui_button primary",
-                            on:click=move |_| { open_dialog_8.set(false) },
+                            on:click=move |_| { open_dialog_9.set(false) },
                         )
                         {
                             "Close"
                         }
                     }
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.dialog.colors.heading"))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {

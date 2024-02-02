@@ -23,6 +23,10 @@ pub fn AlertExamples<G: Html>() -> View<G>
         }
         MainPanel
         {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.alert.basic.heading"))
+            }
             div(class="flex flex_column flex_gap_md width_full")
             {
                 Alert(severity=*create_signal("error".to_string()))
@@ -41,6 +45,13 @@ pub fn AlertExamples<G: Html>() -> View<G>
                 {
                     "Alert"
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.alert.outlined.heading"))
             }
             div(class="flex flex_column flex_gap_md width_full")
             {
@@ -76,6 +87,13 @@ pub fn AlertExamples<G: Html>() -> View<G>
                 {
                     "Alert"
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.alert.filled.heading"))
             }
             div(class="flex flex_column flex_gap_md width_full")
             {

@@ -23,6 +23,10 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
         }
         MainPanel
         {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.tooltip.basic.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full padding_top_4xl")
             {
                 Tooltip(description=view! { "Content" })
@@ -36,6 +40,13 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 {
                     "Hover me"
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.tooltip.colors.heading"))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full padding_top_2xl")
             {
@@ -54,6 +65,13 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         }
                     }
                 )
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.tooltip.position.heading"))
             }
             div(class="flex flex_column flex_gap_md flex_align_center width_full padding_vertical_2xl")
             {

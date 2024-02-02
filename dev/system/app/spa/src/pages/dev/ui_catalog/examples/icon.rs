@@ -23,11 +23,22 @@ pub fn IconExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
         }
         MainPanel
         {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.icon.basic.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 Icon(icon=*create_signal("plus".to_string()))
                 Icon(icon=*create_signal("minus".to_string()))
                 Icon(icon=*create_signal("caret_right".to_string()))
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.icon.sizes.heading"))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
@@ -70,6 +81,13 @@ pub fn IconExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     icon=*create_signal("caret_right".to_string()),
                     size=*create_signal("large".to_string()),
                 )
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.icon.colors.heading"))
             }
             Indexed
             (

@@ -23,6 +23,10 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
         }
         MainPanel
         {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.chip.basic.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 Chip
@@ -35,6 +39,13 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     variant=*create_signal("outlined".to_string()),
                 )
             }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.chip.disabled.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 Chip
@@ -49,6 +60,13 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     disabled=*create_signal(true),
                 )
             }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.chip.clickable.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 Chip
@@ -62,6 +80,13 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     variant=*create_signal("outlined".to_string()),
                     clickable=*create_signal(true),
                 )
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.chip.icon.heading"))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
@@ -80,6 +105,13 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     }
                 )
             }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.chip.sizes.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 Chip
@@ -96,6 +128,13 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     label=*create_signal("Chip".to_string()),
                     size=*create_signal("large".to_string()),
                 )
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.chip.colors.heading"))
             }
             Indexed
             (

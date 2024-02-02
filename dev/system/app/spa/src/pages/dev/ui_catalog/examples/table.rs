@@ -25,6 +25,10 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
         }
         MainPanel
         {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.table.basic.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 Table
@@ -119,6 +123,13 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         )
                     }
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.table.sizes.heading"))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
@@ -306,6 +317,13 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     }
                 }
             }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.table.stripe.heading"))
+            }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 Table(variant=*create_signal("stripe".to_string()))
@@ -430,6 +448,16 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         }
                     }
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.table.tiled.heading"))
+            }
+            div(class="flex flex_row flex_gap_md flex_align_center width_full")
+            {
                 Table(variant=*create_signal("tiled".to_string()))
                 {
                     TableHead
@@ -491,6 +519,13 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         }
                     }
                 }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.table.colors.heading"))
             }
             Indexed
             (
@@ -581,6 +616,13 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     }
                 }
             )
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.table.sticky.heading"))
+            }
             div(class="flex flex_row flex_gap_md overflow_auto max_height_8xl")
             {
                 Table(sticky=*create_signal(true))

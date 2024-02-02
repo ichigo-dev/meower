@@ -2,21 +2,120 @@ pages:
   dev:
     ui_catalog:
       heading_top: "UIカタログ"
+
       badge:
         heading: "Badge"
+        basic:
+          heading: "Basic"
+        colors:
+          heading: "Colors"
+
       chip:
         heading: "Chip"
+        basic:
+          heading: "Basic"
+        disabled:
+          heading: "Disabled"
+        clickable:
+          heading: "Clickable"
+        icon:
+          heading: "Icon"
+        sizes:
+          heading: "Sizes"
+        colors:
+          heading: "Colors"
+
       heading:
         heading: "Heading"
+        basic:
+          heading: "Basic"
+        divider:
+          align:
+            heading: "Divider Align"
+          thickness:
+            heading: "Divider Thickness"
+          colors:
+            heading: "Divider Colors"
+        bullet:
+          thickness:
+            heading: "Bullet Thickness"
+          colors:
+            heading: "Bullet Colors"
+        line:
+          align:
+            heading: "Line Align"
+          thickness:
+            heading: "Line Thickness"
+          colors:
+            heading: "Line Colors"
+        band:
+          align:
+            heading: "Band Align"
+          thickness:
+            heading: "Band Thickness"
+          colors:
+            heading: "Band Colors"
+
       icon:
         heading: "Icon"
+        basic:
+          heading: "Basic"
+        sizes:
+          heading: "Sizes"
+        colors:
+          heading: "Colors"
+
       list:
         heading: "List"
+        basic:
+          heading: "Basic"
+        colors:
+          heading: "Colors"
+        nested:
+          heading: "Nested"
+
       table:
         heading: "Table"
+        basic:
+          heading: "Basic"
+        sizes:
+          heading: "Sizes"
+        stripe:
+          heading: "Stripe"
+        tiled:
+          heading: "Tiled"
+        colors:
+          heading: "Colors"
+        sticky:
+          heading: "Sticky"
+
       tooltip:
         heading: "Tooltip"
+        basic:
+          heading: "Basic"
+        colors:
+          heading: "Colors"
+        position:
+          heading: "Position"
+
       alert:
         heading: "Alert"
+        basic:
+          heading: "Basic"
+        outlined:
+          heading: "Outlined"
+        filled:
+          heading: "Filled"
+
       dialog:
         heading: "Dialog"
+        basic:
+          heading: "Basic"
+        animations:
+          heading: "Animations"
+        sizes:
+          heading: "Sizes"
+        scroll:
+          heading: "Scroll"
+        colors:
+          heading: "Colors"

@@ -23,6 +23,10 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
         }
         MainPanel
         {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.badge.basic.heading"))
+            }
             div(class="flex flex_row flex_gap_xl flex_align_center width_full")
             {
                 Badge
@@ -53,6 +57,11 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                 {
                     div(class="ui_icon icon_envelope")
                 }
+            }
+
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.badge.colors.heading"))
             }
             div(class="flex flex_row flex_gap_xl flex_align_center width_full")
             {
