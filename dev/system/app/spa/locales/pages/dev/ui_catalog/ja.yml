@@ -119,3 +119,18 @@ pages:
           heading: "Scroll"
         colors:
           heading: "Colors"
+
+      progress:
+        heading: "Progress"
+        spin:
+          heading: "Spin"
+          sizes:
+            heading: "Spin Sizes"
+          thickness:
+            heading: "Spin Thicness"
+          colors:
+            heading: "Spin Colors"
+        linear:
+          heading: "Linear"
+          colors:
+            heading: "Linear Colors"

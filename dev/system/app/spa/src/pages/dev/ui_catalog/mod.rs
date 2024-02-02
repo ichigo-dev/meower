@@ -40,6 +40,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             TooltipExamples(colors=*theme_colors)
             AlertExamples()
             DialogExamples(colors=*theme_colors)
+            ProgressExamples(colors=*theme_colors)
         }
     }
 }

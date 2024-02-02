@@ -9,6 +9,7 @@ mod dialog;
 mod heading;
 mod icon;
 mod list;
+mod progress;
 mod table;
 mod tooltip;
 
@@ -21,3 +22,4 @@ pub use icon::IconExamples;
 pub use list::ListExamples;
 pub use table::TableExamples;
 pub use tooltip::TooltipExamples;
+pub use progress::ProgressExamples;
