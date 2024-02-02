@@ -38,6 +38,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
                 ChipExamples(colors=*theme_colors)
                 HeadingExamples(colors=*theme_colors)
                 IconExamples(colors=*theme_colors)
+                ListExamples(colors=*theme_colors)
             }
         )
     }

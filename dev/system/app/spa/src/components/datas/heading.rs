@@ -12,24 +12,24 @@ use sycamore::prelude::*;
 pub struct HeadingProps<G: Html>
 {
     #[prop(default)]
-    align: ReadSignal<String>,
+    pub align: ReadSignal<String>,
 
-    children: View<G>,
-
-    #[prop(default)]
-    classes: ReadSignal<String>,
+    pub children: View<G>,
 
     #[prop(default)]
-    color: ReadSignal<String>,
+    pub classes: ReadSignal<String>,
 
     #[prop(default)]
-    level: ReadSignal<String>,
+    pub color: ReadSignal<String>,
 
     #[prop(default)]
-    thickness: ReadSignal<String>,
+    pub level: ReadSignal<String>,
 
     #[prop(default)]
-    variant: ReadSignal<String>,
+    pub thickness: ReadSignal<String>,
+
+    #[prop(default)]
+    pub variant: ReadSignal<String>,
 }
 
 
