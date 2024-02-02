@@ -2,6 +2,7 @@
 //! UI catalog examples.
 //------------------------------------------------------------------------------
 
+mod alert;
 mod badge;
 mod chip;
 mod heading;
@@ -10,6 +11,7 @@ mod list;
 mod table;
 mod tooltip;
 
+pub use alert::AlertExamples;
 pub use badge::BadgeExamples;
 pub use chip::ChipExamples;
 pub use heading::HeadingExamples;

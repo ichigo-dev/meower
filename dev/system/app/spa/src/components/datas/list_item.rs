@@ -8,6 +8,7 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 /// Props.
 //------------------------------------------------------------------------------
+#[allow(dead_code)]
 #[derive(Props)]
 pub struct ListItemProps<G: Html>
 {
@@ -24,6 +25,7 @@ pub struct ListItemProps<G: Html>
 //------------------------------------------------------------------------------
 /// Component.
 //------------------------------------------------------------------------------
+#[allow(dead_code)]
 #[component]
 pub fn ListItem<G: Html>( props: ListItemProps<G> ) -> View<G>
 {

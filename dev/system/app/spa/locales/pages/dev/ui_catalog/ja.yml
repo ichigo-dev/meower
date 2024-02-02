@@ -14,3 +14,7 @@ pages:
         heading: "List"
       table:
         heading: "Table"
+      tooltip:
+        heading: "Tooltip"
+      alert:
+        heading: "Alert"

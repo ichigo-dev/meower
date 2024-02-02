@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Table.
+//! Alert.
 //------------------------------------------------------------------------------
 
 use sycamore::prelude::*;
@@ -10,21 +10,15 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct TableProps<G: Html>
+pub struct AlertProps<G: Html>
 {
-    children: Children<G>,
-
     #[prop(default)]
     pub classes: ReadSignal<String>,
 
-    #[prop(default)]
-    pub color: ReadSignal<String>,
+    children: Children<G>,
 
     #[prop(default)]
-    pub size: ReadSignal<String>,
-
-    #[prop(default)]
-    pub sticky: ReadSignal<bool>,
+    pub severity: ReadSignal<String>,
 
     #[prop(default)]
     pub variant: ReadSignal<String>,
@@ -36,22 +30,20 @@ pub struct TableProps<G: Html>
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn Table<G: Html>( props: TableProps<G> ) -> View<G>
+pub fn Alert<G: Html>( props: AlertProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        return "ui_table ".to_string()
+        return "ui_alert ".to_string()
             + &props.classes.get_clone() + " "
-            + &props.color.get_clone() + " "
-            + &props.size.get_clone() + " "
-            + &props.variant.get_clone() + " "
-            + if props.sticky.get() { "sticky " } else { "" };
+            + &props.severity.get_clone() + " "
+            + &props.variant.get_clone();
     };
 
     let children = props.children.call();
     view!
     {
-        table(class=classes())
+        div(class=classes())
         {
             (children)
         }

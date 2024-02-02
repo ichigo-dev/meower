@@ -19,7 +19,7 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
     {
         h3(class="ui_heading h3")
         {
-            (t!("pages.dev.ui_catalog.heading.heading"))
+            (t!("pages.dev.ui_catalog.tooltip.heading"))
         }
         MainPanel
         {

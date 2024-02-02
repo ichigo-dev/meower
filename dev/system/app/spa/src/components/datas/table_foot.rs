@@ -8,6 +8,7 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 /// Props.
 //------------------------------------------------------------------------------
+#[allow(dead_code)]
 #[derive(Props)]
 pub struct TableFootProps<G: Html>
 {
@@ -21,6 +22,7 @@ pub struct TableFootProps<G: Html>
 //------------------------------------------------------------------------------
 /// Component.
 //------------------------------------------------------------------------------
+#[allow(dead_code)]
 #[component]
 pub fn TableFoot<G: Html>( props: TableFootProps<G> ) -> View<G>
 {
