@@ -143,3 +143,8 @@ pages:
           heading: "Pulse"
         wave:
           heading: "Wave"
+
+      snackbar:
+        heading: "Snackbar"
+        basic:
+          heading: "Basic"

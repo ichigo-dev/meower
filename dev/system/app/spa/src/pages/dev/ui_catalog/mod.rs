@@ -43,6 +43,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             DialogExamples(colors=*theme_colors)
             ProgressExamples(colors=*theme_colors)
             SkeletonExamples()
+            SnackbarExamples(colors=*theme_colors)
         }
     }
 }

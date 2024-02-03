@@ -2,10 +2,9 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::animation::DialogAnimation;
-use super::size::DialogSize;
-use crate::utils::props::*;
-use crate::variables::*;
+use super::animation::SnackbarAnimation;
+use super::position::SnackbarPosition;
+use crate::variables::Colors;
 
 use sycamore::prelude::*;
 
@@ -15,25 +14,28 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct DialogProps<G: Html>
+pub struct SnackbarProps<G: Html>
 {
     #[prop(default)]
-    pub animation: ReadSignal<DialogAnimation>,
-
-    #[prop(default)]
-    pub color: ReadSignal<Colors>,
+    pub animation: ReadSignal<SnackbarAnimation>,
 
     pub children: Children<G>,
 
     #[prop(default)]
     pub classes: ReadSignal<String>,
 
-    #[prop(default = BoolProp(true).into())]
-    pub close_on_backdrop: ReadSignal<bool>,
+    #[prop(default = Colors::Background.into())]
+    pub close_icon_color: ReadSignal<Colors>,
+
+    #[prop(default)]
+    pub color: ReadSignal<Colors>,
 
     #[prop(default)]
     pub open: Signal<bool>,
 
     #[prop(default)]
-    pub size: ReadSignal<DialogSize>,
+    pub position: ReadSignal<SnackbarPosition>,
+
+    #[prop(default)]
+    pub show_close_icon: ReadSignal<bool>,
 }

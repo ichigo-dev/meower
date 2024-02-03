@@ -11,6 +11,7 @@ mod icon;
 mod list;
 mod progress;
 mod skeleton;
+mod snackbar;
 mod table;
 mod tooltip;
 
@@ -23,5 +24,6 @@ pub use icon::IconExamples;
 pub use list::ListExamples;
 pub use progress::ProgressExamples;
 pub use skeleton::SkeletonExamples;
+pub use snackbar::SnackbarExamples;
 pub use table::TableExamples;
 pub use tooltip::TooltipExamples;

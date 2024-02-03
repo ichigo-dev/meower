@@ -18,7 +18,7 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn Icon<G: Html>( props: IconProps ) -> View<G>
+pub fn Icon<G: Html>( props: IconProps<G> ) -> View<G>
 {
     let classes = move ||
     {
@@ -27,10 +27,11 @@ pub fn Icon<G: Html>( props: IconProps ) -> View<G>
             + &props.icon.get_clone().get_class_name() + " "
             + &props.color.get_clone().get_class_name() + " "
             + &props.size.get_clone().get_class_name() + " "
+            + if props.clickable.get_clone() { "clickable " } else { " " }
     };
 
     view!
     {
-        span(class=classes())
+        span(class=classes(), ..props.attributes)
     }
 }
