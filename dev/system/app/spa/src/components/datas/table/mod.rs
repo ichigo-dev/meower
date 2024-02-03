@@ -1,14 +1,24 @@
 //------------------------------------------------------------------------------
-//! List.
+//! Table.
 //------------------------------------------------------------------------------
 
-mod list_item;
 mod props;
+mod size;
+mod table_body;
+mod table_cell;
+mod table_foot;
+mod table_head;
+mod table_row;
 mod variant;
 
-pub use list_item::*;
-pub use props::ListProps;
-pub use variant::ListVariant;
+pub use props::TableProps;
+pub use size::TableSize;
+pub use table_body::*;
+pub use table_cell::*;
+pub use table_foot::*;
+pub use table_head::*;
+pub use table_row::*;
+pub use variant::TableVariant;
 
 use sycamore::prelude::*;
 
@@ -18,31 +28,24 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
+pub fn Table<G: Html>( props: TableProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_list ".to_string()
+        "ui_table ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone().get_class_name() + " "
+            + &props.size.get_clone().get_class_name() + " "
             + &props.variant.get_clone().get_class_name() + " "
-            + if props.ordered.get() { "ordered " } else { " " }
+            + if props.sticky.get() { "sticky " } else { " " }
     };
 
     let children = props.children.call();
     view!
     {
-        (
-            if props.ordered.get()
-            {
-                let children = children.clone();
-                view! { ol(class=classes()) { (children) } }
-            }
-            else
-            {
-                let children = children.clone();
-                view! { ul(class=classes()) { (children) } }
-            }
-        )
+        table(class=classes())
+        {
+            (children)
+        }
     }
 }

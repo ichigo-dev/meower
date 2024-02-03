@@ -4,6 +4,7 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
+use crate::utils::props::*;
 use crate::variables::*;
 
 use rust_i18n::t;
@@ -43,7 +44,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (index)
                                     }
@@ -84,7 +85,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Footer " (index)
                                     }
@@ -104,7 +105,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                             {
                                 TableRow
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (i)
                                     }
@@ -134,7 +135,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Table(size=*create_signal("small".to_string()))
+                Table(size=TableSize::Small.into())
                 {
                     TableHead
                     {
@@ -145,7 +146,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (index)
                                     }
@@ -186,7 +187,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Footer " (index)
                                     }
@@ -206,7 +207,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (index)
                                     }
@@ -247,7 +248,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Footer " (index)
                                     }
@@ -256,7 +257,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                         }
                     }
                 }
-                Table(size=*create_signal("large".to_string()))
+                Table(size=TableSize::Large.into())
                 {
                     TableHead
                     {
@@ -267,7 +268,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (index)
                                     }
@@ -308,7 +309,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Footer " (index)
                                     }
@@ -327,7 +328,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Table(variant=*create_signal("stripe".to_string()))
+                Table(variant=TableVariant::Stripe.into())
                 {
                     TableHead
                     {
@@ -338,7 +339,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (index)
                                     }
@@ -379,7 +380,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Footer " (index)
                                     }
@@ -388,7 +389,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                         }
                     }
                 }
-                Table(variant=*create_signal("stripe_vertical".to_string()))
+                Table(variant=TableVariant::StripeVertical.into())
                 {
                     TableHead
                     {
@@ -399,7 +400,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (index)
                                     }
@@ -440,7 +441,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Footer " (index)
                                     }
@@ -459,7 +460,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Table(variant=*create_signal("tiled".to_string()))
+                Table(variant=TableVariant::Tiled.into())
                 {
                     TableHead
                     {
@@ -470,7 +471,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (index)
                                     }
@@ -511,7 +512,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Footer " (index)
                                     }
@@ -533,12 +534,11 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 iterable=colors,
                 view=move |color|
                 {
-                    let cloned_color = color.clone();
                     view!
                     {
                         div(class="flex flex_row flex_gap_md flex_align_center width_full")
                         {
-                            Table(color=*create_signal(cloned_color))
+                            Table(color=color.into())
                             {
                                 TableHead
                                 {
@@ -549,7 +549,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                             iterable=*iter,
                                             view=|index| view!
                                             {
-                                                TableCell(is_head=*create_signal(true))
+                                                TableCell(is_head=BoolProp(true).into())
                                                 {
                                                     "Header " (index)
                                                 }
@@ -582,7 +582,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                     )
                                 }
                             }
-                            Table(color=*create_signal(color))
+                            Table(color=color.into())
                             {
                                 TableBody
                                 {
@@ -593,7 +593,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                         {
                                             TableRow
                                             {
-                                                TableCell(is_head=*create_signal(true))
+                                                TableCell(is_head=BoolProp(true).into())
                                                 {
                                                     "Header " (i)
                                                 }
@@ -626,7 +626,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md overflow_auto max_height_8xl")
             {
-                Table(sticky=*create_signal(true))
+                Table(sticky=BoolProp(true).into())
                 {
                     TableHead
                     {
@@ -637,7 +637,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (index)
                                     }
@@ -678,7 +678,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                                 iterable=*iter,
                                 view=|index| view!
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Footer " (index)
                                     }
@@ -690,7 +690,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md overflow_auto max_width_10xl")
             {
-                Table(sticky=*create_signal(true))
+                Table(sticky=BoolProp(true).into())
                 {
                     TableBody
                     {
@@ -701,7 +701,7 @@ pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                             {
                                 TableRow
                                 {
-                                    TableCell(is_head=*create_signal(true))
+                                    TableCell(is_head=BoolProp(true).into())
                                     {
                                         "Header " (i)
                                     }

@@ -1,22 +1,12 @@
 //------------------------------------------------------------------------------
-//! TableBody.
+//! TableRow.
 //------------------------------------------------------------------------------
+
+mod props;
+
+pub use props::TableRowProps;
 
 use sycamore::prelude::*;
-
-
-//------------------------------------------------------------------------------
-/// Props.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Props)]
-pub struct TableBodyProps<G: Html>
-{
-    children: Children<G>,
-
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-}
 
 
 //------------------------------------------------------------------------------
@@ -24,12 +14,12 @@ pub struct TableBodyProps<G: Html>
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn TableBody<G: Html>( props: TableBodyProps<G> ) -> View<G>
+pub fn TableRow<G: Html>( props: TableRowProps<G> ) -> View<G>
 {
     let children = props.children.call();
     view!
     {
-        tbody(class=props.classes)
+        tr(class=props.classes)
         {
             (children)
         }
