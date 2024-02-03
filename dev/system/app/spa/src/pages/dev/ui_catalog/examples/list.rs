@@ -4,6 +4,7 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
+use crate::utils::props::*;
 use crate::variables::*;
 
 use rust_i18n::t;
@@ -32,48 +33,48 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 List
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
                 }
-                List(variant=*create_signal("boxed".to_string()))
+                List(variant=ListVariant::Boxed.into())
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
                 }
-                List(variant=*create_signal("simple".to_string()))
+                List(variant=ListVariant::Simple.into())
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
                 }
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                List(ordered=*create_signal(true))
+                List(ordered=BoolProp(true).into())
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
                 }
                 List
                 (
-                    ordered=*create_signal(true),
-                    variant=*create_signal("boxed".to_string()),
+                    ordered=BoolProp(true).into(),
+                    variant=ListVariant::Boxed.into(),
                 )
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
                 }
                 List
                 (
-                    ordered=*create_signal(true),
-                    variant=*create_signal("simple".to_string()),
+                    ordered=BoolProp(true).into(),
+                    variant=ListVariant::Simple.into(),
                 )
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
                 }
@@ -91,15 +92,23 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 iterable=colors,
                 view=|color|
                 {
-                    let cloned_color_1 = color.clone();
-                    let cloned_color_2 = color.clone();
                     view!
                     {
                         div(class="flex flex_row flex_gap_md flex_align_center width_full")
                         {
-                            List(color=*create_signal(cloned_color_1))
+                            List(color=color.into())
                             {
-                                ListItem(clickable=*create_signal(true))
+                                ListItem(clickable=BoolProp(true).into()) { "Item 1" }
+                                ListItem { "Item 2" }
+                                ListItem { "Item 3" }
+                            }
+                            List
+                            (
+                                color=color.into(),
+                                variant=ListVariant::Boxed.into(),
+                            )
+                            {
+                                ListItem(clickable=BoolProp(true).into())
                                 {
                                     "Item 1"
                                 }
@@ -108,24 +117,11 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                             }
                             List
                             (
-                                color=*create_signal(cloned_color_2),
-                                variant=*create_signal("boxed".to_string()),
+                                color=color.into(),
+                                variant=ListVariant::Simple.into(),
                             )
                             {
-                                ListItem(clickable=*create_signal(true))
-                                {
-                                    "Item 1"
-                                }
-                                ListItem { "Item 2" }
-                                ListItem { "Item 3" }
-                            }
-                            List
-                            (
-                                color=*create_signal(color),
-                                variant=*create_signal("simple".to_string()),
-                            )
-                            {
-                                ListItem(clickable=*create_signal(true))
+                                ListItem(clickable=BoolProp(true).into())
                                 {
                                     "Item 1"
                                 }
@@ -147,36 +143,36 @@ pub fn ListExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 List
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
-                    List(ordered=*create_signal(true))
+                    List(ordered=BoolProp(true).into())
                     {
-                        ListItem(clickable=*create_signal(true)) { "Item 1" }
+                        ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                         ListItem { "Item 2" }
                         ListItem { "Item 3" }
                     }
                 }
-                List(variant=*create_signal("boxed".to_string()))
+                List(variant=ListVariant::Simple.into())
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
-                    List(ordered=*create_signal(true))
+                    List(ordered=BoolProp(true).into())
                     {
-                        ListItem(clickable=*create_signal(true)) { "Item 1" }
+                        ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                         ListItem { "Item 2" }
                         ListItem { "Item 3" }
                     }
                 }
-                List(variant=*create_signal("simple".to_string()))
+                List(variant=ListVariant::Boxed.into())
                 {
-                    ListItem(clickable=*create_signal(true)) { "Item 1" }
+                    ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                     ListItem { "Item 2" }
                     ListItem { "Item 3" }
-                    List(ordered=*create_signal(true))
+                    List(ordered=BoolProp(true).into())
                     {
-                        ListItem(clickable=*create_signal(true)) { "Item 1" }
+                        ListItem(clickable=BoolProp(true).into()) { "Item 1" }
                         ListItem { "Item 2" }
                         ListItem { "Item 3" }
                     }

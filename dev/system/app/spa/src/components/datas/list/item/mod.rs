@@ -2,24 +2,11 @@
 //! ListItem.
 //------------------------------------------------------------------------------
 
+mod props;
+
+pub use props::ListItemProps;
+
 use sycamore::prelude::*;
-
-
-//------------------------------------------------------------------------------
-/// Props.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Props)]
-pub struct ListItemProps<G: Html>
-{
-    children: Children<G>,
-
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-
-    #[prop(default)]
-    pub clickable: ReadSignal<bool>,
-}
 
 
 //------------------------------------------------------------------------------
@@ -33,7 +20,7 @@ pub fn ListItem<G: Html>( props: ListItemProps<G> ) -> View<G>
     {
         "ui_list_item ".to_string()
             + &props.classes.get_clone() + " "
-            + if props.clickable.get() { "clickable " } else { "" }
+            + if props.clickable.get() { "clickable " } else { " " }
     };
 
     let children = props.children.call();

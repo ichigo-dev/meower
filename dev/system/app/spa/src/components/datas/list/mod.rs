@@ -2,30 +2,15 @@
 //! List.
 //------------------------------------------------------------------------------
 
+mod item;
+mod props;
+mod variant;
+
+pub use item::*;
+pub use props::ListProps;
+pub use variant::ListVariant;
+
 use sycamore::prelude::*;
-
-
-//------------------------------------------------------------------------------
-/// Props.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Props)]
-pub struct ListProps<G: Html>
-{
-    children: Children<G>,
-
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-
-    #[prop(default)]
-    pub color: ReadSignal<String>,
-
-    #[prop(default)]
-    pub ordered: ReadSignal<bool>,
-
-    #[prop(default)]
-    pub variant: ReadSignal<String>,
-}
 
 
 //------------------------------------------------------------------------------
@@ -39,8 +24,8 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
     {
         "ui_list ".to_string()
             + &props.classes.get_clone() + " "
-            + &props.color.get_clone() + " "
-            + &props.variant.get_clone() + " "
+            + &props.color.get_clone().get_class_name() + " "
+            + &props.variant.get_clone().get_class_name() + " "
             + if props.ordered.get() { "ordered " } else { " " }
     };
 
