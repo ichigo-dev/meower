@@ -19,7 +19,7 @@ pub fn TableBody<G: Html>( props: TableBodyProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        tbody(class=props.classes, ..props.attributes)
+        tbody(class=props.classes, ref=props.node_ref, ..props.attributes)
         {
             (children)
         }

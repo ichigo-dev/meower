@@ -19,7 +19,7 @@ pub fn TableRow<G: Html>( props: TableRowProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        tr(class=props.classes, ..props.attributes)
+        tr(class=props.classes, ref=props.node_ref, ..props.attributes)
         {
             (children)
         }

@@ -31,7 +31,7 @@ pub fn Alert<G: Html>( props: AlertProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        div(class=classes(), ..props.attributes)
+        div(class=classes(), ref=props.node_ref, ..props.attributes)
         {
             (children)
         }

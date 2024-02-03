@@ -38,6 +38,9 @@ pub struct ChipProps<G: Html>
     pub left_icon: View<G>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub right_icon: View<G>,
 
     #[prop(default)]

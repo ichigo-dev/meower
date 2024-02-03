@@ -65,7 +65,7 @@ pub fn Badge<G: Html>( props: BadgeProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        span(class=classes(), ..props.attributes)
+        span(class=classes(), ref=props.node_ref, ..props.attributes)
         {
             (
                 if badge_content().len() > 0

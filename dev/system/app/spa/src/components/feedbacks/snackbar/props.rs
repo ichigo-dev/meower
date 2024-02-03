@@ -38,6 +38,9 @@ pub struct SnackbarProps<G: Html>
     pub color: ReadSignal<Colors>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub open: Signal<bool>,
 
     #[prop(default)]

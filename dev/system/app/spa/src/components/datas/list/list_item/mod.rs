@@ -26,7 +26,7 @@ pub fn ListItem<G: Html>( props: ListItemProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        li(class=classes(), ..props.attributes)
+        li(class=classes(), ref=props.node_ref, ..props.attributes)
         {
             (children)
         }

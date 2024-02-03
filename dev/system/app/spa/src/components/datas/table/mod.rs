@@ -43,7 +43,7 @@ pub fn Table<G: Html>( props: TableProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        table(class=classes(), ..props.attributes)
+        table(class=classes(), ref=props.node_ref, ..props.attributes)
         {
             (children)
         }

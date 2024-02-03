@@ -19,7 +19,7 @@ pub fn TableHead<G: Html>( props: TableHeadProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        thead(class=props.classes, ..props.attributes)
+        thead(class=props.classes, ref=props.node_ref, ..props.attributes)
         {
             (children)
         }

@@ -30,6 +30,6 @@ pub fn Skeleton<G: Html>( props: SkeletonProps<G> ) -> View<G>
 
     view!
     {
-        div(class=classes(), ..props.attributes)
+        div(class=classes(), ref=props.node_ref, ..props.attributes)
     }
 }

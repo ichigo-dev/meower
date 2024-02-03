@@ -24,6 +24,9 @@ pub struct AlertProps<G: Html>
     pub children: Children<G>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub severity: ReadSignal<AlertSeverity>,
 
     #[prop(default)]

@@ -59,6 +59,7 @@ pub fn Dialog<G: Html>( props: DialogProps<G> ) -> View<G>
                 {
                     event.stop_propagation();
                 },
+                ref=props.node_ref,
                 ..props.attributes
             )
             {

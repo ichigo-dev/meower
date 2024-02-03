@@ -22,4 +22,7 @@ pub struct TableCellProps<G: Html>
 
     #[prop(default)]
     pub is_head: ReadSignal<bool>,
+
+    #[prop(default)]
+    pub node_ref: NodeRef<G>,
 }

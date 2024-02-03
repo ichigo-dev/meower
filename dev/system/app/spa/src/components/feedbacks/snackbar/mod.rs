@@ -14,8 +14,8 @@ use crate::components::{ Icon, IconKind };
 use crate::utils::props::*;
 use crate::variables::*;
 
-use sycamore::prelude::*;
 use gloo_timers::callback::Timeout;
+use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
@@ -39,19 +39,19 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
     {
         if props.open.get() && props.auto_hide_duration.get() > 0
         {
-            let close_timer = Timeout::new
+            let auto_hide_timer = Timeout::new
             (
                 props.auto_hide_duration.get(),
-                move || { props.open.set(false); }
+                move || props.open.set(false),
             );
-            close_timer.forget();
+            auto_hide_timer.forget();
         }
     });
 
     let children = props.children.call();
     view!
     {
-        span(class=classes(), ..props.attributes)
+        span(class=classes(), ref=props.node_ref, ..props.attributes)
         {
             (children)
             (
@@ -65,7 +65,7 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
                             icon=IconKind::Xmark.into(),
                             color=Colors::Background.into(),
                             clickable=BoolProp(true).into(),
-                            on:click=move |_| props.open.set(false)
+                            on:click=move |_| props.open.set(false),
                         )
                     }
                 }

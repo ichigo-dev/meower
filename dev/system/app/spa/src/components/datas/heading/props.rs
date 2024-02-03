@@ -36,6 +36,9 @@ pub struct HeadingProps<G: Html>
     pub level: ReadSignal<HeadingLevel>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub thickness: ReadSignal<HeadingThickness>,
 
     #[prop(default)]

@@ -32,6 +32,6 @@ pub fn Icon<G: Html>( props: IconProps<G> ) -> View<G>
 
     view!
     {
-        span(class=classes(), ..props.attributes)
+        span(class=classes(), ref=props.node_ref, ..props.attributes)
     }
 }

@@ -25,5 +25,8 @@ pub struct SkeletonProps<G: Html>
     pub classes: ReadSignal<String>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub shape: ReadSignal<SkeletonShape>,
 }

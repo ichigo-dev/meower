@@ -33,7 +33,7 @@ pub fn Chip<G: Html>( props: ChipProps<G> ) -> View<G>
 
     view!
     {
-        span(class=classes(), ..props.attributes)
+        span(class=classes(), ref=props.node_ref, ..props.attributes)
         {
             (props.left_icon)
             (props.label.get_clone())
