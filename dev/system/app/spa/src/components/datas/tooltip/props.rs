@@ -1,7 +1,8 @@
 //------------------------------------------------------------------------------
-/// Props.
+//! Props.
 //------------------------------------------------------------------------------
 
+use super::position::TooltipPosition;
 use crate::utils::props::*;
 use crate::variables::*;
 
@@ -13,11 +14,8 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct BadgeProps<G: Html>
+pub struct TooltipProps<G: Html>
 {
-    #[prop(default)]
-    pub badge_content: ReadSignal<String>,
-
     pub children: Children<G>,
 
     #[prop(default)]
@@ -26,12 +24,11 @@ pub struct BadgeProps<G: Html>
     #[prop(default)]
     pub color: ReadSignal<Colors>,
 
-    #[prop(default)]
-    pub invisible: ReadSignal<bool>,
-
-    #[prop(default = UsizeProp(0).into())]
-    pub max: ReadSignal<usize>,
+    pub description: View<G>,
 
     #[prop(default)]
-    pub show_zero: ReadSignal<bool>,
+    pub position: ReadSignal<TooltipPosition>,
+
+    #[prop(default = UsizeProp(250).into())]
+    pub max_width: ReadSignal<usize>,
 }

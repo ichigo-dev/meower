@@ -38,7 +38,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             IconExamples(colors=*theme_colors)
             ListExamples(colors=*theme_colors)
             TableExamples(colors=*theme_colors)
-            //TooltipExamples(colors=*theme_colors)
+            TooltipExamples(colors=*theme_colors)
             //AlertExamples()
             //DialogExamples(colors=*theme_colors)
             //ProgressExamples(colors=*theme_colors)

@@ -11,7 +11,7 @@ mod icon;
 mod list;
 //mod progress;
 mod table;
-//mod tooltip;
+mod tooltip;
 
 //pub use alert::AlertExamples;
 pub use badge::BadgeExamples;
@@ -22,4 +22,4 @@ pub use icon::IconExamples;
 pub use list::ListExamples;
 //pub use progress::ProgressExamples;
 pub use table::TableExamples;
-//pub use tooltip::TooltipExamples;
+pub use tooltip::TooltipExamples;

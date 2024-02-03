@@ -4,6 +4,7 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
+use crate::utils::props::*;
 use crate::variables::*;
 
 use rust_i18n::t;
@@ -58,7 +59,7 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     {
                         Tooltip
                         (
-                            color=*create_signal(color),
+                            color=color.into(),
                             description=view! { "Content" },
                         )
                         {
@@ -78,8 +79,8 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Tooltip
                 (
-                    classes=*create_signal("width_6xl text_align_center".to_string()),
-                    position=*create_signal("top".to_string()),
+                    classes=StringProp("width_6xl text_align_center").into(),
+                    position=TooltipPosition::Top.into(),
                     description=view! { "Content" },
                 )
                 {
@@ -89,8 +90,8 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 {
                     Tooltip
                     (
-                        classes=*create_signal("width_6xl text_align_center".to_string()),
-                        position=*create_signal("left".to_string()),
+                        classes=StringProp("width_6xl text_align_center").into(),
+                        position=TooltipPosition::Left.into(),
                         description=view! { "Content" },
                     )
                     {
@@ -99,8 +100,8 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     div(class="width_6xl")
                     Tooltip
                     (
-                        classes=*create_signal("width_6xl text_align_center".to_string()),
-                        position=*create_signal("right".to_string()),
+                        classes=StringProp("width_6xl text_align_center").into(),
+                        position=TooltipPosition::Right.into(),
                         description=view! { "Content" },
                     )
                     {
@@ -109,8 +110,8 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 }
                 Tooltip
                 (
-                    classes=*create_signal("width_6xl text_align_center".to_string()),
-                    position=*create_signal("bottom".to_string()),
+                    classes=StringProp("width_6xl text_align_center").into(),
+                    position=TooltipPosition::Bottom.into(),
                     description=view! { "Content" },
                 )
                 {
