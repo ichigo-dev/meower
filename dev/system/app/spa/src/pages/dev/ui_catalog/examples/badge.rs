@@ -4,6 +4,7 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
+use crate::utils::props::*;
 use crate::variables::*;
 
 use rust_i18n::t;
@@ -34,26 +35,26 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 {
                     div(class="ui_icon icon_envelope")
                 }
-                Badge(badge_content=*create_signal("3".to_string()))
+                Badge(badge_content=StringProp("3").into())
                 {
                     div(class="ui_icon icon_envelope")
                 }
                 Badge
                 (
-                    badge_content=*create_signal("99999".to_string()),
-                    max=*create_signal(999),
+                    badge_content=StringProp("99999").into(),
+                    max=UsizeProp(999).into(),
                 )
                 {
                     div(class="ui_icon icon_envelope")
                 }
-                Badge(invisible=*create_signal(true))
+                Badge(invisible=BoolProp(true).into())
                 {
                     div(class="ui_icon icon_envelope")
                 }
                 Badge
                 (
-                    badge_content=*create_signal("0".to_string()),
-                    show_zero=*create_signal(true),
+                    badge_content=StringProp("0").into(),
+                    show_zero=BoolProp(true).into(),
                 )
                 {
                     div(class="ui_icon icon_envelope")
@@ -75,7 +76,7 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     {
                         Badge
                         (
-                            badge_content=*create_signal("3".to_string()),
+                            badge_content=StringProp("3").into(),
                             color=color.into(),
                         )
                         {

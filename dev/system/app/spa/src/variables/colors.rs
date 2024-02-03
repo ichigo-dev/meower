@@ -753,7 +753,7 @@ impl Default for Colors
 
 impl Into<ReadSignal<Colors>> for Colors
 {
-    fn into( self ) -> ReadSignal<Colors>
+    fn into( self ) -> ReadSignal<Self>
     {
         *create_signal(self)
     }

@@ -4,7 +4,7 @@
 
 //mod alert;
 mod badge;
-//mod chip;
+mod chip;
 //mod dialog;
 //mod heading;
 //mod icon;
@@ -15,7 +15,7 @@ mod badge;
 //
 //pub use alert::AlertExamples;
 pub use badge::BadgeExamples;
-//pub use chip::ChipExamples;
+pub use chip::ChipExamples;
 //pub use dialog::DialogExamples;
 //pub use heading::HeadingExamples;
 //pub use icon::IconExamples;

@@ -5,6 +5,7 @@
 use crate::components::*;
 use crate::layouts::application::MainPanel;
 use crate::variables::*;
+use crate::utils::props::*;
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -30,14 +31,11 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
+                Chip(label=StringProp("Chip").into())
                 Chip
                 (
-                    label=*create_signal("Chip".to_string())
-                )
-                Chip
-                (
-                    label=*create_signal("Chip".to_string()),
-                    variant=*create_signal("outlined".to_string()),
+                    label=StringProp("Chip").into(),
+                    variant=ChipVariant::Outlined.into(),
                 )
             }
         }
@@ -51,14 +49,14 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
-                    disabled=*create_signal(true),
+                    label=StringProp("Chip").into(),
+                    disabled=BoolProp(true).into(),
                 )
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
-                    variant=*create_signal("outlined".to_string()),
-                    disabled=*create_signal(true),
+                    label=StringProp("Chip").into(),
+                    variant=ChipVariant::Outlined.into(),
+                    disabled=BoolProp(true).into(),
                 )
             }
         }
@@ -72,14 +70,14 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
-                    clickable=*create_signal(true),
+                    label=StringProp("Chip").into(),
+                    clickable=BoolProp(true).into(),
                 )
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
-                    variant=*create_signal("outlined".to_string()),
-                    clickable=*create_signal(true),
+                    label=StringProp("Chip").into(),
+                    variant=ChipVariant::Outlined.into(),
+                    clickable=BoolProp(true).into(),
                 )
             }
         }
@@ -93,13 +91,13 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
+                    label=StringProp("Chip").into(),
                     left_icon=view! { span(class="ui_icon icon_envelope") }
                 )
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
-                    variant=*create_signal("outlined".to_string()),
+                    label=StringProp("Chip").into(),
+                    variant=ChipVariant::Outlined.into(),
                     right_icon=view!
                     {
                         span(class="ui_icon icon_xmark clickable")
@@ -117,17 +115,18 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
-                    size=*create_signal("small".to_string()),
+                    label=StringProp("Chip").into(),
+                    size=ChipSize::Small.into(),
                 )
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
+                    label=StringProp("Chip").into(),
+                    size=ChipSize::Medium.into(),
                 )
                 Chip
                 (
-                    label=*create_signal("Chip".to_string()),
-                    size=*create_signal("large".to_string()),
+                    label=StringProp("Chip").into(),
+                    size=ChipSize::Large.into(),
                 )
             }
         }
@@ -142,21 +141,20 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 iterable=colors,
                 view=|color|
                 {
-                    let cloned_color = color.clone();
                     view!
                     {
                         div(class="flex flex_row flex_gap_md flex_align_center width_full")
                         {
                             Chip
                             (
-                                label=*create_signal("Chip".to_string()),
-                                color=*create_signal(cloned_color),
+                                label=StringProp("Chip").into(),
+                                color=color.into(),
                             )
                             Chip
                             (
-                                label=*create_signal("Chip".to_string()),
-                                color=*create_signal(color),
-                                variant=*create_signal("outlined".to_string()),
+                                label=StringProp("Chip").into(),
+                                color=color.into(),
+                                variant=ChipVariant::Outlined.into(),
                             )
                         }
                     }
@@ -165,4 +163,3 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
         }
     }
 }
-
