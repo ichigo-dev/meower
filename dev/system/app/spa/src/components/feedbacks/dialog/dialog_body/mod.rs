@@ -1,22 +1,12 @@
 //------------------------------------------------------------------------------
-//! DialogHead.
+//! DialogBody.
 //------------------------------------------------------------------------------
+
+mod props;
+
+pub use props::DialogBodyProps;
 
 use sycamore::prelude::*;
-
-
-//------------------------------------------------------------------------------
-/// Props.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Props)]
-pub struct DialogHeadProps<G: Html>
-{
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-
-    pub children: Children<G>,
-}
 
 
 //------------------------------------------------------------------------------
@@ -24,11 +14,11 @@ pub struct DialogHeadProps<G: Html>
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn DialogHead<G: Html>( props: DialogHeadProps<G> ) -> View<G>
+pub fn DialogBody<G: Html>( props: DialogBodyProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "head ".to_string() + &props.classes.get_clone()
+        "body ".to_string() + &props.classes.get_clone()
     };
 
     let children = props.children.call();

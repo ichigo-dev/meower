@@ -1,0 +1,39 @@
+//------------------------------------------------------------------------------
+//! Props.
+//------------------------------------------------------------------------------
+
+use super::animation::DialogAnimation;
+use super::size::DialogSize;
+use crate::utils::props::*;
+use crate::variables::*;
+
+use sycamore::prelude::*;
+
+
+//------------------------------------------------------------------------------
+/// Props.
+//------------------------------------------------------------------------------
+#[allow(dead_code)]
+#[derive(Props)]
+pub struct DialogProps<G: Html>
+{
+    #[prop(default)]
+    pub animation: ReadSignal<DialogAnimation>,
+
+    #[prop(default)]
+    pub color: ReadSignal<Colors>,
+
+    #[prop(default)]
+    pub classes: ReadSignal<String>,
+
+    #[prop(default = BoolProp(true).into())]
+    pub close_on_backdrop: ReadSignal<bool>,
+
+    pub children: Children<G>,
+
+    #[prop(default)]
+    pub open: Signal<bool>,
+
+    #[prop(default)]
+    pub size: ReadSignal<DialogSize>,
+}

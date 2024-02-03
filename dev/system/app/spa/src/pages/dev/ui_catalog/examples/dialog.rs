@@ -25,6 +25,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
     let open_dialog_7 = create_signal(false);
     let open_dialog_8 = create_signal(false);
     let open_dialog_9 = create_signal(false);
+    let open_dialog_10 = create_signal(false);
 
     view!
     {
@@ -108,7 +109,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 }
                 Dialog
                 (
-                    animation=*create_signal("slidein".to_string()),
+                    animation=DialogAnimation::Slide.into(),
                     open=open_dialog_3,
                 )
                 {
@@ -136,7 +137,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 }
                 Dialog
                 (
-                    animation=*create_signal("grow".to_string()),
+                    animation=DialogAnimation::Grow.into(),
                     open=open_dialog_4,
                 )
                 {
@@ -148,6 +149,34 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                         (
                             class="ui_button primary",
                             on:click=move |_| { open_dialog_4.set(false) },
+                        )
+                        {
+                            "Close"
+                        }
+                    }
+                }
+                button
+                (
+                    class="ui_button primary",
+                    on:click=move |_| { open_dialog_5.set(true) },
+                )
+                {
+                    "Open dialog"
+                }
+                Dialog
+                (
+                    animation=DialogAnimation::Flash.into(),
+                    open=open_dialog_5,
+                )
+                {
+                    DialogHead { "Dialog" }
+                    DialogBody { "Content" }
+                    DialogFoot
+                    {
+                        button
+                        (
+                            class="ui_button primary",
+                            on:click=move |_| { open_dialog_5.set(false) },
                         )
                         {
                             "Close"
@@ -167,40 +196,16 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 button
                 (
                     class="ui_button primary",
-                    on:click=move |_| { open_dialog_5.set(true) },
+                    on:click=move |_| { open_dialog_6.set(true) },
                 )
                 {
                     "Open dialog"
                 }
                 Dialog
                 (
-                    size=*create_signal("small".to_string()),
-                    open=open_dialog_5,
+                    size=DialogSize::Small.into(),
+                    open=open_dialog_6,
                 )
-                {
-                    DialogHead { "Dialog" }
-                    DialogBody { "Content" }
-                    DialogFoot
-                    {
-                        button
-                        (
-                            class="ui_button primary",
-                            on:click=move |_| { open_dialog_5.set(false) },
-                        )
-                        {
-                            "Close"
-                        }
-                    }
-                }
-                button
-                (
-                    class="ui_button primary",
-                    on:click=move |_| { open_dialog_6.set(true) },
-                )
-                {
-                    "Open dialog"
-                }
-                Dialog(open=open_dialog_6)
                 {
                     DialogHead { "Dialog" }
                     DialogBody { "Content" }
@@ -224,11 +229,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 {
                     "Open dialog"
                 }
-                Dialog
-                (
-                    size=*create_signal("large".to_string()),
-                    open=open_dialog_7,
-                )
+                Dialog(open=open_dialog_7)
                 {
                     DialogHead { "Dialog" }
                     DialogBody { "Content" }
@@ -254,7 +255,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 }
                 Dialog
                 (
-                    size=*create_signal("full".to_string()),
+                    size=DialogSize::Large.into(),
                     open=open_dialog_8,
                 )
                 {
@@ -266,6 +267,34 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                         (
                             class="ui_button primary",
                             on:click=move |_| { open_dialog_8.set(false) },
+                        )
+                        {
+                            "Close"
+                        }
+                    }
+                }
+                button
+                (
+                    class="ui_button primary",
+                    on:click=move |_| { open_dialog_9.set(true) },
+                )
+                {
+                    "Open dialog"
+                }
+                Dialog
+                (
+                    size=DialogSize::Full.into(),
+                    open=open_dialog_9,
+                )
+                {
+                    DialogHead { "Dialog" }
+                    DialogBody { "Content" }
+                    DialogFoot
+                    {
+                        button
+                        (
+                            class="ui_button primary",
+                            on:click=move |_| { open_dialog_9.set(false) },
                         )
                         {
                             "Close"
@@ -285,12 +314,12 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 button
                 (
                     class="ui_button primary",
-                    on:click=move |_| { open_dialog_9.set(true) },
+                    on:click=move |_| { open_dialog_10.set(true) },
                 )
                 {
                     "Open dialog"
                 }
-                Dialog(open=open_dialog_9)
+                Dialog(open=open_dialog_10)
                 {
                     DialogHead { "Dialog" }
                     DialogBody
@@ -312,7 +341,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                         button
                         (
                             class="ui_button primary",
-                            on:click=move |_| { open_dialog_9.set(false) },
+                            on:click=move |_| { open_dialog_10.set(false) },
                         )
                         {
                             "Close"
@@ -335,12 +364,11 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     view=|color|
                     {
                         let open_dialog = create_signal(false);
-                        let cloned_color = color.clone();
                         view!
                         {
                             button
                             (
-                                class=&("ui_button ".to_string() + &cloned_color),
+                                class=&("ui_button ".to_string() + &color.get_class_name()),
                                 on:click=move |_| { open_dialog.set(true) },
                             )
                             {
@@ -348,7 +376,7 @@ pub fn DialogExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                             }
                             Dialog
                             (
-                                color=*create_signal(color),
+                                color=color.into(),
                                 open=open_dialog,
                             )
                             {

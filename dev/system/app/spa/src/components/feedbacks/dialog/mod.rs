@@ -2,39 +2,22 @@
 //! Dialog.
 //------------------------------------------------------------------------------
 
+mod animation;
+mod dialog_body;
+mod dialog_foot;
+mod dialog_head;
+mod props;
+mod size;
+
+pub use animation::DialogAnimation;
+pub use dialog_body::*;
+pub use dialog_foot::*;
+pub use dialog_head::*;
+pub use props::DialogProps;
+pub use size::DialogSize;
+
 use sycamore::prelude::*;
-
-
-//------------------------------------------------------------------------------
-/// Props.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Props)]
-pub struct DialogProps<G: Html>
-{
-    #[prop(default)]
-    pub animation: ReadSignal<String>,
-
-    #[prop(default)]
-    pub color: ReadSignal<String>,
-
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-
-    #[prop(default = *create_signal(true))]
-    pub close_on_backdrop: ReadSignal<bool>,
-
-    pub children: Children<G>,
-
-    #[prop(default)]
-    pub open: Signal<bool>,
-
-    #[prop(default)]
-    pub size: ReadSignal<String>,
-
-    #[prop(default)]
-    pub variant: ReadSignal<String>,
-}
+use web_sys::MouseEvent;
 
 
 //------------------------------------------------------------------------------
@@ -46,13 +29,11 @@ pub fn Dialog<G: Html>( props: DialogProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        log::info!("{}", props.open.get());
         "ui_dialog ".to_string()
             + &props.classes.get_clone() + " "
-            + &props.color.get_clone() + " "
-            + &props.animation.get_clone() + " "
-            + &props.size.get_clone() + " "
-            + &props.variant.get_clone() + " "
+            + &props.color.get_clone().get_class_name() + " "
+            + &props.animation.get_clone().get_class_name() + " "
+            + &props.size.get_clone().get_class_name() + " "
             + if props.open.get() { "open " } else { " " }
     };
 
@@ -71,7 +52,14 @@ pub fn Dialog<G: Html>( props: DialogProps<G> ) -> View<G>
             }
         )
         {
-            dialog(class="dialog")
+            dialog
+            (
+                class="dialog",
+                on:click=move |event: MouseEvent|
+                {
+                    event.stop_propagation();
+                }
+            )
             {
                 (children)
             }

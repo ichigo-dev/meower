@@ -41,9 +41,9 @@ pub fn ProgressExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Progress(size=*create_signal("small".to_string()))
-                Progress
-                Progress(size=*create_signal("large".to_string()))
+                Progress(size=ProgressSize::Small.into())
+                Progress(size=ProgressSize::Medium.into())
+                Progress(size=ProgressSize::Large.into())
             }
         }
         MainPanel
@@ -54,9 +54,9 @@ pub fn ProgressExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Progress(thickness=*create_signal("thin".to_string()))
-                Progress
-                Progress(thickness=*create_signal("thick".to_string()))
+                Progress(thickness=ProgressThickness::Thin.into())
+                Progress(thickness=ProgressThickness::Normal.into())
+                Progress(thickness=ProgressThickness::Thick.into())
             }
         }
         MainPanel
@@ -72,7 +72,7 @@ pub fn ProgressExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     iterable=colors,
                     view=|color| view!
                     {
-                        Progress(color=*create_signal(color))
+                        Progress(color=color.into())
                     }
                 )
             }
@@ -85,7 +85,7 @@ pub fn ProgressExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_column flex_gap_md flex_align_center width_full")
             {
-                Progress(variant=*create_signal("linear".to_string()))
+                Progress(variant=ProgressVariant::Linear.into())
             }
         }
         MainPanel
@@ -103,8 +103,8 @@ pub fn ProgressExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     {
                         Progress
                         (
-                            color=*create_signal(color),
-                            variant=*create_signal("linear".to_string()),
+                            color=color.into(),
+                            variant=ProgressVariant::Linear.into(),
                         )
                     }
                 )

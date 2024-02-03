@@ -2,21 +2,11 @@
 //! DialogFoot.
 //------------------------------------------------------------------------------
 
+mod props;
+
+pub use props::DialogFootProps;
+
 use sycamore::prelude::*;
-
-
-//------------------------------------------------------------------------------
-/// Props.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Props)]
-pub struct DialogFootProps<G: Html>
-{
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-
-    pub children: Children<G>,
-}
 
 
 //------------------------------------------------------------------------------
