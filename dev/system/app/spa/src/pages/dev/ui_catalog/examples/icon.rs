@@ -30,9 +30,9 @@ pub fn IconExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Icon(icon=*create_signal("plus".to_string()))
-                Icon(icon=*create_signal("minus".to_string()))
-                Icon(icon=*create_signal("caret_right".to_string()))
+                Icon(icon=IconKind::Plus.into())
+                Icon(icon=IconKind::Minus.into())
+                Icon(icon=IconKind::CaretRight.into())
             }
         }
         MainPanel
@@ -45,42 +45,54 @@ pub fn IconExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Icon
                 (
-                    icon=*create_signal("plus".to_string()),
-                    size=*create_signal("small".to_string()),
+                    icon=IconKind::Plus.into(),
+                    size=IconSize::Small.into(),
                 )
                 Icon
                 (
-                    icon=*create_signal("minus".to_string()),
-                    size=*create_signal("small".to_string()),
+                    icon=IconKind::Minus.into(),
+                    size=IconSize::Small.into(),
                 )
                 Icon
                 (
-                    icon=*create_signal("caret_right".to_string()),
-                    size=*create_signal("small".to_string()),
+                    icon=IconKind::CaretRight.into(),
+                    size=IconSize::Small.into(),
                 )
-            }
-            div(class="flex flex_row flex_gap_md flex_align_center width_full")
-            {
-                Icon(icon=*create_signal("plus".to_string()))
-                Icon(icon=*create_signal("minus".to_string()))
-                Icon(icon=*create_signal("caret_right".to_string()))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
                 Icon
                 (
-                    icon=*create_signal("plus".to_string()),
-                    size=*create_signal("large".to_string()),
+                    icon=IconKind::Plus.into(),
+                    size=IconSize::Medium.into(),
                 )
                 Icon
                 (
-                    icon=*create_signal("minus".to_string()),
-                    size=*create_signal("large".to_string()),
+                    icon=IconKind::Minus.into(),
+                    size=IconSize::Medium.into(),
                 )
                 Icon
                 (
-                    icon=*create_signal("caret_right".to_string()),
-                    size=*create_signal("large".to_string()),
+                    icon=IconKind::CaretRight.into(),
+                    size=IconSize::Medium.into(),
+                )
+            }
+            div(class="flex flex_row flex_gap_md flex_align_center width_full")
+            {
+                Icon
+                (
+                    icon=IconKind::Plus.into(),
+                    size=IconSize::Large.into(),
+                )
+                Icon
+                (
+                    icon=IconKind::Minus.into(),
+                    size=IconSize::Large.into(),
+                )
+                Icon
+                (
+                    icon=IconKind::CaretRight.into(),
+                    size=IconSize::Large.into(),
                 )
             }
         }
@@ -95,26 +107,24 @@ pub fn IconExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 iterable=colors,
                 view=|color|
                 {
-                    let cloned_color_1 = color.clone();
-                    let cloned_color_2 = color.clone();
                     view!
                     {
                         div(class="flex flex_row flex_gap_md flex_align_center width_full")
                         {
                             Icon
                             (
-                                icon=*create_signal("plus".to_string()),
-                                color=*create_signal(cloned_color_1),
+                                icon=IconKind::Plus.into(),
+                                color=color.into(),
                             )
                             Icon
                             (
-                                icon=*create_signal("minus".to_string()),
-                                color=*create_signal(cloned_color_2),
+                                icon=IconKind::Minus.into(),
+                                color=color.into(),
                             )
                             Icon
                             (
-                                icon=*create_signal("caret_right".to_string()),
-                                color=*create_signal(color),
+                                icon=IconKind::CaretRight.into(),
+                                color=color.into(),
                             )
                         }
                     }

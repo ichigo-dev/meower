@@ -2,27 +2,15 @@
 //! Icon.
 //------------------------------------------------------------------------------
 
+mod kind;
+mod props;
+mod size;
+
+pub use kind::IconKind;
+pub use props::IconProps;
+pub use size::IconSize;
+
 use sycamore::prelude::*;
-
-
-//------------------------------------------------------------------------------
-/// Props.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Props)]
-pub struct IconProps
-{
-    pub icon: ReadSignal<String>,
-
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-
-    #[prop(default)]
-    pub color: ReadSignal<String>,
-
-    #[prop(default)]
-    pub size: ReadSignal<String>,
-}
 
 
 //------------------------------------------------------------------------------
@@ -36,9 +24,9 @@ pub fn Icon<G: Html>( props: IconProps ) -> View<G>
     {
         "ui_icon ".to_string()
             + &props.classes.get_clone() + " "
-            + "icon_" + &props.icon.get_clone() + " "
-            + &props.color.get_clone() + " "
-            + &props.size.get_clone()
+            + &props.icon.get_clone().get_class_name() + " "
+            + &props.color.get_clone().get_class_name() + " "
+            + &props.size.get_clone().get_class_name() + " "
     };
 
     view!

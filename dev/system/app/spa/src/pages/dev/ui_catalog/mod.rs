@@ -35,7 +35,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             BadgeExamples(colors=*theme_colors)
             ChipExamples(colors=*theme_colors)
             HeadingExamples(colors=*theme_colors)
-            //IconExamples(colors=*theme_colors)
+            IconExamples(colors=*theme_colors)
             //ListExamples(colors=*theme_colors)
             //TableExamples(colors=*theme_colors)
             //TooltipExamples(colors=*theme_colors)
