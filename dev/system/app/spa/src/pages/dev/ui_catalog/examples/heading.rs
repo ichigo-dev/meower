@@ -30,12 +30,12 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Heading(level=*create_signal("h1".to_string())) { "Heading" }
-                Heading(level=*create_signal("h2".to_string())) { "Heading" }
-                Heading(level=*create_signal("h3".to_string())) { "Heading" }
-                Heading(level=*create_signal("h4".to_string())) { "Heading" }
-                Heading(level=*create_signal("h5".to_string())) { "Heading" }
-                Heading(level=*create_signal("h6".to_string())) { "Heading" }
+                Heading(level=HeadingLevel::H1.into()) { "Heading" }
+                Heading(level=HeadingLevel::H2.into()) { "Heading" }
+                Heading(level=HeadingLevel::H3.into()) { "Heading" }
+                Heading(level=HeadingLevel::H4.into()) { "Heading" }
+                Heading(level=HeadingLevel::H5.into()) { "Heading" }
+                Heading(level=HeadingLevel::H6.into()) { "Heading" }
             }
         }
         MainPanel
@@ -48,24 +48,24 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Heading
                 (
-                    variant=*create_signal("divider".to_string()),
-                    align=*create_signal("left".to_string()),
+                    variant=HeadingVariant::Divider.into(),
+                    align=HeadingAlign::Left.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("divider".to_string()),
-                    align=*create_signal("center".to_string()),
+                    variant=HeadingVariant::Divider.into(),
+                    align=HeadingAlign::Center.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("divider".to_string()),
-                    align=*create_signal("right".to_string()),
+                    variant=HeadingVariant::Divider.into(),
+                    align=HeadingAlign::Right.into(),
                 )
                 {
                     "Heading"
@@ -82,20 +82,24 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Heading
                 (
-                    variant=*create_signal("divider".to_string()),
-                    thickness=*create_signal("thin".to_string()),
+                    variant=HeadingVariant::Divider.into(),
+                    thickness=HeadingThickness::Thin.into(),
                 )
-                {
-                    "Heading"
-                }
-                Heading(variant=*create_signal("divider".to_string()))
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("divider".to_string()),
-                    thickness=*create_signal("thick".to_string()),
+                    variant=HeadingVariant::Divider.into(),
+                    thickness=HeadingThickness::Normal.into(),
+                )
+                {
+                    "Heading"
+                }
+                Heading
+                (
+                    variant=HeadingVariant::Divider.into(),
+                    thickness=HeadingThickness::Thick.into(),
                 )
                 {
                     "Heading"
@@ -117,8 +121,8 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     {
                         Heading
                         (
-                            variant=*create_signal("divider".to_string()),
-                            color=*create_signal(color),
+                            variant=HeadingVariant::Divider.into(),
+                            color=color.into(),
                         )
                         {
                             "Heading"
@@ -137,23 +141,24 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Heading
                 (
-                    variant=*create_signal("bullet".to_string()),
-                    thickness=*create_signal("thin".to_string()),
+                    variant=HeadingVariant::Bullet.into(),
+                    thickness=HeadingThickness::Thin.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("bullet".to_string()),
+                    variant=HeadingVariant::Bullet.into(),
+                    thickness=HeadingThickness::Normal.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("bullet".to_string()),
-                    thickness=*create_signal("thick".to_string()),
+                    variant=HeadingVariant::Bullet.into(),
+                    thickness=HeadingThickness::Thick.into(),
                 )
                 {
                     "Heading"
@@ -175,8 +180,8 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     {
                         Heading
                         (
-                            variant=*create_signal("bullet".to_string()),
-                            color=*create_signal(color),
+                            variant=HeadingVariant::Bullet.into(),
+                            color=color.into(),
                         )
                         {
                             "Heading"
@@ -195,24 +200,24 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Heading
                 (
-                    variant=*create_signal("line".to_string()),
-                    align=*create_signal("left".to_string()),
+                    variant=HeadingVariant::Line.into(),
+                    align=HeadingAlign::Left.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("line".to_string()),
-                    align=*create_signal("center".to_string()),
+                    variant=HeadingVariant::Line.into(),
+                    align=HeadingAlign::Center.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("line".to_string()),
-                    align=*create_signal("right".to_string()),
+                    variant=HeadingVariant::Line.into(),
+                    align=HeadingAlign::Right.into(),
                 )
                 {
                     "Heading"
@@ -229,23 +234,24 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Heading
                 (
-                    variant=*create_signal("line".to_string()),
-                    thickness=*create_signal("thin".to_string()),
+                    variant=HeadingVariant::Line.into(),
+                    thickness=HeadingThickness::Thin.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("line".to_string()),
+                    variant=HeadingVariant::Line.into(),
+                    thickness=HeadingThickness::Normal.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("line".to_string()),
-                    thickness=*create_signal("thick".to_string()),
+                    variant=HeadingVariant::Line.into(),
+                    thickness=HeadingThickness::Thick.into(),
                 )
                 {
                     "Heading"
@@ -267,8 +273,8 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     {
                         Heading
                         (
-                            variant=*create_signal("line".to_string()),
-                            color=*create_signal(color),
+                            variant=HeadingVariant::Line.into(),
+                            color=color.into(),
                         )
                         {
                             "Heading"
@@ -287,24 +293,24 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Heading
                 (
-                    variant=*create_signal("band".to_string()),
-                    align=*create_signal("left".to_string()),
+                    variant=HeadingVariant::Band.into(),
+                    align=HeadingAlign::Left.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("band".to_string()),
-                    align=*create_signal("center".to_string()),
+                    variant=HeadingVariant::Band.into(),
+                    align=HeadingAlign::Center.into(),
                 )
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("band".to_string()),
-                    align=*create_signal("right".to_string()),
+                    variant=HeadingVariant::Band.into(),
+                    align=HeadingAlign::Right.into(),
                 )
                 {
                     "Heading"
@@ -321,20 +327,24 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Heading
                 (
-                    variant=*create_signal("band".to_string()),
-                    thickness=*create_signal("thin".to_string()),
+                    variant=HeadingVariant::Band.into(),
+                    thickness=HeadingThickness::Thin.into(),
                 )
-                {
-                    "Heading"
-                }
-                Heading(variant=*create_signal("band".to_string()))
                 {
                     "Heading"
                 }
                 Heading
                 (
-                    variant=*create_signal("band".to_string()),
-                    thickness=*create_signal("thick".to_string()),
+                    variant=HeadingVariant::Band.into(),
+                    thickness=HeadingThickness::Normal.into(),
+                )
+                {
+                    "Heading"
+                }
+                Heading
+                (
+                    variant=HeadingVariant::Band.into(),
+                    thickness=HeadingThickness::Thick.into(),
                 )
                 {
                     "Heading"
@@ -356,8 +366,8 @@ pub fn HeadingExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     {
                         Heading
                         (
-                            variant=*create_signal("band".to_string()),
-                            color=*create_signal(color),
+                            variant=HeadingVariant::Band.into(),
+                            color=color.into(),
                         )
                         {
                             "Heading"

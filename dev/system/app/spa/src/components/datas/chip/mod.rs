@@ -27,8 +27,8 @@ pub fn Chip<G: Html>( props: ChipProps<G> ) -> View<G>
             + &props.color.get_clone().get_class_name() + " "
             + &props.size.get_clone().get_class_name() + " "
             + &props.variant.get_clone().get_class_name() + " "
-            + if props.clickable.get() { "clickable " } else { "" }
-            + if props.disabled.get() { "disabled " } else { "" }
+            + if props.clickable.get() { "clickable " } else { " " }
+            + if props.disabled.get() { "disabled " } else { " " }
     };
 
     view!

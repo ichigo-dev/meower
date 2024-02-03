@@ -6,7 +6,7 @@
 mod badge;
 mod chip;
 //mod dialog;
-//mod heading;
+mod heading;
 //mod icon;
 //mod list;
 //mod progress;
@@ -17,7 +17,7 @@ mod chip;
 pub use badge::BadgeExamples;
 pub use chip::ChipExamples;
 //pub use dialog::DialogExamples;
-//pub use heading::HeadingExamples;
+pub use heading::HeadingExamples;
 //pub use icon::IconExamples;
 //pub use list::ListExamples;
 //pub use table::TableExamples;
