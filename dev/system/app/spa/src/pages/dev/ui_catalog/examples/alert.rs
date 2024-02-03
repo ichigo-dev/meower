@@ -4,7 +4,6 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
-use crate::variables::*;
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -30,19 +29,19 @@ pub fn AlertExamples<G: Html>() -> View<G>
             }
             div(class="flex flex_column flex_gap_md width_full")
             {
-                Alert(severity=*create_signal("error".to_string()))
+                Alert(severity=AlertSeverity::Error.into())
                 {
                     "Alert"
                 }
-                Alert(severity=*create_signal("warning".to_string()))
+                Alert(severity=AlertSeverity::Warning.into())
                 {
                     "Alert"
                 }
-                Alert(severity=*create_signal("info".to_string()))
+                Alert(severity=AlertSeverity::Info.into())
                 {
                     "Alert"
                 }
-                Alert(severity=*create_signal("success".to_string()))
+                Alert(severity=AlertSeverity::Success.into())
                 {
                     "Alert"
                 }
@@ -58,32 +57,32 @@ pub fn AlertExamples<G: Html>() -> View<G>
             {
                 Alert
                 (
-                    severity=*create_signal("error".to_string()),
-                    variant=*create_signal("outlined".to_string()),
+                    severity=AlertSeverity::Error.into(),
+                    variant=AlertVariant::Outlined.into(),
                 )
                 {
                     "Alert"
                 }
                 Alert
                 (
-                    severity=*create_signal("warning".to_string()),
-                    variant=*create_signal("outlined".to_string()),
+                    severity=AlertSeverity::Warning.into(),
+                    variant=AlertVariant::Outlined.into(),
                 )
                 {
                     "Alert"
                 }
                 Alert
                 (
-                    severity=*create_signal("info".to_string()),
-                    variant=*create_signal("outlined".to_string()),
+                    severity=AlertSeverity::Info.into(),
+                    variant=AlertVariant::Outlined.into(),
                 )
                 {
                     "Alert"
                 }
                 Alert
                 (
-                    severity=*create_signal("success".to_string()),
-                    variant=*create_signal("outlined".to_string()),
+                    severity=AlertSeverity::Success.into(),
+                    variant=AlertVariant::Outlined.into(),
                 )
                 {
                     "Alert"
@@ -100,32 +99,32 @@ pub fn AlertExamples<G: Html>() -> View<G>
             {
                 Alert
                 (
-                    severity=*create_signal("error".to_string()),
-                    variant=*create_signal("filled".to_string()),
+                    severity=AlertSeverity::Error.into(),
+                    variant=AlertVariant::Filled.into(),
                 )
                 {
                     "Alert"
                 }
                 Alert
                 (
-                    severity=*create_signal("warning".to_string()),
-                    variant=*create_signal("filled".to_string()),
+                    severity=AlertSeverity::Warning.into(),
+                    variant=AlertVariant::Filled.into(),
                 )
                 {
                     "Alert"
                 }
                 Alert
                 (
-                    severity=*create_signal("info".to_string()),
-                    variant=*create_signal("filled".to_string()),
+                    severity=AlertSeverity::Info.into(),
+                    variant=AlertVariant::Filled.into(),
                 )
                 {
                     "Alert"
                 }
                 Alert
                 (
-                    severity=*create_signal("success".to_string()),
-                    variant=*create_signal("filled".to_string()),
+                    severity=AlertSeverity::Success.into(),
+                    variant=AlertVariant::Filled.into(),
                 )
                 {
                     "Alert"

@@ -2,27 +2,15 @@
 //! Alert.
 //------------------------------------------------------------------------------
 
+mod props;
+mod severity;
+mod variant;
+
+pub use props::AlertProps;
+pub use severity::AlertSeverity;
+pub use variant::AlertVariant;
+
 use sycamore::prelude::*;
-
-
-//------------------------------------------------------------------------------
-/// Props.
-//------------------------------------------------------------------------------
-#[allow(dead_code)]
-#[derive(Props)]
-pub struct AlertProps<G: Html>
-{
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-
-    pub children: Children<G>,
-
-    #[prop(default)]
-    pub severity: ReadSignal<String>,
-
-    #[prop(default)]
-    pub variant: ReadSignal<String>,
-}
 
 
 //------------------------------------------------------------------------------
@@ -36,8 +24,8 @@ pub fn Alert<G: Html>( props: AlertProps<G> ) -> View<G>
     {
         "ui_alert ".to_string()
             + &props.classes.get_clone() + " "
-            + &props.severity.get_clone() + " "
-            + &props.variant.get_clone()
+            + &props.severity.get_clone().get_class_name() + " "
+            + &props.variant.get_clone().get_class_name() + " "
     };
 
     let children = props.children.call();
