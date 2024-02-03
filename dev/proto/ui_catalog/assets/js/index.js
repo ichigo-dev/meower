@@ -201,6 +201,7 @@ const create_color_band = ( color_, type_, fix_text_color_ = false ) =>
 
 	let color = color_ + (type_.length > 0 ? '_' : '') + type_;
 	elm.classList.add(color);
+	elm.classList.add("text_" + color + "_text");
 	elm.innerText = color.replaceAll('_', ' ');
 	elm.style.cursor = 'copy';
 	if( fix_text_color_ ) { elm.classList.add(on_text_color(color)); }

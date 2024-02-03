@@ -10,7 +10,6 @@
 //------------------------------------------------------------------------------
 
 @use "../../functions/string" as string;
-@use "../../themes/index" as themes;
 @use "../../variables/colors" as colors;
 @use "../../variables/icons" as icons;
 
@@ -49,23 +48,10 @@
 	//	Colors
 	//--------------------------------------------------------------------------
 
-	@each $color in colors.$general_colors
-	{
-		$class_name: string.str-replace($color, "-", "_");
-		&.#{$class_name} { background-color: var(--color-#{$color}); }
-	}
-
 	@each $color in colors.$colors
 	{
 		$class_name: string.str-replace($color, "-", "_");
 		&.#{$class_name} { background-color: var(--color-#{$color}); }
-	}
-
-	@each $color in themes.$theme_colors
-	{
-		$class_name: string.str-replace($color, "-", "_");
-		&.#{$class_name} { background-color: var(--color-#{$color}); }
-		&.#{$class_name}_text { background-color: var(--color-#{$color}-text); }
 	}
 
 	&.background

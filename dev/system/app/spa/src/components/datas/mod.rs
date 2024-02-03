@@ -16,7 +16,7 @@ mod table_head;
 mod table_row;
 mod tooltip;
 
-pub use badge::Badge;
+pub use badge::*;
 pub use chip::Chip;
 pub use heading::Heading;
 pub use icon::Icon;

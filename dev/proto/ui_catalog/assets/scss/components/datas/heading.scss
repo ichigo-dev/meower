@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 
 @use "../../functions/string" as string;
-@use "../../themes/index" as themes;
+@use "../../variables/colors" as colors;
 
 .ui_heading
 {
@@ -91,7 +91,7 @@
 		}
 
 		//	Colors
-		@each $color in themes.$theme_colors
+		@each $color in colors.$colors
 		{
 			$class_name: string.str-replace(#{$color}, "-", "_");
 			&.#{$class_name}
@@ -116,7 +116,7 @@
 			border-width: 8px;
 		}
 
-		@each $color in themes.$theme_colors
+		@each $color in colors.$colors
 		{
 			$class_name: string.str-replace(#{$color}, "-", "_");
 			&.#{$class_name}
@@ -195,7 +195,7 @@
 		}
 
 		//	Colors
-		@each $color in themes.$theme_colors
+		@each $color in colors.$colors
 		{
 			$class_name: string.str-replace(#{$color}, "-", "_");
 			&.#{$class_name}
@@ -244,7 +244,7 @@
 		}
 
 		//	Colors
-		@each $color in themes.$theme_colors
+		@each $color in colors.$colors
 		{
 			$class_name: string.str-replace(#{$color}, "-", "_");
 			&.#{$class_name}

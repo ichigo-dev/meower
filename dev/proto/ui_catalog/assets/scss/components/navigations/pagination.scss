@@ -20,7 +20,7 @@
 //------------------------------------------------------------------------------
 
 @use "../../functions/string" as string;
-@use "../../themes/index" as themes;
+@use "../../variables/colors" as colors;
 
 .ui_pagination
 {
@@ -192,7 +192,7 @@
 	//	Colors
 	//--------------------------------------------------------------------------
 
-	@each $color in themes.$theme_colors
+	@each $color in colors.$colors
 	{
 		$class_name: string.str-replace($color, "-", "_");
 		&.#{$class_name}

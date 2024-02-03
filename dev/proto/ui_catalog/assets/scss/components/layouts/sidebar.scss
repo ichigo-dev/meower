@@ -2,6 +2,9 @@
 //	UI sidebar
 //------------------------------------------------------------------------------
 
+@use "../../functions/string" as string;
+@use "../../variables/colors" as colors;
+
 .ui_sidebar
 {
 	display: flex;
@@ -16,5 +19,18 @@
 		position: sticky;
 		top: var(--spacing-md);
 		max-height: calc(100vh - var(--spacing-md) * 2);
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Colors
+	//--------------------------------------------------------------------------
+	@each $color in colors.$colors
+	{
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
+		{
+			background-color: var(--color-#{$color});
+		}
 	}
 }

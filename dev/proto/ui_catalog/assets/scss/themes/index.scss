@@ -2,8 +2,19 @@
 //	Theme configuration
 //------------------------------------------------------------------------------
 
-$theme_colors: "primary", "secondary", "error", "warning", "info", "success";
-$auxiliary_colors: "background", "surface", "filled";
+$theme_colors:
+	"background", "background-text",
+	"surface", "surface-text",
+	"filled", "filled-light", "filled-dark", "filled-text",
+	"border", "border-light", "border-dark",
+	"shadow", "shadow-light", "shadow-dark",
+	"disabled", "disabled-text",
+	"primary", "primary-light", "primary-dark", "primary-text",
+	"secondary", "secondary-light", "secondary-dark", "secondary-text",
+	"error", "error-light", "error-dark", "error-text",
+	"warning", "warning-light", "warning-dark", "warning-text",
+	"info", "info-light", "info-dark", "info-text",
+	"success", "success-light", "success-dark", "success-text";
 
 @forward "meower_light";
 @forward "meower_dark";

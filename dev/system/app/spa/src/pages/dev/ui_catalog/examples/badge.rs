@@ -58,7 +58,9 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                     div(class="ui_icon icon_envelope")
                 }
             }
-
+        }
+        MainPanel
+        {
             h4(class="ui_heading h4")
             {
                 (t!("pages.dev.ui_catalog.badge.colors.heading"))
