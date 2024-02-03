@@ -134,3 +134,12 @@ pages:
           heading: "Linear"
           colors:
             heading: "Linear Colors"
+
+      skeleton:
+        heading: "Skeleton"
+        basic:
+          heading: "Basic"
+        pulse:
+          heading: "Pulse"
+        wave:
+          heading: "Wave"

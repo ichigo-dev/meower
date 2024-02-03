@@ -42,6 +42,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             AlertExamples()
             DialogExamples(colors=*theme_colors)
             ProgressExamples(colors=*theme_colors)
+            SkeletonExamples()
         }
     }
 }

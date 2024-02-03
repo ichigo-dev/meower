@@ -24,7 +24,7 @@ pub fn Progress<G: Html>( props: ProgressProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_progress".to_string()
+        "ui_progress ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone().get_class_name() + " "
             + &props.size.get_clone().get_class_name() + " "

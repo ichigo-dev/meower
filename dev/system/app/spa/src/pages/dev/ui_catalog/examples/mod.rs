@@ -10,6 +10,7 @@ mod heading;
 mod icon;
 mod list;
 mod progress;
+mod skeleton;
 mod table;
 mod tooltip;
 
@@ -21,5 +22,6 @@ pub use heading::HeadingExamples;
 pub use icon::IconExamples;
 pub use list::ListExamples;
 pub use progress::ProgressExamples;
+pub use skeleton::SkeletonExamples;
 pub use table::TableExamples;
 pub use tooltip::TooltipExamples;
