@@ -18,15 +18,6 @@ use sycamore::prelude::*;
 pub fn SnackbarExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
 {
     let open_snackbar_1 = create_signal(false);
-    let open_snackbar_2 = create_signal(false);
-    let open_snackbar_3 = create_signal(false);
-    let open_snackbar_4 = create_signal(false);
-    let open_snackbar_5 = create_signal(false);
-    let open_snackbar_6 = create_signal(false);
-    let open_snackbar_7 = create_signal(false);
-    let open_snackbar_8 = create_signal(false);
-    let open_snackbar_9 = create_signal(false);
-    let open_snackbar_10 = create_signal(false);
 
     view!
     {

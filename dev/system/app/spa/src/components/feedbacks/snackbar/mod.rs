@@ -15,6 +15,7 @@ use crate::utils::props::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;
+use gloo_timers::callback::Timeout;
 
 
 //------------------------------------------------------------------------------
@@ -33,6 +34,19 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
             + &props.position.get_clone().get_class_name() + " "
             + if props.open.get_clone() { "open " } else { " " }
     };
+
+    create_effect(move ||
+    {
+        if props.open.get() && props.auto_hide_duration.get() > 0
+        {
+            let close_timer = Timeout::new
+            (
+                props.auto_hide_duration.get(),
+                move || { props.open.set(false); }
+            );
+            close_timer.forget();
+        }
+    });
 
     let children = props.children.call();
     view!

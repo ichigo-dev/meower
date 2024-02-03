@@ -45,3 +45,185 @@ impl Into<ReadSignal<usize>> for UsizeProp
         *create_signal(self.0)
     }
 }
+
+
+//------------------------------------------------------------------------------
+/// U8Prop.
+//------------------------------------------------------------------------------
+pub struct U8Prop(pub u8);
+
+impl Into<ReadSignal<u8>> for U8Prop
+{
+    fn into( self ) -> ReadSignal<u8>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// U16Prop.
+//------------------------------------------------------------------------------
+pub struct U16Prop(pub u16);
+
+impl Into<ReadSignal<u16>> for U16Prop
+{
+    fn into( self ) -> ReadSignal<u16>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// U32Prop.
+//------------------------------------------------------------------------------
+pub struct U32Prop(pub u32);
+
+impl Into<ReadSignal<u32>> for U32Prop
+{
+    fn into( self ) -> ReadSignal<u32>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// U64Prop.
+//------------------------------------------------------------------------------
+pub struct U64Prop(pub u64);
+
+impl Into<ReadSignal<u64>> for U64Prop
+{
+    fn into( self ) -> ReadSignal<u64>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// U128Prop.
+//------------------------------------------------------------------------------
+pub struct U128Prop(pub u128);
+
+impl Into<ReadSignal<u128>> for U128Prop
+{
+    fn into( self ) -> ReadSignal<u128>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// IsizeProp.
+//------------------------------------------------------------------------------
+pub struct IsizeProp(pub isize);
+
+impl Into<ReadSignal<isize>> for IsizeProp
+{
+    fn into( self ) -> ReadSignal<isize>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// I8Prop.
+//------------------------------------------------------------------------------
+pub struct I8Prop(pub i8);
+
+impl Into<ReadSignal<i8>> for I8Prop
+{
+    fn into( self ) -> ReadSignal<i8>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// I16Prop.
+//------------------------------------------------------------------------------
+pub struct I16Prop(pub i16);
+
+impl Into<ReadSignal<i16>> for I16Prop
+{
+    fn into( self ) -> ReadSignal<i16>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// I32Prop.
+//------------------------------------------------------------------------------
+pub struct I32Prop(pub i32);
+
+impl Into<ReadSignal<i32>> for I32Prop
+{
+    fn into( self ) -> ReadSignal<i32>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// I64Prop.
+//------------------------------------------------------------------------------
+pub struct I64Prop(pub i64);
+
+impl Into<ReadSignal<i64>> for I64Prop
+{
+    fn into( self ) -> ReadSignal<i64>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// I128Prop.
+//------------------------------------------------------------------------------
+pub struct I128Prop(pub i128);
+
+impl Into<ReadSignal<i128>> for I128Prop
+{
+    fn into( self ) -> ReadSignal<i128>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// F32Prop.
+//------------------------------------------------------------------------------
+pub struct F32Prop(pub f32);
+
+impl Into<ReadSignal<f32>> for F32Prop
+{
+    fn into( self ) -> ReadSignal<f32>
+    {
+        *create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// F64Prop.
+//------------------------------------------------------------------------------
+pub struct F64Prop(pub f64);
+
+impl Into<ReadSignal<f64>> for F64Prop
+{
+    fn into( self ) -> ReadSignal<f64>
+    {
+        *create_signal(self.0)
+    }
+}

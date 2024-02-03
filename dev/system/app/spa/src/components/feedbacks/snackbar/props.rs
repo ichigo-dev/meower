@@ -4,6 +4,7 @@
 
 use super::animation::SnackbarAnimation;
 use super::position::SnackbarPosition;
+use crate::utils::props::*;
 use crate::variables::Colors;
 
 use sycamore::prelude::*;
@@ -21,6 +22,9 @@ pub struct SnackbarProps<G: Html>
 
     #[prop(default)]
     pub attributes: Attributes<G>,
+
+    #[prop(default = U32Prop(5000).into())]
+    pub auto_hide_duration: ReadSignal<u32>,
 
     pub children: Children<G>,
 
