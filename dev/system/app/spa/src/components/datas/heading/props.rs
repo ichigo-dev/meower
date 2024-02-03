@@ -21,6 +21,9 @@ pub struct HeadingProps<G: Html>
     #[prop(default)]
     pub align: ReadSignal<HeadingAlign>,
 
+    #[prop(default)]
+    pub attributes: Attributes<G>,
+
     pub children: Children<G>,
 
     #[prop(default)]

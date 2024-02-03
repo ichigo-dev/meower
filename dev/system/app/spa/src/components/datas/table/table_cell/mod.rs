@@ -23,12 +23,18 @@ pub fn TableCell<G: Html>( props: TableCellProps<G> ) -> View<G>
             if props.is_head.get()
             {
                 let children = children.clone();
-                view! { th(class=props.classes) { (children) } }
+                view!
+                {
+                    th(class=props.classes, ..props.attributes) { (children) }
+                }
             }
             else
             {
                 let children = children.clone();
-                view! { td(class=props.classes) { (children) } }
+                view!
+                {
+                    td(class=props.classes, ..props.attributes) { (children) }
+                }
             }
         )
     }

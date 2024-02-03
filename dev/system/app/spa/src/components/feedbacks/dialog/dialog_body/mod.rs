@@ -24,7 +24,7 @@ pub fn DialogBody<G: Html>( props: DialogBodyProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        div(class=classes())
+        div(class=classes(), ..props.attributes)
         {
             (children)
         }

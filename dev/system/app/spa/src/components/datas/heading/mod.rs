@@ -44,32 +44,50 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                 HeadingLevel::H1 =>
                 {
                     let children = children.clone();
-                    view! { h1(class=classes()) { (children) } }
+                    view!
+                    {
+                        h1(class=classes(), ..props.attributes) { (children) }
+                    }
                 },
                 HeadingLevel::H2 =>
                 {
                     let children = children.clone();
-                    view! { h2(class=classes()) { (children) } }
+                    view!
+                    {
+                        h2(class=classes(), ..props.attributes) { (children) }
+                    }
                 },
                 HeadingLevel::H3 =>
                 {
                     let children = children.clone();
-                    view! { h3(class=classes()) { (children) } }
+                    view!
+                    {
+                        h3(class=classes(), ..props.attributes) { (children) }
+                    }
                 },
                 HeadingLevel::H4 =>
                 {
                     let children = children.clone();
-                    view! { h4(class=classes()) { (children) } }
+                    view!
+                    {
+                        h4(class=classes(), ..props.attributes) { (children) }
+                    }
                 },
                 HeadingLevel::H5 =>
                 {
                     let children = children.clone();
-                    view! { h5(class=classes()) { (children) } }
+                    view!
+                    {
+                        h5(class=classes(), ..props.attributes) { (children) }
+                    }
                 },
                 HeadingLevel::H6 =>
                 {
                     let children = children.clone();
-                    view! { h6(class=classes()) { (children) } }
+                    view!
+                    {
+                        h6(class=classes(), ..props.attributes) { (children) }
+                    }
                 },
             }
         )

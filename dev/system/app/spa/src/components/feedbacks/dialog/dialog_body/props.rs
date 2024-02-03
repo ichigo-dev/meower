@@ -13,7 +13,10 @@ use sycamore::prelude::*;
 pub struct DialogBodyProps<G: Html>
 {
     #[prop(default)]
-    pub classes: ReadSignal<String>,
+    pub attributes: Attributes<G>,
 
     pub children: Children<G>,
+
+    #[prop(default)]
+    pub classes: ReadSignal<String>,
 }

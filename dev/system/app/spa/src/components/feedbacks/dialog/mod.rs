@@ -58,7 +58,8 @@ pub fn Dialog<G: Html>( props: DialogProps<G> ) -> View<G>
                 on:click=move |event: MouseEvent|
                 {
                     event.stop_propagation();
-                }
+                },
+                ..props.attributes
             )
             {
                 (children)

@@ -16,6 +16,9 @@ use sycamore::prelude::*;
 pub struct AlertProps<G: Html>
 {
     #[prop(default)]
+    pub attributes: Attributes<G>,
+
+    #[prop(default)]
     pub classes: ReadSignal<String>,
 
     pub children: Children<G>,

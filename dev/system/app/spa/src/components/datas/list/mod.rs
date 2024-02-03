@@ -36,12 +36,18 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
             if props.ordered.get()
             {
                 let children = children.clone();
-                view! { ol(class=classes()) { (children) } }
+                view!
+                {
+                    ol(class=classes(), ..props.attributes) { (children) }
+                }
             }
             else
             {
                 let children = children.clone();
-                view! { ul(class=classes()) { (children) } }
+                view!
+                {
+                    ul(class=classes(), ..props.attributes) { (children) }
+                }
             }
         )
     }

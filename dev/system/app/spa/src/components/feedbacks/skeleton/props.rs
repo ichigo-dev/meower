@@ -13,10 +13,13 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct SkeletonProps
+pub struct SkeletonProps<G: Html>
 {
     #[prop(default)]
     pub animation: ReadSignal<SkeletonAnimation>,
+
+    #[prop(default)]
+    pub attributes: Attributes<G>,
 
     #[prop(default)]
     pub classes: ReadSignal<String>,

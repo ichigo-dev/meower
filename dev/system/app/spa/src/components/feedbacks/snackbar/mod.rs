@@ -37,7 +37,7 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        span(class=classes())
+        span(class=classes(), ..props.attributes)
         {
             (children)
             (

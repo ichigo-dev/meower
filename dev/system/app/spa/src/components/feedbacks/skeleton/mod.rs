@@ -18,7 +18,7 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn Skeleton<G: Html>( props: SkeletonProps ) -> View<G>
+pub fn Skeleton<G: Html>( props: SkeletonProps<G> ) -> View<G>
 {
     let classes = move ||
     {
@@ -30,6 +30,6 @@ pub fn Skeleton<G: Html>( props: SkeletonProps ) -> View<G>
 
     view!
     {
-        div(class=classes())
+        div(class=classes(), ..props.attributes)
     }
 }

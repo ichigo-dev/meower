@@ -21,6 +21,9 @@ pub struct DialogProps<G: Html>
     pub animation: ReadSignal<DialogAnimation>,
 
     #[prop(default)]
+    pub attributes: Attributes<G>,
+
+    #[prop(default)]
     pub color: ReadSignal<Colors>,
 
     pub children: Children<G>,
