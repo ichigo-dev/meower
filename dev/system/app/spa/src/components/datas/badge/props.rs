@@ -2,6 +2,8 @@
 /// Props.
 //------------------------------------------------------------------------------
 
+use crate::variables::*;
+
 use sycamore::prelude::*;
 
 
@@ -21,7 +23,7 @@ pub struct BadgeProps<G: Html>
     pub classes: ReadSignal<String>,
 
     #[prop(default)]
-    pub color: ReadSignal<String>,
+    pub color: ReadSignal<Colors>,
 
     #[prop(default)]
     pub invisible: ReadSignal<bool>,

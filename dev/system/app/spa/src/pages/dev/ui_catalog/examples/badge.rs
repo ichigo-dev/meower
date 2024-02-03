@@ -4,6 +4,7 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
+use crate::variables::*;
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -13,7 +14,7 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
+pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
 {
     view!
     {
@@ -75,7 +76,7 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
                         Badge
                         (
                             badge_content=*create_signal("3".to_string()),
-                            color=*create_signal(color),
+                            color=color.into(),
                         )
                         {
                             div(class="ui_icon icon_envelope")

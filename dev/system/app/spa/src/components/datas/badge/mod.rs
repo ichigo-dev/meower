@@ -58,7 +58,7 @@ pub fn Badge<G: Html>( props: BadgeProps<G> ) -> View<G>
     {
         "ui_badge ".to_string()
             + &props.classes.get_clone() + " "
-            + &props.color.get_clone() + " "
+            + &props.color.get_clone().get_class_name() + " "
             + if props.invisible.get() { "hidden" } else { "" }
     };
 

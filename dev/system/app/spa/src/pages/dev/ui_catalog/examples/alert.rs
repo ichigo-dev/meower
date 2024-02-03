@@ -4,6 +4,7 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
+use crate::variables::*;
 
 use rust_i18n::t;
 use sycamore::prelude::*;

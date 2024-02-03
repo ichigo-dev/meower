@@ -4,6 +4,7 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
+use crate::variables::*;
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -13,7 +14,7 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<String>> ) -> View<G>
+pub fn TableExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
 {
     let iter = create_signal((1..=5).collect::<Vec<_>>());
     let iter_large = create_signal((1..=20).collect::<Vec<_>>());
