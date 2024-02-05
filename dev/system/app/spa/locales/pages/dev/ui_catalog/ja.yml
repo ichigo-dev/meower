@@ -148,3 +148,9 @@ pages:
         heading: "Snackbar"
         basic:
           heading: "Basic"
+        animations:
+          heading: "Animations"
+        colors:
+          heading: "Colors"
+        position:
+          heading: "Position"
