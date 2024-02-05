@@ -45,6 +45,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             SkeletonExamples()
             SnackbarExamples(colors=*theme_colors)
             ButtonExamples(colors=*theme_colors)
+            ButtonGroupExamples(colors=*theme_colors)
         }
     }
 }

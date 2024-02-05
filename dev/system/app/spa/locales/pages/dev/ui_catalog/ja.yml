@@ -167,3 +167,18 @@ pages:
           heading: "Colors"
         rounds:
           heading: "Rounds"
+
+      button_group:
+        heading: "ButtonGroup"
+        basic:
+          heading: "Basic"
+        disabled:
+          heading: "Disabled"
+        sizes:
+          heading: "Sizes"
+        colors:
+          heading: "Colors"
+        vertical:
+          heading: "Vertical"
+        active:
+          heading: "Active"
