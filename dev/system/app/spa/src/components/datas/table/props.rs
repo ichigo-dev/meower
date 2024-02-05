@@ -2,8 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::size::TableSize;
-use super::variant::TableVariant;
+use super::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;

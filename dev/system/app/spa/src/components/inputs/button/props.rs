@@ -3,8 +3,7 @@
 //------------------------------------------------------------------------------
 
 use super::*;
-use crate::utils::props::*;
-use crate::variables::Colors;
+use crate::variables::*;
 
 use sycamore::prelude::*;
 
@@ -14,37 +13,31 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct SnackbarProps<G: Html>
+pub struct ButtonProps<G: Html>
 {
     #[prop(default)]
-    pub animation: ReadSignal<SnackbarAnimation>,
-
-    #[prop(default)]
     pub attributes: Attributes<G>,
-
-    #[prop(default = U32Prop(5000).into())]
-    pub auto_hide_duration: ReadSignal<u32>,
-
-    pub children: Children<G>,
 
     #[prop(default)]
     pub classes: ReadSignal<String>,
 
-    #[prop(default = Colors::Background.into())]
-    pub close_icon_color: ReadSignal<Colors>,
+    pub children: Children<G>,
+
+    #[prop(default = Colors::Primary.into())]
+    pub color: ReadSignal<Colors>,
 
     #[prop(default)]
-    pub color: ReadSignal<Colors>,
+    pub disabled: ReadSignal<bool>,
 
     #[prop(default)]
     pub node_ref: NodeRef<G>,
 
     #[prop(default)]
-    pub open: Signal<bool>,
+    pub round: ReadSignal<ButtonRound>,
 
     #[prop(default)]
-    pub position: ReadSignal<SnackbarPosition>,
+    pub size: ReadSignal<ButtonSize>,
 
     #[prop(default)]
-    pub show_close_icon: ReadSignal<bool>,
+    pub variant: ReadSignal<ButtonVariant>,
 }

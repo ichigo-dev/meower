@@ -2,8 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::severity::AlertSeverity;
-use super::variant::AlertVariant;
+use super::*;
 
 use sycamore::prelude::*;
 

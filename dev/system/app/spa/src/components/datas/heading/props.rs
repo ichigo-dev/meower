@@ -2,10 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::align::HeadingAlign;
-use super::level::HeadingLevel;
-use super::thickness::HeadingThickness;
-use super::variant::HeadingVariant;
+use super::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;

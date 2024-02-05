@@ -2,9 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::size::ProgressSize;
-use super::thickness::ProgressThickness;
-use super::variant::ProgressVariant;
+use super::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;

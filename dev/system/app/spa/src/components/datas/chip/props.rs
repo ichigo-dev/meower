@@ -2,8 +2,7 @@
 /// Props.
 //------------------------------------------------------------------------------
 
-use super::size::ChipSize;
-use super::variant::ChipVariant;
+use super::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;

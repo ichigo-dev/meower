@@ -2,8 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::animation::DialogAnimation;
-use super::size::DialogSize;
+use super::*;
 use crate::utils::props::*;
 use crate::variables::*;
 

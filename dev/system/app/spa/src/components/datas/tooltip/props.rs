@@ -2,7 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::position::TooltipPosition;
+use super::*;
 use crate::utils::props::*;
 use crate::variables::*;
 

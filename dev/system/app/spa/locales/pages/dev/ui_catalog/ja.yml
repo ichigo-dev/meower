@@ -154,3 +154,16 @@ pages:
           heading: "Colors"
         position:
           heading: "Position"
+
+      button:
+        heading: "Button"
+        basic:
+          heading: "Basic"
+        disabled:
+          heading: "Disabled"
+        sizes:
+          heading: "Sizes"
+        colors:
+          heading: "Colors"
+        rounds:
+          heading: "Rounds"

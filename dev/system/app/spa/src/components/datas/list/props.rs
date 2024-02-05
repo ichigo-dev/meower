@@ -2,7 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::variant::ListVariant;
+use super::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;

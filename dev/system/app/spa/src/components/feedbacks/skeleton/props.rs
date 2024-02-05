@@ -2,8 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::animation::SkeletonAnimation;
-use super::shape::SkeletonShape;
+use super::*;
 
 use sycamore::prelude::*;
 

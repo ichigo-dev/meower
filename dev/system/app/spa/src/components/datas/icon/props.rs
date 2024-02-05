@@ -2,8 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
-use super::kind::IconKind;
-use super::size::IconSize;
+use super::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;
