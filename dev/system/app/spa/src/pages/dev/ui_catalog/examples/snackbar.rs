@@ -18,6 +18,7 @@ use sycamore::prelude::*;
 pub fn SnackbarExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
 {
     let open_snackbar_1 = create_signal(false);
+    let open_snackbar_2 = create_signal(false);
 
     view!
     {
@@ -48,6 +49,33 @@ pub fn SnackbarExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 )
                 {
                     "Snackbar"
+                }
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.snackbar.animation.heading"))
+            }
+            div(class="flex flex_row flex_gap_md flex_align_center width_full")
+            {
+                button
+                (
+                    class="ui_button primary",
+                    on:click=move |_| { open_snackbar_2.set(true) },
+                )
+                {
+                    "Open snackbar"
+                }
+                Snackbar
+                (
+                    animation=SnackbarAnimation::Fade.into(),
+                    open=open_snackbar_2,
+                    show_close_icon=BoolProp(true).into(),
+                )
+                {
+                    "Fade Snackbar"
                 }
             }
         }
