@@ -22,21 +22,27 @@ pub fn Chip<G: Html>( props: ChipProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_chip ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.size.get_clone().get_class_name() + " "
-            + &props.variant.get_clone().get_class_name() + " "
-            + if props.clickable.get() { "clickable " } else { " " }
-            + if props.disabled.get() { "disabled " } else { " " }
+        let mut classes = vec!
+        [
+            "ui_chip".to_string(),
+            props.classes.get_clone(),
+            props.color.get_clone().get_class_name(),
+            props.size.get_clone().get_class_name(),
+            props.variant.get_clone().get_class_name(),
+        ];
+        if props.clickable.get() { classes.push("clickable".to_string()) }
+        if props.disabled.get() { classes.push("disabled".to_string()) }
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
+    let children = props.children.call();
     view!
     {
-        span(class=classes(), ref=props.node_ref, ..props.attributes)
+        span(class=classes(), ..props.attributes)
         {
             (props.left_icon)
-            (props.label.get_clone())
+            (children)
             (props.right_icon)
         }
     }

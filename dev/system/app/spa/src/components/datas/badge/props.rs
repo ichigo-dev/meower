@@ -36,8 +36,5 @@ pub struct BadgeProps<G: Html>
     pub max: ReadSignal<usize>,
 
     #[prop(default)]
-    pub node_ref: NodeRef<G>,
-
-    #[prop(default)]
     pub show_zero: ReadSignal<bool>,
 }

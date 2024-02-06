@@ -30,9 +30,6 @@ pub struct TooltipProps<G: Html>
     pub description: View<G>,
 
     #[prop(default)]
-    pub node_ref: NodeRef<G>,
-
-    #[prop(default)]
     pub position: ReadSignal<TooltipPosition>,
 
     #[prop(default = UsizeProp(250).into())]

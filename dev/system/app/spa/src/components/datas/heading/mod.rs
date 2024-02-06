@@ -26,13 +26,18 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_heading ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.align.get_clone().get_class_name() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.level.get_clone().get_class_name() + " "
-            + &props.variant.get_clone().get_class_name() + " "
-            + &props.thickness.get_clone().get_class_name() + " "
+        let mut classes = vec!
+        [
+            "ui_heading".to_string(),
+            props.classes.get_clone(),
+            props.align.get_clone().get_class_name(),
+            props.color.get_clone().get_class_name(),
+            props.level.get_clone().get_class_name(),
+            props.variant.get_clone().get_class_name(),
+            props.thickness.get_clone().get_class_name(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
@@ -46,12 +51,7 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h1
-                        (
-                            class=classes(),
-                            ref=props.node_ref,
-                            ..props.attributes
-                        )
+                        h1(class=classes(), ..props.attributes)
                         {
                             (children)
                         }
@@ -62,12 +62,7 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h2
-                        (
-                            class=classes(),
-                            ref=props.node_ref,
-                            ..props.attributes
-                        )
+                        h2(class=classes(), ..props.attributes)
                         {
                             (children)
                         }
@@ -78,12 +73,7 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h3
-                        (
-                            class=classes(),
-                            ref=props.node_ref,
-                            ..props.attributes
-                        )
+                        h3(class=classes(), ..props.attributes)
                         {
                             (children)
                         }
@@ -94,12 +84,7 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h4
-                        (
-                            class=classes(),
-                            ref=props.node_ref,
-                            ..props.attributes
-                        )
+                        h4(class=classes(), ..props.attributes)
                         {
                             (children)
                         }
@@ -110,12 +95,7 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h5
-                        (
-                            class=classes(),
-                            ref=props.node_ref,
-                            ..props.attributes
-                        )
+                        h5(class=classes(), ..props.attributes)
                         {
                             (children)
                         }
@@ -126,12 +106,7 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h6
-                        (
-                            class=classes(),
-                            ref=props.node_ref,
-                            ..props.attributes
-                        )
+                        h6(class=classes(), ..props.attributes)
                         {
                             (children)
                         }

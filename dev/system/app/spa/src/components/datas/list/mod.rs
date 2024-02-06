@@ -22,11 +22,16 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_list ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.variant.get_clone().get_class_name() + " "
-            + if props.ordered.get() { "ordered " } else { " " }
+        let mut classes = vec!
+        [
+            "ui_list".to_string(),
+            props.classes.get_clone(),
+            props.color.get_clone().get_class_name(),
+            props.variant.get_clone().get_class_name(),
+        ];
+        if props.ordered.get() { classes.push("ordered".to_string()) }
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
@@ -38,7 +43,7 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
                 let children = children.clone();
                 view!
                 {
-                    ol(class=classes(), ref=props.node_ref, ..props.attributes)
+                    ol(class=classes(), ..props.attributes)
                     {
                         (children)
                     }
@@ -49,7 +54,7 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
                 let children = children.clone();
                 view!
                 {
-                    ul(class=classes(), ref=props.node_ref, ..props.attributes)
+                    ul(class=classes(), ..props.attributes)
                     {
                         (children)
                     }

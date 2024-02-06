@@ -22,16 +22,21 @@ pub fn Icon<G: Html>( props: IconProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_icon ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.icon.get_clone().get_class_name() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.size.get_clone().get_class_name() + " "
-            + if props.clickable.get_clone() { "clickable " } else { " " }
+        let mut classes = vec!
+        [
+            "ui_icon".to_string(),
+            props.classes.get_clone(),
+            props.icon.get_clone().get_class_name(),
+            props.color.get_clone().get_class_name(),
+            props.size.get_clone().get_class_name(),
+        ];
+        if props.clickable.get_clone() { classes.push("clickable".to_string()) }
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     view!
     {
-        span(class=classes(), ref=props.node_ref, ..props.attributes)
+        span(class=classes(), ..props.attributes)
     }
 }

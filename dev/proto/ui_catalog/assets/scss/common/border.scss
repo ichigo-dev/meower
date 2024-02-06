@@ -1,0 +1,42 @@
+//------------------------------------------------------------------------------
+//	Border
+//------------------------------------------------------------------------------
+
+.border
+{
+	border: 1px solid var(--color-border);
+
+	// Color
+	&_light { border-color: var(--color-border-light); }
+	&_dark { border-color: var(--color-border-dark); }
+
+	// Position
+	&_top
+	{
+		border-top: 1px solid var(--color-border);
+
+		&_light { border-top-color: var(--color-border-light); }
+		&_dark { border-top-color: var(--color-border-dark); }
+	}
+	&_right
+	{
+		border-right: 1px solid var(--color-border);
+
+		&_light { border-right-color: var(--color-border-light); }
+		&_dark { border-right-color: var(--color-border-dark); }
+	}
+	&_bottom
+	{
+		border-bottom: 1px solid var(--color-border);
+
+		&_light { border-bottom-color: var(--color-border-light); }
+		&_dark { border-bottom-color: var(--color-border-dark); }
+	}
+	&_left
+	{
+		border-left: 1px solid var(--color-border);
+
+		&_light { border-left-color: var(--color-border-light); }
+		&_dark { border-left-color: var(--color-border-dark); }
+	}
+}

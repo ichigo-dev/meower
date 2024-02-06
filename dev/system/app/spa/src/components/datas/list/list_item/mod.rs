@@ -18,15 +18,21 @@ pub fn ListItem<G: Html>( props: ListItemProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_list_item ".to_string()
-            + &props.classes.get_clone() + " "
-            + if props.clickable.get() { "clickable " } else { " " }
+        let mut classes = vec!
+        [
+            "ui_list_item".to_string(),
+            props.classes.get_clone(),
+        ];
+        if props.clickable.get() { classes.push("clickable".to_string()) }
+        if props.divider.get() { classes.push("border_bottom".to_string()) }
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
     view!
     {
-        li(class=classes(), ref=props.node_ref, ..props.attributes)
+        li(class=classes(), ..props.attributes)
         {
             (children)
         }

@@ -18,6 +18,8 @@ pub struct ChipProps<G: Html>
     #[prop(default)]
     pub attributes: Attributes<G>,
 
+    pub children: Children<G>,
+
     #[prop(default)]
     pub classes: ReadSignal<String>,
 
@@ -31,13 +33,7 @@ pub struct ChipProps<G: Html>
     pub disabled: ReadSignal<bool>,
 
     #[prop(default)]
-    pub label: ReadSignal<String>,
-
-    #[prop(default)]
     pub left_icon: View<G>,
-
-    #[prop(default)]
-    pub node_ref: NodeRef<G>,
 
     #[prop(default)]
     pub right_icon: View<G>,

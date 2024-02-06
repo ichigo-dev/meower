@@ -20,16 +20,21 @@ pub fn Tooltip<G: Html>( props: TooltipProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_tooltip ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.position.get_clone().get_class_name() + " "
+        let mut classes = vec!
+        [
+            "ui_tooltip".to_string(),
+            props.classes.get_clone(),
+            props.color.get_clone().get_class_name(),
+            props.position.get_clone().get_class_name(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
     view!
     {
-        span(class=classes(), ref=props.node_ref, ..props.attributes)
+        span(class=classes(), ..props.attributes)
         {
             span
             (
