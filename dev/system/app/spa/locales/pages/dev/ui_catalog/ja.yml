@@ -202,3 +202,19 @@ pages:
           heading: "Sizes"
         colors:
           heading: "Colors"
+
+      radio:
+        heading: "Radio"
+        basic:
+          heading: "Basic"
+        sizes:
+          heading: "Sizes"
+        colors:
+          heading: "Colors"
+
+      range_slider:
+        heading: "Range Slider"
+        basic:
+          heading: "Basic"
+        sizes:
+          heading: "Sizes"

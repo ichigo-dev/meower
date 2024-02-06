@@ -49,6 +49,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             CheckboxExamples(colors=*theme_colors)
             FloatingButtonExamples(colors=*theme_colors)
             RadioExamples(colors=*theme_colors)
+            RangeSliderExamples()
         }
     }
 }

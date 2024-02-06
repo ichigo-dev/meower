@@ -21,13 +21,13 @@ pub fn RadioExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
     {
         h3(class="ui_heading h3")
         {
-            (t!("pages.dev.ui_catalog.checkbox.heading"))
+            (t!("pages.dev.ui_catalog.radio.heading"))
         }
         MainPanel
         {
             h4(class="ui_heading h4")
             {
-                (t!("pages.dev.ui_catalog.checkbox.basic.heading"))
+                (t!("pages.dev.ui_catalog.radio.basic.heading"))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
@@ -49,7 +49,7 @@ pub fn RadioExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
         {
             h4(class="ui_heading h4")
             {
-                (t!("pages.dev.ui_catalog.checkbox.sizes.heading"))
+                (t!("pages.dev.ui_catalog.radio.sizes.heading"))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
@@ -75,7 +75,7 @@ pub fn RadioExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
         {
             h4(class="ui_heading h4")
             {
-                (t!("pages.dev.ui_catalog.checkbox.colors.heading"))
+                (t!("pages.dev.ui_catalog.radio.colors.heading"))
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
