@@ -182,3 +182,12 @@ pages:
           heading: "Vertical"
         active:
           heading: "Active"
+
+      checkbox:
+        heading: "Checkbox"
+        basic:
+          heading: "Basic"
+        sizes:
+          heading: "Sizes"
+        colors:
+          heading: "Colors"
