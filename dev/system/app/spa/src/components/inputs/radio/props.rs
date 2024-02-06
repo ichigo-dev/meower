@@ -13,7 +13,7 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct CheckboxProps<G: Html>
+pub struct RadioProps<G: Html>
 {
     #[prop(default)]
     pub attributes: Attributes<G>,
@@ -37,7 +37,7 @@ pub struct CheckboxProps<G: Html>
     pub node_ref: NodeRef<G>,
 
     #[prop(default)]
-    pub size: ReadSignal<CheckboxSize>,
+    pub size: ReadSignal<RadioSize>,
 
     #[prop(default)]
     pub value: ReadSignal<String>,

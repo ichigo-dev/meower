@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------
-//! Checkbox.
+//! Radio.
 //------------------------------------------------------------------------------
 
 mod props;
 mod size;
 
-pub use props::CheckboxProps;
-pub use size::CheckboxSize;
+pub use props::RadioProps;
+pub use size::RadioSize;
 
 use sycamore::prelude::*;
 
@@ -16,11 +16,11 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
+pub fn Radio<G: Html>( props: RadioProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_checkbox ".to_string()
+        "ui_radio ".to_string()
             + &props.classes.get_clone() + " "
             + &props.color.get_clone().get_class_name() + " "
             + &props.size.get_clone().get_class_name() + " "
@@ -31,7 +31,7 @@ pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
         input
         (
             class=classes(),
-            type="checkbox",
+            type="radio",
             name=props.name.get_clone(),
             value=props.value.get_clone(),
             checked=props.checked.get(),
