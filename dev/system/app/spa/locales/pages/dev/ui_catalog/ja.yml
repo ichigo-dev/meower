@@ -218,3 +218,10 @@ pages:
           heading: "Basic"
         sizes:
           heading: "Sizes"
+
+      select:
+        heading: "Select"
+        basic:
+          heading: "Basic"
+        disabled:
+          heading: "Disabled"
