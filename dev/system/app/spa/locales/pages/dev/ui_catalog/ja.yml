@@ -169,7 +169,7 @@ pages:
           heading: "Rounds"
 
       button_group:
-        heading: "ButtonGroup"
+        heading: "Button Group"
         basic:
           heading: "Basic"
         disabled:
@@ -187,6 +187,17 @@ pages:
         heading: "Checkbox"
         basic:
           heading: "Basic"
+        sizes:
+          heading: "Sizes"
+        colors:
+          heading: "Colors"
+
+      floating_button:
+        heading: "Floating Button"
+        basic:
+          heading: "Basic"
+        disabled:
+          heading: "Disabled"
         sizes:
           heading: "Sizes"
         colors:
