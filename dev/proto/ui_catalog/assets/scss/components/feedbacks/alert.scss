@@ -79,6 +79,11 @@
 		-webkit-mask-image: var(--icon-svg-circle-check);
 	}
 
+	&.no_icon:before
+	{
+		display: none;
+	}
+
 
 	//--------------------------------------------------------------------------
 	//	Styles

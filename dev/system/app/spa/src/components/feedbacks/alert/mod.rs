@@ -20,20 +20,30 @@ use sycamore::prelude::*;
 #[component]
 pub fn Alert<G: Html>( props: AlertProps<G> ) -> View<G>
 {
+    let left_icon = props.left_icon.clone();
     let classes = move ||
     {
-        "ui_alert ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.severity.get_clone().get_class_name() + " "
-            + &props.variant.get_clone().get_class_name() + " "
+        let mut classes = vec!
+        [
+            "ui_alert".to_string(),
+            props.classes.get_clone(),
+            props.severity.get_clone().get_class_name(),
+            props.variant.get_clone().get_class_name(),
+        ];
+        if left_icon.is_some() { classes.push("no_icon".to_string()) }
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
     view!
     {
-        div(class=classes(), ref=props.node_ref, ..props.attributes)
+        div(class=classes(), ..props.attributes)
         {
+            (props.left_icon)
             (children)
+            span(class="flex_spacer")
+            (props.right_icon)
         }
     }
 }

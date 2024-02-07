@@ -59,6 +59,14 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
         }
     });
 
+    let clear_timeout = move ||
+    {
+        let window = web_sys::window().unwrap();
+        let id = auto_hide_timer_id.get();
+        window.clear_timeout_with_handle(id);
+    };
+    on_cleanup(clear_timeout);
+
     let children = props.children.call();
     view!
     {
@@ -78,9 +86,7 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
                             clickable=BoolProp(true).into(),
                             on:click=move |_|
                             {
-                                let window = web_sys::window().unwrap();
-                                let id = auto_hide_timer_id.get();
-                                window.clear_timeout_with_handle(id);
+                                clear_timeout();
                                 auto_hide_timer_id.set(0 as i32);
                                 props.open.set(false);
                             },
