@@ -18,6 +18,14 @@ impl Into<ReadSignal<String>> for StringProp
     }
 }
 
+impl Into<Signal<String>> for StringProp
+{
+    fn into( self ) -> Signal<String>
+    {
+        create_signal(self.0.to_string())
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// BoolProp.
@@ -29,6 +37,14 @@ impl Into<ReadSignal<bool>> for BoolProp
     fn into( self ) -> ReadSignal<bool>
     {
         *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<bool>> for BoolProp
+{
+    fn into( self ) -> Signal<bool>
+    {
+        create_signal(self.0)
     }
 }
 
@@ -46,6 +62,14 @@ impl Into<ReadSignal<usize>> for UsizeProp
     }
 }
 
+impl Into<Signal<usize>> for UsizeProp
+{
+    fn into( self ) -> Signal<usize>
+    {
+        create_signal(self.0)
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// U8Prop.
@@ -57,6 +81,14 @@ impl Into<ReadSignal<u8>> for U8Prop
     fn into( self ) -> ReadSignal<u8>
     {
         *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<u8>> for U8Prop
+{
+    fn into( self ) -> Signal<u8>
+    {
+        create_signal(self.0)
     }
 }
 
@@ -74,6 +106,14 @@ impl Into<ReadSignal<u16>> for U16Prop
     }
 }
 
+impl Into<Signal<u16>> for U16Prop
+{
+    fn into( self ) -> Signal<u16>
+    {
+        create_signal(self.0)
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// U32Prop.
@@ -85,6 +125,14 @@ impl Into<ReadSignal<u32>> for U32Prop
     fn into( self ) -> ReadSignal<u32>
     {
         *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<u32>> for U32Prop
+{
+    fn into( self ) -> Signal<u32>
+    {
+        create_signal(self.0)
     }
 }
 
@@ -102,6 +150,14 @@ impl Into<ReadSignal<u64>> for U64Prop
     }
 }
 
+impl Into<Signal<u64>> for U64Prop
+{
+    fn into( self ) -> Signal<u64>
+    {
+        create_signal(self.0)
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// U128Prop.
@@ -113,6 +169,14 @@ impl Into<ReadSignal<u128>> for U128Prop
     fn into( self ) -> ReadSignal<u128>
     {
         *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<u128>> for U128Prop
+{
+    fn into( self ) -> Signal<u128>
+    {
+        create_signal(self.0)
     }
 }
 
@@ -130,6 +194,14 @@ impl Into<ReadSignal<isize>> for IsizeProp
     }
 }
 
+impl Into<Signal<isize>> for IsizeProp
+{
+    fn into( self ) -> Signal<isize>
+    {
+        create_signal(self.0)
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// I8Prop.
@@ -141,6 +213,14 @@ impl Into<ReadSignal<i8>> for I8Prop
     fn into( self ) -> ReadSignal<i8>
     {
         *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<i8>> for I8Prop
+{
+    fn into( self ) -> Signal<i8>
+    {
+        create_signal(self.0)
     }
 }
 
@@ -158,6 +238,14 @@ impl Into<ReadSignal<i16>> for I16Prop
     }
 }
 
+impl Into<Signal<i16>> for I16Prop
+{
+    fn into( self ) -> Signal<i16>
+    {
+        create_signal(self.0)
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// I32Prop.
@@ -169,6 +257,14 @@ impl Into<ReadSignal<i32>> for I32Prop
     fn into( self ) -> ReadSignal<i32>
     {
         *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<i32>> for I32Prop
+{
+    fn into( self ) -> Signal<i32>
+    {
+        create_signal(self.0)
     }
 }
 
@@ -186,6 +282,14 @@ impl Into<ReadSignal<i64>> for I64Prop
     }
 }
 
+impl Into<Signal<i64>> for I64Prop
+{
+    fn into( self ) -> Signal<i64>
+    {
+        create_signal(self.0)
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// I128Prop.
@@ -197,6 +301,14 @@ impl Into<ReadSignal<i128>> for I128Prop
     fn into( self ) -> ReadSignal<i128>
     {
         *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<i128>> for I128Prop
+{
+    fn into( self ) -> Signal<i128>
+    {
+        create_signal(self.0)
     }
 }
 
@@ -214,6 +326,14 @@ impl Into<ReadSignal<f32>> for F32Prop
     }
 }
 
+impl Into<Signal<f32>> for F32Prop
+{
+    fn into( self ) -> Signal<f32>
+    {
+        create_signal(self.0)
+    }
+}
+
 
 //------------------------------------------------------------------------------
 /// F64Prop.
@@ -225,5 +345,13 @@ impl Into<ReadSignal<f64>> for F64Prop
     fn into( self ) -> ReadSignal<f64>
     {
         *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<f64>> for F64Prop
+{
+    fn into( self ) -> Signal<f64>
+    {
+        create_signal(self.0)
     }
 }

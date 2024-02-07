@@ -265,3 +265,8 @@ pages:
           heading: "Basic"
         position:
           heading: "Position"
+
+      pagination:
+        heading: "Pagination"
+        basic:
+          heading: "Basic"

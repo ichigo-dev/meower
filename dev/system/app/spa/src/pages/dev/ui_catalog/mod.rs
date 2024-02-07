@@ -55,6 +55,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             TextFieldExamples(colors=*theme_colors)
             CrumbsExamples()
             DrawerExamples()
+            PaginationExamples(colors=*theme_colors)
         }
     }
 }
