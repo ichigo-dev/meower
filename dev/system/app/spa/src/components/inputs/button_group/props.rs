@@ -27,9 +27,6 @@ pub struct ButtonGroupProps<G: Html>
     pub color: ReadSignal<Colors>,
 
     #[prop(default)]
-    pub node_ref: NodeRef<G>,
-
-    #[prop(default)]
     pub size: ReadSignal<ButtonGroupSize>,
 
     #[prop(default)]

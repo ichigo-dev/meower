@@ -20,10 +20,15 @@ pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_checkbox ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.size.get_clone().get_class_name() + " "
+        let mut classes = vec!
+        [
+            "ui_checkbox".to_string(),
+            props.classes.get_clone(),
+            props.color.get_clone().get_class_name(),
+            props.size.get_clone().get_class_name(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     view!
@@ -36,7 +41,7 @@ pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
             value=props.value.get_clone(),
             checked=props.checked.get(),
             disabled=props.disabled.get(),
-            ref=props.node_ref,
+            required=props.required.get(),
             ..props.attributes
         )
     }

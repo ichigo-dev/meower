@@ -225,3 +225,7 @@ pages:
           heading: "Basic"
         disabled:
           heading: "Disabled"
+        sizes:
+          heading: "Sizes"
+        optgroup:
+          heading: "Option Group"

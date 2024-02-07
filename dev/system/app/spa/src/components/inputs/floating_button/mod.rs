@@ -20,10 +20,15 @@ pub fn FloatingButton<G: Html>( props: FloatingButtonProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_floating_button ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.size.get_clone().get_class_name() + " "
+        let mut classes = vec!
+        [
+            "ui_floating_button".to_string(),
+            props.classes.get_clone(),
+            props.color.get_clone().get_class_name(),
+            props.size.get_clone().get_class_name(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
@@ -32,7 +37,6 @@ pub fn FloatingButton<G: Html>( props: FloatingButtonProps<G> ) -> View<G>
         button
         (
             class=classes(),
-            ref=props.node_ref,
             disabled=props.disabled.get(),
             ..props.attributes
         )

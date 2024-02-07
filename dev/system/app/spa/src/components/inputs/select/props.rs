@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 use super::*;
-use crate::variables::*;
 
 use sycamore::prelude::*;
 
@@ -24,16 +23,13 @@ pub struct SelectProps<G: Html>
     pub children: Children<G>,
 
     #[prop(default)]
-    pub color: ReadSignal<Colors>,
-
-    #[prop(default)]
     pub disabled: ReadSignal<bool>,
 
     #[prop(default)]
     pub name: ReadSignal<String>,
 
     #[prop(default)]
-    pub node_ref: NodeRef<G>,
+    pub required: ReadSignal<bool>,
 
     #[prop(default)]
     pub size: ReadSignal<SelectSize>,

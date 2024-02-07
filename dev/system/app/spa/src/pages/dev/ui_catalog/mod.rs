@@ -50,7 +50,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             FloatingButtonExamples(colors=*theme_colors)
             RadioExamples(colors=*theme_colors)
             RangeSliderExamples()
-            SelectExamples(colors=*theme_colors)
+            SelectExamples()
         }
     }
 }

@@ -61,7 +61,7 @@ pub fn ButtonGroupExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G
             {
                 ButtonGroup(variant=ButtonGroupVariant::Text.into())
                 {
-                    ButtonGroupItem(disabled=BoolProp(true).into())
+                    ButtonGroupItem(attr:disabled=true)
                     {
                         "Button 1"
                     }
@@ -70,7 +70,7 @@ pub fn ButtonGroupExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G
                 }
                 ButtonGroup(variant=ButtonGroupVariant::Filled.into())
                 {
-                    ButtonGroupItem(disabled=BoolProp(true).into())
+                    ButtonGroupItem(attr:disabled=true)
                     {
                         "Button 1"
                     }
@@ -79,7 +79,7 @@ pub fn ButtonGroupExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G
                 }
                 ButtonGroup(variant=ButtonGroupVariant::Outlined.into())
                 {
-                    ButtonGroupItem(disabled=BoolProp(true).into())
+                    ButtonGroupItem(attr:disabled=true)
                     {
                         "Button 1"
                     }

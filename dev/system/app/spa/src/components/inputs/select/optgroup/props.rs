@@ -23,11 +23,7 @@ pub struct OptgroupProps<G: Html>
     #[prop(default)]
     pub disabled: ReadSignal<bool>,
 
-    #[prop(default)]
-    pub name: ReadSignal<String>,
-
-    #[prop(default)]
-    pub node_ref: NodeRef<G>,
+    pub label: ReadSignal<String>,
 
     #[prop(default)]
     pub value: ReadSignal<String>,

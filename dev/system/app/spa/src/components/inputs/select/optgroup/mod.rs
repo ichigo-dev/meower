@@ -18,7 +18,12 @@ pub fn Optgroup<G: Html>( props: OptgroupProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        props.classes.get_clone() + " "
+        let mut classes = vec!
+        [
+            props.classes.get_clone(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
@@ -27,10 +32,9 @@ pub fn Optgroup<G: Html>( props: OptgroupProps<G> ) -> View<G>
         optgroup
         (
             class=classes(),
-            name=props.name.get_clone(),
+            label=props.label.get_clone(),
             value=props.value.get_clone(),
             disabled=props.disabled.get_clone(),
-            ref=props.node_ref,
             ..props.attributes
         )
         {

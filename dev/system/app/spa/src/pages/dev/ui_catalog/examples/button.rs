@@ -4,7 +4,6 @@
 
 use crate::components::*;
 use crate::layouts::application::MainPanel;
-use crate::utils::props::*;
 use crate::variables::*;
 
 use rust_i18n::t;
@@ -56,7 +55,7 @@ pub fn ButtonExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 Button
                 (
                     variant=ButtonVariant::Text.into(),
-                    disabled=BoolProp(true).into(),
+                    attr:disabled=true,
                 )
                 {
                     "Button"
@@ -64,7 +63,7 @@ pub fn ButtonExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 Button
                 (
                     variant=ButtonVariant::Filled.into(),
-                    disabled=BoolProp(true).into(),
+                    attr:disabled=true,
                 )
                 {
                     "Button"
@@ -72,7 +71,7 @@ pub fn ButtonExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 Button
                 (
                     variant=ButtonVariant::Outlined.into(),
-                    disabled=BoolProp(true).into(),
+                    attr:disabled=true,
                 )
                 {
                     "Button"

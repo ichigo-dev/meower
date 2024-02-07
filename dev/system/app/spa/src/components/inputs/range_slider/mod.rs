@@ -20,9 +20,14 @@ pub fn RangeSlider<G: Html>( props: RangeSliderProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_range_slider ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.size.get_clone().get_class_name() + " "
+        let mut classes = vec!
+        [
+            "ui_range_slider".to_string(),
+            props.classes.get_clone(),
+            props.size.get_clone().get_class_name(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     view!
@@ -34,7 +39,7 @@ pub fn RangeSlider<G: Html>( props: RangeSliderProps<G> ) -> View<G>
             name=props.name.get_clone(),
             value=props.value.get_clone(),
             disabled=props.disabled.get(),
-            ref=props.node_ref,
+            required=props.required.get(),
             ..props.attributes
         )
     }

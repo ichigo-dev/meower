@@ -26,11 +26,15 @@ pub fn Select<G: Html>( props: SelectProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_select ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.size.get_clone().get_class_name() + " "
-            + &props.variant.get_clone().get_class_name() + " "
+        let mut classes = vec!
+        [
+            "ui_select".to_string(),
+            props.classes.get_clone(),
+            props.size.get_clone().get_class_name(),
+            props.variant.get_clone().get_class_name(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
@@ -43,7 +47,7 @@ pub fn Select<G: Html>( props: SelectProps<G> ) -> View<G>
                 name=props.name.get_clone(),
                 value=props.value.get_clone(),
                 disabled=props.disabled.get_clone(),
-                ref=props.node_ref,
+                required=props.required.get_clone(),
                 ..props.attributes
             )
             {
