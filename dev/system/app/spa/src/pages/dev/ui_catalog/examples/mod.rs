@@ -19,6 +19,7 @@ mod range_slider;
 mod select;
 mod skeleton;
 mod snackbar;
+mod switch;
 mod table;
 mod tooltip;
 
@@ -39,5 +40,6 @@ pub use range_slider::RangeSliderExamples;
 pub use select::SelectExamples;
 pub use skeleton::SkeletonExamples;
 pub use snackbar::SnackbarExamples;
+pub use switch::SwitchExamples;
 pub use table::TableExamples;
 pub use tooltip::TooltipExamples;

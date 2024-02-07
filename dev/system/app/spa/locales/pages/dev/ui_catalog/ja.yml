@@ -229,3 +229,12 @@ pages:
           heading: "Sizes"
         optgroup:
           heading: "Option Group"
+
+      switch:
+        heading: "Switch"
+        basic:
+          heading: "Basic"
+        sizes:
+          heading: "Sizes"
+        colors:
+          heading: "Colors"

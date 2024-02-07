@@ -51,6 +51,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             RadioExamples(colors=*theme_colors)
             RangeSliderExamples()
             SelectExamples()
+            SwitchExamples(colors=*theme_colors)
         }
     }
 }
