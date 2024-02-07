@@ -253,3 +253,15 @@ pages:
           heading: "Full Width"
         multiline:
           heading: "Multiline"
+
+      crumbs:
+        heading: "Crumbs"
+        basic:
+          heading: "Basic"
+
+      drawer:
+        heading: "Drawer"
+        basic:
+          heading: "Basic"
+        position:
+          heading: "Position"

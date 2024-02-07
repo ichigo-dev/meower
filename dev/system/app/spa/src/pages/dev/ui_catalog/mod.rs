@@ -53,6 +53,8 @@ pub fn UiCatalog<G: Html>() -> View<G>
             SelectExamples()
             SwitchExamples(colors=*theme_colors)
             TextFieldExamples(colors=*theme_colors)
+            CrumbsExamples()
+            DrawerExamples()
         }
     }
 }

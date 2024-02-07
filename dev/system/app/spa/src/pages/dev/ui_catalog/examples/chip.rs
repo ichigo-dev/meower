@@ -33,7 +33,6 @@ pub fn ChipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Chip { "Chip" }
                 Chip(variant=ChipVariant::Outlined.into()) { "Chip" }
-
             }
         }
         MainPanel
