@@ -33,23 +33,64 @@ pub fn PaginationExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Pagination
                 (
-                    count=UsizeProp(100).into(),
+                    count=IsizeProp(100).into(),
                     variant=PaginationVariant::Circle.into(),
                 )
                 Pagination
                 (
-                    count=UsizeProp(100).into(),
+                    count=IsizeProp(100).into(),
                     variant=PaginationVariant::CircleOutlined.into(),
                 )
                 Pagination
                 (
-                    count=UsizeProp(100).into(),
+                    count=IsizeProp(100).into(),
                     variant=PaginationVariant::Rounded.into(),
                 )
                 Pagination
                 (
-                    count=UsizeProp(100).into(),
+                    count=IsizeProp(100).into(),
                     variant=PaginationVariant::RoundedOutlined.into(),
+                )
+            }
+        }
+        MainPanel
+        {
+            h4(class="ui_heading h4")
+            {
+                (t!("pages.dev.ui_catalog.pagination.colors.heading"))
+            }
+            div(class="flex flex_column flex_gap_md width_full")
+            {
+                Indexed
+                (
+                    iterable=colors,
+                    view=|color| view!
+                    {
+                        Pagination
+                        (
+                            color=color.into(),
+                            count=IsizeProp(100).into(),
+                            variant=PaginationVariant::Circle.into(),
+                        )
+                        Pagination
+                        (
+                            color=color.into(),
+                            count=IsizeProp(100).into(),
+                            variant=PaginationVariant::CircleOutlined.into(),
+                        )
+                        Pagination
+                        (
+                            color=color.into(),
+                            count=IsizeProp(100).into(),
+                            variant=PaginationVariant::Rounded.into(),
+                        )
+                        Pagination
+                        (
+                            color=color.into(),
+                            count=IsizeProp(100).into(),
+                            variant=PaginationVariant::RoundedOutlined.into(),
+                        )
+                    },
                 )
             }
         }

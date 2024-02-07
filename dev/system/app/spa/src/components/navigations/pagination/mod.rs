@@ -27,6 +27,7 @@ pub fn Pagination<G: Html>( props: PaginationProps<G> ) -> View<G>
         [
             "ui_pagination".to_string(),
             props.classes.get_clone(),
+            props.color.get_clone().get_class_name(),
             props.variant.get_clone().get_class_name(),
         ];
         if total() <= 1 { classes.push("hide".to_string()) }
@@ -34,7 +35,7 @@ pub fn Pagination<G: Html>( props: PaginationProps<G> ) -> View<G>
         classes.join(" ")
     };
 
-    let pages = create_signal((1..=total()).collect::<Vec<usize>>());
+    let pages = create_signal((1..=total()).collect::<Vec<isize>>());
     view!
     {
         div(class=classes(), ..props.attributes)
@@ -80,6 +81,18 @@ pub fn Pagination<G: Html>( props: PaginationProps<G> ) -> View<G>
                 iterable=*pages,
                 view=move |i|
                 {
+                    let is_enable = move ||
+                    {
+                        props.page.get() - props.sibling_count.get() <= i &&
+                        props.page.get() + props.sibling_count.get() >= i
+                    };
+
+                    let is_ellipsis = move ||
+                    {
+                        props.page.get() - props.sibling_count.get() - 1 == i ||
+                        props.page.get() + props.sibling_count.get() + 1 == i
+                    };
+
                     let classes = move ||
                     {
                         if props.page.get() == i
@@ -91,20 +104,37 @@ pub fn Pagination<G: Html>( props: PaginationProps<G> ) -> View<G>
                             "page_no"
                         }
                     };
+
                     view!
                     {
-                        button
                         (
-                            class=classes(),
-                            disabled=props.page.get() == i,
-                            on:click=move |_|
+                            if is_enable()
                             {
-                                props.page.set(i)
+                                view!
+                                {
+                                    button
+                                    (
+                                        class=classes(),
+                                        disabled=props.page.get() == i,
+                                        on:click=move |_|
+                                        {
+                                            props.page.set(i)
+                                        }
+                                    )
+                                    {
+                                        (i)
+                                    }
+                                }
+                            }
+                            else if is_ellipsis()
+                            {
+                                view! { div(class="page_ellipsis") }
+                            }
+                            else
+                            {
+                                view! {}
                             }
                         )
-                        {
-                            (i)
-                        }
                     }
                 }
             )

@@ -270,3 +270,5 @@ pages:
         heading: "Pagination"
         basic:
           heading: "Basic"
+        colors:
+          heading: "Colors"

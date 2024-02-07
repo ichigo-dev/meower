@@ -25,13 +25,13 @@ pub struct PaginationProps<G: Html>
     pub color: ReadSignal<Colors>,
 
     #[prop(default)]
-    pub count: ReadSignal<usize>,
+    pub count: ReadSignal<isize>,
 
-    #[prop(default = UsizeProp(1).into())]
-    pub page: Signal<usize>,
+    #[prop(default = IsizeProp(1).into())]
+    pub page: Signal<isize>,
 
-    #[prop(default = UsizeProp(10).into())]
-    pub per_page: ReadSignal<usize>,
+    #[prop(default = IsizeProp(10).into())]
+    pub per_page: ReadSignal<isize>,
 
     #[prop(default = BoolProp(true).into())]
     pub show_first_button: ReadSignal<bool>,
@@ -44,6 +44,9 @@ pub struct PaginationProps<G: Html>
 
     #[prop(default = BoolProp(true).into())]
     pub show_prev_button: ReadSignal<bool>,
+
+    #[prop(default = IsizeProp(2).into())]
+    pub sibling_count: ReadSignal<isize>,
 
     #[prop(default)]
     pub variant: ReadSignal<PaginationVariant>,

@@ -62,16 +62,16 @@
 			}
 		}
 
-		&.page_now
-		{
-			background-color: var(--color-filled);
-			color: var(--color-filled-text);
-		}
-
 		&:disabled
 		{
 			cursor: default;
 			color: var(--color-disabled-text);
+		}
+
+		&.page_now
+		{
+			background-color: var(--color-filled);
+			color: var(--color-filled-text);
 		}
 	}
 
@@ -160,12 +160,6 @@
 				color: var(--color-filled-text);
 			}
 
-			&.page_now
-			{
-				background-color: var(--color-filled-dark);
-				color: var(--color-filled-text);
-			}
-
 			&:disabled
 			{
 				color: var(--color-disabled-text);
@@ -175,6 +169,12 @@
 				{
 					background-color: var(--color-disabled-text);
 				}
+			}
+
+			&.page_now
+			{
+				background-color: var(--color-filled-dark);
+				color: var(--color-filled-text);
 			}
 		}
 
@@ -214,15 +214,15 @@
 					}
 				}
 
+				&:disabled
+				{
+					background-color: transparent;
+				}
+
 				&.page_now
 				{
 					background-color: var(--color-#{$color}-dark);
 					color: var(--color-#{$color}-text);
-				}
-
-				&:disabled
-				{
-					background-color: transparent;
 				}
 			}
 
@@ -244,12 +244,6 @@
 						color: var(--color-#{$color}-text);
 					}
 
-					&.page_now
-					{
-						background-color: var(--color-#{$color}-dark);
-						color: var(--color-#{$color}-text);
-					}
-
 					&:disabled
 					{
 						color: var(--color-disabled-text);
@@ -259,6 +253,12 @@
 						{
 							background-color: var(--color-disabled-text);
 						}
+					}
+
+					&.page_now
+					{
+						background-color: var(--color-#{$color}-dark);
+						color: var(--color-#{$color}-text);
 					}
 				}
 
