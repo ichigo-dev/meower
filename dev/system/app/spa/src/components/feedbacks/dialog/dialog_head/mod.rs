@@ -18,13 +18,19 @@ pub fn DialogHead<G: Html>( props: DialogHeadProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "head ".to_string() + &props.classes.get_clone()
+        let mut classes = vec!
+        [
+            "head".to_string(),
+            props.classes.get_clone(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
     view!
     {
-        div(class=classes(), ref=props.node_ref, ..props.attributes)
+        div(class=classes(), ..props.attributes)
         {
             (children)
         }

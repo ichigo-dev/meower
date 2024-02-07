@@ -19,7 +19,4 @@ pub struct DialogBodyProps<G: Html>
 
     #[prop(default)]
     pub classes: ReadSignal<String>,
-
-    #[prop(default)]
-    pub node_ref: NodeRef<G>,
 }

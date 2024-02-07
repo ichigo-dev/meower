@@ -18,13 +18,19 @@ pub fn DialogBody<G: Html>( props: DialogBodyProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "body ".to_string() + &props.classes.get_clone()
+        let mut classes = vec!
+        [
+            "body".to_string(),
+            props.classes.get_clone(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
     view!
     {
-        div(class=classes(), ref=props.node_ref, ..props.attributes)
+        div(class=classes(), ..props.attributes)
         {
             (children)
         }

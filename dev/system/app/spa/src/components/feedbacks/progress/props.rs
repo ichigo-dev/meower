@@ -18,16 +18,13 @@ pub struct ProgressProps<G: Html>
     #[prop(default)]
     pub attributes: Attributes<G>,
 
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
-
     pub children: Children<G>,
 
     #[prop(default)]
-    pub color: ReadSignal<Colors>,
+    pub classes: ReadSignal<String>,
 
     #[prop(default)]
-    pub node_ref: NodeRef<G>,
+    pub color: ReadSignal<Colors>,
 
     #[prop(default)]
     pub size: ReadSignal<ProgressSize>,

@@ -28,12 +28,16 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
     let auto_hide_timer_id = create_signal(0i32);
     let classes = move ||
     {
-        "ui_snackbar ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.animation.get_clone().get_class_name() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.position.get_clone().get_class_name() + " "
-            + if props.open.get_clone() { "open " } else { " " }
+        let mut classes = vec!
+        [
+            "ui_snackbar".to_string(),
+            props.classes.get_clone(),
+            props.animation.get_clone().get_class_name(),
+            props.position.get_clone().get_class_name(),
+        ];
+        if props.open.get() { classes.push("open".to_string()); }
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     create_effect(move ||
@@ -70,7 +74,7 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        span(class=classes(), ref=props.node_ref, ..props.attributes)
+        span(class=classes(), ..props.attributes)
         {
             (children)
             (

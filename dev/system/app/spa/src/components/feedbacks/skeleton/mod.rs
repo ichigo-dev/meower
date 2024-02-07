@@ -22,14 +22,23 @@ pub fn Skeleton<G: Html>( props: SkeletonProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_skeleton ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.animation.get_clone().get_class_name() + " "
-            + &props.shape.get_clone().get_class_name() + " "
+        let mut classes = vec!
+        [
+            "ui_skeleton".to_string(),
+            props.classes.get_clone(),
+            props.animation.get_clone().get_class_name(),
+            props.shape.get_clone().get_class_name(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
+    let children = props.children.call();
     view!
     {
-        div(class=classes(), ref=props.node_ref, ..props.attributes)
+        div(class=classes(), ..props.attributes)
+        {
+            (children)
+        }
     }
 }

@@ -29,12 +29,17 @@ pub fn Dialog<G: Html>( props: DialogProps<G> ) -> View<G>
 {
     let classes = move ||
     {
-        "ui_dialog ".to_string()
-            + &props.classes.get_clone() + " "
-            + &props.color.get_clone().get_class_name() + " "
-            + &props.animation.get_clone().get_class_name() + " "
-            + &props.size.get_clone().get_class_name() + " "
-            + if props.open.get() { "open " } else { " " }
+        let mut classes = vec!
+        [
+            "ui_dialog".to_string(),
+            props.classes.get_clone(),
+            props.color.get_clone().get_class_name(),
+            props.animation.get_clone().get_class_name(),
+            props.size.get_clone().get_class_name(),
+        ];
+        if props.open.get() { classes.push("open".to_string()) }
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
     };
 
     let children = props.children.call();
@@ -59,7 +64,6 @@ pub fn Dialog<G: Html>( props: DialogProps<G> ) -> View<G>
                 {
                     event.stop_propagation();
                 },
-                ref=props.node_ref,
                 ..props.attributes
             )
             {

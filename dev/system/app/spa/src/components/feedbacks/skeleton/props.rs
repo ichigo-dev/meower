@@ -20,11 +20,10 @@ pub struct SkeletonProps<G: Html>
     #[prop(default)]
     pub attributes: Attributes<G>,
 
-    #[prop(default)]
-    pub classes: ReadSignal<String>,
+    pub children: Children<G>,
 
     #[prop(default)]
-    pub node_ref: NodeRef<G>,
+    pub classes: ReadSignal<String>,
 
     #[prop(default)]
     pub shape: ReadSignal<SkeletonShape>,

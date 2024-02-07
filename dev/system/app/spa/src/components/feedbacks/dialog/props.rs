@@ -22,9 +22,6 @@ pub struct DialogProps<G: Html>
     #[prop(default)]
     pub attributes: Attributes<G>,
 
-    #[prop(default)]
-    pub color: ReadSignal<Colors>,
-
     pub children: Children<G>,
 
     #[prop(default)]
@@ -34,7 +31,7 @@ pub struct DialogProps<G: Html>
     pub close_on_backdrop: ReadSignal<bool>,
 
     #[prop(default)]
-    pub node_ref: NodeRef<G>,
+    pub color: ReadSignal<Colors>,
 
     #[prop(default)]
     pub open: Signal<bool>,
