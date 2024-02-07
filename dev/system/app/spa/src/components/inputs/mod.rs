@@ -10,6 +10,7 @@ mod radio;
 mod range_slider;
 mod select;
 mod switch;
+mod text_field;
 
 pub use button::*;
 pub use button_group::*;
@@ -19,3 +20,4 @@ pub use radio::*;
 pub use range_slider::*;
 pub use select::*;
 pub use switch::*;
+pub use text_field::*;

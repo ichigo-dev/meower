@@ -238,3 +238,18 @@ pages:
           heading: "Sizes"
         colors:
           heading: "Colors"
+
+      text_field:
+        heading: "Text Field"
+        basic:
+          heading: "Basic"
+        disabled:
+          heading: "Disabled"
+        readonly:
+          heading: "Readonly"
+        sizes:
+          heading: "Sizes"
+        full_width:
+          heading: "Full Width"
+        multiline:
+          heading: "Multiline"

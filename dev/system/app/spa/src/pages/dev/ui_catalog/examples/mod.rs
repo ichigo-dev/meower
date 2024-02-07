@@ -21,6 +21,7 @@ mod skeleton;
 mod snackbar;
 mod switch;
 mod table;
+mod text_field;
 mod tooltip;
 
 pub use alert::AlertExamples;
@@ -42,4 +43,5 @@ pub use skeleton::SkeletonExamples;
 pub use snackbar::SnackbarExamples;
 pub use switch::SwitchExamples;
 pub use table::TableExamples;
+pub use text_field::TextFieldExamples;
 pub use tooltip::TooltipExamples;

@@ -52,6 +52,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             RangeSliderExamples()
             SelectExamples()
             SwitchExamples(colors=*theme_colors)
+            TextFieldExamples(colors=*theme_colors)
         }
     }
 }
