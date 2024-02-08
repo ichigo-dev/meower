@@ -23,15 +23,14 @@ fn AsideNavItem<G: Html>
     {
         ListItem
         (
-            classes=StringProp("padding_zero").into(),
+            classes=StrProp("padding_zero").into(),
             clickable=BoolProp(true).into(),
         )
         {
-            a
+            Link
             (
-                href=href,
-                rel="external",
-                class="display_block padding_vertical_sm padding_horizontal_md",
+                href=StrProp(href).into(),
+                classes=StrProp("display_block padding_vertical_sm padding_horizontal_md").into(),
             )
             {
                 (text)
@@ -49,12 +48,12 @@ pub fn Aside<G: Html>() -> View<G>
 {
     view!
     {
-        Box(classes=StringProp("ui_sidebar ui_box border_right z_index_drawer padding_zero min_width_7xl").into())
+        Box(classes=StrProp("ui_sidebar ui_box border_right z_index_drawer padding_zero min_width_7xl").into())
         {
             Box
             (
                 tag=BoxTag::Nav.into(),
-                classes=StringProp("ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden width_full").into(),
+                classes=StrProp("ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden width_full").into(),
             )
             {
                 List

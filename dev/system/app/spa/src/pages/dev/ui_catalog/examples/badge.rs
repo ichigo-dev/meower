@@ -35,13 +35,13 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 {
                     div(class="ui_icon icon_envelope")
                 }
-                Badge(badge_content=StringProp("3").into())
+                Badge(badge_content=StrProp("3").into())
                 {
                     div(class="ui_icon icon_envelope")
                 }
                 Badge
                 (
-                    badge_content=StringProp("99999").into(),
+                    badge_content=StrProp("99999").into(),
                     max=UsizeProp(999).into(),
                 )
                 {
@@ -53,7 +53,7 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 }
                 Badge
                 (
-                    badge_content=StringProp("0").into(),
+                    badge_content=StrProp("0").into(),
                     show_zero=BoolProp(true).into(),
                 )
                 {
@@ -76,7 +76,7 @@ pub fn BadgeExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     {
                         Badge
                         (
-                            badge_content=StringProp("3").into(),
+                            badge_content=StrProp("3").into(),
                             color=color.into(),
                         )
                         {

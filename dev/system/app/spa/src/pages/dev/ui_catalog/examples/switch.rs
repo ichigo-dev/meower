@@ -31,10 +31,10 @@ pub fn SwitchExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Switch(name=StringProp("switch1").into())
+                Switch(name=StrProp("switch1").into())
                 Switch
                 (
-                    name=StringProp("switch1").into(),
+                    name=StrProp("switch1").into(),
                     checked=BoolProp(true).into(),
                 )
                 Switch(disabled=BoolProp(true).into())
@@ -55,18 +55,18 @@ pub fn SwitchExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Switch
                 (
-                    name=StringProp("switch2").into(),
+                    name=StrProp("switch2").into(),
                     checked=BoolProp(true).into(),
                     size=SwitchSize::Small.into(),
                 )
                 Switch
                 (
-                    name=StringProp("switch2").into(),
+                    name=StrProp("switch2").into(),
                     size=SwitchSize::Medium.into(),
                 )
                 Switch
                 (
-                    name=StringProp("switch2").into(),
+                    name=StrProp("switch2").into(),
                     size=SwitchSize::Large.into(),
                 )
             }

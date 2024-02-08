@@ -215,13 +215,13 @@ pub fn SelectExamples<G: Html>() -> View<G>
             {
                 Select(variant=SelectVariant::Default.into())
                 {
-                    Optgroup(label=StringProp("Group 1").into())
+                    Optgroup(label=StrProp("Group 1").into())
                     {
                         Option { "Option 1" }
                         Option { "Option 2" }
                         Option { "Option 3" }
                     }
-                    Optgroup(label=StringProp("Group 2").into())
+                    Optgroup(label=StrProp("Group 2").into())
                     {
                         Option { "Option 4" }
                         Option { "Option 5" }
@@ -229,7 +229,7 @@ pub fn SelectExamples<G: Html>() -> View<G>
                     }
                     Optgroup
                     (
-                        label=StringProp("Group 3").into(),
+                        label=StrProp("Group 3").into(),
                         disabled=BoolProp(true).into(),
                     )
                     {

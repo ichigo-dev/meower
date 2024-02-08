@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 mod badge;
+mod box_component;
 mod chip;
 mod heading;
 mod icon;
@@ -11,6 +12,7 @@ mod table;
 mod tooltip;
 
 pub use badge::*;
+pub use box_component::*;
 pub use chip::*;
 pub use heading::*;
 pub use icon::*;

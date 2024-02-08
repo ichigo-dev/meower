@@ -33,17 +33,17 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Default.into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Filled.into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Outlined.into(),
                 )
             }
@@ -51,16 +51,16 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Password").into(),
-                    field_type=StringProp("password").into(),
+                    placeholder=StrProp("Password").into(),
+                    field_type=StrProp("password").into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Number").into(),
-                    field_type=StringProp("number").into(),
+                    placeholder=StrProp("Number").into(),
+                    field_type=StrProp("number").into(),
                 )
-                TextField(field_type=StringProp("date").into())
-                TextField(field_type=StringProp("time").into())
+                TextField(field_type=StrProp("date").into())
+                TextField(field_type=StrProp("time").into())
             }
         }
         MainPanel
@@ -73,19 +73,19 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Default.into(),
                     disabled=BoolProp(true).into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Filled.into(),
                     disabled=BoolProp(true).into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Outlined.into(),
                     disabled=BoolProp(true).into(),
                 )
@@ -101,19 +101,19 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Default.into(),
                     readonly=BoolProp(true).into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Filled.into(),
                     readonly=BoolProp(true).into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Outlined.into(),
                     readonly=BoolProp(true).into(),
                 )
@@ -129,19 +129,19 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Default.into(),
                     size=TextFieldSize::Small.into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Default.into(),
                     size=TextFieldSize::Medium.into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Default.into(),
                     size=TextFieldSize::Large.into(),
                 )
@@ -150,19 +150,19 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Filled.into(),
                     size=TextFieldSize::Small.into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Filled.into(),
                     size=TextFieldSize::Medium.into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Filled.into(),
                     size=TextFieldSize::Large.into(),
                 )
@@ -171,19 +171,19 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Outlined.into(),
                     size=TextFieldSize::Small.into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Outlined.into(),
                     size=TextFieldSize::Medium.into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Outlined.into(),
                     size=TextFieldSize::Large.into(),
                 )
@@ -199,7 +199,7 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Default.into(),
                     readonly=BoolProp(true).into(),
                     full_width=BoolProp(true).into(),
@@ -216,19 +216,19 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Default.into(),
                     multiline=BoolProp(true).into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Filled.into(),
                     multiline=BoolProp(true).into(),
                 )
                 TextField
                 (
-                    placeholder=StringProp("Text Field").into(),
+                    placeholder=StrProp("Text Field").into(),
                     variant=TextFieldVariant::Outlined.into(),
                     multiline=BoolProp(true).into(),
                 )
@@ -250,19 +250,19 @@ pub fn TextFieldExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                         TextField
                         (
                             color=color.into(),
-                            placeholder=StringProp("Text Field").into(),
+                            placeholder=StrProp("Text Field").into(),
                             variant=TextFieldVariant::Default.into(),
                         )
                         TextField
                         (
                             color=color.into(),
-                            placeholder=StringProp("Text Field").into(),
+                            placeholder=StrProp("Text Field").into(),
                             variant=TextFieldVariant::Filled.into(),
                         )
                         TextField
                         (
                             color=color.into(),
-                            placeholder=StringProp("Text Field").into(),
+                            placeholder=StrProp("Text Field").into(),
                             variant=TextFieldVariant::Outlined.into(),
                         )
                     }

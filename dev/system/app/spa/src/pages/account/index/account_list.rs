@@ -3,8 +3,10 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
+use crate::components::*;
 use crate::utils::request_graphql::post_graphql;
-use crate::components::GraphQLErrorAlert;
+use crate::utils::props::*;
+use crate::variables::*;
 
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
@@ -29,10 +31,10 @@ struct GetAccountList;
 #[component]
 pub async fn AccountList<G: Html>() -> View<G>
 {
-    let state: &AppState = use_context();
+    let state: AppState = use_context();
     let response = post_graphql::<GetAccountList>
     (
-        state,
+        &state,
         "/account/graphql",
          get_account_list::Variables
          {
@@ -61,9 +63,9 @@ pub async fn AccountList<G: Html>() -> View<G>
     {
         return view!
         {
-            div(class="ui_box surface radius padding_lg")
+            Box(classes=StrProp("ui_box surface radius padding_lg").into())
             {
-                p(class="ui_text ui_text_size_md")
+                p(class="ui_text_size_md")
                 {
                     (t!("pages.account.index.account_list.no_accounts"))
                 }
@@ -74,7 +76,11 @@ pub async fn AccountList<G: Html>() -> View<G>
 
     view!
     {
-        ul(class="ui_list primary simple width_full")
+        List
+        (
+            color=Colors::Primary.into(),
+            variant=ListVariant::Simple.into(),
+        )
         {
             Indexed
             (
@@ -83,21 +89,24 @@ pub async fn AccountList<G: Html>() -> View<G>
                 {
                     let href = format!("/account/{}", account.account_name);
                     let account_name = account.account_name.clone();
-                    return view!
+                    view!
                     {
-                        li(class="clickable padding_zero")
+                        ListItem
+                        (
+                            clickable=BoolProp(true).into(),
+                            classes=StrProp("padding_zero").into(),
+                        )
                         {
-                            a
+                            Link
                             (
-                                href=href,
-                                rel="external",
-                                class="display_block padding_vertical_sm padding_horizontal_md",
+                                href=StringProp(href).into(),
+                                classes=StrProp("display_block padding_vertical_sm padding_horizontal_md").into(),
                             )
                             {
                                 (account_name)
                             }
                         }
-                    };
+                    }
                 }
             )
         }

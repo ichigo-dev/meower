@@ -6,11 +6,33 @@ use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// StringProp.
+/// OptionProp.
 //------------------------------------------------------------------------------
-pub struct StringProp(pub &'static str);
+pub struct OptionProp<T>(pub Option<T>);
 
-impl Into<ReadSignal<String>> for StringProp
+impl<T> Into<ReadSignal<Option<T>>> for OptionProp<T>
+{
+    fn into( self ) -> ReadSignal<Option<T>>
+    {
+        *create_signal(self.0)
+    }
+}
+
+impl<T> Into<Signal<Option<T>>> for OptionProp<T>
+{
+    fn into( self ) -> Signal<Option<T>>
+    {
+        create_signal(self.0)
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// StrProp.
+//------------------------------------------------------------------------------
+pub struct StrProp(pub &'static str);
+
+impl Into<ReadSignal<String>> for StrProp
 {
     fn into( self ) -> ReadSignal<String>
     {
@@ -18,11 +40,33 @@ impl Into<ReadSignal<String>> for StringProp
     }
 }
 
-impl Into<Signal<String>> for StringProp
+impl Into<Signal<String>> for StrProp
 {
     fn into( self ) -> Signal<String>
     {
         create_signal(self.0.to_string())
+    }
+}
+
+
+//------------------------------------------------------------------------------
+/// StringProp.
+//------------------------------------------------------------------------------
+pub struct StringProp(pub String);
+
+impl Into<ReadSignal<String>> for StringProp
+{
+    fn into( self ) -> ReadSignal<String>
+    {
+        *create_signal(self.0)
+    }
+}
+
+impl Into<Signal<String>> for StringProp
+{
+    fn into( self ) -> Signal<String>
+    {
+        create_signal(self.0)
     }
 }
 

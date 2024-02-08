@@ -1,24 +1,25 @@
 //------------------------------------------------------------------------------
-//! Header.
+//! Props.
 //------------------------------------------------------------------------------
-
-use crate::components::*;
-use crate::utils::props::*;
 
 use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// Component.
+/// Props.
 //------------------------------------------------------------------------------
-#[component]
-pub fn Header<G: Html>() -> View<G>
+#[allow(dead_code)]
+#[derive(Props)]
+pub struct LinkProps<G: Html>
 {
-    view!
-    {
-        Box(classes=StrProp("ui_box primary text_align_center padding_sm fs_2xl").into())
-        {
-            "Meower"
-        }
-    }
+    #[prop(default)]
+    pub attributes: Attributes<G>,
+
+    pub children: Children<G>,
+
+    #[prop(default)]
+    pub classes: ReadSignal<String>,
+
+    #[prop(default)]
+    pub href: ReadSignal<String>,
 }

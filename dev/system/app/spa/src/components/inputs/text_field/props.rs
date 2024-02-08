@@ -28,7 +28,7 @@ pub struct TextFieldProps<G: Html>
     #[prop(default)]
     pub disabled: ReadSignal<bool>,
 
-    #[prop(default = StringProp("text").into())]
+    #[prop(default = StrProp("text").into())]
     pub field_type: ReadSignal<String>,
 
     #[prop(default)]

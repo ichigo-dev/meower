@@ -31,10 +31,10 @@ pub fn RadioExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             }
             div(class="flex flex_row flex_gap_md flex_align_center width_full")
             {
-                Radio(name=StringProp("radio1").into())
+                Radio(name=StrProp("radio1").into())
                 Radio
                 (
-                    name=StringProp("radio1").into(),
+                    name=StrProp("radio1").into(),
                     checked=BoolProp(true).into(),
                 )
                 Radio(disabled=BoolProp(true).into())
@@ -55,18 +55,18 @@ pub fn RadioExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Radio
                 (
-                    name=StringProp("radio2").into(),
+                    name=StrProp("radio2").into(),
                     checked=BoolProp(true).into(),
                     size=RadioSize::Small.into(),
                 )
                 Radio
                 (
-                    name=StringProp("radio2").into(),
+                    name=StrProp("radio2").into(),
                     size=RadioSize::Medium.into(),
                 )
                 Radio
                 (
-                    name=StringProp("radio2").into(),
+                    name=StrProp("radio2").into(),
                     size=RadioSize::Large.into(),
                 )
             }

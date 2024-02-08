@@ -79,7 +79,7 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
             {
                 Tooltip
                 (
-                    classes=StringProp("width_6xl text_align_center").into(),
+                    classes=StrProp("width_6xl text_align_center").into(),
                     position=TooltipPosition::Top.into(),
                     description=view! { "Content" },
                 )
@@ -90,7 +90,7 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 {
                     Tooltip
                     (
-                        classes=StringProp("width_6xl text_align_center").into(),
+                        classes=StrProp("width_6xl text_align_center").into(),
                         position=TooltipPosition::Left.into(),
                         description=view! { "Content" },
                     )
@@ -100,7 +100,7 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                     div(class="width_6xl")
                     Tooltip
                     (
-                        classes=StringProp("width_6xl text_align_center").into(),
+                        classes=StrProp("width_6xl text_align_center").into(),
                         position=TooltipPosition::Right.into(),
                         description=view! { "Content" },
                     )
@@ -110,7 +110,7 @@ pub fn TooltipExamples<G: Html>( colors: ReadSignal<Vec<Colors>> ) -> View<G>
                 }
                 Tooltip
                 (
-                    classes=StringProp("width_6xl text_align_center").into(),
+                    classes=StrProp("width_6xl text_align_center").into(),
                     position=TooltipPosition::Bottom.into(),
                     description=view! { "Content" },
                 )
