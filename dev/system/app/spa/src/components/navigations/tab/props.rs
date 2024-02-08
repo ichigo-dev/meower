@@ -2,6 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
+use super::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;
@@ -26,7 +27,7 @@ pub struct TabProps<G: Html>
     pub color: ReadSignal<Colors>,
 
     #[prop(default)]
-    pub value: Signal<String>,
+    pub value: Signal<TabValue>,
 
     #[prop(default)]
     pub vertical: ReadSignal<bool>,

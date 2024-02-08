@@ -2,6 +2,8 @@
 //! Props.
 //------------------------------------------------------------------------------
 
+use crate::components::TabValue;
+
 use sycamore::prelude::*;
 
 
@@ -24,7 +26,7 @@ pub struct TabItemProps<G: Html>
     pub classes: ReadSignal<String>,
 
     #[prop(default)]
-    pub value: ReadSignal<String>,
+    pub value: ReadSignal<TabValue>,
 
     #[prop(default)]
     pub disabled: ReadSignal<bool>,

@@ -279,3 +279,5 @@ pages:
           heading: "Basic"
         colors:
           heading: "Colors"
+        vertical:
+          heading: "Vertical"

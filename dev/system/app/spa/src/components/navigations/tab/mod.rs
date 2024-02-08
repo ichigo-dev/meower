@@ -4,9 +4,11 @@
 
 mod props;
 mod tab_item;
+mod value;
 
 pub use props::TabProps;
 pub use tab_item::*;
+pub use value::TabValue;
 
 use sycamore::prelude::*;
 
@@ -18,6 +20,7 @@ use sycamore::prelude::*;
 #[component]
 pub fn Tab<G: Html>( props: TabProps<G> ) -> View<G>
 {
+    provide_context(props.value);
     let classes = move ||
     {
         let mut classes = vec!

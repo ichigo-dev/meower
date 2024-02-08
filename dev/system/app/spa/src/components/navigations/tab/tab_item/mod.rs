@@ -6,8 +6,9 @@ mod props;
 
 pub use props::TabItemProps;
 
+use crate::components::TabValue;
+
 use sycamore::prelude::*;
-use web_sys::MouseEvent;
 
 
 //------------------------------------------------------------------------------
@@ -17,6 +18,7 @@ use web_sys::MouseEvent;
 #[component]
 pub fn TabItem<G: Html>( props: TabItemProps<G> ) -> View<G>
 {
+    let value = try_use_context::<Signal<TabValue>>();
     let classes = move ||
     {
         let mut classes = vec!
@@ -29,6 +31,14 @@ pub fn TabItem<G: Html>( props: TabItemProps<G> ) -> View<G>
         classes.join(" ")
     };
 
+    create_effect(move ||
+    {
+        if let Some(value) = value
+        {
+            props.active.set(props.value.get_clone() == value.get_clone());
+        }
+    });
+
     let children = props.children.call();
     view!
     {
@@ -36,7 +46,14 @@ pub fn TabItem<G: Html>( props: TabItemProps<G> ) -> View<G>
         (
             class=classes(),
             disabled=props.disabled.get(),
-            on:click=move |event: MouseEvent| { props.active.set(true) },
+            on:click=move |_|
+            {
+                if let Some(value) = value
+                {
+                    value.set(props.value.get_clone());
+                }
+                props.active.set(true)
+            },
             ..props.attributes
         )
         {
