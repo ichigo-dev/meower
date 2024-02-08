@@ -2,6 +2,7 @@
 //! Props.
 //------------------------------------------------------------------------------
 
+use crate::utils::props::*;
 use crate::variables::*;
 
 use sycamore::prelude::*;
@@ -19,6 +20,9 @@ pub struct ButtonGroupItemProps<G: Html>
 
     #[prop(default)]
     pub attributes: Attributes<G>,
+
+    #[prop(default = StrProp("button").into())]
+    pub button_type: ReadSignal<String>,
 
     pub children: Children<G>,
 
@@ -38,5 +42,11 @@ pub struct ButtonGroupItemProps<G: Html>
     pub left_icon: View<G>,
 
     #[prop(default)]
+    pub name: ReadSignal<String>,
+
+    #[prop(default)]
     pub right_icon: View<G>,
+
+    #[prop(default)]
+    pub value: ReadSignal<String>,
 }

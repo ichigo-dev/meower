@@ -8,6 +8,8 @@ mod size;
 pub use props::RangeSliderProps;
 pub use size::RangeSliderSize;
 
+use crate::components::*;
+
 use sycamore::prelude::*;
 
 
@@ -18,6 +20,7 @@ use sycamore::prelude::*;
 #[component]
 pub fn RangeSlider<G: Html>( props: RangeSliderProps<G> ) -> View<G>
 {
+    let form_values = try_use_context::<Signal<FormValues>>();
     let classes = move ||
     {
         let mut classes = vec!
@@ -30,6 +33,27 @@ pub fn RangeSlider<G: Html>( props: RangeSliderProps<G> ) -> View<G>
         classes.join(" ")
     };
 
+    create_effect(move ||
+    {
+        if let Some(form_values) = form_values
+        {
+            let mut values = form_values.get_clone();
+            if !props.disabled.get()
+            {
+                values.set
+                (
+                    &props.name.get_clone(),
+                    &props.value.get_clone()
+                );
+            }
+            else
+            {
+                values.remove(&props.name.get_clone());
+            }
+            form_values.set(values);
+        }
+    });
+
     view!
     {
         input
@@ -37,9 +61,9 @@ pub fn RangeSlider<G: Html>( props: RangeSliderProps<G> ) -> View<G>
             class=classes(),
             type="range",
             name=props.name.get_clone(),
-            value=props.value.get_clone(),
             disabled=props.disabled.get(),
             required=props.required.get(),
+            bind:value=props.value,
             ..props.attributes
         )
     }

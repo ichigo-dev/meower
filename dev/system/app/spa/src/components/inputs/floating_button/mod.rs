@@ -8,6 +8,8 @@ mod size;
 pub use props::FloatingButtonProps;
 pub use size::FloatingButtonSize;
 
+use crate::components::*;
+
 use sycamore::prelude::*;
 
 
@@ -18,6 +20,7 @@ use sycamore::prelude::*;
 #[component]
 pub fn FloatingButton<G: Html>( props: FloatingButtonProps<G> ) -> View<G>
 {
+    let form_values = try_use_context::<Signal<FormValues>>();
     let classes = move ||
     {
         let mut classes = vec!
@@ -34,15 +37,76 @@ pub fn FloatingButton<G: Html>( props: FloatingButtonProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        button
         (
-            class=classes(),
-            disabled=props.disabled.get(),
-            ..props.attributes
+            match props.href.get_clone()
+            {
+                Some(href) if !props.disabled.get() =>
+                {
+                    let icon = props.icon.clone();
+                    let children = children.clone();
+                    view!
+                    {
+                        a
+                        (
+                            class=classes(),
+                            href=href,
+                            rel="external",
+                            ..props.attributes
+                        )
+                        {
+                            div(class="flex flex_row flex_align_center flex_gap_md")
+                            {
+                                (icon)
+                                (children)
+                            }
+                        }
+                    }
+                },
+                _ =>
+                {
+                    let icon = props.icon.clone();
+                    let children = children.clone();
+                    view!
+                    {
+                        button
+                        (
+                            class=classes(),
+                            disabled=props.disabled.get(),
+                            name=props.name.get_clone(),
+                            type=props.button_type.get_clone(),
+                            on:click=move |_|
+                            {
+                                if let Some(form_values) = form_values
+                                {
+                                    let mut values = form_values.get_clone();
+                                    if !props.disabled.get() &&
+                                        props.button_type.get_clone() == "submit"
+                                    {
+                                        values.set
+                                        (
+                                            &props.name.get_clone(),
+                                            &props.value.get_clone()
+                                        );
+                                    }
+                                    else
+                                    {
+                                        values.remove(&props.name.get_clone());
+                                    }
+                                    form_values.set(values);
+                                }
+                            },
+                            ..props.attributes
+                        )
+                        {
+                            div(class="flex flex_row flex_align_center flex_gap_md")
+                            {
+                                (icon)
+                                (children)
+                            }
+                        }
+                    }
+                }
+            }
         )
-        {
-            (props.icon)
-            (children)
-        }
     }
 }

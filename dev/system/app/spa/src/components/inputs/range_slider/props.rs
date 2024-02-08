@@ -32,5 +32,5 @@ pub struct RangeSliderProps<G: Html>
     pub size: ReadSignal<RangeSliderSize>,
 
     #[prop(default)]
-    pub value: ReadSignal<String>,
+    pub value: Signal<String>,
 }

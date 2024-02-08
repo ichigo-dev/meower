@@ -12,6 +12,8 @@ pub use round::ButtonRound;
 pub use size::ButtonSize;
 pub use variant::ButtonVariant;
 
+use crate::components::*;
+
 use sycamore::prelude::*;
 
 
@@ -22,6 +24,7 @@ use sycamore::prelude::*;
 #[component]
 pub fn Button<G: Html>( props: ButtonProps<G> ) -> View<G>
 {
+    let form_values = try_use_context::<Signal<FormValues>>();
     let classes = move ||
     {
         let mut classes = vec!
@@ -78,6 +81,30 @@ pub fn Button<G: Html>( props: ButtonProps<G> ) -> View<G>
                         (
                             class=classes(),
                             disabled=props.disabled.get_clone(),
+                            name=props.name.get_clone(),
+                            value=props.value.get_clone(),
+                            type=props.button_type.get_clone(),
+                            on:click=move |_|
+                            {
+                                if let Some(form_values) = form_values
+                                {
+                                    let mut values = form_values.get_clone();
+                                    if !props.disabled.get() &&
+                                        props.button_type.get_clone() == "submit"
+                                    {
+                                        values.set
+                                        (
+                                            &props.name.get_clone(),
+                                            &props.value.get_clone()
+                                        );
+                                    }
+                                    else
+                                    {
+                                        values.remove(&props.name.get_clone());
+                                    }
+                                    form_values.set(values);
+                                }
+                            },
                             ..props.attributes
                         )
                         {

@@ -10,6 +10,8 @@ pub use props::TextFieldProps;
 pub use size::TextFieldSize;
 pub use variant::TextFieldVariant;
 
+use crate::components::*;
+
 use sycamore::prelude::*;
 
 
@@ -20,6 +22,7 @@ use sycamore::prelude::*;
 #[component]
 pub fn TextField<G: Html>( props: TextFieldProps<G> ) -> View<G>
 {
+    let form_values = try_use_context::<Signal<FormValues>>();
     let classes = move ||
     {
         let mut classes = vec!
@@ -34,6 +37,27 @@ pub fn TextField<G: Html>( props: TextFieldProps<G> ) -> View<G>
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
     };
+
+    create_effect(move ||
+    {
+        if let Some(form_values) = form_values
+        {
+            let mut values = form_values.get_clone();
+            if !props.disabled.get()
+            {
+                values.set
+                (
+                    &props.name.get_clone(),
+                    &props.value.get_clone()
+                );
+            }
+            else
+            {
+                values.remove(&props.name.get_clone());
+            }
+            form_values.set(values);
+        }
+    });
 
     view!
     {
@@ -52,6 +76,7 @@ pub fn TextField<G: Html>( props: TextFieldProps<G> ) -> View<G>
                         readonly=props.readonly.get(),
                         required=props.required.get(),
                         rows=props.rows.get(),
+                        bind:value=props.value,
                         ..props.attributes
                     )
                     {
@@ -69,10 +94,10 @@ pub fn TextField<G: Html>( props: TextFieldProps<G> ) -> View<G>
                         type=props.field_type.get_clone(),
                         name=props.name.get_clone(),
                         placeholder=props.placeholder.get_clone(),
-                        value=props.value.get_clone(),
                         disabled=props.disabled.get(),
                         readonly=props.readonly.get(),
                         required=props.required.get(),
+                        bind:value=props.value,
                         ..props.attributes
                     )
                 }

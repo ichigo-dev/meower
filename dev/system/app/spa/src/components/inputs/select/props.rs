@@ -35,7 +35,7 @@ pub struct SelectProps<G: Html>
     pub size: ReadSignal<SelectSize>,
 
     #[prop(default)]
-    pub value: ReadSignal<String>,
+    pub value: Signal<String>,
 
     #[prop(default)]
     pub variant: ReadSignal<SelectVariant>,

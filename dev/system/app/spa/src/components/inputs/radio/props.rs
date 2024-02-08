@@ -19,7 +19,7 @@ pub struct RadioProps<G: Html>
     pub attributes: Attributes<G>,
 
     #[prop(default)]
-    pub checked: ReadSignal<bool>,
+    pub checked: Signal<bool>,
 
     #[prop(default)]
     pub classes: ReadSignal<String>,

@@ -1,12 +1,15 @@
 //------------------------------------------------------------------------------
-//! Option.
+//! Form.
 //------------------------------------------------------------------------------
 
 mod props;
+mod values;
 
-pub use props::OptionProps;
+pub use props::FormProps;
+pub use values::FormValues;
 
 use sycamore::prelude::*;
+use web_sys::SubmitEvent;
 
 
 //------------------------------------------------------------------------------
@@ -14,28 +17,20 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn Option<G: Html>( props: OptionProps<G> ) -> View<G>
+pub fn Form<G: Html>( props: FormProps<G> ) -> View<G>
 {
-    let classes = move ||
-    {
-        let mut classes = vec!
-        [
-            props.classes.get_clone(),
-        ];
-        classes.retain(|c| !c.is_empty());
-        classes.join(" ")
-    };
-
+    provide_context(props.values);
     let children = props.children.call();
     view!
     {
-        option
+        form
         (
-            class=classes(),
-            name=props.name.get_clone(),
-            value=props.value.get_clone(),
-            disabled=props.disabled.get(),
-            selected=props.selected.get(),
+            action=props.action.get_clone(),
+            class=props.classes.get_clone(),
+            on:submit=move |event: SubmitEvent|
+            {
+                event.prevent_default();
+            },
             ..props.attributes
         )
         {

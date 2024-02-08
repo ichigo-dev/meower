@@ -56,7 +56,7 @@ pub struct TextFieldProps<G: Html>
     pub size: ReadSignal<TextFieldSize>,
 
     #[prop(default)]
-    pub value: ReadSignal<String>,
+    pub value: Signal<String>,
 
     #[prop(default)]
     pub variant: ReadSignal<TextFieldVariant>,

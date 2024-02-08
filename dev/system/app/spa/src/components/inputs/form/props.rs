@@ -2,6 +2,9 @@
 //! Props.
 //------------------------------------------------------------------------------
 
+use super::*;
+use crate::utils::props::*;
+
 use sycamore::prelude::*;
 
 
@@ -10,8 +13,11 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct OptionProps<G: Html>
+pub struct FormProps<G: Html>
 {
+    #[prop(default)]
+    pub action: ReadSignal<String>,
+
     #[prop(default)]
     pub attributes: Attributes<G>,
 
@@ -20,15 +26,12 @@ pub struct OptionProps<G: Html>
 
     pub children: Children<G>,
 
-    #[prop(default)]
-    pub disabled: ReadSignal<bool>,
+    #[prop(default = StrProp("POST").into())]
+    pub method: ReadSignal<String>,
 
     #[prop(default)]
-    pub name: ReadSignal<String>,
+    pub submit: ReadSignal<bool>,
 
     #[prop(default)]
-    pub selected: ReadSignal<bool>,
-
-    #[prop(default)]
-    pub value: ReadSignal<String>,
+    pub values: Signal<FormValues>,
 }

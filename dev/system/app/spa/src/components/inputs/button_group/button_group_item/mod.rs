@@ -6,6 +6,8 @@ mod props;
 
 pub use props::ButtonGroupItemProps;
 
+use crate::components::*;
+
 use sycamore::prelude::*;
 
 
@@ -16,6 +18,7 @@ use sycamore::prelude::*;
 #[component]
 pub fn ButtonGroupItem<G: Html>( props: ButtonGroupItemProps<G> ) -> View<G>
 {
+    let form_values = try_use_context::<Signal<FormValues>>();
     let classes = move ||
     {
         let mut classes = vec!
@@ -69,6 +72,11 @@ pub fn ButtonGroupItem<G: Html>( props: ButtonGroupItemProps<G> ) -> View<G>
                         (
                             class=classes(),
                             disabled=props.disabled.get_clone(),
+                            name=props.name.get_clone(),
+                            type=props.button_type.get_clone(),
+                            on:click=move |_|
+                            {
+                            },
                             ..props.attributes
                         )
                         {

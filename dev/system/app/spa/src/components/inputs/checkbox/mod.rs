@@ -8,6 +8,8 @@ mod size;
 pub use props::CheckboxProps;
 pub use size::CheckboxSize;
 
+use crate::components::*;
+
 use sycamore::prelude::*;
 
 
@@ -18,6 +20,7 @@ use sycamore::prelude::*;
 #[component]
 pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
 {
+    let form_values = try_use_context::<Signal<FormValues>>();
     let classes = move ||
     {
         let mut classes = vec!
@@ -31,6 +34,27 @@ pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
         classes.join(" ")
     };
 
+    create_effect(move ||
+    {
+        if let Some(form_values) = form_values
+        {
+            let mut values = form_values.get_clone();
+            if props.checked.get() && !props.disabled.get()
+            {
+                values.set
+                (
+                    &props.name.get_clone(),
+                    &props.value.get_clone()
+                );
+            }
+            else
+            {
+                values.remove(&props.name.get_clone());
+            }
+            form_values.set(values);
+        }
+    });
+
     view!
     {
         input
@@ -38,10 +62,9 @@ pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
             class=classes(),
             type="checkbox",
             name=props.name.get_clone(),
-            value=props.value.get_clone(),
-            checked=props.checked.get(),
             disabled=props.disabled.get(),
             required=props.required.get(),
+            bind:checked=props.checked,
             ..props.attributes
         )
     }
