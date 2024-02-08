@@ -1,0 +1,4 @@
+system:
+  error:
+    fatal: "システムエラーが発生しました"
+    unauthorized: "権限がありません"

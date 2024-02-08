@@ -12,7 +12,7 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub async fn Create<G: Html>() -> View<G>
+pub fn Create<G: Html>() -> View<G>
 {
     view!
     {

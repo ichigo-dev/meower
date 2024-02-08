@@ -7,7 +7,8 @@ use meower_account_entity::account::Entity as AccountEntity;
 use meower_account_entity::account::Model as AccountModel;
 use meower_shared::JwtClaims;
 
-use async_graphql::{ Context, Object };
+use async_graphql::{ Context, Object, Result };
+use rust_i18n::t;
 use sea_orm::{ ColumnTrait, DbConn, EntityTrait, QueryFilter };
 
 
@@ -28,19 +29,20 @@ impl AccountQuery
         &self,
         ctx: &Context<'_>,
         public_user_id: String,
-    ) -> Vec<AccountModel>
+    ) -> Result<Vec<AccountModel>>
     {
         let hdb = ctx.data::<DbConn>().unwrap();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != public_user_id
         {
-            return vec![];
+            return Err(t!("system.error.unauthorized").into());
         }
 
-        AccountEntity::find()
+        let accounts = AccountEntity::find()
             .filter(AccountColumn::PublicUserId.eq(&public_user_id))
             .all(hdb)
             .await
-            .unwrap()
+            .unwrap();
+        Ok(accounts)
     }
 }

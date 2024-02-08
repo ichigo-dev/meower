@@ -9,11 +9,25 @@ type Account {
 }
 
 
+"""
+Inputs.
+"""
+input CreateAccountInput {
+	publicUserId: String!
+	accountName: String!
+}
 
 
 
+
+"""
+Mutation root.
+"""
 type MutationRoot {
-	hello: String!
+	"""
+	Gets accounts.
+	"""
+	createAccount(input: CreateAccountInput!): Account!
 }
 
 """

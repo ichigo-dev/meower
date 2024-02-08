@@ -32,7 +32,7 @@ struct GetAccountList;
 pub async fn AccountList<G: Html>() -> View<G>
 {
     let state: AppState = use_context();
-    let response = post_graphql::<GetAccountList>
+    let data = match post_graphql::<GetAccountList>
     (
         &state,
         "/account/graphql",
@@ -40,22 +40,16 @@ pub async fn AccountList<G: Html>() -> View<G>
          {
              public_user_id: state.config.public_user_id.clone()
          },
-    ).await;
-
-    // Error handling.
-    let response = match response
+    ).await
     {
-        Ok(response) => response,
-        Err(_) => return view! { Alert { (t!("common.api.graphql.error")) } },
-    };
-    if let Some(_) = response.errors
-    {
-        return view! { Alert { (t!("common.api.graphql.error")) } };
-    }
-    let data = match response.data
-    {
-        Some(data) => data,
-        None => return view! { Alert { (t!("common.api.graphql.error")) } },
+        Ok(data) => data,
+        Err(e) =>
+        {
+            return view!
+            {
+                Alert { (format!("{}", e)) }
+            };
+        }
     };
 
     // Gets accounts.

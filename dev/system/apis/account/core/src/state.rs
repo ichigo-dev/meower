@@ -35,7 +35,7 @@ impl AppState
         let schema = Schema::build
             (
                 QueryRoot::default(),
-                MutationRoot,
+                MutationRoot::default(),
                 EmptySubscription
             )
             .finish();

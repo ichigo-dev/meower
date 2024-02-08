@@ -181,6 +181,7 @@ services:
     environment:
       PORT: ${ACCOUNT_PORT}
       DATABASE_URL: ${ACCOUNT_DB_URL}
+      FALLBACK_LOCALE: ${FALLBACK_LOCALE}
     working_dir: /system/apis/account/core
     command: "cargo watch -x run --ignore 'schema.graphql'"
     depends_on:

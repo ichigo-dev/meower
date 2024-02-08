@@ -3,15 +3,17 @@
 //------------------------------------------------------------------------------
 
 pub(crate) mod query;
+pub(crate) mod mutation;
 
 use crate::state::AppState;
 use query::account::AccountQuery;
+use mutation::account::AccountMutation;
 
 use meower_shared::JwtClaims;
 
 use std::str::from_utf8;
 
-use async_graphql::{ MergedObject, Object, Request, Response };
+use async_graphql::{ MergedObject, Request, Response };
 use axum::extract::{ Json, State };
 use axum::http::{ header, HeaderMap };
 use base64::prelude::*;
@@ -55,13 +57,5 @@ pub(crate) struct QueryRoot(AccountQuery);
 //------------------------------------------------------------------------------
 /// Mutation root.
 //------------------------------------------------------------------------------
-pub(crate) struct MutationRoot;
-
-#[Object]
-impl MutationRoot
-{
-    async fn hello( &self ) -> String
-    {
-        "Hello, world!".to_string()
-    }
-}
+#[derive(MergedObject, Default)]
+pub(crate) struct MutationRoot(AccountMutation);
