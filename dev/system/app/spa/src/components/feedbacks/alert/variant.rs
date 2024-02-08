@@ -37,7 +37,7 @@ impl Default for AlertVariant
 {
     fn default() -> Self
     {
-        Self::Default
+        Self::Filled
     }
 }
 

@@ -13,6 +13,7 @@ use sycamore::prelude::*;
 pub enum SkeletonShape
 {
     Box,
+    BoxRounded,
     Circle,
     Text,
 }
@@ -27,6 +28,7 @@ impl SkeletonShape
         match self
         {
             Self::Box => "box".to_string(),
+            Self::BoxRounded => "box rounded".to_string(),
             Self::Circle => "circle".to_string(),
             Self::Text => "text".to_string(),
         }
@@ -37,7 +39,7 @@ impl Default for SkeletonShape
 {
     fn default() -> Self
     {
-        Self::Box
+        Self::BoxRounded
     }
 }
 

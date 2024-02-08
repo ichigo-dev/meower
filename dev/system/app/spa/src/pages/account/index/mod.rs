@@ -11,6 +11,7 @@ use crate::utils::props::*;
 
 use rust_i18n::t;
 use sycamore::prelude::*;
+use sycamore::suspense::Suspense;
 
 
 //------------------------------------------------------------------------------
@@ -31,7 +32,13 @@ pub fn Index<G: Html>() -> View<G>
             {
                 (t!("pages.account.index.button.add_account"))
             }
-            AccountList()
+            Suspense
+            (
+                fallback=view! { Skeleton(full_width=BoolProp(true).into()) }
+            )
+            {
+                AccountList()
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ impl Default for SkeletonAnimation
 {
     fn default() -> Self
     {
-        Self::None
+        Self::Wave
     }
 }
 

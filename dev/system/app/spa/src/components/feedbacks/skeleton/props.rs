@@ -26,5 +26,8 @@ pub struct SkeletonProps<G: Html>
     pub classes: ReadSignal<String>,
 
     #[prop(default)]
+    pub full_width: ReadSignal<bool>,
+
+    #[prop(default)]
     pub shape: ReadSignal<SkeletonShape>,
 }

@@ -13,15 +13,18 @@ $size_prefixes: "min-", "", "max-";
 	$class_prefix: string.str-replace(#{$prefix}, "-", "_");
 	.#{$class_prefix}width
 	{
-		&_full { #{$prefix}width: 100%; }
-		&_full_viewport { #{$prefix}width: 100vw; }
-		&_half { #{$prefix}width: 50%; }
-		&_half_viewport { #{$prefix}width: 50vw; }
+		&_full { #{$prefix}width: 100% !important; }
+		&_full_viewport { #{$prefix}width: 100vw !important; }
+		&_half { #{$prefix}width: 50% !important; }
+		&_half_viewport { #{$prefix}width: 50vw !important; }
 
 		@each $size in sizes.$sizes
 		{
 			$class_name: string.str-replace(#{$size}, "-", "_");
-			&_#{$class_name} { #{$prefix}width: var(--size-#{$size}); }
+			&_#{$class_name}
+			{
+				#{$prefix}width: var(--size-#{$size}) !important;
+			}
 		}
 	}
 }
@@ -32,15 +35,18 @@ $size_prefixes: "min-", "", "max-";
 	$class_prefix: string.str-replace(#{$prefix}, "-", "_");
 	.#{$class_prefix}height
 	{
-		&_full { #{$prefix}height: 100%; }
-		&_full_viewport { #{$prefix}height: 100vh; }
-		&_half { #{$prefix}height: 50%; }
-		&_half_viewport { #{$prefix}height: 50vh; }
+		&_full { #{$prefix}height: 100% !important; }
+		&_full_viewport { #{$prefix}height: 100vh !important; }
+		&_half { #{$prefix}height: 50% !important; }
+		&_half_viewport { #{$prefix}height: 50vh !important; }
 
 		@each $size in sizes.$sizes
 		{
 			$class_name: string.str-replace(#{$size}, "-", "_");
-			&_#{$class_name} { #{$prefix}height: var(--size-#{$size}); }
+			&_#{$class_name}
+			{
+				#{$prefix}height: var(--size-#{$size}) !important;
+			}
 		}
 	}
 }
@@ -53,23 +59,23 @@ $size_prefixes: "min-", "", "max-";
 	{
 		&_full
 		{
-			#{$prefix}width: 100%;
-			#{$prefix}height: 100%;
+			#{$prefix}width: 100% !important;
+			#{$prefix}height: 100% !important;
 		}
 		&_full_viewport
 		{
-			#{$prefix}width: 100vw;
-			#{$prefix}height: 100vh;
+			#{$prefix}width: 100vw !important;
+			#{$prefix}height: 100vh !important;
 		}
 		&_half
 		{
-			#{$prefix}width: 50%;
-			#{$prefix}height: 50%;
+			#{$prefix}width: 50% !important;
+			#{$prefix}height: 50% !important;
 		}
 		&_half_viewport
 		{
-			#{$prefix}width: 50vw;
-			#{$prefix}height: 50vh;
+			#{$prefix}width: 50vw !important;
+			#{$prefix}height: 50vh !important;
 		}
 
 		@each $size in sizes.$sizes
@@ -77,8 +83,8 @@ $size_prefixes: "min-", "", "max-";
 			$class_name: string.str-replace(#{$size}, "-", "_");
 			&_#{$class_name}
 			{
-				#{$prefix}width: var(--size-#{$size});
-				#{$prefix}height: var(--size-#{$size});
+				#{$prefix}width: var(--size-#{$size}) !important;
+				#{$prefix}height: var(--size-#{$size}) !important;
 			}
 		}
 	}

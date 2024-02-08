@@ -46,16 +46,16 @@ pub async fn AccountList<G: Html>() -> View<G>
     let response = match response
     {
         Ok(response) => response,
-        Err(_) => return view! { GraphQLErrorAlert() },
+        Err(_) => return view! { Alert { (t!("common.api.graphql.error")) } },
     };
     if let Some(_) = response.errors
     {
-        return view! { GraphQLErrorAlert() };
+        return view! { Alert { (t!("common.api.graphql.error")) } };
     }
     let data = match response.data
     {
         Some(data) => data,
-        None => return view! { GraphQLErrorAlert() },
+        None => return view! { Alert { (t!("common.api.graphql.error")) } },
     };
 
     // Gets accounts.

@@ -29,6 +29,10 @@ pub fn Skeleton<G: Html>( props: SkeletonProps<G> ) -> View<G>
             props.animation.get().get_class_name(),
             props.shape.get().get_class_name(),
         ];
+        if props.full_width.get()
+        {
+            classes.push("max_width_full".to_string());
+        }
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
     };
