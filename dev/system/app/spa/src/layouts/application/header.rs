@@ -2,6 +2,9 @@
 //! Header.
 //------------------------------------------------------------------------------
 
+use crate::components::*;
+use crate::utils::props::*;
+
 use sycamore::prelude::*;
 
 
@@ -13,7 +16,7 @@ pub fn Header<G: Html>() -> View<G>
 {
     view!
     {
-        div(class="ui_box primary text_align_center padding_sm fs_2xl")
+        Box(classes=StringProp("ui_box primary text_align_center padding_sm fs_2xl").into())
         {
             "Meower"
         }

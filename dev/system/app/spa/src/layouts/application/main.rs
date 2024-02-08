@@ -2,6 +2,9 @@
 //! Main component.
 //------------------------------------------------------------------------------
 
+use crate::components::*;
+use crate::utils::props::*;
+
 use sycamore::prelude::*;
 
 
@@ -18,11 +21,18 @@ pub fn Main<G: Html>
     let children = children.call();
     view!
     {
-        div(class="flex flex_justify_center")
+        Box(classes=StringProp("flex flex_justify_center").into())
         {
-            div(class="flex flex_column flex_gap_lg max_width_breakpoint_lg width_full overflow_hidden")
+            Box(classes=StringProp("flex flex_column flex_gap_lg max_width_breakpoint_lg width_full overflow_hidden").into())
             {
-                h1(class="ui_heading h1 divider") { (heading) }
+                Heading
+                (
+                    level=HeadingLevel::H2.into(),
+                    variant=HeadingVariant::Divider.into(),
+                )
+                {
+                    (heading)
+                }
                 (children)
             }
         }

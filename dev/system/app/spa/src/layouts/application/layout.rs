@@ -3,6 +3,8 @@
 //------------------------------------------------------------------------------
 
 use super::{ Header, Footer, Aside };
+use crate::components::*;
+use crate::utils::props::*;
 
 use sycamore::prelude::*;
 
@@ -16,15 +18,15 @@ pub fn Layout<G: Html>( children: Children<G> ) -> View<G>
     let children = children.call();
     view!
     {
-        div(class="flex flex_column min_height_full_viewport")
+        Box(classes=StringProp("flex flex_column min_height_full_viewport").into())
         {
-            div(class="theme_meower_light flex_grow flex flex_row")
+            Box(classes=StringProp("theme_meower_light flex_grow flex flex_row").into())
             {
                 Aside()
-                div(class="flex_grow flex flex_column overflow_auto_x")
+                Box(classes=StringProp("flex_grow flex flex_column overflow_auto_x").into())
                 {
                     Header()
-                    div(class="flex_grow padding_xl")
+                    Box(classes=StringProp("flex_grow padding_xl").into())
                     {
                         (children)
                     }

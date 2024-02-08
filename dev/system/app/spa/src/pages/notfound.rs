@@ -2,6 +2,8 @@
 //! NotFound page.
 //------------------------------------------------------------------------------
 
+use crate::components::*;
+
 use rust_i18n::t;
 use sycamore::prelude::*;
 
@@ -14,6 +16,9 @@ pub fn NotFound<G: Html>() -> View<G>
 {
     view!
     {
-        h1(class="ui_heading h1") { (t!("pages.notfound.heading")) }
+        Heading(level=HeadingLevel::H1.into())
+        {
+            (t!("pages.notfound.heading"))
+        }
     }
 }

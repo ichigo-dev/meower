@@ -2,6 +2,10 @@
 //! Aside.
 //------------------------------------------------------------------------------
 
+use crate::components::*;
+use crate::utils::props::*;
+use crate::variables::*;
+
 use sycamore::prelude::*;
 
 
@@ -17,7 +21,11 @@ fn AsideNavItem<G: Html>
 {
     view!
     {
-        li(class="clickable padding_zero")
+        ListItem
+        (
+            classes=StringProp("padding_zero").into(),
+            clickable=BoolProp(true).into(),
+        )
         {
             a
             (
@@ -41,11 +49,19 @@ pub fn Aside<G: Html>() -> View<G>
 {
     view!
     {
-        div(class="ui_sidebar ui_box border_right z_index_drawer padding_zero min_width_7xl")
+        Box(classes=StringProp("ui_sidebar ui_box border_right z_index_drawer padding_zero min_width_7xl").into())
         {
-            nav(class="ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden width_full")
+            Box
+            (
+                tag=BoxTag::Nav.into(),
+                classes=StringProp("ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden width_full").into(),
+            )
             {
-                ul(class="ui_list primary simple")
+                List
+                (
+                    color=Colors::Primary.into(),
+                    variant=ListVariant::Simple.into(),
+                )
                 {
                     AsideNavItem(href="/", text="Home")
                     AsideNavItem(href="/account", text="Account")
