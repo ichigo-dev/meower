@@ -89,6 +89,7 @@ pub(crate) async fn get_handler
         return Err(StatusCode::INTERNAL_SERVER_ERROR);
     }
 
+    let public_user_id = user_token.public_user_id.clone();
     if let Err(_) = user_token.delete(&tsx).await
     {
         tsx.rollback().await.unwrap();
@@ -98,6 +99,7 @@ pub(crate) async fn get_handler
     let access_token = tokens.access_token.clone();
     let user_token = UserTokenActiveModel
     {
+        public_user_id: ActiveValue::Set(public_user_id),
         access_token: ActiveValue::Set(tokens.access_token.into()),
         refresh_token: ActiveValue::Set(tokens.refresh_token.into()),
         ..Default::default()
