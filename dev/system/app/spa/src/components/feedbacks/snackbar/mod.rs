@@ -32,8 +32,8 @@ pub fn Snackbar<G: Html>( props: SnackbarProps<G> ) -> View<G>
         [
             "ui_snackbar".to_string(),
             props.classes.get_clone(),
-            props.animation.get_clone().get_class_name(),
-            props.position.get_clone().get_class_name(),
+            props.animation.get().get_class_name(),
+            props.position.get().get_class_name(),
         ];
         if props.open.get() { classes.push("open".to_string()) }
         classes.retain(|c| !c.is_empty());

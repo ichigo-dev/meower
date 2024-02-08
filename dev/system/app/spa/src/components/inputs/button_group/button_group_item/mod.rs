@@ -21,9 +21,9 @@ pub fn ButtonGroupItem<G: Html>( props: ButtonGroupItemProps<G> ) -> View<G>
         let mut classes = vec!
         [
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
         ];
-        if props.active.get_clone() { classes.push("active".to_string()); }
+        if props.active.get() { classes.push("active".to_string()); }
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
     };

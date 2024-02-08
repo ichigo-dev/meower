@@ -24,8 +24,8 @@ pub fn Switch<G: Html>( props: SwitchProps<G> ) -> View<G>
         [
             "ui_switch".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.size.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.size.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
@@ -39,9 +39,9 @@ pub fn Switch<G: Html>( props: SwitchProps<G> ) -> View<G>
             type="checkbox",
             name=props.name.get_clone(),
             value=props.value.get_clone(),
-            checked=props.checked.get_clone(),
-            disabled=props.disabled.get_clone(),
-            required=props.required.get_clone(),
+            checked=props.checked.get(),
+            disabled=props.disabled.get(),
+            required=props.required.get(),
             ..props.attributes
         )
     }

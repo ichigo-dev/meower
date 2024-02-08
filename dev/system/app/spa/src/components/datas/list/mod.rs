@@ -26,8 +26,8 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
         [
             "ui_list".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         if props.ordered.get() { classes.push("ordered".to_string()) }
         classes.retain(|c| !c.is_empty());

@@ -24,8 +24,8 @@ pub fn Radio<G: Html>( props: RadioProps<G> ) -> View<G>
         [
             "ui_radio".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.size.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.size.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")

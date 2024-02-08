@@ -28,10 +28,10 @@ pub fn Progress<G: Html>( props: ProgressProps<G> ) -> View<G>
         [
             "ui_progress".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.size.get_clone().get_class_name(),
-            props.thickness.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.size.get().get_class_name(),
+            props.thickness.get().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")

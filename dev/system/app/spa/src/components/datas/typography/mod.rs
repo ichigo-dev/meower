@@ -1,12 +1,14 @@
 //------------------------------------------------------------------------------
-//! Checkbox.
+//! Typography.
 //------------------------------------------------------------------------------
 
+mod font_size;
+mod font_weight;
 mod props;
-mod size;
 
-pub use props::CheckboxProps;
-pub use size::CheckboxSize;
+pub use font_size::TypographyFontSize;
+pub use font_weight::TypographyFontWeight;
+pub use props::TypographyProps;
 
 use sycamore::prelude::*;
 
@@ -16,33 +18,26 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[component]
-pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
+pub fn Typography<G: Html>( props: TypographyProps<G> ) -> View<G>
 {
     let classes = move ||
     {
         let mut classes = vec!
         [
-            "ui_checkbox".to_string(),
             props.classes.get_clone(),
-            props.color.get().get_class_name(),
-            props.size.get().get_class_name(),
+            props.font_size.get().get_class_name(),
+            props.font_weight.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
     };
 
+    let children = props.children.call();
     view!
     {
-        input
-        (
-            class=classes(),
-            type="checkbox",
-            name=props.name.get_clone(),
-            value=props.value.get_clone(),
-            checked=props.checked.get(),
-            disabled=props.disabled.get(),
-            required=props.required.get(),
-            ..props.attributes
-        )
+        p(class=classes())
+        {
+            (children)
+        }
     }
 }

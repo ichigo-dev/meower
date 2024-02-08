@@ -33,9 +33,9 @@ pub fn Dialog<G: Html>( props: DialogProps<G> ) -> View<G>
         [
             "ui_dialog".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.animation.get_clone().get_class_name(),
-            props.size.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.animation.get().get_class_name(),
+            props.size.get().get_class_name(),
         ];
         if props.open.get() { classes.push("open".to_string()) }
         classes.retain(|c| !c.is_empty());

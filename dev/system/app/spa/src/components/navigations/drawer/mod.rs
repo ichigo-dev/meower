@@ -27,7 +27,7 @@ pub fn Drawer<G: Html>( props: DrawerProps<G> ) -> View<G>
         [
             "ui_drawer".to_string(),
             props.classes.get_clone(),
-            props.position.get_clone().get_class_name(),
+            props.position.get().get_class_name(),
         ];
         if props.open.get() { classes.push("open".to_string()) }
         classes.retain(|c| !c.is_empty());

@@ -10,6 +10,7 @@ mod icon;
 mod list;
 mod table;
 mod tooltip;
+mod typography;
 
 pub use badge::*;
 pub use box_component::*;
@@ -19,3 +20,4 @@ pub use icon::*;
 pub use list::*;
 pub use table::*;
 pub use tooltip::*;
+pub use typography::*;

@@ -27,8 +27,8 @@ pub fn Pagination<G: Html>( props: PaginationProps<G> ) -> View<G>
         [
             "ui_pagination".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         if total() <= 1 { classes.push("hide".to_string()) }
         classes.retain(|c| !c.is_empty());

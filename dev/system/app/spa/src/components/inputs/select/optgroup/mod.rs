@@ -34,7 +34,7 @@ pub fn Optgroup<G: Html>( props: OptgroupProps<G> ) -> View<G>
             class=classes(),
             label=props.label.get_clone(),
             value=props.value.get_clone(),
-            disabled=props.disabled.get_clone(),
+            disabled=props.disabled.get(),
             ..props.attributes
         )
         {

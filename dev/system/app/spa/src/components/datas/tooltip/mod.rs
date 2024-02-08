@@ -24,8 +24,8 @@ pub fn Tooltip<G: Html>( props: TooltipProps<G> ) -> View<G>
         [
             "ui_tooltip".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.position.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.position.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")

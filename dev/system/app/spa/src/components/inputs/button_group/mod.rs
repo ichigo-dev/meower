@@ -28,9 +28,9 @@ pub fn ButtonGroup<G: Html>( props: ButtonGroupProps<G> ) -> View<G>
         [
             "ui_button_group".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.size.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.size.get().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         if props.vertical.get() { classes.push("vertical".to_string()) }
         classes.retain(|c| !c.is_empty());

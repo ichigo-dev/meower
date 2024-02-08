@@ -24,7 +24,7 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
         [
             "ui_box".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")

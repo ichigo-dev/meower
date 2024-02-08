@@ -65,7 +65,7 @@ pub async fn AccountList<G: Html>() -> View<G>
         {
             Box(classes=StrProp("ui_box surface radius padding_lg").into())
             {
-                p(class="ui_text_size_md")
+                Typography
                 {
                     (t!("pages.account.index.account_list.no_accounts"))
                 }

@@ -26,7 +26,7 @@ pub fn Crumbs<G: Html>( props: CrumbsProps<G> ) -> View<G>
         [
             "ui_crumbs".to_string(),
             props.classes.get_clone(),
-            props.variant.get_clone().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")

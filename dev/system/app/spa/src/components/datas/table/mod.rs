@@ -36,9 +36,9 @@ pub fn Table<G: Html>( props: TableProps<G> ) -> View<G>
         [
             "ui_table".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.size.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.size.get().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         if props.sticky.get() { classes.push("sticky".to_string()) }
         classes.retain(|c| !c.is_empty());

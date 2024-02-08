@@ -30,11 +30,11 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
         [
             "ui_heading".to_string(),
             props.classes.get_clone(),
-            props.align.get_clone().get_class_name(),
-            props.color.get_clone().get_class_name(),
-            props.level.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
-            props.thickness.get_clone().get_class_name(),
+            props.align.get().get_class_name(),
+            props.color.get().get_class_name(),
+            props.level.get().get_class_name(),
+            props.variant.get().get_class_name(),
+            props.thickness.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")

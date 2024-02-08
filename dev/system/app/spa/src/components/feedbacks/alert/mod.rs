@@ -27,8 +27,8 @@ pub fn Alert<G: Html>( props: AlertProps<G> ) -> View<G>
         [
             "ui_alert".to_string(),
             props.classes.get_clone(),
-            props.severity.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
+            props.severity.get().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         if left_icon.is_some() { classes.push("no_icon".to_string()) }
         classes.retain(|c| !c.is_empty());

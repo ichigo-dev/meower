@@ -26,11 +26,11 @@ pub fn Icon<G: Html>( props: IconProps<G> ) -> View<G>
         [
             "ui_icon".to_string(),
             props.classes.get_clone(),
-            props.icon.get_clone().get_class_name(),
-            props.color.get_clone().get_class_name(),
-            props.size.get_clone().get_class_name(),
+            props.icon.get().get_class_name(),
+            props.color.get().get_class_name(),
+            props.size.get().get_class_name(),
         ];
-        if props.clickable.get_clone() { classes.push("clickable".to_string()) }
+        if props.clickable.get() { classes.push("clickable".to_string()) }
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
     };

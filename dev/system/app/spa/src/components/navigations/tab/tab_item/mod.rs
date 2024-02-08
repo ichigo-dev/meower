@@ -26,7 +26,7 @@ pub fn TabItem<G: Html>( props: TabItemProps<G> ) -> View<G>
             "tab".to_string(),
             props.classes.get_clone(),
         ];
-        if props.active.get_clone() { classes.push("active".to_string()) }
+        if props.active.get() { classes.push("active".to_string()) }
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
     };

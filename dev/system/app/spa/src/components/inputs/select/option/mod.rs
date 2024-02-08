@@ -34,7 +34,7 @@ pub fn Option<G: Html>( props: OptionProps<G> ) -> View<G>
             class=classes(),
             name=props.name.get_clone(),
             value=props.value.get_clone(),
-            disabled=props.disabled.get_clone(),
+            disabled=props.disabled.get(),
             ..props.attributes
         )
         {

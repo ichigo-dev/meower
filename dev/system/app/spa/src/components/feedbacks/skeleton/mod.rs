@@ -26,8 +26,8 @@ pub fn Skeleton<G: Html>( props: SkeletonProps<G> ) -> View<G>
         [
             "ui_skeleton".to_string(),
             props.classes.get_clone(),
-            props.animation.get_clone().get_class_name(),
-            props.shape.get_clone().get_class_name(),
+            props.animation.get().get_class_name(),
+            props.shape.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")

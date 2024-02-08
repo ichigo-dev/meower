@@ -30,8 +30,8 @@ pub fn Select<G: Html>( props: SelectProps<G> ) -> View<G>
         [
             "ui_select".to_string(),
             props.classes.get_clone(),
-            props.size.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
+            props.size.get().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
@@ -46,8 +46,8 @@ pub fn Select<G: Html>( props: SelectProps<G> ) -> View<G>
             (
                 name=props.name.get_clone(),
                 value=props.value.get_clone(),
-                disabled=props.disabled.get_clone(),
-                required=props.required.get_clone(),
+                disabled=props.disabled.get(),
+                required=props.required.get(),
                 ..props.attributes
             )
             {

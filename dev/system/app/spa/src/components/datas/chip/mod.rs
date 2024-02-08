@@ -26,9 +26,9 @@ pub fn Chip<G: Html>( props: ChipProps<G> ) -> View<G>
         [
             "ui_chip".to_string(),
             props.classes.get_clone(),
-            props.color.get_clone().get_class_name(),
-            props.size.get_clone().get_class_name(),
-            props.variant.get_clone().get_class_name(),
+            props.color.get().get_class_name(),
+            props.size.get().get_class_name(),
+            props.variant.get().get_class_name(),
         ];
         if props.clickable.get() { classes.push("clickable".to_string()) }
         if props.disabled.get() { classes.push("disabled".to_string()) }
