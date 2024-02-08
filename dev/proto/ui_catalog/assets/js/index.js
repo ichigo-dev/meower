@@ -470,12 +470,12 @@ const init_drawer = () =>
 
 
 //------------------------------------------------------------------------------
-//	Initializes tabs.
+//	Initializes tab.
 //------------------------------------------------------------------------------
-const init_tabs = () =>
+const init_tab = () =>
 {
-	const elm_tabs = document.querySelectorAll('.ui_tabs');
-	elm_tabs.forEach(( elm_ ) =>
+	const elm_tab = document.querySelectorAll('.ui_tab');
+	elm_tab.forEach(( elm_ ) =>
 	{
 		const elm_tab_buttons = elm_.querySelectorAll('.tab');
 		elm_tab_buttons.forEach(( elm_tab_button_ ) =>
@@ -599,7 +599,7 @@ const init = () =>
 	init_dialog();
 	init_snackbar();
 	init_drawer();
-	init_tabs();
+	init_tab();
 	init_example_code();
 };
 

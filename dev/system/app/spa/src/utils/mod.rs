@@ -2,6 +2,7 @@
 //! Utils.
 //------------------------------------------------------------------------------
 
+pub mod dom;
 pub mod props;
 pub mod request;
 pub mod request_graphql;

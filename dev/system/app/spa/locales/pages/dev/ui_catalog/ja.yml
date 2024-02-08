@@ -272,3 +272,10 @@ pages:
           heading: "Basic"
         colors:
           heading: "Colors"
+
+      tab:
+        heading: "Tab"
+        basic:
+          heading: "Basic"
+        colors:
+          heading: "Colors"

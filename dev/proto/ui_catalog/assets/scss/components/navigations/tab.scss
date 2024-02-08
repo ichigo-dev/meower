@@ -1,11 +1,11 @@
 //------------------------------------------------------------------------------
-//	UI tabs
+//	UI tab
 //
 //
 //	# Usage
 //
 //	```html
-//	<div class="ui_tabs">
+//	<div class="ui_tab">
 //	 <button class="tab active">Tab1</button>
 //	 <button class="tab">Tab2</button>
 //	 <button class="tab" disabled>Tab3</button>
@@ -17,13 +17,14 @@
 @use "../../functions/string" as string;
 @use "../../variables/colors" as colors;
 
-.ui_tabs
+.ui_tab
 {
 	display: flex;
 
 	.tab
 	{
 		cursor: pointer;
+		padding: var(--spacing-md) var(--spacing-lg);
 		border-bottom: 3px solid transparent;
 		border-color: transparent;
 		transition: all 0.3s 0s ease-in-out;
