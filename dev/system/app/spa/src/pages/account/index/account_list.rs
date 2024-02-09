@@ -19,7 +19,7 @@ use sycamore::prelude::*;
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "graphql/schema/account.graphql",
-    query_path = "graphql/pages/account/index/get_account_list.graphql",
+    query_path = "graphql/pages/account/index.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
 struct GetAccountList;
@@ -43,13 +43,7 @@ pub async fn AccountList<G: Html>() -> View<G>
     ).await
     {
         Ok(data) => data,
-        Err(e) =>
-        {
-            return view!
-            {
-                Alert { (format!("{}", e)) }
-            };
-        }
+        Err(e) => return view! { Alert { (e) } },
     };
 
     // Gets accounts.

@@ -1,0 +1,8 @@
+################################################################################
+# Get Account List
+################################################################################
+query GetAccountList($publicUserId: String!) {
+  accounts(publicUserId: $publicUserId) {
+    accountName
+  }
+}

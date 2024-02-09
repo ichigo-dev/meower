@@ -1,0 +1,8 @@
+################################################################################
+# Create Account
+################################################################################
+mutation CreateAccount($input: CreateAccountInput!) {
+  createAccount(input: $input) {
+    accountName
+  }
+}
