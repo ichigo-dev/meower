@@ -29,7 +29,10 @@ pub fn Form<G: Html>( props: FormProps<G> ) -> View<G>
             class=props.classes.get_clone(),
             on:submit=move |event: SubmitEvent|
             {
-                event.prevent_default();
+                if !props.submit.get()
+                {
+                    event.prevent_default();
+                }
             },
             ..props.attributes
         )

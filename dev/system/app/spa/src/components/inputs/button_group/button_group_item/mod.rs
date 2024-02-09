@@ -76,6 +76,24 @@ pub fn ButtonGroupItem<G: Html>( props: ButtonGroupItemProps<G> ) -> View<G>
                             type=props.button_type.get_clone(),
                             on:click=move |_|
                             {
+                                if let Some(form_values) = form_values
+                                {
+                                    let mut values = form_values.get_clone();
+                                    if !props.disabled.get() &&
+                                        props.button_type.get_clone() == "submit"
+                                    {
+                                        values.set
+                                        (
+                                            &props.name.get_clone(),
+                                            &props.value.get_clone()
+                                        );
+                                    }
+                                    else
+                                    {
+                                        values.remove(&props.name.get_clone());
+                                    }
+                                    form_values.set(values);
+                                }
                             },
                             ..props.attributes
                         )

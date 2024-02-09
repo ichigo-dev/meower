@@ -6,6 +6,7 @@ use super::*;
 use crate::utils::props::*;
 
 use sycamore::prelude::*;
+use web_sys::SubmitEvent;
 
 
 //------------------------------------------------------------------------------
@@ -31,6 +32,9 @@ pub struct FormProps<G: Html>
 
     #[prop(default)]
     pub submit: ReadSignal<bool>,
+
+    #[prop(default)]
+    pub on_submit: Option<Box<dyn FnMut(FormValues, SubmitEvent) -> ()>>,
 
     #[prop(default)]
     pub values: Signal<FormValues>,
