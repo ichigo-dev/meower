@@ -101,7 +101,11 @@ pub fn Create<G: Html>() -> View<G>
                         view! {}
                     }
                 )
-                TextField(name=StrProp("account_name").into())
+                TextField
+                (
+                    name=StrProp("account_name").into(),
+                    variant=TextFieldVariant::Outlined.into(),
+                )
                 Button(button_type=StrProp("submit").into())
                 {
                     "Send"

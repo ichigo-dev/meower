@@ -22,16 +22,16 @@
 	//--------------------------------------------------------------------------
 
 	//	Primary
-	--color-primary: var(--color-blue-grey);
-	--color-primary-light: var(--color-blue-grey-lighten-2);
-	--color-primary-dark: var(--color-blue-grey-darken-2);
-	--color-primary-text: var(--color-grey-lighten-5);
+	--color-primary: #37474F;
+	--color-primary-light: #52646C;
+	--color-primary-dark: #213139;
+	--color-primary-text: #F2F5F6;
 
 	//	Secondary
-	--color-secondary: var(--color-deep-orange);
-	--color-secondary-light: var(--color-deep-orange-lighten-2);
-	--color-secondary-dark: var(--color-deep-orange-darken-2);
-	--color-secondary-text: var(--color-grey-lighten-5);
+	--color-secondary: #C0C6C9;
+	--color-secondary-light: #E6E8E9;
+	--color-secondary-dark: #A5B2B8;
+	--color-secondary-text: #212B30;
 
 	//	Error
 	--color-error: var(--color-red);
@@ -46,7 +46,7 @@
 	--color-warning-text: var(--color-grey-lighten-5);
 
 	//	Info
-	--color-info: var(--color-blue);
+	--color-info: #2076B5;
 	--color-info-light: var(--color-blue-lighten-2);
 	--color-info-dark: var(--color-blue-darken-2);
 	--color-info-text: var(--color-grey-lighten-5);
@@ -58,9 +58,9 @@
 	--color-success-text: var(--color-grey-lighten-5);
 
 	//	Common
-	--color-background: var(--color-blue-grey-lighten-5);
+	--color-background: #E3E9EC;
 	--color-background-text: var(--color-grey-darken-4);
-	--color-surface: var(--color-blue-grey-lighten-4);
+	--color-surface: #FFFFFF;
 	--color-surface-text: var(--color-grey-darken-3);
 
 	--color-filled: var(--color-blue-grey-accent-3);

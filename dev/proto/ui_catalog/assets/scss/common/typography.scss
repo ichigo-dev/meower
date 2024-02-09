@@ -2,6 +2,9 @@
 //	Typography
 //------------------------------------------------------------------------------
 
+@use "../functions/string" as string;
+@use "../variables/colors" as colors;
+
 .fs_3xs
 {
 	font-size: var(--fs-3xs);
@@ -125,4 +128,18 @@
 .text_black
 {
 	font-weight: 900;
+}
+
+
+//------------------------------------------------------------------------------
+//	Font weight
+//------------------------------------------------------------------------------
+
+@each $color in colors.$colors
+{
+	$class_name: string.str-replace(#{$color}, "-", "_");
+	.color_#{$class_name}
+	{
+		color: var(--color-#{$color});
+	}
 }

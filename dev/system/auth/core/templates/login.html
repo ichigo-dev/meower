@@ -5,34 +5,29 @@
 {% block content %}
  <div class="flex_grow flex flex_column flex_align_center flex_justify_center padding_xl">
   <div class="min_width_10xl flex flex_column">
-   <h1 class="ui_heading h1 text_align_center margin_bottom">{{ t!("pages.login.heading") }}</h1>
-   <div class="ui_box surface radius_md padding_xl flex flex_column flex_gap_xl">
-    <form method="POST" class="flex flex_column flex_gap_md">
-     <label class="flex flex_column flex_gap_sm">
-      <span>{{ t!("pages.login.form.email.label") }}</span>
-      <input type="email" name="email" placeholder="{{ t!("pages.login.form.email.placeholder") }}" value="{{ input.email }}" class="ui_text_field">
-      {% if input_error.email.is_some() %}
-       <div class="ui_alert filled error">{{ input_error.email.as_ref().unwrap() }}</div>
-      {% endif %}
-     </label>
-     <label class="flex flex_column flex_gap_sm">
-      <span>{{ t!("pages.login.form.password.label") }}</span>
-      <input type="password" name="password" class="ui_text_field">
-      {% if input_error.password.is_some() %}
-       <div class="ui_alert filled error">{{ input_error.password.as_ref().unwrap() }}</div>
-      {% endif %}
-     </label>
+   <div class="ui_box surface radius_md padding_4xl flex flex_column flex_align_center flex_gap_xl">
+    <h1 class="ui_heading h1 text_align_center text_bold margin_bottom">{{ t!("pages.login.heading") }}</h1>
+    <form method="POST" class="flex flex_column flex_gap_2xl flex_align_center width_8xl">
+     <input type="email" name="email" placeholder="{{ t!("pages.login.form.email.placeholder") }}" value="{{ input.email }}" class="ui_text_field width_full padding_horizontal_sm">
+     {% if input_error.email.is_some() %}
+      <div class="ui_alert filled error">{{ input_error.email.as_ref().unwrap() }}</div>
+     {% endif %}
+     <input type="password" name="password" placeholder="{{ t!("pages.login.form.password.placeholder") }}" class="ui_text_field width_full padding_horizontal_sm">
+     {% if input_error.password.is_some() %}
+      <div class="ui_alert filled error">{{ input_error.password.as_ref().unwrap() }}</div>
+     {% endif %}
      {% if input_error.other.is_some() %}
       <div class="ui_alert filled error">{{ input_error.other.as_ref().unwrap() }}</div>
      {% endif %}
-     <button type="submit" class="ui_button primary text_align_center">{{ t!("pages.login.form.button.submit") }}</button>
+     <div class="flex flex_column flex_align_center flex_gap_md">
+      <button type="submit" class="ui_button primary full_rounded width_7xl text_align_center">{{ t!("pages.login.form.button.submit") }}</button>
+      <div class="flex flex_column flex_align_center flex_gap_sm">
+       <a href="/auth/resend_verify_code" class="text_align_center color_info">{{ t!("pages.login.button.resend_verify_code") }}</a>
+       <a href="/auth/forgot_password" class="text_align_center color_info">{{ t!("pages.login.button.forgot_password") }}</a>
+      </div>
+     </div>
+     <a href="/auth/signup" class="ui_button secondary full_rounded width_7xl text_align_center">{{ t!("pages.login.button.signup") }}</a>
     </form>
-
-    <div class="flex flex_column flex_gap_sm">
-     <a href="/auth/signup" class="ui_button outlined primary text_align_center">{{ t!("pages.login.button.signup") }}</a>
-     <a href="/auth/resend_verify_code" class="ui_button outlined primary text_align_center">{{ t!("pages.login.button.resend_verify_code") }}</a>
-     <a href="/auth/forgot_password" class="ui_button outlined primary text_align_center">{{ t!("pages.login.button.forgot_password") }}</a>
-    </div>
    </div>
   </div>
  </div>
