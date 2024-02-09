@@ -33,12 +33,12 @@ impl AppState
         let config = Config::init();
         let hdb = Database::connect(&config.database_url).await.unwrap();
         let schema = Schema::build
-            (
-                QueryRoot::default(),
-                MutationRoot::default(),
-                EmptySubscription
-            )
-            .finish();
+        (
+            QueryRoot::default(),
+            MutationRoot::default(),
+            EmptySubscription
+        )
+        .finish();
 
         Self
         {

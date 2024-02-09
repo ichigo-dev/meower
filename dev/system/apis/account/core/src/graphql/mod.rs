@@ -2,19 +2,19 @@
 //! GraphQL.
 //------------------------------------------------------------------------------
 
-pub(crate) mod query;
-pub(crate) mod mutation;
+mod query;
+mod mutation;
+
+pub(crate) use query::QueryRoot;
+pub(crate) use mutation::MutationRoot;
 
 use crate::state::AppState;
-use query::account::AccountQuery;
-use mutation::account::AccountMutation;
-
 use meower_shared::JwtClaims;
 
 use std::str::from_utf8;
 use std::sync::Arc;
 
-use async_graphql::{ MergedObject, Request, Response };
+use async_graphql::{ Request, Response };
 use axum::extract::{ Json, State };
 use axum::http::{ header, HeaderMap };
 use base64::prelude::*;
@@ -31,6 +31,7 @@ pub(crate) async fn handler
     req: Json<Request>,
 ) -> Json<Response>
 {
+    // Extracts the JWT claims from the request.
     let bearer = headers
         .get(header::AUTHORIZATION)
         .unwrap()
@@ -41,7 +42,10 @@ pub(crate) async fn handler
     let auth = from_utf8(decoded_bytes).unwrap();
     let jwt_claims = serde_json::from_str::<JwtClaims>(auth).unwrap();
 
+    // Begins a transaction.
     let tsx = Arc::new(state.hdb.begin().await.unwrap());
+
+    // Executes the query.
     let query = req.0
         .data(state.config.clone())
         .data(tsx.clone())
@@ -60,17 +64,3 @@ pub(crate) async fn handler
     }
     response.into()
 }
-
-
-//------------------------------------------------------------------------------
-/// Query root.
-//------------------------------------------------------------------------------
-#[derive(MergedObject, Default)]
-pub(crate) struct QueryRoot(AccountQuery);
-
-
-//------------------------------------------------------------------------------
-/// Mutation root.
-//------------------------------------------------------------------------------
-#[derive(MergedObject, Default)]
-pub(crate) struct MutationRoot(AccountMutation);

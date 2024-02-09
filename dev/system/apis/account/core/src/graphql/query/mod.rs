@@ -3,3 +3,14 @@
 //------------------------------------------------------------------------------
 
 pub(crate) mod account;
+
+use account::AccountQuery;
+
+use async_graphql::MergedObject;
+
+
+//------------------------------------------------------------------------------
+/// Query root.
+//------------------------------------------------------------------------------
+#[derive(MergedObject, Default)]
+pub(crate) struct QueryRoot(AccountQuery);
