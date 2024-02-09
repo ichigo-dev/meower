@@ -26,6 +26,7 @@ impl FormValues
     //--------------------------------------------------------------------------
     /// Creates a new instance.
     //--------------------------------------------------------------------------
+    #[allow(dead_code)]
     pub fn new() -> Self
     {
         Self(HashMap::new())
@@ -34,6 +35,7 @@ impl FormValues
     //--------------------------------------------------------------------------
     /// Gets the value of a field.
     //--------------------------------------------------------------------------
+    #[allow(dead_code)]
     pub fn get( &self, name: &str ) -> Option<&String>
     {
         self.0.get(name)
@@ -42,6 +44,7 @@ impl FormValues
     //--------------------------------------------------------------------------
     /// Sets the value of a field.
     //--------------------------------------------------------------------------
+    #[allow(dead_code)]
     pub fn set( &mut self, name: &str, value: &str )
     {
         self.0.insert(name.to_string(), value.to_string());

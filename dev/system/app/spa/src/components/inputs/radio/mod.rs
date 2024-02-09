@@ -39,7 +39,7 @@ pub fn Radio<G: Html>( props: RadioProps<G> ) -> View<G>
         if let Some(form_values) = form_values
         {
             let mut values = form_values.get_clone();
-            if !props.disabled.get()
+            if !props.disabled.get() && props.name.get_clone().len() > 0
             {
                 values.set
                 (

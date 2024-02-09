@@ -34,7 +34,7 @@ pub struct FormProps<G: Html>
     pub submit: ReadSignal<bool>,
 
     #[prop(default)]
-    pub on_submit: Option<Box<dyn FnMut(FormValues, SubmitEvent) -> ()>>,
+    pub on_submit: Option<Box<dyn Fn(FormValues, SubmitEvent) -> ()>>,
 
     #[prop(default)]
     pub values: Signal<FormValues>,

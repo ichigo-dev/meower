@@ -29,6 +29,11 @@ pub fn Form<G: Html>( props: FormProps<G> ) -> View<G>
             class=props.classes.get_clone(),
             on:submit=move |event: SubmitEvent|
             {
+                if let Some(on_submit) = props.on_submit.as_ref()
+                {
+                    on_submit(props.values.get_clone(), event.clone());
+                }
+
                 if !props.submit.get()
                 {
                     event.prevent_default();

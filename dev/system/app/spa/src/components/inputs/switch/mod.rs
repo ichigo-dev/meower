@@ -39,7 +39,9 @@ pub fn Switch<G: Html>( props: SwitchProps<G> ) -> View<G>
         if let Some(form_values) = form_values
         {
             let mut values = form_values.get_clone();
-            if props.checked.get() && !props.disabled.get()
+            if props.checked.get()
+                && !props.disabled.get()
+                && props.name.get_clone().len() > 0
             {
                 values.set
                 (
