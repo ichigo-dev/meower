@@ -7,9 +7,11 @@ use meower_account_entity::account::ActiveModel as AccountActiveModel;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
 
+use std::sync::Arc;
+
 use async_graphql::{ Context, Object, InputObject, Result };
 use rust_i18n::t;
-use sea_orm::{ ActiveValue, DbConn };
+use sea_orm::{ ActiveValue, DatabaseTransaction };
 
 
 //------------------------------------------------------------------------------
@@ -42,7 +44,7 @@ impl AccountMutation
         input: CreateAccountInput,
     ) -> Result<AccountModel>
     {
-        let hdb = ctx.data::<DbConn>().unwrap();
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != input.public_user_id
         {
@@ -55,7 +57,7 @@ impl AccountMutation
             account_name: ActiveValue::Set(input.account_name),
             ..Default::default()
         };
-        let account = match account.validate_and_insert(hdb).await
+        let account = match account.validate_and_insert(tsx).await
         {
             Ok(account) => account,
             Err(e) => return Err(e.get_message().into()),
