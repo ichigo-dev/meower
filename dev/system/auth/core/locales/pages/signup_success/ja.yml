@@ -2,6 +2,6 @@ pages:
   signup_success:
     title: "サインアップ完了"
     heading: "サインアップ完了"
-    next: "ログインしてMeowerを使い始めよう！"
+    next: "さぁ、今すぐ始めよう！"
     button:
       login: "ログイン"

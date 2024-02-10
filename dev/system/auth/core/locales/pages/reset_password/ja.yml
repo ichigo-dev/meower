@@ -4,9 +4,11 @@ pages:
     heading: "パスワードリセット"
     form:
       password:
-        label: "パスワード"
+        label: "新しいパスワード"
+        placeholder: "●●●●●●●●"
       password_confirm:
-        label: "パスワード（確認用）"
+        label: "新しいパスワード（確認用）"
+        placeholder: "●●●●●●●●"
         error:
           not_match: "パスワードが一致しません"
       button:

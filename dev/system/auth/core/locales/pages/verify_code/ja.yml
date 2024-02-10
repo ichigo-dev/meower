@@ -5,7 +5,8 @@ pages:
     form:
       caution: "この画面を離れると、認証コードの再送が必要になります"
       code:
-        label: "コード"
+        label: "認証コード"
+        placeholder: "123456"
       button:
         submit: "送信"
     error:

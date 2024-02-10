@@ -10,10 +10,11 @@ pages:
           required: "メールアドレスが入力されていません"
       password:
         label: "パスワード"
+        placeholder: "●●●●●●●●"
         error:
           required: "パスワードが入力されていません"
       button:
-        submit: "送信"
+        submit: "再送信"
     button:
       login: "ログイン"
-      signup: "サインアップ"
+      signup: "アカウント作成"

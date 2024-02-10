@@ -3,9 +3,9 @@
 //------------------------------------------------------------------------------
 
 $breakpoints: (
-	'mobile': 'screen and (min-width: 0px) and (max-width: 524px)',
-	'tablet': 'screen and (min-width: 525px) and (max-width: 768px)',
-	'laptop': 'screen and (min-width: 769px) and (max-width: 900px)',
-	'desktop': 'screen and (min-width: 901px) and (max-width: 1200px)',
-	'wide': 'screen and (min-width: 1201px)'
+	"mobile": "screen and (min-width: 0px) and (max-width: 524px)",
+	"tablet": "screen and (min-width: 525px) and (max-width: 768px)",
+	"laptop": "screen and (min-width: 769px) and (max-width: 900px)",
+	"desktop": "screen and (min-width: 901px) and (max-width: 1200px)",
+	"wide": "screen and (min-width: 1201px)"
 );

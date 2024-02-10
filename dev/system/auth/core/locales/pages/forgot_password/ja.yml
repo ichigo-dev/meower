@@ -1,10 +1,10 @@
 pages:
   forgot_password:
-    title: "パスワードを忘れた場合"
-    heading: "パスワードを忘れた場合"
+    title: "パスワード再設定"
+    heading: "パスワード再設定"
     form:
       email:
-        label: "メールアドレス"
+        label: "再設定用メールアドレス"
         placeholder: "meower@example.com"
         error:
           not_verified: "そのユーザは認証されていません"

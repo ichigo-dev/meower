@@ -15,7 +15,6 @@ use meower_entity_ext::ValidateExt;
 
 use askama::Template;
 use axum::extract::{ Form, State };
-use axum::http::Uri;
 use axum::response::{ Html, IntoResponse };
 use lettre::{ AsyncTransport, Message };
 use lettre::message::header::ContentType;
@@ -76,7 +75,6 @@ pub(crate) async fn get_handler() -> impl IntoResponse
 // POST
 pub(crate) async fn post_handler
 (
-    uri: Uri,
     State(state): State<AppState>,
     Form(input): Form<FormData>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
@@ -155,17 +153,10 @@ pub(crate) async fn post_handler
     };
 
     // Sends a confirmation email.
-    let base_url = format!
-    (
-        "{}://{}:{}",
-        uri.scheme_str().unwrap_or("https"),
-        uri.host().unwrap_or(""),
-        uri.port_u16().unwrap_or(80),
-    );
     let reset_password_url = format!
     (
         "{}/auth/reset_password/{}",
-        base_url,
+        config.url,
         reset_password_token.token,
     );
     let email = Message::builder()
