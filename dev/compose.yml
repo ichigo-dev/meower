@@ -268,6 +268,22 @@ services:
     command: "npx gulp"
     tty: true
 
+  # PGAdmin
+  pgadmin:
+    image: dpage/pgadmin4:8.3
+    ports:
+      - ${PGADMIN_PORT}:80
+    volumes:
+      - pgadmindata:/var/lib/pgadmin4/storage
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      TZ: Asia/Tokyo
+    depends_on:
+      - auth_db
+      - app_db
+      - account_db
+
 
 ################################################################################
 # Volumes
@@ -278,3 +294,4 @@ volumes:
   account_db_data:
   mailhog_data:
   ui_catalog_node_modules:
+  pgadmindata:
