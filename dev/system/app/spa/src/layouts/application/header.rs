@@ -16,7 +16,7 @@ pub fn Header<G: Html>() -> View<G>
 {
     view!
     {
-        Box(classes=StrProp("ui_box primary text_align_center padding_sm fs_2xl").into())
+        Box(classes=StrProp("ui_box primary color_primary_text text_align_center padding_sm fs_2xl").into())
         {
             "Meower"
         }
