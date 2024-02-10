@@ -4,11 +4,13 @@ pages:
     heading: "ログイン"
     form:
       email:
-        placeholder: "メールアドレス"
+        label: "メールアドレス"
+        placeholder: "meower@example.com"
         error:
           not_verified: "そのユーザは認証されていません"
       password:
-        placeholder: "パスワード"
+        label: "パスワード"
+        placeholder: "●●●●●●●●"
       button:
         submit: "ログイン"
       error:

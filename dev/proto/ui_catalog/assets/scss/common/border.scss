@@ -2,7 +2,9 @@
 //	Border
 //------------------------------------------------------------------------------
 
-.border
+@use "../functions/responsive" as responsive;
+
+@include responsive.responsive("border")
 {
 	border: 1px solid var(--color-border);
 

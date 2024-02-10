@@ -2,7 +2,9 @@
 //	Display
 //------------------------------------------------------------------------------
 
-.display
+@use "../functions/responsive" as responsive;
+
+@include responsive.responsive("display")
 {
 	&_none
 	{
@@ -25,7 +27,7 @@
 	}
 }
 
-.hide
+@include responsive.responsive("hide")
 {
 	display: none !important;
 }

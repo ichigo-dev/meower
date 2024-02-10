@@ -1,0 +1,24 @@
+//------------------------------------------------------------------------------
+//	Responsive utilities
+//------------------------------------------------------------------------------
+
+@use "../variables/breakpoints" as breakpoints;
+
+@mixin responsive( $class, $bp: breakpoints.$breakpoints )
+{
+	.#{$class}
+	{
+		@content;
+	}
+
+	@each $prefix, $value in $bp
+	{
+		@media #{$value}
+		{
+			.#{$prefix}\:#{$class}
+			{
+				@content;
+			}
+		}
+	}
+}

@@ -2,26 +2,31 @@
 //	Overflow
 //------------------------------------------------------------------------------
 
-.overflow_auto
+@use "../functions/responsive" as responsive;
+
+@include responsive.responsive("overflow")
 {
-	overflow: auto;
+	&_auto
+	{
+		overflow: auto;
 
-	&_x { overflow-x: auto; }
-	&_y { overflow-y: auto; }
-}
+		&_x { overflow-x: auto; }
+		&_y { overflow-y: auto; }
+	}
 
-.overflow_scroll
-{
-	overflow: scroll;
+	&_scroll
+	{
+		overflow: scroll;
 
-	&_x { overflow-x: scroll; }
-	&_y { overflow-y: scroll; }
-}
+		&_x { overflow-x: scroll; }
+		&_y { overflow-y: scroll; }
+	}
 
-.overflow_hidden
-{
-	overflow: hidden;
+	&_hidden
+	{
+		overflow: hidden;
 
-	&_x { overflow-x: hidden; }
-	&_y { overflow-y: hidden; }
+		&_x { overflow-x: hidden; }
+		&_y { overflow-y: hidden; }
+	}
 }

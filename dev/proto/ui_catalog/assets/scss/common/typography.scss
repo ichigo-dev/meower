@@ -2,62 +2,23 @@
 //	Typography
 //------------------------------------------------------------------------------
 
+@use "../functions/responsive" as responsive;
 @use "../functions/string" as string;
 @use "../variables/colors" as colors;
 
-.fs_3xs
+@include responsive.responsive("fs")
 {
-	font-size: var(--fs-3xs);
-}
-
-.fs_2xs
-{
-	font-size: var(--fs-2xs);
-}
-
-.fs_xs
-{
-	font-size: var(--fs-xs);
-}
-
-.fs_sm
-{
-	font-size: var(--fs-sm);
-}
-
-.fs_md
-{
-	font-size: var(--fs-md);
-}
-
-.fs_lg
-{
-	font-size: var(--fs-lg);
-}
-
-.fs_xl
-{
-	font-size: var(--fs-xl);
-}
-
-.fs_2xl
-{
-	font-size: var(--fs-2xl);
-}
-
-.fs_3xl
-{
-	font-size: var(--fs-3xl);
-}
-
-.fs_4xl
-{
-	font-size: var(--fs-4xl);
-}
-
-.fs_5xl
-{
-	font-size: var(--fs-5xl);
+	&_3xs { font-size: var(--fs-3xs); }
+	&_2xs { font-size: var(--fs-2xs); }
+	&_xs { font-size: var(--fs-xs); }
+	&_sm { font-size: var(--fs-sm); }
+	&_md { font-size: var(--fs-md); }
+	&_lg { font-size: var(--fs-lg); }
+	&_xl { font-size: var(--fs-xl); }
+	&_2xl { font-size: var(--fs-2xl); }
+	&_3xl { font-size: var(--fs-3xl); }
+	&_4xl { font-size: var(--fs-4xl); }
+	&_5xl { font-size: var(--fs-5xl); }
 }
 
 
@@ -65,19 +26,11 @@
 //	Text align
 //------------------------------------------------------------------------------
 
-.text_align_left
+@include responsive.responsive("text_align")
 {
-	text-align: left;
-}
-
-.text_align_center
-{
-	text-align: center;
-}
-
-.text_align_right
-{
-	text-align: right;
+	&_left { text-align: left; }
+	&_center { text-align: center; }
+	&_right { text-align: right; }
 }
 
 
@@ -85,49 +38,17 @@
 //	Font weight
 //------------------------------------------------------------------------------
 
-.text_thin
+@include responsive.responsive("text")
 {
-	font-weight: 100;
-}
-
-.text_extra_light
-{
-	font-weight: 200;
-}
-
-.text_light
-{
-	font-weight: 300;
-}
-
-.text_regular
-{
-	font-weight: 400;
-}
-
-.text_medium
-{
-	font-weight: 500;
-}
-
-.text_semi_bold
-{
-	font-weight: 600;
-}
-
-.text_bold
-{
-	font-weight: 700;
-}
-
-.text_extra_bold
-{
-	font-weight: 800;
-}
-
-.text_black
-{
-	font-weight: 900;
+	&_thin { font-weight: 100; }
+	&_extra_light { font-weight: 200; }
+	&_light { font-weight: 300; }
+	&_regular { font-weight: 400; }
+	&_medium { font-weight: 500; }
+	&_semi_bold { font-weight: 600; }
+	&_bold { font-weight: 700; }
+	&_extra_bold { font-weight: 800; }
+	&_black { font-weight: 900; }
 }
 
 
@@ -138,7 +59,7 @@
 @each $color in colors.$colors
 {
 	$class_name: string.str-replace(#{$color}, "-", "_");
-	.color_#{$class_name}
+	@include responsive.responsive("color_#{$class_name}")
 	{
 		color: var(--color-#{$color});
 	}

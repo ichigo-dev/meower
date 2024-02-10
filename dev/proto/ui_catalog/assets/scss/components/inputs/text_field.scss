@@ -103,7 +103,7 @@
 	//	Errors
 	//--------------------------------------------------------------------------
 
-	&.is_error
+	&.is_error:placeholder-shown
 	{
 		border-color: var(--color-error);
 		color: var(--color-background-text);

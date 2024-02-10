@@ -2,7 +2,7 @@
 //	String utilities
 //------------------------------------------------------------------------------
 
-@function str-replace( $string, $search, $replace: '' )
+@function str-replace( $string, $search, $replace: "" )
 {
 	$index: str_index($string, $search);
 

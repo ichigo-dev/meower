@@ -2,11 +2,12 @@
 //	Spacer
 //------------------------------------------------------------------------------
 
+@use "../functions/responsive" as responsive;
 @use "../functions/string" as string;
 @use "../variables/spaces" as spaces;
 
 //	Margin
-.margin
+@include responsive.responsive("margin")
 {
 	margin: var(--spacing-md) !important;
 
@@ -115,7 +116,7 @@
 }
 
 //	Padding
-.padding
+@include responsive.responsive("padding")
 {
 	padding: var(--spacing-md) !important;
 

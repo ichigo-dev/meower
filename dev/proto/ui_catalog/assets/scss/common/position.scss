@@ -2,10 +2,11 @@
 //	Position
 //------------------------------------------------------------------------------
 
+@use "../functions/responsive" as responsive;
 @use "../functions/string" as string;
 @use "../variables/z_indexes" as z_index;
 
-.position
+@include responsive.responsive("position")
 {
 	&_relative
 	{
@@ -23,7 +24,7 @@
 	}
 }
 
-.z_index
+@include responsive.responsive("z_index")
 {
 	z-index: var(--z-index-default);
 

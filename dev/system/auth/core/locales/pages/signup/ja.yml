@@ -16,12 +16,15 @@ pages:
           not_match: "メールアドレスが一致しません"
       password:
         label: "パスワード"
+        placeholder: "●●●●●●●●"
+        help: "※ 文字数8文字以上、半角英数・記号1文字以上"
       password_confirm:
         label: "パスワード（確認用）"
+        placeholder: "●●●●●●●●"
         error:
           not_match: "パスワードが一致しません"
       button:
-        submit: "送信"
+        submit: "さっそく始める"
     button:
+      resend_verify_code: "認証コードを再送する"
       login: "ログイン"
-      resend_verify_code: "認証コード再送信"

@@ -2,6 +2,7 @@
 //	Size
 //------------------------------------------------------------------------------
 
+@use "../functions/responsive" as responsive;
 @use "../functions/string" as string;
 @use "../variables/sizes" as sizes;
 
@@ -11,7 +12,7 @@ $size_prefixes: "min-", "", "max-";
 @each $prefix in $size_prefixes
 {
 	$class_prefix: string.str-replace(#{$prefix}, "-", "_");
-	.#{$class_prefix}width
+	@include responsive.responsive("#{$class_prefix}width")
 	{
 		&_full { #{$prefix}width: 100% !important; }
 		&_full_viewport { #{$prefix}width: 100vw !important; }
@@ -33,7 +34,7 @@ $size_prefixes: "min-", "", "max-";
 @each $prefix in $size_prefixes
 {
 	$class_prefix: string.str-replace(#{$prefix}, "-", "_");
-	.#{$class_prefix}height
+	@include responsive.responsive("#{$class_prefix}height")
 	{
 		&_full { #{$prefix}height: 100% !important; }
 		&_full_viewport { #{$prefix}height: 100vh !important; }
@@ -55,7 +56,7 @@ $size_prefixes: "min-", "", "max-";
 @each $prefix in $size_prefixes
 {
 	$class_prefix: string.str-replace(#{$prefix}, "-", "_");
-	.#{$class_prefix}size
+	@include responsive.responsive("#{$class_prefix}size")
 	{
 		&_full
 		{

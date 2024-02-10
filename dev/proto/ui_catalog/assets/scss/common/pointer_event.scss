@@ -2,7 +2,9 @@
 //	Pointer event
 //------------------------------------------------------------------------------
 
-.pointer_event_none
+@use "../functions/responsive" as responsive;
+
+@include responsive.responsive("pointer_event_none")
 {
     pointer-events: none;
 }
