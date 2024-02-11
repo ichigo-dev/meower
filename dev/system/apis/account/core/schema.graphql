@@ -89,6 +89,10 @@ type QueryRoot {
 	Gets accounts.
 	"""
 	accounts(publicUserId: String!): [Account!]!
+	"""
+	Gets account profiles.
+	"""
+	accountProfiles(accountName: String!): [AccountProfile!]!
 }
 
 

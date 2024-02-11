@@ -1,5 +1,5 @@
 ################################################################################
-# Create Account
+# Creates account
 ################################################################################
 mutation CreateAccount(
   $createAccountInput: CreateAccountInput!,

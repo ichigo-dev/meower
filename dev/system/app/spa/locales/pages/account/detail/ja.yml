@@ -1,0 +1,17 @@
+pages:
+  account:
+    detail:
+      heading: "アカウント詳細"
+      table:
+        name:
+          head: "表示名"
+        affiliation:
+          head: "所属"
+        email:
+          head: "メールアドレス"
+        bio:
+          head: "自己紹介"
+        birthdate:
+          head: "生年月日"
+        gender:
+          head: "性別"
