@@ -38,10 +38,10 @@ pub struct Model
     pub account_profile_id: i64,
     pub account_id: i64,
     pub name: String,
-    pub affiliation: String,
-    pub bio: String,
+    pub affiliation: Option<String>,
+    pub bio: Option<String>,
     pub email: String,
-    pub birthdate: DateTime,
+    pub birthdate: Option<DateTime>,
     pub gender: Option<Gender>,
     pub created_at: DateTime,
     pub updated_at: DateTime,
@@ -90,18 +90,34 @@ impl ValidateExt for ActiveModel
     where
         C: ConnectionTrait,
     {
-        let name = self.name.clone().take().unwrap_or("".to_string());
-        let affiliation = self.affiliation.clone().take().unwrap_or("".to_string());
-        let bio = self.bio.clone().take().unwrap_or("".to_string());
-        let email = self.email.clone().take().unwrap_or("".to_string());
+        let name = self.name
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
+        let affiliation = self.affiliation
+            .clone()
+            .take()
+            .unwrap_or(None)
+            .unwrap_or("".to_string());
+        let bio = self.bio
+            .clone()
+            .take()
+            .unwrap_or(None)
+            .unwrap_or("".to_string());
+        let email = self.email
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
         let birthdate = self
             .birthdate
             .clone()
             .take()
+            .unwrap_or(None)
             .unwrap_or(DateTime::from_timestamp_millis(0).unwrap());
 
         // Validates fields.
         if let Err(e) = Validator::new()
+            .required()
             .max_length(32)
             .validate(&name)
         {
@@ -123,6 +139,7 @@ impl ValidateExt for ActiveModel
         }
 
         if let Err(e) = Validator::new()
+            .required()
             .max_length(255)
             .is_email()
             .validate(&email)
@@ -132,7 +149,6 @@ impl ValidateExt for ActiveModel
 
         if let Err(e) = Validator::new()
             .max_length(255)
-            .is_email()
             .custom(Box::new(|value|
             {
                 let now = Utc::now().naive_utc().timestamp_millis().to_string();
@@ -147,7 +163,7 @@ impl ValidateExt for ActiveModel
             }))
             .validate(&birthdate.timestamp_millis().to_string())
         {
-            return Err(Error::Validation { column: Column::Email, error: e });
+            return Err(Error::Validation { column: Column::Birthdate, error: e });
         }
 
         Ok(())

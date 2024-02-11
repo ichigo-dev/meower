@@ -10,6 +10,7 @@ repository = "https://github.com/ichigo-dev/meower"
 
 
 [dependencies]
+chrono = { version = "0.4.34", features = ["serde"] }
 console_error_panic_hook = "0.1.7"
 console_log = "0.2.0"
 gloo-timers = "0.3.0"

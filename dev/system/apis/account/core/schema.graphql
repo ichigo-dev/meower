@@ -8,6 +8,22 @@ type Account {
 	createdAt: NaiveDateTime!
 }
 
+"""
+Model.
+"""
+type AccountProfile {
+	accountProfileId: Int!
+	accountId: Int!
+	name: String!
+	affiliation: String
+	bio: String
+	email: String!
+	birthdate: NaiveDateTime
+	gender: Gender
+	createdAt: NaiveDateTime!
+	updatedAt: NaiveDateTime!
+}
+
 
 """
 Inputs.
@@ -17,6 +33,28 @@ input CreateAccountInput {
 	accountName: String!
 }
 
+"""
+Inputs.
+"""
+input CreateAccountProfileInput {
+	accountName: String!
+	name: String!
+	affiliation: String
+	email: String!
+	bio: String
+	birthdate: NaiveDateTime
+	gender: Gender
+}
+
+
+"""
+Gender.
+"""
+enum Gender {
+	MALE
+	FEMALE
+	OTHER
+}
 
 
 
@@ -25,9 +63,13 @@ Mutation root.
 """
 type MutationRoot {
 	"""
-	Gets accounts.
+	Creates accounts.
 	"""
 	createAccount(input: CreateAccountInput!): Account!
+	"""
+	Creates account profile.
+	"""
+	createAccountProfile(input: CreateAccountProfileInput!): AccountProfile!
 }
 
 """

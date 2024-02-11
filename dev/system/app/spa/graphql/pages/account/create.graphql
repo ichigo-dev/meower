@@ -1,8 +1,15 @@
 ################################################################################
 # Create Account
 ################################################################################
-mutation CreateAccount($input: CreateAccountInput!) {
-  createAccount(input: $input) {
+mutation CreateAccount(
+  $createAccountInput: CreateAccountInput!,
+  $createAccountProfileInput: CreateAccountProfileInput!
+) {
+  createAccount(input: $createAccountInput) {
     accountName
+  }
+
+  createAccountProfile(input: $createAccountProfileInput) {
+    name
   }
 }

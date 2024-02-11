@@ -2,8 +2,8 @@
 //! Account mutation.
 //------------------------------------------------------------------------------
 
-use meower_account_entity::account::Model as AccountModel;
 use meower_account_entity::account::ActiveModel as AccountActiveModel;
+use meower_account_entity::account::Model as AccountModel;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
 
@@ -26,7 +26,7 @@ struct CreateAccountInput
 
 
 //------------------------------------------------------------------------------
-/// Account query.
+/// Mutation.
 //------------------------------------------------------------------------------
 #[derive(Default)]
 pub(crate) struct AccountMutation;
@@ -35,7 +35,7 @@ pub(crate) struct AccountMutation;
 impl AccountMutation
 {
     //--------------------------------------------------------------------------
-    /// Gets accounts.
+    /// Creates accounts.
     //--------------------------------------------------------------------------
     async fn create_account
     (

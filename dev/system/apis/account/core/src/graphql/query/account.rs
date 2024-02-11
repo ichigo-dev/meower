@@ -15,7 +15,7 @@ use sea_orm::{ ColumnTrait, DatabaseTransaction, EntityTrait, QueryFilter };
 
 
 //------------------------------------------------------------------------------
-/// Account query.
+/// Query.
 //------------------------------------------------------------------------------
 #[derive(Default)]
 pub(crate) struct AccountQuery;

@@ -36,9 +36,9 @@ impl FormValues
     /// Gets the value of a field.
     //--------------------------------------------------------------------------
     #[allow(dead_code)]
-    pub fn get( &self, name: &str ) -> Option<&String>
+    pub fn get( &self, name: &str ) -> Option<String>
     {
-        self.0.get(name)
+        self.0.get(name).cloned()
     }
 
     //--------------------------------------------------------------------------
