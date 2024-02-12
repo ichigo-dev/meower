@@ -17,7 +17,7 @@ use thiserror::Error;
 /// Gender.
 //------------------------------------------------------------------------------
 #[derive(Copy, Clone, Debug, PartialEq, Eq, EnumIter, DeriveActiveEnum, Enum)]
-#[sea_orm(rs_type = "i8", db_type = "TinyInteger")]
+#[sea_orm(rs_type = "i32", db_type = "Integer")]
 pub enum Gender
 {
     Male = 1,
@@ -128,7 +128,10 @@ impl ValidateExt for ActiveModel
             .max_length(32)
             .validate(&affiliation)
         {
-            return Err(Error::Validation { column: Column::Affiliation, error: e });
+            return Err
+            (
+                Error::Validation { column: Column::Affiliation, error: e }
+            );
         }
 
         if let Err(e) = Validator::new()
@@ -163,7 +166,10 @@ impl ValidateExt for ActiveModel
             }))
             .validate(&birthdate.timestamp_millis().to_string())
         {
-            return Err(Error::Validation { column: Column::Birthdate, error: e });
+            return Err
+            (
+                Error::Validation { column: Column::Birthdate, error: e }
+            );
         }
 
         Ok(())

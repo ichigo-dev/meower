@@ -7,7 +7,7 @@ use crate::components::*;
 use crate::utils::request_graphql::post_graphql;
 use crate::utils::props::*;
 
-use chrono::NaiveDateTime;
+use chrono::{ NaiveDate, NaiveDateTime };
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -47,9 +47,13 @@ pub fn CreateAccountForm<G: Html>() -> View<G>
         {
             Some(birthdate) =>
             {
-                match NaiveDateTime::parse_from_str(&birthdate, "%Y-%m-%d")
+                match NaiveDate::parse_from_str
+                (
+                    &birthdate,
+                    "%Y-%m-%d",
+                )
                 {
-                    Ok(birthdate) => Some(birthdate),
+                    Ok(naive_date) => Some(NaiveDateTime::from(naive_date)),
                     Err(_) => None,
                 }
             },

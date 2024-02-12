@@ -15,3 +15,6 @@ pages:
           head: "生年月日"
         gender:
           head: "性別"
+          male: "男性"
+          female: "女性"
+          other: "その他"

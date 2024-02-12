@@ -74,7 +74,7 @@ impl MigrationTrait for Migration
             .col
             (
                 ColumnDef::new(AccountProfile::Gender)
-                    .tiny_integer()
+                    .integer()
             )
             .col
             (

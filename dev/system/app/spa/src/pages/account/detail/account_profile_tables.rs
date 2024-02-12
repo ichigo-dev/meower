@@ -122,7 +122,34 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
                             {
                                 (t!("pages.account.detail.table.gender.head"))
                             }
-                            TableCell { ("") }
+                            TableCell
+                            {
+                                (
+                                    match &account_profile.gender
+                                    {
+                                        Some(gender) => match gender
+                                        {
+                                            get_account_profiles::Gender::MALE =>
+                                            {
+                                                t!("pages.account.detail.table.gender.male")
+                                            },
+                                            get_account_profiles::Gender::FEMALE =>
+                                            {
+                                                t!("pages.account.detail.table.gender.female")
+                                            },
+                                            get_account_profiles::Gender::OTHER =>
+                                            {
+                                                t!("pages.account.detail.table.gender.other")
+                                            },
+                                            _ =>
+                                            {
+                                                "".to_string()
+                                            },
+                                        },
+                                        None => "".to_string(),
+                                    }
+                                )
+                            }
                         }
                     }
                 }

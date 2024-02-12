@@ -38,8 +38,11 @@ pub fn Radio<G: Html>( props: RadioProps<G> ) -> View<G>
     {
         if let Some(radio_value) = radio_value
         {
-            let value = props.value.get_clone();
-            radio_value.set(RadioValue::new(&value));
+            if props.checked.get()
+            {
+                let value = props.value.get_clone();
+                radio_value.set(RadioValue::new(&value));
+            }
         }
     });
 

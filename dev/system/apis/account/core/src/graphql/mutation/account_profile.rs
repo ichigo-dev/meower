@@ -84,6 +84,8 @@ impl AccountProfileMutation
             affiliation: ActiveValue::Set(input.affiliation),
             email: ActiveValue::Set(input.email),
             bio: ActiveValue::Set(input.bio),
+            birthdate: ActiveValue::Set(input.birthdate),
+            gender: ActiveValue::Set(input.gender),
             ..Default::default()
         };
         let account_profile = match account_profile
