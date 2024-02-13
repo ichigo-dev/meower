@@ -182,8 +182,10 @@ services:
       PORT: ${ACCOUNT_PORT}
       DATABASE_URL: ${ACCOUNT_DB_URL}
       FALLBACK_LOCALE: ${FALLBACK_LOCALE}
+      STORAGE_URL: ${ACCOUNT_STORAGE_URL}
+      STORAGE_BUCKET: ${ACCOUNT_STORAGE_BUCKET}
     working_dir: /system/apis/account/core
-    command: "cargo watch -x run --ignore 'schema.graphql'"
+    command: "cargo watch -x run --ignore 'schema.graphql' --ignore 'uploads/*'"
     depends_on:
       - account_db
     tty: true

@@ -19,6 +19,10 @@ pub(crate) struct Config
 
     // Database config.
     pub(crate) database_url: String,
+
+    // Storage config.
+    pub(crate) storage_url: String,
+    pub(crate) storage_bucket: String,
 }
 
 impl Config
@@ -42,6 +46,12 @@ impl Config
         let database_url = env::var("DATABASE_URL")
             .expect("DATABASE_URL must be set");
 
+        // Storage config.
+        let storage_url = env::var("STORAGE_URL")
+            .expect("STORAGE_URL must be set");
+        let storage_bucket = env::var("STORAGE_BUCKET")
+            .expect("STORAGE_BUCKET must be set");
+
         Self
         {
             // Server config.
@@ -52,6 +62,10 @@ impl Config
 
             // Database config.
             database_url,
+
+            // Storage config.
+            storage_url,
+            storage_bucket,
         }
     }
 }

@@ -116,19 +116,6 @@ install-auth:
 
 
 ################################################################################
-# Storage
-################################################################################
-
-create-bucket:
-	$(MAKE) create-bucket-account --no-print-directory
-
-# Create a bucket
-create-bucket-account:
-	@docker compose exec account_storage \
-		bash -c 'mc mb data/${ACCOUNT_STORAGE_BUCKET} --ignore-existing'
-
-
-################################################################################
 # Development utilities
 ################################################################################
 
