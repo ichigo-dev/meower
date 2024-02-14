@@ -23,6 +23,10 @@ pub(crate) struct Config
     // Storage config.
     pub(crate) storage_url: String,
     pub(crate) storage_bucket: String,
+
+    pub(crate) avatar_path: String,
+    pub(crate) default_avatar_path: String,
+    pub(crate) default_avatar_mime: String,
 }
 
 impl Config
@@ -52,6 +56,10 @@ impl Config
         let storage_bucket = env::var("STORAGE_BUCKET")
             .expect("STORAGE_BUCKET must be set");
 
+        let avatar_path = "avatar".to_string();
+        let default_avatar_path = "avatar/default.png".to_string();
+        let default_avatar_mime = "image/png".to_string();
+
         Self
         {
             // Server config.
@@ -66,6 +74,10 @@ impl Config
             // Storage config.
             storage_url,
             storage_bucket,
+
+            avatar_path,
+            default_avatar_path,
+            default_avatar_mime,
         }
     }
 }

@@ -5,7 +5,8 @@
 use meower_shared::JwtClaims;
 
 use axum::extract::{ Extension, Path, State };
-use axum::http::Method;
+use axum::http::{ Method, HeaderMap };
+use axum::http::header::HeaderName;
 use axum::response::IntoResponse;
 use base64::prelude::*;
 use reqwest::{ Client, header, Method as ReqMethod };
@@ -38,9 +39,15 @@ pub(crate) async fn handler
         .body(body)
         .send()
         .await
-        .unwrap()
-        .text()
-        .await
         .unwrap();
-    res
+
+    let mut headers = HeaderMap::new();
+    for (name, value) in res.headers().iter()
+    {
+        let name = HeaderName::from_bytes(name.as_str().as_bytes()).unwrap();
+        headers.append(name, value.to_str().unwrap().parse().unwrap());
+    }
+
+    let bytes = res.bytes().await.unwrap();
+    (headers, bytes).into_response()
 }

@@ -4,7 +4,7 @@
 
 use crate::AppState;
 
-use reqwest::{ StatusCode, Method };
+use reqwest::{ StatusCode, Method, Response };
 use rust_i18n::t;
 
 
@@ -20,17 +20,18 @@ pub async fn request
     endpoint: &str,
     body: &str,
     method: Method,
-) -> Result<String, String>
+) -> Result<Response, String>
 {
     let client = &state.client;
     let config = &state.config;
     let body = body.to_string();
+    let access_token = config.access_token.read().unwrap();
 
     let endpoint = endpoint.trim_start_matches('/');
     let url = format!("{}/{}", config.api_url, endpoint);
     let mut response = match client
         .request(method.clone(), url.clone())
-        .bearer_auth(config.access_token.lock().unwrap().clone())
+        .bearer_auth(&access_token)
         .body(body.clone())
         .send()
         .await
@@ -53,7 +54,7 @@ pub async fn request
         {
             return Err(t!("common.api.unauthorized.error"));
         }
-        let mut access_token = config.access_token.lock().unwrap();
+        let mut access_token = config.access_token.write().unwrap();
         *access_token = token;
 
         response = match client
@@ -68,11 +69,6 @@ pub async fn request
         };
     }
 
-    let response = match response.text().await
-    {
-        Ok(response) => response,
-        Err(_) => return Err(t!("common.api.network.error")),
-    };
     Ok(response)
 }
 
@@ -83,7 +79,7 @@ pub async fn get
     state: &AppState,
     endpoint: &str,
     body: &str,
-) -> Result<String, String>
+) -> Result<Response, String>
 {
     request(state, endpoint, body, Method::GET).await
 }
@@ -95,7 +91,7 @@ pub async fn post
     state: &AppState,
     endpoint: &str,
     body: &str,
-) -> Result<String, String>
+) -> Result<Response, String>
 {
     request(state, endpoint, body, Method::POST).await
 }
@@ -107,7 +103,7 @@ pub async fn put
     state: &AppState,
     endpoint: &str,
     body: &str,
-) -> Result<String, String>
+) -> Result<Response, String>
 {
     request(state, endpoint, body, Method::PUT).await
 }
@@ -119,7 +115,7 @@ pub async fn delete
     state: &AppState,
     endpoint: &str,
     body: &str,
-) -> Result<String, String>
+) -> Result<Response, String>
 {
     request(state, endpoint, body, Method::DELETE).await
 }

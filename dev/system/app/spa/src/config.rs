@@ -2,7 +2,7 @@
 //! Configuration.
 //------------------------------------------------------------------------------
 
-use std::sync::{ Arc, Mutex };
+use std::sync::{ Arc, RwLock };
 
 
 //------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ pub struct Config
     pub client_id_key: String,
     pub client_id: String,
     pub public_user_id: String,
-    pub access_token: Arc<Mutex<String>>,
+    pub access_token: Arc<RwLock<String>>,
 }
 
 impl Config
@@ -49,7 +49,7 @@ impl Config
         let api_url = std::env!("API_URL").to_string();
         let client_id_key = std::env!("CLIENT_ID_KEY").to_string();
         let client_id = client_id;
-        let access_token = Arc::new(Mutex::new(access_token));
+        let access_token = Arc::new(RwLock::new(access_token));
 
         Self
         {

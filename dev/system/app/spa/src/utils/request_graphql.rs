@@ -25,13 +25,14 @@ pub async fn request_graphql<Q: GraphQLQuery>
 {
     let client = &state.client;
     let config = &state.config;
+    let access_token = config.access_token.read().unwrap();
 
     let endpoint = endpoint.trim_start_matches('/');
     let url = format!("{}/{}", config.api_url, endpoint);
     let body = Q::build_query(variables);
     let mut response = match client
         .request(method.clone(), url.clone())
-        .bearer_auth(config.access_token.lock().unwrap().clone())
+        .bearer_auth(&access_token)
         .json(&body)
         .send()
         .await
@@ -54,7 +55,7 @@ pub async fn request_graphql<Q: GraphQLQuery>
         {
             return Err(t!("common.api.unauthorized.error"));
         }
-        let mut access_token = config.access_token.lock().unwrap();
+        let mut access_token = config.access_token.write().unwrap();
         *access_token = token;
 
         response = match client

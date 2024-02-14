@@ -4,9 +4,11 @@
 
 mod config;
 mod graphql;
+mod handlers;
 mod layers;
 mod state;
 
+use handlers::*;
 pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
@@ -14,7 +16,7 @@ use std::fs::File;
 use std::io::Write;
 
 use axum::{ Router, middleware };
-use axum::routing::post;
+use axum::routing::{ get, post };
 use tokio::net::TcpListener;
 
 // Loads the locales.
@@ -39,6 +41,7 @@ async fn main()
     // Creates the application routes.
     let routes = Router::new()
         .route("/graphql", post(graphql::handler))
+        .route("/avatar/:account_name", get(avatar::get_handler))
         .layer
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
