@@ -58,7 +58,7 @@ pub(crate) async fn handler
         Node::new_element("span", vec!
         [
             ("id", &config.access_token_key),
-            ("data-value", &user_token.access_token),
+            ("data-value", ""), //&user_token.access_token),
         ], vec![]),
         Node::new_element("span", vec!
         [

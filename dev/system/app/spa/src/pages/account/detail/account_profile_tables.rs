@@ -31,10 +31,10 @@ struct GetAccountProfiles;
 #[component(inline_props)]
 pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
 {
-    let state: AppState = use_context();
+    let mut state: AppState = use_context();
     let data = match post_graphql::<GetAccountProfiles>
     (
-        &state,
+        &mut state,
         "/account/graphql",
          get_account_profiles::Variables
          {

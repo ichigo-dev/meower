@@ -3,8 +3,10 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
+use crate::utils::request::refresh_token;
 
-use graphql_client::{ Response, GraphQLQuery };
+use reqwest::Response as ReqwestResponse;
+use graphql_client::{ Response, GraphQLQuery, QueryBody };
 use reqwest::{ StatusCode, Method };
 use rust_i18n::t;
 
@@ -13,62 +15,90 @@ use rust_i18n::t;
 /// GraphQL requests.
 //------------------------------------------------------------------------------
 
-// Request
+// Tries request
 #[allow(dead_code)]
+pub async fn try_request_graphql_inner<Q: GraphQLQuery>
+(
+    state: &mut AppState,
+    endpoint: &str,
+    body: &QueryBody<Q::Variables>,
+    method: Method,
+) -> Result<ReqwestResponse, String>
+{
+    let client = &state.client;
+    let config = &mut state.config;
+
+    let endpoint = endpoint.trim_start_matches('/');
+    let url = format!("{}/{}", config.api_url, endpoint);
+    match client
+        .request(method.clone(), url.clone())
+        .bearer_auth(&config.access_token)
+        .json(&body)
+        .send()
+        .await
+    {
+        Ok(response) => Ok(response),
+        Err(_) => Err(t!("common.api.network.error")),
+    }
+}
+
+// Request
+pub async fn request_graphql_inner<Q: GraphQLQuery>
+(
+    state: &mut AppState,
+    endpoint: &str,
+    variables: Q::Variables,
+    method: Method,
+) -> Result<ReqwestResponse, String>
+{
+    let max_retry_count = 3;
+    let mut retry_count = 0;
+    let body = Q::build_query(variables);
+    while retry_count < max_retry_count
+    {
+        let response = match try_request_graphql_inner::<Q>
+        (
+            state,
+            endpoint,
+            &body,
+            method.clone()
+        ).await
+        {
+            Ok(response) => response,
+            Err(_) => return Err(t!("common.api.network.error")),
+        };
+
+        if response.status() == StatusCode::OK
+        {
+            return Ok(response);
+        }
+
+        retry_count += 1;
+        let _ = refresh_token(state).await;
+    }
+
+    Err(t!("common.api.unauthorized.error"))
+}
+
 pub async fn request_graphql<Q: GraphQLQuery>
 (
-    state: &AppState,
+    state: &mut AppState,
     endpoint: &str,
     variables: Q::Variables,
     method: Method,
 ) -> Result<Q::ResponseData, String>
 {
-    let client = &state.client;
-    let config = &state.config;
-    let access_token = config.access_token.read().unwrap();
-
-    let endpoint = endpoint.trim_start_matches('/');
-    let url = format!("{}/{}", config.api_url, endpoint);
-    let body = Q::build_query(variables);
-    let mut response = match client
-        .request(method.clone(), url.clone())
-        .bearer_auth(&access_token)
-        .json(&body)
-        .send()
-        .await
+    let response = match request_graphql_inner::<Q>
+    (
+        state,
+        endpoint,
+        variables,
+        method.clone()
+    ).await
     {
         Ok(response) => response,
         Err(_) => return Err(t!("common.api.network.error")),
     };
-
-    // If the authentication status is invalid, refresh the token and try again.
-    if response.status() == StatusCode::UNAUTHORIZED
-    {
-        let refresh_url = format!("{}/auth/refresh_token", config.app_url);
-        let refresh_response = match client.get(refresh_url).send().await
-        {
-            Ok(refresh_response) => refresh_response,
-            Err(_) => return Err(t!("common.api.network.error")),
-        };
-        let token = refresh_response.text().await.unwrap_or_default();
-        if token.is_empty()
-        {
-            return Err(t!("common.api.unauthorized.error"));
-        }
-        let mut access_token = config.access_token.write().unwrap();
-        *access_token = token;
-
-        response = match client
-            .request(method, url)
-            .bearer_auth(access_token)
-            .json(&body)
-            .send()
-            .await
-        {
-            Ok(response) => response,
-            Err(_) => return Err(t!("common.api.network.error")),
-        };
-    }
 
     let graphql_response: Response<Q::ResponseData> = match response
         .json()
@@ -89,11 +119,12 @@ pub async fn request_graphql<Q: GraphQLQuery>
     Ok(data)
 }
 
+
 // POST
 #[allow(dead_code)]
 pub async fn post_graphql<Q: GraphQLQuery>
 (
-    state: &AppState,
+    state: &mut AppState,
     endpoint: &str,
     variables: Q::Variables,
 ) -> Result<Q::ResponseData, String>

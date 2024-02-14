@@ -2,8 +2,6 @@
 //! Configuration.
 //------------------------------------------------------------------------------
 
-use std::sync::{ Arc, RwLock };
-
 
 //------------------------------------------------------------------------------
 /// Config.
@@ -17,7 +15,7 @@ pub struct Config
     pub client_id_key: String,
     pub client_id: String,
     pub public_user_id: String,
-    pub access_token: Arc<RwLock<String>>,
+    pub access_token: String,
 }
 
 impl Config
@@ -48,8 +46,6 @@ impl Config
         let app_url = std::env!("APP_URL").to_string();
         let api_url = std::env!("API_URL").to_string();
         let client_id_key = std::env!("CLIENT_ID_KEY").to_string();
-        let client_id = client_id;
-        let access_token = Arc::new(RwLock::new(access_token));
 
         Self
         {
@@ -61,5 +57,13 @@ impl Config
             public_user_id,
             access_token,
         }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Updates the access token.
+    //--------------------------------------------------------------------------
+    pub fn update_access_token( &mut self, access_token: &str )
+    {
+        self.access_token = access_token.to_string();
     }
 }

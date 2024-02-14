@@ -31,14 +31,16 @@ struct GetAccountList;
 #[component]
 pub async fn AccountList<G: Html>() -> View<G>
 {
-    let state: AppState = use_context();
+    let mut state: AppState = use_context();
+    let config = state.config.clone();
+    let public_user_id = config.public_user_id.clone();
     let data = match post_graphql::<GetAccountList>
     (
-        &state,
+        &mut state,
         "/account/graphql",
          get_account_list::Variables
          {
-             public_user_id: state.config.public_user_id.clone()
+             public_user_id: public_user_id,
          },
     ).await
     {

@@ -17,8 +17,8 @@ use sycamore::prelude::*;
 #[component]
 pub async fn Header<G: Html>() -> View<G>
 {
-    let state: AppState = use_context();
-    let avatar = get(&state, "account/avatar/default", "").await.unwrap();
+    let mut state: AppState = use_context();
+    let avatar = get(&mut state, "account/avatar/default", "").await.unwrap();
 
     //let bytes = avatar.bytes().await.unwrap();
     //let base64 = BASE64_STANDARD.encode(bytes);

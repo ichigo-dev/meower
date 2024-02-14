@@ -37,7 +37,7 @@ pub fn CreateAccountForm<G: Html>() -> View<G>
 
     let save_handler = move |values: FormValues, _|
     {
-        let state = state.clone();
+        let mut state = state.clone();
         let account_name = values
             .get("account_name")
             .unwrap_or("".to_string())
@@ -95,7 +95,7 @@ pub fn CreateAccountForm<G: Html>() -> View<G>
         {
             match post_graphql::<CreateAccount>
             (
-                &state,
+                &mut state,
                 "/account/graphql",
                  create_account::Variables
                  {
