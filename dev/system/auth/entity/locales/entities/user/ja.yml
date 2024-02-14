@@ -14,7 +14,7 @@ entities:
       name: "登録日時"
     updated_at:
       name: "更新日時"
-    last_logined_at:
+    last_login_at:
       name: "最終ログイン日時"
     is_deleted:
       name: "削除フラグ"

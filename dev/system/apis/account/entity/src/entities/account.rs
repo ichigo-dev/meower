@@ -26,7 +26,10 @@ pub struct Model
     #[sea_orm(unique)]
     pub account_name: String,
     pub public_user_id: String,
+    pub default_account_profile_id: i64,
+    pub default_workspace_id: i64,
     pub created_at: DateTime,
+    pub last_login_at: Option<DateTime>,
 }
 
 
@@ -125,7 +128,10 @@ impl Column
             Self::AccountId => t!("entities.account.account_id.name"),
             Self::AccountName => t!("entities.account.account_name.name"),
             Self::PublicUserId => t!("entities.account.public_user_id.name"),
+            Self::DefaultAccountProfileId => t!("entities.account.default_account_profile_id.name"),
+            Self::DefaultWorkspaceId => t!("entities.account.default_workspace_id.name"),
             Self::CreatedAt => t!("entities.account.created_at.name"),
+            Self::LastLoginAt => t!("entities.account.last_login_at.name"),
         }
     }
 }
@@ -189,6 +195,24 @@ impl Error
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
+    #[sea_orm(
+        belongs_to = "super::account_profile::Entity",
+        from = "Column::DefaultAccountProfileId",
+        to = "super::account_profile::Column::AccountProfileId",
+        on_update = "NoAction",
+        on_delete = "NoAction"
+    )]
+    DefaultAccountProfile,
+
+    #[sea_orm(
+        belongs_to = "super::workspace::Entity",
+        from = "Column::DefaultWorkspaceId",
+        to = "super::workspace::Column::WorkspaceId",
+        on_update = "NoAction",
+        on_delete = "NoAction"
+    )]
+    DefaultWorkspace,
+
     #[sea_orm(has_many = "super::account_profile::Entity")]
     AccountProfile,
 

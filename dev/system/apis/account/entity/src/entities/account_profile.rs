@@ -2,6 +2,8 @@
 //! AccountProfile model.
 //------------------------------------------------------------------------------
 
+use super::account::Column as AccountColumn;
+use super::account::Entity as AccountEntity;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
@@ -10,6 +12,7 @@ use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
 use sea_orm::entity::prelude::*;
+use sea_orm::DeleteResult;
 use thiserror::Error;
 
 
@@ -38,7 +41,7 @@ pub struct Model
     pub account_profile_id: i64,
     pub account_id: i64,
     #[sea_orm(unique)]
-    pub token: String,
+    pub hash: String,
     pub name: String,
     pub affiliation: Option<String>,
     pub bio: Option<String>,
@@ -72,8 +75,8 @@ impl ActiveModelBehavior for ActiveModel
         let now = Utc::now().naive_utc();
         if insert
         {
-            let token = meower_utility::get_random_str(128);
-            self.set(Column::Token, token.into());
+            let hash = meower_utility::get_random_str(128);
+            self.set(Column::Hash, hash.into());
 
             self.set(Column::CreatedAt, now.into());
         }
@@ -179,6 +182,36 @@ impl ValidateExt for ActiveModel
 
         Ok(())
     }
+
+    //--------------------------------------------------------------------------
+    /// Validates the data before delete.
+    //--------------------------------------------------------------------------
+    async fn validate_and_delete<C>
+    (
+        self,
+        hdb: &C,
+    ) -> Result<DeleteResult, Self::Error>
+    where
+        C: ConnectionTrait,
+    {
+        let account_profile_id = self.account_profile_id
+            .clone()
+            .take()
+            .unwrap_or(0);
+        if let Some(_) = AccountEntity::find()
+            .filter(AccountColumn::DefaultAccountProfileId.eq(account_profile_id))
+            .one(hdb)
+            .await?
+        {
+            return Err(Error::DefaultAccountProfile);
+        };
+
+        match self.delete(hdb).await
+        {
+            Ok(result) => Ok(result),
+            Err(e) => Err(Error::DbError(e)),
+        }
+    }
 }
 
 
@@ -197,7 +230,7 @@ impl Column
             Self::AccountProfileId => t!("entities.account_profile.account_profile_id.name"),
             Self::AccountId => t!("entities.account_profile.account_id.name"),
             Self::Name => t!("entities.account_profile.name.name"),
-            Self::Token => t!("entities.account_profile.token.name"),
+            Self::Hash => t!("entities.account_profile.hash.name"),
             Self::Affiliation => t!("entities.account_profile.affiliation.name"),
             Self::Bio => t!("entities.account_profile.bio.name"),
             Self::Email => t!("entities.account_profile.email.name"),
@@ -216,6 +249,9 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
+    #[error("AccountProfile: This account profile is default.")]
+    DefaultAccountProfile,
+
     #[error("AccountProfile: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
@@ -232,6 +268,7 @@ impl Error
     {
         match self
         {
+            Self::DefaultAccountProfile => None,
             Self::Validation { column, .. } => Some(*column),
             Self::DbError(_) => None,
         }
@@ -244,6 +281,10 @@ impl Error
     {
         match self
         {
+            Self::DefaultAccountProfile =>
+            {
+                t!("entities.account_profile.error.default_account_profile")
+            },
             Self::Validation { column, error } =>
             {
                 error.get_error_message(&column.get_name())

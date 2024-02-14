@@ -26,7 +26,7 @@ pub struct Model
     pub account_profile_id: i64,
     #[sea_orm(unique)]
     pub file_key: String,
-    pub mime: String,
+    pub content_type: String,
     pub created_at: DateTime,
 }
 
@@ -79,7 +79,7 @@ impl Column
             Self::AccountProfileAvatarId => t!("entities.account_profile_avatar.account_profile_avatar_id.name"),
             Self::AccountProfileId => t!("entities.account_profile_avatar.account_profile_id.name"),
             Self::FileKey => t!("entities.account_profile_avatar.file_key.name"),
-            Self::Mime => t!("entities.account_profile_avatar.mime.name"),
+            Self::ContentType => t!("entities.account_profile_avatar.content_type.name"),
             Self::CreatedAt => t!("entities.account_profile_avatar.created_at.name"),
         }
     }

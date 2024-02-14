@@ -18,7 +18,7 @@ pub(crate) enum User
     Email,
     CreatedAt,
     UpdatedAt,
-    LastLoginedAt,
+    LastLoginAt,
     IsDeleted,
 }
 

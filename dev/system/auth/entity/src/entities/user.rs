@@ -29,7 +29,7 @@ pub struct Model
     pub jwt_subject: String,
     #[sea_orm(unique)]
     pub email: String,
-    pub last_logined_at: DateTime,
+    pub last_login_at: DateTime,
     pub created_at: DateTime,
     pub updated_at: DateTime,
     pub is_deleted: bool,
@@ -50,7 +50,13 @@ impl Model
             .await
             .unwrap_or(None)
         {
-            return user_auth.verify_password(password);
+            if user_auth.verify_password(password)
+            {
+                let mut user: ActiveModel = self.clone().into();
+                user.set(Column::LastLoginAt, Utc::now().naive_utc().into());
+                user.save(hdb).await.unwrap();
+                return true;
+            }
         }
         false
     }
@@ -84,7 +90,7 @@ impl ActiveModelBehavior for ActiveModel
             self.set(Column::PublicUserId, public_user_id.into());
             self.set(Column::JwtSubject, jwt_subject.into());
             self.set(Column::CreatedAt, now.into());
-            self.set(Column::LastLoginedAt, now.into());
+            self.set(Column::LastLoginAt, now.into());
             self.set(Column::IsDeleted, false.into());
         }
         self.set(Column::UpdatedAt, now.into());
@@ -154,7 +160,7 @@ impl Column
             Self::Email => t!("entities.user.email.name"),
             Self::CreatedAt => t!("entities.user.created_at.name"),
             Self::UpdatedAt => t!("entities.user.updated_at.name"),
-            Self::LastLoginedAt => t!("entities.user.last_logined_at.name"),
+            Self::LastLoginAt => t!("entities.user.last_login_at.name"),
             Self::IsDeleted => t!("entities.user.is_deleted.name"),
         }
     }

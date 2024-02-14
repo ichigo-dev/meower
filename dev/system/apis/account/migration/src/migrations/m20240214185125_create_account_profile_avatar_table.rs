@@ -49,7 +49,7 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(AccountProfileAvatar::Mime)
+                ColumnDef::new(AccountProfileAvatar::ContentType)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -84,7 +84,7 @@ impl MigrationTrait for Migration
             "COMMENT ON TABLE \"account_profile_avatar\" IS 'Account profile avatar table'",
             "COMMENT ON COLUMN \"account_profile_avatar\".\"account_profile_id\" IS 'Account profile ID'",
             "COMMENT ON COLUMN \"account_profile_avatar\".\"file_key\" IS 'Avatar file key'",
-            "COMMENT ON COLUMN \"account_profile_avatar\".\"mime\" IS 'Avatar file MIME type'",
+            "COMMENT ON COLUMN \"account_profile_avatar\".\"content_type\" IS 'Avatar file content type'",
             "COMMENT ON COLUMN \"account_profile_avatar\".\"created_at\" IS 'Create date'",
         ];
         let hdb = manager.get_connection();

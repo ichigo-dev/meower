@@ -18,7 +18,7 @@
       {% endif %}
      </label>
      {% if input_error.other.is_some() %}
-      <div class="color_erorr">{{ input_error.other.as_ref().unwrap() }}</div>
+      <div class="color_error">{{ input_error.other.as_ref().unwrap() }}</div>
      {% endif %}
      <button type="submit" class="ui_button primary full_rounded width_7xl text_align_center">{{ t!("pages.verify_code.form.button.submit") }}</button>
     </form>

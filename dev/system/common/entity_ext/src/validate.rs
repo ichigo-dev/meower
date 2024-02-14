@@ -9,7 +9,7 @@
 
 use async_trait::async_trait;
 use sea_orm::entity::prelude::*;
-use sea_orm::IntoActiveModel;
+use sea_orm::{ DeleteResult, IntoActiveModel };
 
 
 //------------------------------------------------------------------------------
@@ -86,6 +86,26 @@ pub trait ValidateExt: ActiveModelTrait + ActiveModelBehavior + Sync
         match self.update(hdb).await
         {
             Ok(model) => Ok(model),
+            Err(e) => Err(e.into()),
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    /// Validates and deletes the active model.
+    //--------------------------------------------------------------------------
+    async fn validate_and_delete<C>
+    (
+        self,
+        hdb: &C,
+    ) -> Result<DeleteResult, Self::Error>
+    where
+        <Self::Entity as EntityTrait>::Model: IntoActiveModel<Self>,
+        C: ConnectionTrait,
+    {
+        self.validate(hdb).await?;
+        match self.delete(hdb).await
+        {
+            Ok(result) => Ok(result),
             Err(e) => Err(e.into()),
         }
     }

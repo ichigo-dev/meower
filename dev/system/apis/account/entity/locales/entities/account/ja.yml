@@ -8,5 +8,11 @@ entities:
         already_exists: "そのアカウント名は既に使用されています"
     public_user_id:
       name: "パブリックユーザID"
+    default_account_profile_id:
+      name: "デフォルトアカウントプロフィールID"
+    default_workspace_id:
+      name: "デフォルトワークスペースID"
     created_at:
       name: "作成日時"
+    last_login_at:
+      name: "最終ログイン日時"

@@ -6,7 +6,7 @@ entities:
       name: "アカウントプロフィールID"
     file_key:
       name: "ファイルキー"
-    mime:
-      name: "MIMEタイプ"
+    content_type:
+      name: "ファイル種別"
     created_at:
       name: "作成日時"

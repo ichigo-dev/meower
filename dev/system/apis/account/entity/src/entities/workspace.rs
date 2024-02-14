@@ -2,6 +2,8 @@
 //! Workspace model.
 //------------------------------------------------------------------------------
 
+use super::account::Column as AccountColumn;
+use super::account::Entity as AccountEntity;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
@@ -10,6 +12,7 @@ use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
 use sea_orm::entity::prelude::*;
+use sea_orm::DeleteResult;
 use thiserror::Error;
 
 
@@ -108,6 +111,36 @@ impl ValidateExt for ActiveModel
 
         Ok(())
     }
+
+    //--------------------------------------------------------------------------
+    /// Validates the data before delete.
+    //--------------------------------------------------------------------------
+    async fn validate_and_delete<C>
+    (
+        self,
+        hdb: &C,
+    ) -> Result<DeleteResult, Self::Error>
+    where
+        C: ConnectionTrait,
+    {
+        let workspace_id = self.workspace_id
+            .clone()
+            .take()
+            .unwrap_or(0);
+        if let Some(_) = AccountEntity::find()
+            .filter(AccountColumn::DefaultWorkspaceId.eq(workspace_id))
+            .one(hdb)
+            .await?
+        {
+            return Err(Error::DefaultWorkspace);
+        };
+
+        match self.delete(hdb).await
+        {
+            Ok(result) => Ok(result),
+            Err(e) => Err(Error::DbError(e)),
+        }
+    }
 }
 
 
@@ -141,6 +174,9 @@ pub enum Error
     #[error("Workspace: The workspace_name already exists.")]
     WorkspaceNameAlreadyExists,
 
+    #[error("Workspace: This workspace is default.")]
+    DefaultWorkspace,
+
     #[error("Workspace: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
@@ -158,6 +194,7 @@ impl Error
         match self
         {
             Self::WorkspaceNameAlreadyExists => Some(Column::WorkspaceName),
+            Self::DefaultWorkspace => None,
             Self::Validation { column, .. } => Some(*column),
             Self::DbError(_) => None,
         }
@@ -173,6 +210,10 @@ impl Error
             Self::WorkspaceNameAlreadyExists =>
             {
                 t!("entities.workspace.workspace_name.error.already_exists")
+            },
+            Self::DefaultWorkspace =>
+            {
+                t!("entities.workspace.error.default_workspace")
             },
             Self::Validation { column, error } =>
             {

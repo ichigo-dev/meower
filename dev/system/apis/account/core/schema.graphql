@@ -5,7 +5,10 @@ type Account {
 	accountId: Int!
 	accountName: String!
 	publicUserId: String!
+	defaultAccountProfileId: Int!
+	defaultWorkspaceId: Int!
 	createdAt: NaiveDateTime!
+	lastLoginAt: NaiveDateTime
 }
 
 """
@@ -14,7 +17,7 @@ Model.
 type AccountProfile {
 	accountProfileId: Int!
 	accountId: Int!
-	token: String!
+	hash: String!
 	name: String!
 	affiliation: String
 	bio: String

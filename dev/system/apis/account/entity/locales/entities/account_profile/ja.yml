@@ -4,8 +4,8 @@ entities:
       name: "アカウントプロフィールID"
     account_id:
       name: "アカウントID"
-    token:
-      name: "トークン"
+    hash:
+      name: "ハッシュ"
     name:
       name: "名前"
     affiliation:
@@ -24,3 +24,5 @@ entities:
       name: "作成日時"
     updated_at:
       name: "更新日時"
+    error:
+      default_account_profile: "このプロフィールはアカウントのデフォルトになっています"

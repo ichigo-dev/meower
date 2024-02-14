@@ -2,7 +2,7 @@
 //! Creates account table.
 //------------------------------------------------------------------------------
 
-use crate::table_def::Account;
+use crate::table_def::{ Account, AccountProfile, Workspace };
 
 use sea_orm::Statement;
 use sea_orm_migration::prelude::*;
@@ -50,10 +50,45 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(Account::DefaultAccountProfileId)
+                    .big_integer()
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(Account::DefaultWorkspaceId)
+                    .big_integer()
+                    .not_null()
+            )
+            .col
+            (
                 ColumnDef::new(Account::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(Account::LastLoginAt)
+                    .timestamp()
+                    .default(Expr::current_timestamp())
+                    .not_null()
+            )
+            .foreign_key
+            (
+                ForeignKey::create()
+                    .name("account_account_profile_id_fkey")
+                    .from(Account::Table, Account::DefaultAccountProfileId)
+                    .to(AccountProfile::Table, AccountProfile::AccountProfileId)
+                    .on_delete(ForeignKeyAction::NoAction)
+            )
+            .foreign_key
+            (
+                ForeignKey::create()
+                    .name("account_workspace_id_fkey")
+                    .from(Account::Table, Account::DefaultWorkspaceId)
+                    .to(Workspace::Table, Workspace::WorkspaceId)
+                    .on_delete(ForeignKeyAction::NoAction)
             )
             .to_owned();
         manager.create_table(table).await?;
@@ -64,7 +99,10 @@ impl MigrationTrait for Migration
             "COMMENT ON COLUMN \"account\".\"account_id\" IS 'Account ID'",
             "COMMENT ON COLUMN \"account\".\"account_name\" IS 'Account name'",
             "COMMENT ON COLUMN \"account\".\"public_user_id\" IS 'User public ID (auth server user(public_user_id))'",
+            "COMMENT ON COLUMN \"account\".\"default_account_profile_id\" IS 'Default account profile ID'",
+            "COMMENT ON COLUMN \"account\".\"default_workspace_id\" IS 'Default workspace ID'",
             "COMMENT ON COLUMN \"account\".\"created_at\" IS 'Create date'",
+            "COMMENT ON COLUMN \"account\".\"last_login_at\" IS 'Last login date'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();

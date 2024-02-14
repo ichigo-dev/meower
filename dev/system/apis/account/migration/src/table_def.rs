@@ -15,7 +15,10 @@ pub(crate) enum Account
     AccountId,
     AccountName,
     PublicUserId,
+    DefaultAccountProfileId,
+    DefaultWorkspaceId,
     CreatedAt,
+    LastLoginAt,
 }
 
 
@@ -28,7 +31,7 @@ pub(crate) enum AccountProfile
     Table,
     AccountProfileId,
     AccountId,
-    Token,
+    Hash,
     Name,
     Affiliation,
     Bio,
@@ -50,7 +53,7 @@ pub(crate) enum AccountProfileAvatar
     AccountProfileAvatarId,
     AccountProfileId,
     FileKey,
-    Mime,
+    ContentType,
     CreatedAt,
 }
 
