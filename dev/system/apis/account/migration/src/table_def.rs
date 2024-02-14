@@ -28,6 +28,7 @@ pub(crate) enum AccountProfile
     Table,
     AccountProfileId,
     AccountId,
+    Token,
     Name,
     Affiliation,
     Bio,
@@ -36,6 +37,21 @@ pub(crate) enum AccountProfile
     Gender,
     CreatedAt,
     UpdatedAt,
+}
+
+
+//------------------------------------------------------------------------------
+/// AccountProfileAvatar.
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum AccountProfileAvatar
+{
+    Table,
+    AccountProfileAvatarId,
+    AccountProfileId,
+    FileKey,
+    Mime,
+    CreatedAt,
 }
 
 

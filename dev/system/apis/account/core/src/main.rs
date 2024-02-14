@@ -41,7 +41,7 @@ async fn main()
     // Creates the application routes.
     let routes = Router::new()
         .route("/graphql", post(graphql::handler))
-        .route("/avatar/:account_name", get(avatar::get_handler))
+        .route("/avatar/:file_key", get(avatar::get_handler))
         .layer
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)

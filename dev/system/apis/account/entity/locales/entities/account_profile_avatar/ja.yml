@@ -1,0 +1,12 @@
+entities:
+  account_profile_avatar:
+    account_profile_avatar_id:
+      name: "アカウントプロフィールアバターID"
+    account_profile_id:
+      name: "アカウントプロフィールID"
+    file_key:
+      name: "ファイルキー"
+    mime:
+      name: "MIMEタイプ"
+    created_at:
+      name: "作成日時"

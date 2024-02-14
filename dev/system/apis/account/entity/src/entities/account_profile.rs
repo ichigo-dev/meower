@@ -37,6 +37,8 @@ pub struct Model
     #[sea_orm(primary_key)]
     pub account_profile_id: i64,
     pub account_id: i64,
+    #[sea_orm(unique)]
+    pub token: String,
     pub name: String,
     pub affiliation: Option<String>,
     pub bio: Option<String>,
@@ -70,6 +72,9 @@ impl ActiveModelBehavior for ActiveModel
         let now = Utc::now().naive_utc();
         if insert
         {
+            let token = meower_utility::get_random_str(128);
+            self.set(Column::Token, token.into());
+
             self.set(Column::CreatedAt, now.into());
         }
         self.set(Column::UpdatedAt, now.into());
@@ -192,6 +197,7 @@ impl Column
             Self::AccountProfileId => t!("entities.account_profile.account_profile_id.name"),
             Self::AccountId => t!("entities.account_profile.account_id.name"),
             Self::Name => t!("entities.account_profile.name.name"),
+            Self::Token => t!("entities.account_profile.token.name"),
             Self::Affiliation => t!("entities.account_profile.affiliation.name"),
             Self::Bio => t!("entities.account_profile.bio.name"),
             Self::Email => t!("entities.account_profile.email.name"),
@@ -263,6 +269,9 @@ pub enum Relation
     )]
     Account,
 
+    #[sea_orm(has_one = "super::account_profile_avatar::Entity")]
+    AccountProfileAvatar,
+
     #[sea_orm(has_many = "super::group_member::Entity")]
     GroupMember,
 }
@@ -275,6 +284,13 @@ impl Related<super::account::Entity> for Entity
     }
 }
 
+impl Related<super::account_profile_avatar::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::AccountProfileAvatar.def()
+    }
+}
 impl Related<super::group_member::Entity> for Entity
 {
     fn to() -> RelationDef

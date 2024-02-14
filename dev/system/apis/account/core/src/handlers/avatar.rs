@@ -18,7 +18,7 @@ use object_store::path::Path as StoragePath;
 pub async fn get_handler
 (
     State(state): State<AppState>,
-    Path(hash): Path<String>,
+    Path(file_key): Path<String>,
 ) -> Result<impl IntoResponse, impl IntoResponse>
 {
     let config = &state.config;

@@ -4,6 +4,8 @@ entities:
       name: "アカウントプロフィールID"
     account_id:
       name: "アカウントID"
+    token:
+      name: "トークン"
     name:
       name: "名前"
     affiliation:
