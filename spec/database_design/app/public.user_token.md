@@ -6,28 +6,31 @@ User token table
 
 ## Columns
 
-| Name          | Type                        | Default                                           | Nullable | Children | Parents | Comment       |
-| ------------- | --------------------------- | ------------------------------------------------- | -------- | -------- | ------- | ------------- |
-| user_token_id | bigint                      | nextval('user_token_user_token_id_seq'::regclass) | false    |          |         | User token ID |
-| token         | varchar(255)                |                                                   | false    |          |         | Token         |
-| access_token  | text                        |                                                   | false    |          |         |               |
-| refresh_token | varchar(255)                |                                                   | false    |          |         | Refresh token |
-| created_at    | timestamp without time zone | CURRENT_TIMESTAMP                                 | false    |          |         | Create date   |
-| expired_at    | timestamp without time zone | CURRENT_TIMESTAMP                                 | false    |          |         | Expire date   |
+| Name           | Type                        | Default                                           | Nullable | Children | Parents | Comment                                           |
+| -------------- | --------------------------- | ------------------------------------------------- | -------- | -------- | ------- | ------------------------------------------------- |
+| user_token_id  | bigint                      | nextval('user_token_user_token_id_seq'::regclass) | false    |          |         | User token ID                                     |
+| token          | varchar(255)                |                                                   | false    |          |         | Token                                             |
+| public_user_id | varchar(255)                |                                                   | false    |          |         | User public ID (auth server user(public_user_id)) |
+| access_token   | text                        |                                                   | false    |          |         |                                                   |
+| refresh_token  | varchar(255)                |                                                   | false    |          |         | Refresh token                                     |
+| created_at     | timestamp without time zone | CURRENT_TIMESTAMP                                 | false    |          |         | Create date                                       |
+| expired_at     | timestamp without time zone | CURRENT_TIMESTAMP                                 | false    |          |         | Expire date                                       |
 
 ## Constraints
 
-| Name                 | Type        | Definition                  |
-| -------------------- | ----------- | --------------------------- |
-| user_token_pkey      | PRIMARY KEY | PRIMARY KEY (user_token_id) |
-| user_token_token_key | UNIQUE      | UNIQUE (token)              |
+| Name                          | Type        | Definition                  |
+| ----------------------------- | ----------- | --------------------------- |
+| user_token_pkey               | PRIMARY KEY | PRIMARY KEY (user_token_id) |
+| user_token_token_key          | UNIQUE      | UNIQUE (token)              |
+| user_token_public_user_id_key | UNIQUE      | UNIQUE (public_user_id)     |
 
 ## Indexes
 
-| Name                 | Definition                                                                           |
-| -------------------- | ------------------------------------------------------------------------------------ |
-| user_token_pkey      | CREATE UNIQUE INDEX user_token_pkey ON public.user_token USING btree (user_token_id) |
-| user_token_token_key | CREATE UNIQUE INDEX user_token_token_key ON public.user_token USING btree (token)    |
+| Name                          | Definition                                                                                          |
+| ----------------------------- | --------------------------------------------------------------------------------------------------- |
+| user_token_pkey               | CREATE UNIQUE INDEX user_token_pkey ON public.user_token USING btree (user_token_id)                |
+| user_token_token_key          | CREATE UNIQUE INDEX user_token_token_key ON public.user_token USING btree (token)                   |
+| user_token_public_user_id_key | CREATE UNIQUE INDEX user_token_public_user_id_key ON public.user_token USING btree (public_user_id) |
 
 ## Relations
 

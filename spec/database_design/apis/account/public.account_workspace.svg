@@ -70,8 +70,8 @@
 <text text-anchor="start" x="457.5" y="-113.9" font-family="Arial" font-size="14.00" fill="#000000">account_name    </text>
 <text text-anchor="start" x="583.5168" y="-113.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
 <polygon fill="none" stroke="#000000" points="450.5,-72.5 450.5,-102.5 749.5,-102.5 749.5,-72.5 450.5,-72.5"/>
-<text text-anchor="start" x="457.5" y="-83.9" font-family="Arial" font-size="14.00" fill="#000000">user_subject    </text>
-<text text-anchor="start" x="571.0582" y="-83.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<text text-anchor="start" x="457.5" y="-83.9" font-family="Arial" font-size="14.00" fill="#000000">public_user_id    </text>
+<text text-anchor="start" x="581.946" y="-83.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
 <polygon fill="none" stroke="#000000" points="450.5,-42.5 450.5,-72.5 749.5,-72.5 749.5,-42.5 450.5,-42.5"/>
 <text text-anchor="start" x="457.2588" y="-53.9" font-family="Arial" font-size="14.00" fill="#000000">created_at    </text>
 <text text-anchor="start" x="557.601" y="-53.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
