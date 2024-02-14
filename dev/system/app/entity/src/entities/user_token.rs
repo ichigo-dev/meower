@@ -79,17 +79,16 @@ impl ActiveModelBehavior for ActiveModel
         }
 
         // Sets the default values.
+        let now = Utc::now().naive_utc();
         if insert
         {
             let token = meower_utility::get_random_str(128);
             self.set(Column::Token, token.into());
 
-            let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
-
-            let expired_at = now + Duration::hours(TOKEN_EXPIRATION_HOURS);
-            self.set(Column::ExpiredAt, expired_at.into());
         }
+        let expired_at = now + Duration::hours(TOKEN_EXPIRATION_HOURS);
+        self.set(Column::ExpiredAt, expired_at.into());
 
         Ok(self)
     }

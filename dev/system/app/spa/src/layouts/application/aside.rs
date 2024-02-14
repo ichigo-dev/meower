@@ -44,7 +44,7 @@ fn AsideNavItem<G: Html>
 /// Aside.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Aside<G: Html>() -> View<G>
+pub async fn Aside<G: Html>() -> View<G>
 {
     view!
     {
@@ -56,6 +56,7 @@ pub fn Aside<G: Html>() -> View<G>
                 classes=StrProp("ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden width_full").into(),
             )
             {
+                Avatar(account_name=OptionProp(Some("default".to_string())).into())
                 List
                 (
                     color=Colors::Primary.into(),

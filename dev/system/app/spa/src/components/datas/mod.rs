@@ -2,6 +2,7 @@
 //! Data components.
 //------------------------------------------------------------------------------
 
+mod avatar;
 mod badge;
 mod box_component;
 mod chip;
@@ -12,6 +13,7 @@ mod table;
 mod tooltip;
 mod typography;
 
+pub use avatar::*;
 pub use badge::*;
 pub use box_component::*;
 pub use chip::*;

@@ -1,0 +1,20 @@
+//------------------------------------------------------------------------------
+//	UI avatar
+//
+//
+//	# Usage
+//
+//	```html
+//	<img class="ui_avatar" src="path/to/image.jpg" alt="Avatar">
+//	```
+//------------------------------------------------------------------------------
+
+.ui_avatar
+{
+	display: inline-block;
+	width: var(--size-avatar);
+	height: var(--size-avatar);
+	border-radius: var(--radius-circle);
+	border: 1px solid var(--color-border);
+	object-fit: cover;
+}

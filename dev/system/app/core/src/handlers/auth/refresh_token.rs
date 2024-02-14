@@ -18,7 +18,6 @@ use sea_orm::{
     ActiveValue,
     ColumnTrait,
     EntityTrait,
-    ModelTrait,
     QueryFilter,
     TransactionTrait,
 };
@@ -89,22 +88,11 @@ pub(crate) async fn get_handler
         return Err(StatusCode::INTERNAL_SERVER_ERROR);
     }
 
-    let public_user_id = user_token.public_user_id.clone();
-    if let Err(_) = user_token.delete(&tsx).await
-    {
-        tsx.rollback().await.unwrap();
-        return Err(StatusCode::INTERNAL_SERVER_ERROR);
-    };
-
     let access_token = tokens.access_token.clone();
-    let user_token = UserTokenActiveModel
-    {
-        public_user_id: ActiveValue::Set(public_user_id),
-        access_token: ActiveValue::Set(tokens.access_token.into()),
-        refresh_token: ActiveValue::Set(tokens.refresh_token.into()),
-        ..Default::default()
-    };
-    let user_token = match user_token.validate_and_insert(&tsx).await
+    let mut user_token: UserTokenActiveModel = user_token.into();
+    user_token.access_token = ActiveValue::Set(tokens.access_token.into());
+    user_token.refresh_token = ActiveValue::Set(tokens.refresh_token.into());
+    let user_token = match user_token.validate_and_update(&tsx).await
     {
         Ok(user_token) => user_token,
         Err(_) =>
