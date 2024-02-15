@@ -4,25 +4,32 @@
 
 use super::account_profile::Entity as AccountProfileEntity;
 use super::account_profile::Model as AccountProfileModel;
+use super::entity_linked::{
+    AccountToWorkspace,
+    AccountToGroup,
+    AccountToGroupWorkspace,
+};
 use super::workspace::Entity as WorkspaceEntity;
 use super::workspace::Model as WorkspaceModel;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
-use async_graphql::SimpleObject;
+use std::sync::Arc;
+
+use async_graphql::{ Context, Object };
 use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
 use sea_orm::entity::prelude::*;
+use sea_orm::DatabaseTransaction;
 use thiserror::Error;
 
 
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "account")]
-#[graphql(concrete(name = "Account", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
@@ -34,6 +41,140 @@ pub struct Model
     pub default_workspace_id: i64,
     pub created_at: DateTime,
     pub last_login_at: DateTime,
+}
+
+#[Object(name = "Account")]
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets the account name.
+    //--------------------------------------------------------------------------
+    pub async fn account_name( &self ) -> &String
+    {
+        &self.account_name
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the public user id.
+    //--------------------------------------------------------------------------
+    pub async fn public_user_id( &self ) -> &String
+    {
+        &self.public_user_id
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the create date.
+    //--------------------------------------------------------------------------
+    pub async fn created_at( &self ) -> DateTime
+    {
+        self.created_at
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the last login date.
+    //--------------------------------------------------------------------------
+    pub async fn last_login_at( &self ) -> DateTime
+    {
+        self.last_login_at
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the default account profile.
+    //--------------------------------------------------------------------------
+    pub async fn default_account_profile
+    (
+        &self,
+        ctx: &Context<'_>
+    ) -> Option<AccountProfileModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        AccountProfileEntity::find_by_id(self.default_account_profile_id)
+            .one(tsx)
+            .await
+            .unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the default workspace.
+    //--------------------------------------------------------------------------
+    pub async fn default_workspace
+    (
+        &self,
+        ctx: &Context<'_>
+    ) -> Option<WorkspaceModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        WorkspaceEntity::find_by_id(self.default_workspace_id)
+            .one(tsx)
+            .await
+            .unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the workspaces.
+    //--------------------------------------------------------------------------
+    pub async fn workspaces
+    (
+        &self,
+        ctx: &Context<'_>
+    ) -> Vec<WorkspaceModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let account_workspaces = self.account_workspaces(ctx).await.unwrap();
+        let group_workspaces = self.find_linked(AccountToGroupWorkspace)
+            .all(tsx)
+            .await
+            .unwrap();
+        [account_workspaces, group_workspaces].concat()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the account profiles.
+    //--------------------------------------------------------------------------
+    pub async fn account_profiles
+    (
+        &self,
+        ctx: &Context<'_>
+    ) -> Vec<AccountProfileModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(AccountProfileEntity)
+            .all(tsx)
+            .await
+            .unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the account workspaces.
+    //--------------------------------------------------------------------------
+    pub async fn account_workspaces
+    (
+        &self,
+        ctx: &Context<'_>
+    ) -> Vec<WorkspaceModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_linked(AccountToWorkspace)
+            .all(tsx)
+            .await
+            .unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the member groups.
+    //--------------------------------------------------------------------------
+    pub async fn member_groups
+    (
+        &self,
+        ctx: &Context<'_>
+    ) -> Vec<super::group::Model>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_linked(AccountToGroup)
+            .all(tsx)
+            .await
+            .unwrap()
+    }
 }
 
 

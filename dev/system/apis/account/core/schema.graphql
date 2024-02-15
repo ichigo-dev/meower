@@ -1,19 +1,44 @@
-"""
-Model.
-"""
 type Account {
-	accountId: Int!
+	"""
+	Gets the account name.
+	"""
 	accountName: String!
+	"""
+	Gets the public user id.
+	"""
 	publicUserId: String!
-	defaultAccountProfileId: Int!
-	defaultWorkspaceId: Int!
+	"""
+	Gets the create date.
+	"""
 	createdAt: NaiveDateTime!
+	"""
+	Gets the last login date.
+	"""
 	lastLoginAt: NaiveDateTime!
+	"""
+	Gets the default account profile.
+	"""
 	defaultAccountProfile: AccountProfile
+	"""
+	Gets the default workspace.
+	"""
 	defaultWorkspace: Workspace
+	"""
+	Gets the workspaces.
+	"""
+	workspaces: [Workspace!]!
+	"""
+	Gets the account profiles.
+	"""
 	accountProfiles: [AccountProfile!]!
+	"""
+	Gets the account workspaces.
+	"""
 	accountWorkspaces: [Workspace!]!
-	groupMembers: [GroupMember!]!
+	"""
+	Gets the member groups.
+	"""
+	memberGroups: [Group!]!
 }
 
 """
@@ -68,12 +93,11 @@ enum Gender {
 """
 Model.
 """
-type GroupMember {
-	groupMemberId: Int!
+type Group {
 	groupId: Int!
-	accountId: Int!
-	accountProfileId: Int!
-	role: Role!
+	groupName: String!
+	createdAt: NaiveDateTime!
+	updatedAt: NaiveDateTime!
 }
 
 
@@ -117,14 +141,6 @@ type QueryRoot {
 	Gets account profiles.
 	"""
 	accountProfiles(accountName: String!): [AccountProfile!]!
-}
-
-"""
-Role.
-"""
-enum Role {
-	ADMIN
-	MEMBER
 }
 
 
