@@ -4,15 +4,19 @@
 
 use super::account::Column as AccountColumn;
 use super::account::Entity as AccountEntity;
+use super::account::Model as AccountModel;
+use super::account_profile_avatar::Model as AccountProfileAvatar;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
-use async_graphql::{ Enum, SimpleObject };
+use std::sync::Arc;
+
+use async_graphql::{ Context, Enum, Object };
 use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
+use sea_orm::{ DatabaseTransaction, DeleteResult };
 use sea_orm::entity::prelude::*;
-use sea_orm::DeleteResult;
 use thiserror::Error;
 
 
@@ -32,16 +36,13 @@ pub enum Gender
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "account_profile")]
-#[graphql(concrete(name = "AccountProfile", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
     pub account_profile_id: i64,
     pub account_id: i64,
-    #[sea_orm(unique)]
-    pub hash: String,
     pub name: String,
     pub affiliation: Option<String>,
     pub bio: Option<String>,
@@ -50,6 +51,99 @@ pub struct Model
     pub gender: Option<Gender>,
     pub created_at: DateTime,
     pub updated_at: DateTime,
+}
+
+#[Object(name = "AccountProfile")]
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets the name.
+    //--------------------------------------------------------------------------
+    pub async fn name( &self ) -> String
+    {
+        self.name.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the affiliation.
+    //--------------------------------------------------------------------------
+    pub async fn affiliation( &self ) -> Option<String>
+    {
+        self.affiliation.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the bio.
+    //--------------------------------------------------------------------------
+    pub async fn bio( &self ) -> Option<String>
+    {
+        self.bio.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the email.
+    //--------------------------------------------------------------------------
+    pub async fn email( &self ) -> String
+    {
+        self.email.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the birthdate.
+    //--------------------------------------------------------------------------
+    pub async fn birthdate( &self ) -> Option<DateTime>
+    {
+        self.birthdate
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the gender.
+    //--------------------------------------------------------------------------
+    pub async fn gender( &self ) -> Option<Gender>
+    {
+        self.gender
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the create date.
+    //--------------------------------------------------------------------------
+    pub async fn created_at( &self ) -> DateTime
+    {
+        self.created_at
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the update date.
+    //--------------------------------------------------------------------------
+    pub async fn updated_at( &self ) -> DateTime
+    {
+        self.updated_at
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the account.
+    //--------------------------------------------------------------------------
+    pub async fn account( &self, ctx: &Context<'_> ) -> Option<AccountModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(AccountEntity).one(tsx).await.unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the avatar.
+    //--------------------------------------------------------------------------
+    pub async fn avatar
+    (
+        &self,
+        ctx: &Context<'_>,
+    ) -> Option<AccountProfileAvatar>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(super::account_profile_avatar::Entity)
+            .one(tsx)
+            .await
+            .unwrap()
+    }
 }
 
 
@@ -75,9 +169,6 @@ impl ActiveModelBehavior for ActiveModel
         let now = Utc::now().naive_utc();
         if insert
         {
-            let hash = meower_utility::get_random_str(128);
-            self.set(Column::Hash, hash.into());
-
             self.set(Column::CreatedAt, now.into());
         }
         self.set(Column::UpdatedAt, now.into());
@@ -230,7 +321,6 @@ impl Column
             Self::AccountProfileId => t!("entities.account_profile.account_profile_id.name"),
             Self::AccountId => t!("entities.account_profile.account_id.name"),
             Self::Name => t!("entities.account_profile.name.name"),
-            Self::Hash => t!("entities.account_profile.hash.name"),
             Self::Affiliation => t!("entities.account_profile.affiliation.name"),
             Self::Bio => t!("entities.account_profile.bio.name"),
             Self::Email => t!("entities.account_profile.email.name"),

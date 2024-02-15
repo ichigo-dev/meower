@@ -4,8 +4,6 @@ entities:
       name: "アカウントプロフィールID"
     account_id:
       name: "アカウントID"
-    hash:
-      name: "ハッシュ"
     name:
       name: "名前"
     affiliation:

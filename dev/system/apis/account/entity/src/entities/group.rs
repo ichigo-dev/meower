@@ -2,13 +2,20 @@
 //! Group model.
 //------------------------------------------------------------------------------
 
+use super::group_member::Entity as GroupMemberEntity;
+use super::group_member::Model as GroupMemberModel;
+use super::group_workspace::Entity as GroupWorkspaceEntity;
+use super::group_workspace::Model as GroupWorkspaceModel;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
-use async_graphql::SimpleObject;
+use std::sync::Arc;
+
+use async_graphql::{ Context, Object };
 use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
+use sea_orm::DatabaseTransaction;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -16,9 +23,8 @@ use thiserror::Error;
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "group")]
-#[graphql(concrete(name = "Group", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
@@ -27,6 +33,63 @@ pub struct Model
     pub group_name: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
+}
+
+#[Object(name = "Group")]
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets the group name.
+    //--------------------------------------------------------------------------
+    pub async fn group_name( &self ) -> String
+    {
+        self.group_name.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the create date.
+    //--------------------------------------------------------------------------
+    pub async fn created_at( &self ) -> DateTime
+    {
+        self.created_at
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the update date.
+    //--------------------------------------------------------------------------
+    pub async fn updated_at( &self ) -> DateTime
+    {
+        self.updated_at
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the group members.
+    //--------------------------------------------------------------------------
+    pub async fn group_members
+    (
+        &self,
+        ctx: &Context<'_>,
+    ) -> Vec<GroupMemberModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(GroupMemberEntity)
+            .all(tsx)
+            .await
+            .unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the group workspaces.
+    //--------------------------------------------------------------------------
+    pub async fn group_workspaces
+    (
+        &self,
+        ctx: &Context<'_>,
+    ) -> Vec<GroupWorkspaceModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(GroupWorkspaceEntity).all(tsx).await.unwrap()
+    }
 }
 
 

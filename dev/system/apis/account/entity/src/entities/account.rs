@@ -4,6 +4,8 @@
 
 use super::account_profile::Entity as AccountProfileEntity;
 use super::account_profile::Model as AccountProfileModel;
+use super::account_workspace::Entity as AccountWorkspaceEntity;
+use super::account_workspace::Model as AccountWorkspaceModel;
 use super::entity_linked::{
     AccountToWorkspace,
     AccountToGroup,
@@ -20,8 +22,8 @@ use async_graphql::{ Context, Object };
 use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
-use sea_orm::entity::prelude::*;
 use sea_orm::DatabaseTransaction;
+use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
 
@@ -49,17 +51,17 @@ impl Model
     //--------------------------------------------------------------------------
     /// Gets the account name.
     //--------------------------------------------------------------------------
-    pub async fn account_name( &self ) -> &String
+    pub async fn account_name( &self ) -> String
     {
-        &self.account_name
+        self.account_name.clone()
     }
 
     //--------------------------------------------------------------------------
     /// Gets the public user id.
     //--------------------------------------------------------------------------
-    pub async fn public_user_id( &self ) -> &String
+    pub async fn public_user_id( &self ) -> String
     {
-        &self.public_user_id
+        self.public_user_id.clone()
     }
 
     //--------------------------------------------------------------------------
@@ -84,7 +86,7 @@ impl Model
     pub async fn default_account_profile
     (
         &self,
-        ctx: &Context<'_>
+        ctx: &Context<'_>,
     ) -> Option<AccountProfileModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
@@ -100,7 +102,7 @@ impl Model
     pub async fn default_workspace
     (
         &self,
-        ctx: &Context<'_>
+        ctx: &Context<'_>,
     ) -> Option<WorkspaceModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
@@ -111,16 +113,15 @@ impl Model
     }
 
     //--------------------------------------------------------------------------
-    /// Gets the workspaces.
+    /// Gets the workspaces. (Account workspaces and member group workspaces)
     //--------------------------------------------------------------------------
-    pub async fn workspaces
-    (
-        &self,
-        ctx: &Context<'_>
-    ) -> Vec<WorkspaceModel>
+    pub async fn workspaces( &self, ctx: &Context<'_> ) -> Vec<WorkspaceModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let account_workspaces = self.account_workspaces(ctx).await.unwrap();
+        let account_workspaces = self.find_linked(AccountToWorkspace)
+            .all(tsx)
+            .await
+            .unwrap();
         let group_workspaces = self.find_linked(AccountToGroupWorkspace)
             .all(tsx)
             .await
@@ -134,14 +135,11 @@ impl Model
     pub async fn account_profiles
     (
         &self,
-        ctx: &Context<'_>
+        ctx: &Context<'_>,
     ) -> Vec<AccountProfileModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        self.find_related(AccountProfileEntity)
-            .all(tsx)
-            .await
-            .unwrap()
+        self.find_related(AccountProfileEntity).all(tsx).await.unwrap()
     }
 
     //--------------------------------------------------------------------------
@@ -150,14 +148,11 @@ impl Model
     pub async fn account_workspaces
     (
         &self,
-        ctx: &Context<'_>
-    ) -> Vec<WorkspaceModel>
+        ctx: &Context<'_>,
+    ) -> Vec<AccountWorkspaceModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        self.find_linked(AccountToWorkspace)
-            .all(tsx)
-            .await
-            .unwrap()
+        self.find_related(AccountWorkspaceEntity).all(tsx).await.unwrap()
     }
 
     //--------------------------------------------------------------------------
@@ -166,14 +161,11 @@ impl Model
     pub async fn member_groups
     (
         &self,
-        ctx: &Context<'_>
+        ctx: &Context<'_>,
     ) -> Vec<super::group::Model>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        self.find_linked(AccountToGroup)
-            .all(tsx)
-            .await
-            .unwrap()
+        self.find_linked(AccountToGroup).all(tsx).await.unwrap()
     }
 }
 

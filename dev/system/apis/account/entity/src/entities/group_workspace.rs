@@ -2,12 +2,19 @@
 //! GroupWorkspace model.
 //------------------------------------------------------------------------------
 
+use super::group::Entity as GroupEntity;
+use super::group::Model as GroupModel;
+use super::workspace::Entity as WorkspaceEntity;
+use super::workspace::Model as WorkspaceModel;
 use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
-use async_graphql::SimpleObject;
+use std::sync::Arc;
+
+use async_graphql::{ Context, Object };
 use async_trait::async_trait;
 use rust_i18n::t;
+use sea_orm::DatabaseTransaction;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -15,15 +22,36 @@ use thiserror::Error;
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "group_workspace")]
-#[graphql(concrete(name = "GroupWorkspace", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
     pub group_workspace_id: i64,
     pub workspace_id: i64,
     pub group_id: i64,
+}
+
+#[Object(name = "GroupWorkspace")]
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets the group.
+    //--------------------------------------------------------------------------
+    pub async fn group( &self, ctx: &Context<'_> ) -> Option<GroupModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(GroupEntity).one(tsx).await.unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the workspace.
+    //--------------------------------------------------------------------------
+    pub async fn workspace( &self, ctx: &Context<'_> ) -> Option<WorkspaceModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(WorkspaceEntity).one(tsx).await.unwrap()
+    }
 }
 
 

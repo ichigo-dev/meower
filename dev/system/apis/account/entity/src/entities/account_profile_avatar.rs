@@ -5,7 +5,7 @@
 use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
-use async_graphql::SimpleObject;
+use async_graphql::Object;
 use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
@@ -16,9 +16,8 @@ use thiserror::Error;
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "account_profile_avatar")]
-#[graphql(concrete(name = "AccountProfileAvatar", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
@@ -26,8 +25,45 @@ pub struct Model
     pub account_profile_id: i64,
     #[sea_orm(unique)]
     pub file_key: String,
+    pub file_size: i64,
     pub content_type: String,
     pub created_at: DateTime,
+}
+
+#[Object(name = "AccountProfileAvatar")]
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets the file key.
+    //--------------------------------------------------------------------------
+    pub async fn file_key( &self ) -> String
+    {
+        self.file_key.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the file size.
+    //--------------------------------------------------------------------------
+    pub async fn file_size( &self ) -> i64
+    {
+        self.file_size
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the content type.
+    //--------------------------------------------------------------------------
+    pub async fn content_type( &self ) -> String
+    {
+        self.content_type.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the create date.
+    //--------------------------------------------------------------------------
+    pub async fn created_at( &self ) -> DateTime
+    {
+        self.created_at
+    }
 }
 
 
@@ -79,6 +115,7 @@ impl Column
             Self::AccountProfileAvatarId => t!("entities.account_profile_avatar.account_profile_avatar_id.name"),
             Self::AccountProfileId => t!("entities.account_profile_avatar.account_profile_id.name"),
             Self::FileKey => t!("entities.account_profile_avatar.file_key.name"),
+            Self::FileSize => t!("entities.account_profile_avatar.file_size.name"),
             Self::ContentType => t!("entities.account_profile_avatar.content_type.name"),
             Self::CreatedAt => t!("entities.account_profile_avatar.created_at.name"),
         }

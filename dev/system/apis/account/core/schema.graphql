@@ -24,7 +24,7 @@ type Account {
 	"""
 	defaultWorkspace: Workspace
 	"""
-	Gets the workspaces.
+	Gets the workspaces. (Account workspaces and member group workspaces)
 	"""
 	workspaces: [Workspace!]!
 	"""
@@ -34,28 +34,84 @@ type Account {
 	"""
 	Gets the account workspaces.
 	"""
-	accountWorkspaces: [Workspace!]!
+	accountWorkspaces: [AccountWorkspace!]!
 	"""
 	Gets the member groups.
 	"""
 	memberGroups: [Group!]!
 }
 
-"""
-Model.
-"""
 type AccountProfile {
-	accountProfileId: Int!
-	accountId: Int!
-	hash: String!
+	"""
+	Gets the name.
+	"""
 	name: String!
+	"""
+	Gets the affiliation.
+	"""
 	affiliation: String
+	"""
+	Gets the bio.
+	"""
 	bio: String
+	"""
+	Gets the email.
+	"""
 	email: String!
+	"""
+	Gets the birthdate.
+	"""
 	birthdate: NaiveDateTime
+	"""
+	Gets the gender.
+	"""
 	gender: Gender
+	"""
+	Gets the create date.
+	"""
 	createdAt: NaiveDateTime!
+	"""
+	Gets the update date.
+	"""
 	updatedAt: NaiveDateTime!
+	"""
+	Gets the account.
+	"""
+	account: Account
+	"""
+	Gets the avatar.
+	"""
+	avatar: AccountProfileAvatar
+}
+
+type AccountProfileAvatar {
+	"""
+	Gets the file key.
+	"""
+	fileKey: String!
+	"""
+	Gets the file size.
+	"""
+	fileSize: Int!
+	"""
+	Gets the content type.
+	"""
+	contentType: String!
+	"""
+	Gets the create date.
+	"""
+	createdAt: NaiveDateTime!
+}
+
+type AccountWorkspace {
+	"""
+	Gets the account.
+	"""
+	account: Account
+	"""
+	Gets the wrokspace.
+	"""
+	workspace: Workspace
 }
 
 
@@ -90,14 +146,57 @@ enum Gender {
 	OTHER
 }
 
-"""
-Model.
-"""
 type Group {
-	groupId: Int!
+	"""
+	Gets the group name.
+	"""
 	groupName: String!
+	"""
+	Gets the create date.
+	"""
 	createdAt: NaiveDateTime!
+	"""
+	Gets the update date.
+	"""
 	updatedAt: NaiveDateTime!
+	"""
+	Gets the group members.
+	"""
+	groupMembers: [GroupMember!]!
+	"""
+	Gets the group workspaces.
+	"""
+	groupWorkspaces: [GroupWorkspace!]!
+}
+
+type GroupMember {
+	"""
+	Gets the role.
+	"""
+	role: Role!
+	"""
+	Gets the group.
+	"""
+	group: Group
+	"""
+	Gets the account.
+	"""
+	account: Account
+	"""
+	Gets the account profile.
+	"""
+	accountProfile: AccountProfile
+}
+
+type GroupWorkspace {
+	"""
+	Gets the group.
+	"""
+	group: Group
+	"""
+	Gets the workspace.
+	"""
+	workspace: Workspace
 }
 
 
@@ -143,14 +242,27 @@ type QueryRoot {
 	accountProfiles(accountName: String!): [AccountProfile!]!
 }
 
+"""
+Role.
+"""
+enum Role {
+	ADMIN
+	MEMBER
+}
 
-"""
-Model.
-"""
+
 type Workspace {
-	workspaceId: Int!
+	"""
+	Gets the workspace name.
+	"""
 	workspaceName: String!
+	"""
+	Gets the create date.
+	"""
 	createdAt: NaiveDateTime!
+	"""
+	Gets the update date.
+	"""
 	updatedAt: NaiveDateTime!
 }
 

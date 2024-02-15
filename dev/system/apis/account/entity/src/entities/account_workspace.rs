@@ -2,12 +2,19 @@
 //! AccountWorkspace model.
 //------------------------------------------------------------------------------
 
+use super::account::Entity as AccountEntity;
+use super::account::Model as AccountModel;
+use super::workspace::Entity as WorkspaceEntity;
+use super::workspace::Model as WorkspaceModel;
 use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
-use async_graphql::SimpleObject;
+use std::sync::Arc;
+
+use async_graphql::{ Context, Object };
 use async_trait::async_trait;
 use rust_i18n::t;
+use sea_orm::DatabaseTransaction;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -15,15 +22,36 @@ use thiserror::Error;
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "account_workspace")]
-#[graphql(concrete(name = "AccountWorkspace", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
     pub account_workspace_id: i64,
     pub workspace_id: i64,
     pub account_id: i64,
+}
+
+#[Object(name = "AccountWorkspace")]
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets the account.
+    //--------------------------------------------------------------------------
+    pub async fn account( &self, ctx: &Context<'_> ) -> Option<AccountModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(AccountEntity).one(tsx).await.unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the wrokspace.
+    //--------------------------------------------------------------------------
+    pub async fn workspace( &self, ctx: &Context<'_> ) -> Option<WorkspaceModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(WorkspaceEntity).one(tsx).await.unwrap()
+    }
 }
 
 

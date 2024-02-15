@@ -2,12 +2,21 @@
 //! GroupMember model.
 //------------------------------------------------------------------------------
 
+use super::account::Entity as AccountEntity;
+use super::account::Model as AccountModel;
+use super::account_profile::Entity as AccountProfileEntity;
+use super::account_profile::Model as AccountProfileModel;
+use super::group::Entity as GroupEntity;
+use super::group::Model as GroupModel;
 use meower_entity_ext::ValidateExt;
 use meower_validator::ValidationError;
 
-use async_graphql::{ Enum, SimpleObject };
+use std::sync::Arc;
+
+use async_graphql::{ Context, Enum, Object };
 use async_trait::async_trait;
 use rust_i18n::t;
+use sea_orm::DatabaseTransaction;
 use sea_orm::entity::prelude::*;
 use thiserror::Error;
 
@@ -27,9 +36,8 @@ pub enum Role
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "group_member")]
-#[graphql(concrete(name = "GroupMember", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
@@ -38,6 +46,49 @@ pub struct Model
     pub account_id: i64,
     pub account_profile_id: i64,
     pub role: Role,
+}
+
+#[Object(name = "GroupMember")]
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets the role.
+    //--------------------------------------------------------------------------
+    pub async fn role( &self ) -> Role
+    {
+        self.role
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the group.
+    //--------------------------------------------------------------------------
+    pub async fn group( &self, ctx: &Context<'_> ) -> Option<GroupModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(GroupEntity).one(tsx).await.unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the account.
+    //--------------------------------------------------------------------------
+    pub async fn account( &self, ctx: &Context<'_> ) -> Option<AccountModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(AccountEntity).one(tsx).await.unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the account profile.
+    //--------------------------------------------------------------------------
+    pub async fn account_profile
+    (
+        &self,
+        ctx: &Context<'_>,
+    ) -> Option<AccountProfileModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(AccountProfileEntity).one(tsx).await.unwrap()
+    }
 }
 
 

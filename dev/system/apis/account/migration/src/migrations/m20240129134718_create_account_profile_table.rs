@@ -42,13 +42,6 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(AccountProfile::Hash)
-                    .string()
-                    .string_len(255)
-                    .not_null()
-            )
-            .col
-            (
                 ColumnDef::new(AccountProfile::Name)
                     .string()
                     .string_len(255)
@@ -120,7 +113,6 @@ impl MigrationTrait for Migration
             "COMMENT ON TABLE \"account_profile\" IS 'Account profile table'",
             "COMMENT ON COLUMN \"account_profile\".\"account_profile_id\" IS 'Account profile ID'",
             "COMMENT ON COLUMN \"account_profile\".\"account_id\" IS 'Account ID'",
-            "COMMENT ON COLUMN \"account_profile\".\"hash\" IS 'Hash'",
             "COMMENT ON COLUMN \"account_profile\".\"name\" IS 'Name'",
             "COMMENT ON COLUMN \"account_profile\".\"affiliation\" IS 'Affiliation'",
             "COMMENT ON COLUMN \"account_profile\".\"bio\" IS 'Biography'",

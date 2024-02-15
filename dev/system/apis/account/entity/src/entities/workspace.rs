@@ -7,7 +7,7 @@ use super::account::Entity as AccountEntity;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
-use async_graphql::SimpleObject;
+use async_graphql::Object;
 use async_trait::async_trait;
 use chrono::Utc;
 use rust_i18n::t;
@@ -19,9 +19,8 @@ use thiserror::Error;
 //------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, SimpleObject)]
+#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
 #[sea_orm(table_name = "workspace")]
-#[graphql(concrete(name = "Workspace", params()))]
 pub struct Model
 {
     #[sea_orm(primary_key)]
@@ -30,6 +29,34 @@ pub struct Model
     pub workspace_name: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
+}
+
+#[Object(name = "Workspace")]
+impl Model
+{
+    //--------------------------------------------------------------------------
+    /// Gets the workspace name.
+    //--------------------------------------------------------------------------
+    pub async fn workspace_name( &self ) -> String
+    {
+        self.workspace_name.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the create date.
+    //--------------------------------------------------------------------------
+    pub async fn created_at( &self ) -> DateTime
+    {
+        self.created_at
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the update date.
+    //--------------------------------------------------------------------------
+    pub async fn updated_at( &self ) -> DateTime
+    {
+        self.updated_at
+    }
 }
 
 
