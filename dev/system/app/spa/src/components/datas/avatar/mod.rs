@@ -49,10 +49,11 @@ pub async fn Avatar<G: Html>( props: AvatarProps<G> ) -> View<G>
 
     spawn_local_scoped(async move
     {
-        if let Some(account_name) = props.account_name.get_clone()
+        if let Some(file_key) = props.file_key.get_clone()
         {
             let mut state: AppState = use_context();
-            let avatar = get(&mut state, "account/avatar/default", "")
+            let path = format!("account/avatar/{}", file_key);
+            let avatar = get(&mut state, &path, "")
                 .await
                 .unwrap();
             let bytes = avatar.bytes().await.unwrap();

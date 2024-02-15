@@ -15,8 +15,6 @@ use sycamore::prelude::*;
 #[derive(Props)]
 pub struct AvatarProps<G: Html>
 {
-    #[prop(default)]
-    pub account_name: ReadSignal<Option<String>>,
 
     #[prop(default)]
     pub alt: ReadSignal<String>,
@@ -29,6 +27,9 @@ pub struct AvatarProps<G: Html>
 
     #[prop(default)]
     pub classes: ReadSignal<String>,
+
+    #[prop(default)]
+    pub file_key: ReadSignal<Option<String>>,
 
     #[prop(default = StrProp("image/png").into())]
     pub mime_type: ReadSignal<String>,
