@@ -31,7 +31,7 @@ pub struct Model
     pub default_account_profile_id: i64,
     pub default_workspace_id: i64,
     pub created_at: DateTime,
-    pub last_login_at: Option<DateTime>,
+    pub last_login_at: DateTime,
 }
 
 

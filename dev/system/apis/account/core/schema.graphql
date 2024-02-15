@@ -90,6 +90,10 @@ Query root.
 """
 type QueryRoot {
 	"""
+	Gets an account.
+	"""
+	account(accountName: String!): Account
+	"""
 	Gets accounts.
 	"""
 	accounts(publicUserId: String!): [Account!]!
