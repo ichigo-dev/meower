@@ -4,6 +4,8 @@
 
 use super::account_profile::Entity as AccountProfileEntity;
 use super::account_profile::Model as AccountProfileModel;
+use super::workspace::Entity as WorkspaceEntity;
+use super::workspace::Model as WorkspaceModel;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
@@ -246,22 +248,5 @@ impl Related<super::group_member::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::GroupMember.def()
-    }
-}
-
-
-//------------------------------------------------------------------------------
-/// Link.
-//------------------------------------------------------------------------------
-pub struct DefaultAccountProfileLink;
-
-impl Linked for DefaultAccountProfileLink
-{
-    type FromEntity = Entity;
-    type ToEntity = AccountProfileEntity;
-
-    fn link( &self ) -> Vec<RelationDef>
-    {
-        vec![Relation::DefaultAccountProfile.def()]
     }
 }

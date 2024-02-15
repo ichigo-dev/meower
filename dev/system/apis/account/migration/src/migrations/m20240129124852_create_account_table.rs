@@ -2,7 +2,7 @@
 //! Creates account table.
 //------------------------------------------------------------------------------
 
-use crate::table_def::{ Account, AccountProfile, Workspace };
+use crate::table_def::Account;
 
 use sea_orm::Statement;
 use sea_orm_migration::prelude::*;
@@ -73,22 +73,6 @@ impl MigrationTrait for Migration
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
-            )
-            .foreign_key
-            (
-                ForeignKey::create()
-                    .name("account_account_profile_id_fkey")
-                    .from(Account::Table, Account::DefaultAccountProfileId)
-                    .to(AccountProfile::Table, AccountProfile::AccountProfileId)
-                    .on_delete(ForeignKeyAction::NoAction)
-            )
-            .foreign_key
-            (
-                ForeignKey::create()
-                    .name("account_workspace_id_fkey")
-                    .from(Account::Table, Account::DefaultWorkspaceId)
-                    .to(Workspace::Table, Workspace::WorkspaceId)
-                    .on_delete(ForeignKeyAction::NoAction)
             )
             .to_owned();
         manager.create_table(table).await?;

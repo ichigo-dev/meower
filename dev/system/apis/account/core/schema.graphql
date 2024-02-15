@@ -8,7 +8,12 @@ type Account {
 	defaultAccountProfileId: Int!
 	defaultWorkspaceId: Int!
 	createdAt: NaiveDateTime!
-	lastLoginAt: NaiveDateTime
+	lastLoginAt: NaiveDateTime!
+	defaultAccountProfile: AccountProfile
+	defaultWorkspace: Workspace
+	accountProfiles: [AccountProfile!]!
+	accountWorkspaces: [Workspace!]!
+	groupMembers: [GroupMember!]!
 }
 
 """
@@ -60,6 +65,17 @@ enum Gender {
 	OTHER
 }
 
+"""
+Model.
+"""
+type GroupMember {
+	groupMemberId: Int!
+	groupId: Int!
+	accountId: Int!
+	accountProfileId: Int!
+	role: Role!
+}
+
 
 
 """
@@ -103,6 +119,24 @@ type QueryRoot {
 	accountProfiles(accountName: String!): [AccountProfile!]!
 }
 
+"""
+Role.
+"""
+enum Role {
+	ADMIN
+	MEMBER
+}
+
+
+"""
+Model.
+"""
+type Workspace {
+	workspaceId: Int!
+	workspaceName: String!
+	createdAt: NaiveDateTime!
+	updatedAt: NaiveDateTime!
+}
 
 directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
