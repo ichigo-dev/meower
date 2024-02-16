@@ -10,6 +10,7 @@ mod root;
 mod routes;
 mod config;
 mod state;
+mod types;
 mod utils;
 mod variables;
 

@@ -53,6 +53,7 @@ pub async fn Avatar<G: Html>( props: AvatarProps<G> ) -> View<G>
         {
             let mut state: AppState = use_context();
             let path = format!("account/avatar/{}", file_key);
+            log::info!("path: {}", path);
             let avatar = get(&mut state, &path, "")
                 .await
                 .unwrap();

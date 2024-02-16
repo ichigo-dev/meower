@@ -13,7 +13,7 @@ use sycamore::prelude::*;
 /// Application root.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Root<G: Html>() -> View<G>
+pub async fn Root<G: Html>() -> View<G>
 {
     // Sets the locale.
     let window = web_sys::window().unwrap();
@@ -22,7 +22,7 @@ pub fn Root<G: Html>() -> View<G>
     rust_i18n::set_locale(language.as_str());
 
     // Initializes the application state.
-    let app_state = AppState::new();
+    let app_state = AppState::new().await;
     provide_context(app_state);
 
     view!

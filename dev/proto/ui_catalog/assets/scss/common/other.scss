@@ -1,0 +1,20 @@
+//------------------------------------------------------------------------------
+//	Other
+//------------------------------------------------------------------------------
+
+@use "../functions/responsive" as responsive;
+
+@include responsive.responsive("clickable")
+{
+	&:hover
+	{
+		cursor: pointer;
+	}
+}
+
+@include responsive.responsive("text_overflow_ellipsis")
+{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

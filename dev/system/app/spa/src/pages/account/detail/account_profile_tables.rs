@@ -46,7 +46,6 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
         Err(e) => return view! { Alert { (e) } },
     };
     let account_profiles = create_signal(data.account_profiles);
-    log::info!("account_profiles: {:?}", account_profiles);
 
     view!
     {

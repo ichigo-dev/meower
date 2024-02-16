@@ -6,3 +6,7 @@ common:
       error: "通信エラーが発生しました。時間を空けて再度お試しください。"
     unauthorized:
       error: "エラーが発生しました。画面をリロードして、再度ログインしてください。"
+  aside:
+    account_menu_button:
+      avatar:
+        alt: "アバター画像"

@@ -135,6 +135,17 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                         }
                     }
                 },
+                BoxTag::Button =>
+                {
+                    let children = children.clone();
+                    view!
+                    {
+                        button(class=classes(), ..props.attributes)
+                        {
+                            (children)
+                        }
+                    }
+                },
             }
         )
     }

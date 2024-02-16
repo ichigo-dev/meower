@@ -1,4 +1,20 @@
 ################################################################################
+# Gets default account
+################################################################################
+query InitializeAccountState($publicUserId: String!) {
+  defaultAccount(publicUserId: $publicUserId) {
+    accountName
+    defaultAccountProfile {
+      name
+      avatar {
+        fileKey
+      }
+    }
+  }
+}
+
+
+################################################################################
 # Gets account list
 ################################################################################
 query GetAccountList($publicUserId: String!) {

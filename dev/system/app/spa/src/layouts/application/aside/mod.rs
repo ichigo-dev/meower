@@ -3,9 +3,11 @@
 //------------------------------------------------------------------------------
 
 mod account_list;
+mod account_menu_button;
 mod nav_item;
 
 use account_list::AccountList;
+use account_menu_button::AccountMenuButton;
 use nav_item::NavItem;
 
 use crate::components::*;
@@ -23,8 +25,7 @@ pub fn Aside<G: Html>() -> View<G>
 {
     view!
     {
-        AccountList
-        Box(classes=StrProp("ui_sidebar ui_box border_right z_index_drawer padding_zero min_width_7xl").into())
+        Box(classes=StrProp("ui_sidebar ui_box border_right z_index_drawer padding_zero width_7xl overflow_hidden").into())
         {
             Box
             (
@@ -32,6 +33,10 @@ pub fn Aside<G: Html>() -> View<G>
                 classes=StrProp("ui_sidebar_inner flex flex_column flex_gap_xl overflow_hidden width_full").into(),
             )
             {
+                Box(classes=StrProp("margin_horizontal_md").into())
+                {
+                    AccountMenuButton
+                }
                 List
                 (
                     color=Colors::Primary.into(),

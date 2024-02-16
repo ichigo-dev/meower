@@ -21,6 +21,7 @@ pub enum BoxTag
     Main,
     Nav,
     Span,
+    Button,
 }
 
 impl Default for BoxTag
