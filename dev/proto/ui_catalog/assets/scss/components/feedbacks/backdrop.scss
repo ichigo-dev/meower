@@ -1,0 +1,15 @@
+//------------------------------------------------------------------------------
+//	UI backdrop
+//------------------------------------------------------------------------------
+
+.ui_backdrop
+{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background-color: var(--color-shadow);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: var(--z-index-dialog);
+}

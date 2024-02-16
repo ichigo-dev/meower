@@ -1,0 +1,22 @@
+/*------------------------------------------------------------------------------
+    Account menu
+------------------------------------------------------------------------------*/
+
+.account_menu_container
+{
+    position: relative;
+}
+
+.account_menu_container .account_menu
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(90%, 90%) scale(0);
+    transition: all 0s 0.5s ease;
+}
+
+.account_menu_container .account_menu.open
+{
+    transform: translate(90%, 90%) scale(1);
+}

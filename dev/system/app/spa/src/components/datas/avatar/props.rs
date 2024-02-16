@@ -15,7 +15,6 @@ use sycamore::prelude::*;
 #[derive(Props)]
 pub struct AvatarProps<G: Html>
 {
-
     #[prop(default)]
     pub alt: ReadSignal<String>,
 

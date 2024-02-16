@@ -14,8 +14,8 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 /// Component.
 //------------------------------------------------------------------------------
-#[component]
-pub fn AccountMenuButton<G: Html>() -> View<G>
+#[component(inline_props)]
+pub fn AccountMenuButton<G: Html>( open: Signal<bool> ) -> View<G>
 {
     let state: AppState = use_context();
 
@@ -33,6 +33,7 @@ pub fn AccountMenuButton<G: Html>() -> View<G>
                         (
                             classes=StrProp("clickable flex flex_row flex_align_center flex_gap_sm width_full").into(),
                             tag=BoxTag::Button.into(),
+                            on:click=move |_| { open.set(!open.get()); },
                         )
                         {
                             Avatar
