@@ -2,9 +2,9 @@
 //! Account create page.
 //------------------------------------------------------------------------------
 
-mod account_form;
+mod account_profile_form;
 
-use account_form::AccountForm;
+use account_profile_form::AccountProfileForm;
 
 use crate::layouts::application::Main;
 
@@ -22,7 +22,7 @@ pub fn Create<G: Html>() -> View<G>
     {
         Main(heading=t!("pages.account.create.heading"))
         {
-            AccountForm
+            AccountProfileForm
         }
     }
 }

@@ -27,6 +27,7 @@ pub struct Model
     pub workspace_id: i64,
     #[sea_orm(unique)]
     pub workspace_name: String,
+    pub name: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
 }
@@ -40,6 +41,14 @@ impl Model
     pub async fn workspace_name( &self ) -> String
     {
         self.workspace_name.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the name.
+    //--------------------------------------------------------------------------
+    pub async fn name( &self ) -> String
+    {
+        self.name.clone()
     }
 
     //--------------------------------------------------------------------------
@@ -107,15 +116,15 @@ impl ValidateExt for ActiveModel
             .clone()
             .take()
             .unwrap_or("".to_string());
+        let name = self.name.clone().take().unwrap_or("".to_string());
 
         // Checks if the user already exists.
-        if self.workspace_id.is_set() == false
+        if self.get_primary_key_value().is_none()
         {
             if Entity::find()
                 .filter(Column::WorkspaceName.contains(workspace_name.clone()))
                 .one(hdb)
-                .await
-                .unwrap_or(None)
+                .await?
                 .is_some()
             {
                 return Err(Error::WorkspaceNameAlreadyExists);
@@ -134,6 +143,15 @@ impl ValidateExt for ActiveModel
             (
                 Error::Validation { column: Column::WorkspaceName, error: e }
             );
+        }
+
+        if let Err(e) = Validator::new()
+            .required()
+            .min_length(4)
+            .max_length(48)
+            .validate(&name)
+        {
+            return Err(Error::Validation { column: Column::Name, error: e });
         }
 
         Ok(())
@@ -185,6 +203,7 @@ impl Column
         {
             Self::WorkspaceId => t!("entities.workspace.workspace_id.name"),
             Self::WorkspaceName => t!("entities.workspace.workspace_name.name"),
+            Self::Name => t!("entities.workspace.name.name"),
             Self::CreatedAt => t!("entities.workspace.created_at.name"),
             Self::UpdatedAt => t!("entities.workspace.updated_at.name"),
         }

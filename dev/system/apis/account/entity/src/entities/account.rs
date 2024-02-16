@@ -218,13 +218,12 @@ impl ValidateExt for ActiveModel
             .unwrap_or("".to_string());
 
         // Checks if the user already exists.
-        if self.account_id.is_set() == false
+        if self.get_primary_key_value().is_none()
         {
             if Entity::find()
                 .filter(Column::AccountName.contains(account_name.clone()))
                 .one(hdb)
-                .await
-                .unwrap_or(None)
+                .await?
                 .is_some()
             {
                 return Err(Error::AccountNameAlreadyExists);

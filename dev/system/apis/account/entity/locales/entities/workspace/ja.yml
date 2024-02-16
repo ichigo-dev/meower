@@ -6,6 +6,8 @@ entities:
       name: "ワークスペース名"
       error:
         already_exists: "そのアカウント名は既に使用されています"
+    name:
+      name: "表示名"
     created_at:
       name: "作成日時"
     updated_at:

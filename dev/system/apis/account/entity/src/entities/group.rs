@@ -31,6 +31,7 @@ pub struct Model
     pub group_id: i64,
     #[sea_orm(unique)]
     pub group_name: String,
+    pub name: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
 }
@@ -44,6 +45,14 @@ impl Model
     pub async fn group_name( &self ) -> String
     {
         self.group_name.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the name.
+    //--------------------------------------------------------------------------
+    pub async fn name( &self ) -> String
+    {
+        self.name.clone()
     }
 
     //--------------------------------------------------------------------------
@@ -140,15 +149,15 @@ impl ValidateExt for ActiveModel
             .clone()
             .take()
             .unwrap_or("".to_string());
+        let name = self.name.clone().take().unwrap_or("".to_string());
 
         // Checks if the user already exists.
-        if self.group_id.is_set() == false
+        if self.get_primary_key_value().is_none()
         {
             if Entity::find()
                 .filter(Column::GroupName.contains(group_name.clone()))
                 .one(hdb)
-                .await
-                .unwrap_or(None)
+                .await?
                 .is_some()
             {
                 return Err(Error::GroupNameAlreadyExists);
@@ -167,6 +176,15 @@ impl ValidateExt for ActiveModel
             (
                 Error::Validation { column: Column::GroupName, error: e }
             );
+        }
+
+        if let Err(e) = Validator::new()
+            .required()
+            .min_length(4)
+            .max_length(32)
+            .validate(&name)
+        {
+            return Err(Error::Validation { column: Column::Name, error: e });
         }
 
         Ok(())
@@ -188,6 +206,7 @@ impl Column
         {
             Self::GroupId => t!("entities.group.group_id.name"),
             Self::GroupName => t!("entities.group.group_name.name"),
+            Self::Name => t!("entities.group.name.name"),
             Self::CreatedAt => t!("entities.group.created_at.name"),
             Self::UpdatedAt => t!("entities.group.updated_at.name"),
         }

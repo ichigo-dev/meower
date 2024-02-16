@@ -6,27 +6,5 @@ pages:
         account_name:
           label: "アカウント名"
           placeholder: "半角英数字、アンダーバー(_)が使用可能"
-        name:
-          label: "表示名"
-          placeholder: "表示名"
-        affiliation:
-          label: "所属"
-          placeholder: "会社名、学校名、組織名..."
-        email:
-          label: "メールアドレス"
-          placeholder: "meower@example.com"
-        bio:
-          label: "自己紹介"
-          placeholder: "自己紹介"
-        birthdate:
-          label: "生年月日"
-        gender:
-          label: "性別"
-          male:
-            label: "男性"
-          female:
-            label: "女性"
-          other:
-            label: "その他"
         button:
           send: "作成"

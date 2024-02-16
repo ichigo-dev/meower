@@ -1,0 +1,48 @@
+################################################################################
+# Gets account list
+################################################################################
+query GetAccountList($publicUserId: String!) {
+  accounts(publicUserId: $publicUserId) {
+    accountName
+  }
+}
+
+
+################################################################################
+# Gets account profiles
+################################################################################
+query GetAccountProfiles($accountName: String!) {
+  accountProfiles(accountName: $accountName) {
+    name
+    affiliation
+    bio
+    email
+    birthdate
+    gender
+  }
+}
+
+
+################################################################################
+# Creates account
+################################################################################
+mutation CreateAccount($createAccountInput: CreateAccountInput!) {
+  createAccount(input: $createAccountInput) {
+    accountName
+  }
+}
+
+
+################################################################################
+# Creates account profile
+################################################################################
+mutation CreateAccountProfile($createAccountProfileInput: CreateAccountProfileInput!) {
+  createAccountProfile(input: $createAccountProfileInput) {
+    name
+    affiliation
+    email
+    bio
+    birthdate
+    gender
+  }
+}

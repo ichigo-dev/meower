@@ -43,6 +43,13 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(Group::Name)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
                 ColumnDef::new(Group::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
@@ -63,6 +70,7 @@ impl MigrationTrait for Migration
             "COMMENT ON TABLE \"group\" IS 'Group table'",
             "COMMENT ON COLUMN \"group\".\"group_id\" IS 'Group ID'",
             "COMMENT ON COLUMN \"group\".\"group_name\" IS 'Group name'",
+            "COMMENT ON COLUMN \"group\".\"name\" IS 'Name'",
             "COMMENT ON COLUMN \"group\".\"created_at\" IS 'Create date'",
             "COMMENT ON COLUMN \"group\".\"updated_at\" IS 'Update date'",
         ];

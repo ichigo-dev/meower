@@ -67,6 +67,7 @@ pub(crate) enum Group
     Table,
     GroupId,
     GroupName,
+    Name,
     CreatedAt,
     UpdatedAt,
 }
@@ -96,6 +97,7 @@ pub(crate) enum Workspace
     Table,
     WorkspaceId,
     WorkspaceName,
+    Name,
     CreatedAt,
     UpdatedAt,
 }

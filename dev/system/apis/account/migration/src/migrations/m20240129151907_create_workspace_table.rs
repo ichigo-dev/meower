@@ -43,6 +43,13 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(Workspace::Name)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
                 ColumnDef::new(Workspace::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
@@ -63,6 +70,7 @@ impl MigrationTrait for Migration
             "COMMENT ON TABLE \"workspace\" IS 'Workspace table'",
             "COMMENT ON COLUMN \"workspace\".\"workspace_id\" IS 'Workspace ID'",
             "COMMENT ON COLUMN \"workspace\".\"workspace_name\" IS 'Workspace name'",
+            "COMMENT ON COLUMN \"workspace\".\"name\" IS 'Name'",
             "COMMENT ON COLUMN \"workspace\".\"created_at\" IS 'Create date'",
             "COMMENT ON COLUMN \"workspace\".\"updated_at\" IS 'Update date'",
         ];

@@ -21,4 +21,5 @@ pub struct JwtClaims
 
     // Private claims.
     pub public_user_id: String,
+    pub user_email: String,
 }

@@ -165,13 +165,16 @@ impl ValidateExt for ActiveModel
             .unwrap_or("".to_string());
 
         // Checks if the email already exists.
-        if Entity::find()
-            .filter(Column::Email.eq(&email))
-            .one(hdb)
-            .await?
-            .is_some()
+        if self.get_primary_key_value().is_none()
         {
-            return Err(Error::EmailAlreadyExists);
+            if Entity::find()
+                .filter(Column::Email.eq(&email))
+                .one(hdb)
+                .await?
+                .is_some()
+            {
+                return Err(Error::EmailAlreadyExists);
+            }
         }
 
         // User validation.

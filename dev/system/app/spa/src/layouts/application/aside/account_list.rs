@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Account list components.
+//! Aside account list.
 //------------------------------------------------------------------------------
 
 use crate::AppState;
@@ -9,12 +9,11 @@ use crate::utils::props::*;
 use crate::variables::*;
 
 use graphql_client::GraphQLQuery;
-use rust_i18n::t;
 use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// Gets my accounts.
+/// Gets acount list.
 //------------------------------------------------------------------------------
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -47,21 +46,6 @@ pub async fn AccountList<G: Html>() -> View<G>
         Ok(data) => data,
         Err(e) => return view! { Alert { (e) } },
     };
-
-    // Gets accounts.
-    if data.accounts.len() <= 0
-    {
-        return view!
-        {
-            Box(classes=StrProp("ui_box surface radius padding_lg").into())
-            {
-                Typography
-                {
-                    (t!("pages.account.index.account_list.no_accounts"))
-                }
-            }
-        };
-    }
     let accounts = create_signal(data.accounts);
 
     view!

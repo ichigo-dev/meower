@@ -6,6 +6,7 @@ use crate::Config;
 
 use reqwest::Client;
 use reqwest::header::HeaderMap;
+use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
@@ -16,6 +17,7 @@ pub struct AppState
 {
     pub config: Config,
     pub client: Client,
+    pub selected_account_name: Signal<String>,
 }
 
 impl AppState
@@ -37,6 +39,8 @@ impl AppState
             .default_headers(headers)
             .build()
             .unwrap_or(Client::new());
-        Self { config, client }
+        let selected_account_name = create_signal(String::new());
+
+        Self { config, client, selected_account_name }
     }
 }

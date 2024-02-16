@@ -152,6 +152,10 @@ type Group {
 	"""
 	groupName: String!
 	"""
+	Gets the name.
+	"""
+	name: String!
+	"""
 	Gets the create date.
 	"""
 	createdAt: NaiveDateTime!
@@ -229,6 +233,10 @@ Query root.
 """
 type QueryRoot {
 	"""
+	Gets a default account.
+	"""
+	defaultAccount(publicUserId: String!): Account
+	"""
 	Gets an account.
 	"""
 	account(accountName: String!): Account
@@ -256,6 +264,10 @@ type Workspace {
 	Gets the workspace name.
 	"""
 	workspaceName: String!
+	"""
+	Gets the name.
+	"""
+	name: String!
 	"""
 	Gets the create date.
 	"""

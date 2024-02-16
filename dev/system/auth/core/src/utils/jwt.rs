@@ -75,5 +75,6 @@ pub(crate) fn create_jwt_claims
 
         // Private claims.
         public_user_id: user.public_user_id.clone(),
+        user_email: user.email.clone(),
     }
 }

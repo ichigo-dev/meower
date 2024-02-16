@@ -114,13 +114,12 @@ impl ValidateExt for ActiveModel
         let email = self.email.clone().take().unwrap_or("".to_string());
 
         // Checks if the user already exists.
-        if self.user_id.is_set() == false
+        if self.get_primary_key_value().is_none()
         {
             if Entity::find()
                 .filter(Column::Email.contains(email.clone()))
                 .one(hdb)
-                .await
-                .unwrap_or(None)
+                .await?
                 .is_some()
             {
                 return Err(Error::EmailAlreadyExists);

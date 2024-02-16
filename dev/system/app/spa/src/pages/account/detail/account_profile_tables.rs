@@ -19,7 +19,7 @@ use sycamore::prelude::*;
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "graphql/schema/account.graphql",
-    query_path = "graphql/pages/account/detail.graphql",
+    query_path = "graphql/query/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
 struct GetAccountProfiles;
