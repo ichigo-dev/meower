@@ -351,6 +351,34 @@ const init_dialog = () =>
 
 
 //------------------------------------------------------------------------------
+//	Initializes popoveres.
+//------------------------------------------------------------------------------
+const init_popover = () =>
+{
+	const elm_buttons = document.querySelectorAll('.ui_popover button');
+	elm_buttons.forEach((elm_) =>
+	{
+		elm_.addEventListener('click', ( event_ ) =>
+		{
+			const popover = event_.target.parentElement;
+			if( popover ) { popover.classList.add('open'); }
+		});
+	});
+
+	const elm_popovers = document.querySelectorAll('.ui_popover .drop_shadow');
+	elm_popovers.forEach(( elm_ ) =>
+	{
+		elm_.addEventListener('click', ( event_ ) =>
+		{
+			elm_.parentElement.classList.remove('open');
+		});
+	});
+};
+
+
+
+
+//------------------------------------------------------------------------------
 //	Initializes snackbars.
 //------------------------------------------------------------------------------
 const init_snackbar = () =>
@@ -597,6 +625,7 @@ const init = () =>
 	init_colors();
 	init_theme_colors();
 	init_dialog();
+	init_popover();
 	init_snackbar();
 	init_drawer();
 	init_tab();
