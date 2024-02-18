@@ -41,7 +41,6 @@ body:has(.ui_popover.open)
 		background-color: var(--color-surface);
 		border-radius: var(--radius-md);
 		position: fixed;
-		transform: translate(-50%, -50%);
 		transition: all 0.3s 0s ease-in-out;
 		overflow: hidden;
 	}
@@ -93,14 +92,14 @@ body:has(.ui_popover.open)
 	{
 		.dialog
 		{
-			transform: translate(-50%, -50%) scale(0);
+			transform: scale(0);
 		}
 
 		&.open
 		{
 			.dialog
 			{
-				transform: translate(-50%, -50%) scale(1);
+				transform: scale(1);
 			}
 		}
 	}

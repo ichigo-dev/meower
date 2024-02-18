@@ -20,6 +20,8 @@ use web_sys::{ Element, MouseEvent };
 #[component]
 pub fn Popover<G: Html>( props: PopoverProps<G> ) -> View<G>
 {
+    let node_ref = create_node_ref();
+    let popover_node_ref = create_node_ref();
     let classes = move ||
     {
         let mut classes = vec!
@@ -29,23 +31,43 @@ pub fn Popover<G: Html>( props: PopoverProps<G> ) -> View<G>
             props.color.get().get_class_name(),
             props.animation.get().get_class_name(),
         ];
-        if props.open.get() { classes.push("open".to_string()) }
         classes.retain(|c| !c.is_empty());
         classes.join(" ")
     };
 
-    let top = create_signal(0f64);
-    let left = create_signal(0f64);
     create_effect(move ||
     {
-        /*
-        let dom_node = props.anchor.get::<DomNode>();
-        let node = dom_node.to_web_sys();
-        let elem = node.dyn_ref::<Element>().unwrap();
-        let rect = elem.get_bounding_client_rect();
-        top.set(rect.y());
-        left.set(rect.x());
-        */
+        let dom_node = match node_ref.try_get::<DomNode>()
+        {
+            Some(dom_node) => dom_node,
+            None => return,
+        };
+        let popover_dom_node = match popover_node_ref.try_get::<DomNode>()
+        {
+            Some(popover_dom_node) => popover_dom_node,
+            None => return,
+        };
+
+        if props.open.get()
+        {
+            let anchor_dom_node = props.anchor.get::<DomNode>();
+            let anchor_node = anchor_dom_node.to_web_sys();
+            let anchor_elem = anchor_node.dyn_ref::<Element>().unwrap();
+            let anchor_rect = anchor_elem.get_bounding_client_rect();
+            let top = anchor_rect.top();
+            let left = anchor_rect.left();
+
+            popover_dom_node.set_property
+            (
+                "style",
+                &format!("top: {}px; left: {}px;", top, left).into()
+            );
+            dom_node.add_class("open");
+        }
+        else
+        {
+            dom_node.remove_class("open");
+        }
     });
 
     let children = props.children.call();
@@ -53,6 +75,7 @@ pub fn Popover<G: Html>( props: PopoverProps<G> ) -> View<G>
     {
         div
         (
+            ref=node_ref,
             class=classes(),
             on:click=move |_|
             {
@@ -65,12 +88,12 @@ pub fn Popover<G: Html>( props: PopoverProps<G> ) -> View<G>
         {
             div
             (
+                ref=popover_node_ref,
                 class="popover",
                 on:click=move |event: MouseEvent|
                 {
                     event.stop_propagation();
                 },
-                style=format!("top: {}px; left: {}px;", top.get(), left.get()),
                 ..props.attributes
             )
             {
