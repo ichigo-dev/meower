@@ -2,6 +2,9 @@
 //	UI popover
 //------------------------------------------------------------------------------
 
+@use "../../functions/string" as string;
+@use "../../variables/colors" as colors;
+
 body:has(.ui_popover.open)
 {
 	overflow: hidden;
@@ -9,133 +12,101 @@ body:has(.ui_popover.open)
 
 .ui_popover
 {
-	position: relative;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background-color: var(--color-shadow);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: var(--z-index-dialog);
+	opacity: 0;
+	transform: translate(-50%, -50%);
+	transition: all 0.3s 0s ease-in-out;
+	pointer-events: none;
 
-	.drop_shadow
+	&.open
 	{
-		display: inline-block;
-		opacity: 0;
-		width: 100%;
-		height: 100%;
-		background-color: var(--color-shadow);
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		z-index: var(--z-index-dialog);
-		opacity: 0;
-		transform: translate(-50%, -50%);
-		transition: all 0.3s 0s ease-in-out;
-		pointer-events: none;
+		opacity: 1;
+		pointer-events: auto;
 	}
 
 	.popover
 	{
-		display: none;
-		padding: var(--spacing-md);
-		border: 1px solid var(--color-border);
+		display: flex;
+		flex-direction: column;
+		width: 60%;
+		min-width: var(--size-8xl);
+		max-height: 80%;
+		background-color: var(--color-surface);
 		border-radius: var(--radius-md);
-		background-color: var(--color-filled);
-		position: absolute;
-		top: 100%;
-		left: 100%;
-		z-index: var(--z-index-dialog);
-		opacity: 0;
-		transition: opacity 0.3s 0s ease-in-out;
-		pointer-events: none;
+		position: fixed;
+		transform: translate(-50%, -50%);
+		transition: all 0.3s 0s ease-in-out;
+		overflow: hidden;
 	}
 
-	&.open
-	{
-		.drop_shadow,
-		.popover
-		{
-			display: inline-block;
-			opacity: 1;
-			pointer-events: auto;
-		}
-	}
 
 	//--------------------------------------------------------------------------
-	//	Position
+	//	Colors
 	//--------------------------------------------------------------------------
 
-	&.top_left
+	@each $color in colors.$colors
 	{
-		.popover
+		$class_name: string.str-replace(#{$color}, "-", "_");
+		&.#{$class_name}
 		{
-			top: 0;
-			left: 0;
-			transform: translate(-100%, -100%);
+			.dialog
+			{
+				.head
+				{
+					background-color: var(--color-#{$color});
+					color: var(--color-#{$color}-text);
+					border: none;
+				}
+			}
 		}
 	}
 
-	&.top
-	{
-		.popover
-		{
-			top: 0;
-			left: 50%;
-			transform: translate(-50%, -100%);
-		}
-	}
 
-	&.top_right
-	{
-		.popover
-		{
-			top: 0;
-			left: 100%;
-			transform: translate(0, -100%);
-		}
-	}
+	//--------------------------------------------------------------------------
+	//	Animations
+	//--------------------------------------------------------------------------
 
-	&.left
+	&.slidein
 	{
-		.popover
-		{
-			top: 50%;
-			left: 0;
-			transform: translate(-100%, -50%);
-		}
-	}
-
-	&.right
-	{
-		.popover
-		{
-			top: 50%;
-			left: 100%;
-			transform: translate(0, -50%);
-		}
-	}
-
-	&.bottom_left
-	{
-		.popover
+		.dialog
 		{
 			top: 100%;
-			left: 0%;
-			transform: translate(-100%, 0);
+		}
+
+		&.open
+		{
+			.dialog
+			{
+				top: 50%;
+			}
 		}
 	}
 
-	&.bottom
+	&.grow
 	{
-		.popover
+		.dialog
 		{
-			top: 100%;
-			left: 50%;
-			transform: translate(-50%, 0);
+			transform: translate(-50%, -50%) scale(0);
+		}
+
+		&.open
+		{
+			.dialog
+			{
+				transform: translate(-50%, -50%) scale(1);
+			}
 		}
 	}
 
-	&.bottom_right
+	&.flash
 	{
-		.popover
-		{
-			top: 100%;
-			left: 100%;
-			transform: translate(0, 0);
-		}
+		transition: none;
 	}
 }

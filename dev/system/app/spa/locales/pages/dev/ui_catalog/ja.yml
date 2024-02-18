@@ -120,6 +120,11 @@ pages:
         colors:
           heading: "Colors"
 
+      popover:
+        heading: "Popover"
+        basic:
+          heading: "Basic"
+
       progress:
         heading: "Progress"
         spin:
