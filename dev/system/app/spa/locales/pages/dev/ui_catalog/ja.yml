@@ -124,6 +124,10 @@ pages:
         heading: "Popover"
         basic:
           heading: "Basic"
+        animations:
+          heading: "Animations"
+        position:
+          heading: "Position"
 
       progress:
         heading: "Progress"

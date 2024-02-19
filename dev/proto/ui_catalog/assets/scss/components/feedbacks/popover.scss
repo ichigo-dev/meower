@@ -1,5 +1,7 @@
 //------------------------------------------------------------------------------
 //	UI popover
+//
+//	Note that the popover position control must be implemented using JavaScript.
 //------------------------------------------------------------------------------
 
 @use "../../functions/string" as string;
@@ -35,77 +37,10 @@ body:has(.ui_popover.open)
 	{
 		display: flex;
 		flex-direction: column;
-		width: 60%;
-		min-width: var(--size-8xl);
-		max-height: 80%;
 		background-color: var(--color-surface);
 		border-radius: var(--radius-md);
 		position: fixed;
 		transition: all 0.3s 0s ease-in-out;
 		overflow: hidden;
-	}
-
-
-	//--------------------------------------------------------------------------
-	//	Colors
-	//--------------------------------------------------------------------------
-
-	@each $color in colors.$colors
-	{
-		$class_name: string.str-replace(#{$color}, "-", "_");
-		&.#{$class_name}
-		{
-			.dialog
-			{
-				.head
-				{
-					background-color: var(--color-#{$color});
-					color: var(--color-#{$color}-text);
-					border: none;
-				}
-			}
-		}
-	}
-
-
-	//--------------------------------------------------------------------------
-	//	Animations
-	//--------------------------------------------------------------------------
-
-	&.slidein
-	{
-		.dialog
-		{
-			top: 100%;
-		}
-
-		&.open
-		{
-			.dialog
-			{
-				top: 50%;
-			}
-		}
-	}
-
-	&.grow
-	{
-		.dialog
-		{
-			transform: scale(0);
-		}
-
-		&.open
-		{
-			.dialog
-			{
-				transform: scale(1);
-			}
-		}
-	}
-
-	&.flash
-	{
-		transition: none;
 	}
 }

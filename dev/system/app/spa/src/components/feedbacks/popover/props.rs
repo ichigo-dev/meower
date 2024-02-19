@@ -4,7 +4,6 @@
 
 use super::*;
 use crate::utils::props::*;
-use crate::variables::*;
 
 use sycamore::prelude::*;
 
@@ -19,9 +18,6 @@ pub struct PopoverProps<G: Html>
     pub anchor: NodeRef<G>,
 
     #[prop(default)]
-    pub animation: ReadSignal<PopoverAnimation>,
-
-    #[prop(default)]
     pub attributes: Attributes<G>,
 
     pub children: Children<G>,
@@ -33,8 +29,8 @@ pub struct PopoverProps<G: Html>
     pub close_on_backdrop: ReadSignal<bool>,
 
     #[prop(default)]
-    pub color: ReadSignal<Colors>,
+    pub open: Signal<bool>,
 
     #[prop(default)]
-    pub open: Signal<bool>,
+    pub position: ReadSignal<PopoverPosition>,
 }

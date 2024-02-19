@@ -41,7 +41,7 @@ pub fn UiCatalog<G: Html>() -> View<G>
             TooltipExamples(colors=*theme_colors)
             AlertExamples()
             DialogExamples(colors=*theme_colors)
-            PopoverExamples(colors=*theme_colors)
+            PopoverExamples()
             ProgressExamples(colors=*theme_colors)
             SkeletonExamples()
             SnackbarExamples(colors=*theme_colors)
