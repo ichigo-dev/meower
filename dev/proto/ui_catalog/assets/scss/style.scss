@@ -10,3 +10,9 @@
 
 //	UI Catalog
 @use "catalog";
+
+//	Hide scrollbar
+::-webkit-scrollbar
+{
+	display: none;
+}
