@@ -114,7 +114,10 @@ pub fn Button<G: Html>( props: ButtonProps<G> ) -> View<G>
                             div(class="flex flex_row flex_align_center flex_gap_md")
                             {
                                 (left_icon)
-                                (children)
+                                div(class="width_full text_align_center")
+                                {
+                                    (children)
+                                }
                                 (right_icon)
                             }
                         }

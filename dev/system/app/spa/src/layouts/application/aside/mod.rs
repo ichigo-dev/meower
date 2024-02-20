@@ -7,7 +7,6 @@ mod account_menu;
 mod account_menu_button;
 mod nav_item;
 
-use account_list::AccountList;
 use account_menu::AccountMenu;
 use account_menu_button::AccountMenuButton;
 use nav_item::NavItem;

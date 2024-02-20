@@ -2,7 +2,9 @@
 //! Account menu.
 //------------------------------------------------------------------------------
 
+use super::account_list::AccountList;
 use crate::components::*;
+use crate::utils::props::*;
 
 use sycamore::prelude::*;
 
@@ -22,7 +24,10 @@ pub fn AccountMenu<G: Html>( anchor: NodeRef<G>, open: Signal<bool> ) -> View<G>
             position=PopoverPosition::BottomRight.into(),
         )
         {
-            "account"
+            Box(classes=StrProp("width_8xl").into())
+            {
+                AccountList
+            }
         }
     }
 }

@@ -10,4 +10,7 @@ common:
     account_menu_button:
       avatar:
         alt: "アバター画像"
-      create: "アカウントを作成"
+      button:
+        create: "アカウントを作成"
+        show_profile: "プロフィールを見る"
+        add_account: "アカウントを追加"

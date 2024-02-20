@@ -63,7 +63,7 @@ pub fn AccountMenuButton<G: Html>
                             color=Colors::Primary.into(),
                         )
                         {
-                            (t!("common.aside.account_menu_button.create"))
+                            (t!("common.aside.account_menu_button.button.create"))
                         }
                     }
                 },

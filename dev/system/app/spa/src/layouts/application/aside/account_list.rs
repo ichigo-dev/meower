@@ -9,6 +9,7 @@ use crate::utils::props::*;
 use crate::variables::*;
 
 use graphql_client::GraphQLQuery;
+use rust_i18n::t;
 use sycamore::prelude::*;
 
 
@@ -83,6 +84,36 @@ pub async fn AccountList<G: Html>() -> View<G>
                     }
                 }
             )
+            ListItem
+            (
+                clickable=BoolProp(true).into(),
+                classes=StrProp("padding_zero").into(),
+            )
+            {
+                Button
+                (
+                    classes=StrProp("width_full").into(),
+                    color=Colors::Transparent.into(),
+                )
+                {
+                    (t!("common.aside.account_menu_button.button.show_profile"))
+                }
+            }
+            ListItem
+            (
+                clickable=BoolProp(true).into(),
+                classes=StrProp("padding_zero").into(),
+            )
+            {
+                Button
+                (
+                    classes=StrProp("width_full").into(),
+                    color=Colors::Transparent.into(),
+                )
+                {
+                    (t!("common.aside.account_menu_button.button.add_account"))
+                }
+            }
         }
     }
 }
