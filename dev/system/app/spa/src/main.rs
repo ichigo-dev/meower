@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 mod components;
-mod features;
 mod layouts;
 mod pages;
 mod root;
