@@ -69,6 +69,7 @@ pub fn TextField<G: Html>( props: TextFieldProps<G> ) -> View<G>
                 {
                     textarea
                     (
+                        ref=props.node_ref,
                         class=classes(),
                         name=props.name.get_clone(),
                         placeholder=props.placeholder.get_clone(),
@@ -90,6 +91,7 @@ pub fn TextField<G: Html>( props: TextFieldProps<G> ) -> View<G>
                 {
                     input
                     (
+                        ref=props.node_ref,
                         class=classes(),
                         type=props.field_type.get_clone(),
                         name=props.name.get_clone(),

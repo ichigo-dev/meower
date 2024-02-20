@@ -30,7 +30,7 @@ pub fn DialogFoot<G: Html>( props: DialogFootProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        div(class=classes(), ..props.attributes)
+        div(ref=props.node_ref, class=classes(), ..props.attributes)
         {
             (children)
         }

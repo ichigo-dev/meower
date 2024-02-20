@@ -32,7 +32,7 @@ pub fn Label<G: Html>( props: LabelProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        label(class=classes(), ..props.attributes)
+        label(ref=props.node_ref, class=classes(), ..props.attributes)
         {
             span
             {

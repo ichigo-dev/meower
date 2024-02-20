@@ -31,6 +31,7 @@ pub fn Option<G: Html>( props: OptionProps<G> ) -> View<G>
     {
         option
         (
+            ref=props.node_ref,
             class=classes(),
             name=props.name.get_clone(),
             value=props.value.get_clone(),

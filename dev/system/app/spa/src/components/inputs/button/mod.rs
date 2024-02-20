@@ -55,6 +55,7 @@ pub fn Button<G: Html>( props: ButtonProps<G> ) -> View<G>
                     {
                         a
                         (
+                            ref=props.node_ref,
                             class=classes(),
                             href=href,
                             rel="external",
@@ -79,6 +80,7 @@ pub fn Button<G: Html>( props: ButtonProps<G> ) -> View<G>
                     {
                         button
                         (
+                            ref=props.node_ref,
                             class=classes(),
                             disabled=props.disabled.get_clone(),
                             name=props.name.get_clone(),

@@ -27,6 +27,9 @@ pub struct PaginationProps<G: Html>
     #[prop(default)]
     pub count: ReadSignal<isize>,
 
+    #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
     #[prop(default = IsizeProp(1).into())]
     pub page: Signal<isize>,
 

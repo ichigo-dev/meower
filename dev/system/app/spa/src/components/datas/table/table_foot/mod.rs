@@ -19,7 +19,7 @@ pub fn TableFoot<G: Html>( props: TableFootProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        tfoot(class=props.classes, ..props.attributes)
+        tfoot(ref=props.node_ref, class=props.classes, ..props.attributes)
         {
             (children)
         }

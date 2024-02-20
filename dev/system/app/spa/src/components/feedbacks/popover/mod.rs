@@ -26,7 +26,6 @@ const ANIMATION_DURATION: u32 = 300;
 pub fn Popover<G: Html>( props: PopoverProps<G> ) -> View<G>
 {
     let node_ref = create_node_ref();
-    let popover_node_ref = create_node_ref();
     let classes = move ||
     {
         let mut classes = vec!
@@ -45,7 +44,7 @@ pub fn Popover<G: Html>( props: PopoverProps<G> ) -> View<G>
             Some(dom_node) => dom_node,
             None => return,
         };
-        let popover_dom_node = match popover_node_ref.try_get::<DomNode>()
+        let popover_dom_node = match props.node_ref.try_get::<DomNode>()
         {
             Some(popover_dom_node) => popover_dom_node,
             None => return,
@@ -176,7 +175,7 @@ pub fn Popover<G: Html>( props: PopoverProps<G> ) -> View<G>
         {
             div
             (
-                ref=popover_node_ref,
+                ref=props.node_ref,
                 class="popover",
                 on:click=move |event: MouseEvent|
                 {

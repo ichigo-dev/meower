@@ -34,4 +34,7 @@ pub struct TooltipProps<G: Html>
 
     #[prop(default = UsizeProp(250).into())]
     pub max_width: ReadSignal<usize>,
+
+    #[prop(default)]
+    pub node_ref: NodeRef<G>,
 }

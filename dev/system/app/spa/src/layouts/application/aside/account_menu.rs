@@ -11,16 +11,18 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub fn AccountMenu<G: Html>( open: Signal<bool> ) -> View<G>
+pub fn AccountMenu<G: Html>( anchor: NodeRef<G>, open: Signal<bool> ) -> View<G>
 {
     view!
     {
-        Dialog(open=open)
+        Popover
+        (
+            anchor=anchor,
+            open=open,
+            position=PopoverPosition::BottomRight.into(),
+        )
         {
-            DialogBody
-            {
-                "account"
-            }
+            "account"
         }
     }
 }

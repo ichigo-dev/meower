@@ -26,8 +26,11 @@ pub struct TabItemProps<G: Html>
     pub classes: ReadSignal<String>,
 
     #[prop(default)]
-    pub value: ReadSignal<TabValue>,
+    pub disabled: ReadSignal<bool>,
 
     #[prop(default)]
-    pub disabled: ReadSignal<bool>,
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
+    pub value: ReadSignal<TabValue>,
 }

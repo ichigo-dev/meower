@@ -34,6 +34,9 @@ pub struct AvatarProps<G: Html>
     pub mime_type: ReadSignal<String>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub size: ReadSignal<AvatarSize>,
 
     #[prop(default)]

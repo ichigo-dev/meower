@@ -35,7 +35,7 @@ pub fn Crumbs<G: Html>( props: CrumbsProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        ul(class=classes(), ..props.attributes)
+        ul(ref=props.node_ref, class=classes(), ..props.attributes)
         {
             (children)
         }

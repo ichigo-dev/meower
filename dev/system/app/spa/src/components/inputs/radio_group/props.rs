@@ -26,5 +26,8 @@ pub struct RadioGroupProps<G: Html>
     pub name: ReadSignal<String>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub value: Signal<RadioValue>,
 }

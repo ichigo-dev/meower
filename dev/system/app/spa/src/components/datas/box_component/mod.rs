@@ -41,7 +41,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        div(class=classes(), ..props.attributes)
+                        div
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -52,7 +57,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        section(class=classes(), ..props.attributes)
+                        section
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -63,7 +73,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        article(class=classes(), ..props.attributes)
+                        article
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -74,7 +89,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        aside(class=classes(), ..props.attributes)
+                        aside
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -85,7 +105,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        header(class=classes(), ..props.attributes)
+                        header
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -96,7 +121,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        footer(class=classes(), ..props.attributes)
+                        footer
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -107,7 +137,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        main(class=classes(), ..props.attributes)
+                        main
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -118,7 +153,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        nav(class=classes(), ..props.attributes)
+                        nav
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -129,7 +169,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        span(class=classes(), ..props.attributes)
+                        span
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -140,7 +185,12 @@ pub fn Box<G: Html>( props: BoxProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        button(class=classes(), ..props.attributes)
+                        button
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }

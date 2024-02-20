@@ -24,4 +24,7 @@ pub struct ListItemProps<G: Html>
 
     #[prop(default)]
     pub divider: ReadSignal<bool>,
+
+    #[prop(default)]
+    pub node_ref: NodeRef<G>,
 }

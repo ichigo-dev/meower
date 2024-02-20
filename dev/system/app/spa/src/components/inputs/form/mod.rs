@@ -25,6 +25,7 @@ pub fn Form<G: Html>( props: FormProps<G> ) -> View<G>
     {
         form
         (
+            ref=props.node_ref,
             action=props.action.get_clone(),
             class=props.classes.get_clone(),
             on:submit=move |event: SubmitEvent|

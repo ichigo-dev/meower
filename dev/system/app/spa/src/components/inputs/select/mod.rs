@@ -68,6 +68,7 @@ pub fn Select<G: Html>( props: SelectProps<G> ) -> View<G>
         {
             select
             (
+                ref=props.node_ref,
                 name=props.name.get_clone(),
                 disabled=props.disabled.get(),
                 required=props.required.get(),

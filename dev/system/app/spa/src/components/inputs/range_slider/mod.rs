@@ -58,6 +58,7 @@ pub fn RangeSlider<G: Html>( props: RangeSliderProps<G> ) -> View<G>
     {
         input
         (
+            ref=props.node_ref,
             class=classes(),
             type="range",
             name=props.name.get_clone(),

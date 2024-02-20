@@ -31,10 +31,13 @@ pub struct FormProps<G: Html>
     pub method: ReadSignal<String>,
 
     #[prop(default)]
-    pub submit: ReadSignal<bool>,
+    pub node_ref: NodeRef<G>,
 
     #[prop(default)]
     pub on_submit: Option<Box<dyn Fn(FormValues, SubmitEvent) -> ()>>,
+
+    #[prop(default)]
+    pub submit: ReadSignal<bool>,
 
     #[prop(default)]
     pub values: Signal<FormValues>,

@@ -31,6 +31,7 @@ pub fn Optgroup<G: Html>( props: OptgroupProps<G> ) -> View<G>
     {
         optgroup
         (
+            ref=props.node_ref,
             class=classes(),
             label=props.label.get_clone(),
             value=props.value.get_clone(),

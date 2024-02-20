@@ -51,6 +51,7 @@ pub fn Drawer<G: Html>( props: DrawerProps<G> ) -> View<G>
         {
             div
             (
+                ref=props.node_ref,
                 class="drawer",
                 on:click=move |event: MouseEvent|
                 {

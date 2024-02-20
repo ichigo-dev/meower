@@ -25,7 +25,12 @@ pub fn TableCell<G: Html>( props: TableCellProps<G> ) -> View<G>
                 let children = children.clone();
                 view!
                 {
-                    th(class=props.classes, ..props.attributes)
+                    th
+                    (
+                        ref=props.node_ref,
+                        class=props.classes,
+                        ..props.attributes
+                    )
                     {
                         (children)
                     }
@@ -36,7 +41,12 @@ pub fn TableCell<G: Html>( props: TableCellProps<G> ) -> View<G>
                 let children = children.clone();
                 view!
                 {
-                    td(class=props.classes, ..props.attributes)
+                    td
+                    (
+                        ref=props.node_ref,
+                        class=props.classes,
+                        ..props.attributes
+                    )
                     {
                         (children)
                     }

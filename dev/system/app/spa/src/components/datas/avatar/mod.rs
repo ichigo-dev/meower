@@ -75,6 +75,7 @@ pub async fn Avatar<G: Html>( props: AvatarProps<G> ) -> View<G>
     {
         img
         (
+            ref=props.node_ref,
             class=classes(),
             src=src(),
             alt=props.alt,

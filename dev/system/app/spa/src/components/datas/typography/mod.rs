@@ -35,7 +35,7 @@ pub fn Typography<G: Html>( props: TypographyProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        p(class=classes())
+        p(ref=props.node_ref, class=classes())
         {
             (children)
         }

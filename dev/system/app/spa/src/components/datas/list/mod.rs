@@ -43,7 +43,7 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
                 let children = children.clone();
                 view!
                 {
-                    ol(class=classes(), ..props.attributes)
+                    ol(ref=props.node_ref, class=classes(), ..props.attributes)
                     {
                         (children)
                     }
@@ -54,7 +54,7 @@ pub fn List<G: Html>( props: ListProps<G> ) -> View<G>
                 let children = children.clone();
                 view!
                 {
-                    ul(class=classes(), ..props.attributes)
+                    ul(ref=props.node_ref, class=classes(), ..props.attributes)
                     {
                         (children)
                     }

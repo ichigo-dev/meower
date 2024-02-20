@@ -26,6 +26,7 @@ use sycamore::prelude::*;
 pub fn Aside<G: Html>() -> View<G>
 {
     let account_menu_open = create_signal(false);
+    let account_menu_button_ref = create_node_ref();
 
     view!
     {
@@ -39,8 +40,16 @@ pub fn Aside<G: Html>() -> View<G>
             {
                 Box(classes=StrProp("account_menu_container margin_horizontal").into())
                 {
-                    AccountMenu(open=account_menu_open)
-                    AccountMenuButton(open=account_menu_open)
+                    AccountMenu
+                    (
+                        anchor=account_menu_button_ref,
+                        open=account_menu_open,
+                    )
+                    AccountMenuButton
+                    (
+                        node_ref=account_menu_button_ref,
+                        open=account_menu_open,
+                    )
                 }
                 List
                 (

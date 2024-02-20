@@ -22,4 +22,7 @@ pub struct LinkProps<G: Html>
 
     #[prop(default)]
     pub href: ReadSignal<String>,
+
+    #[prop(default)]
+    pub node_ref: NodeRef<G>,
 }

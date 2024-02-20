@@ -31,6 +31,7 @@ pub fn Link<G: Html>( props: LinkProps<G> ) -> View<G>
     {
         a
         (
+            ref=props.node_ref,
             href=props.href.get_clone(),
             rel="external",
             class=classes(),

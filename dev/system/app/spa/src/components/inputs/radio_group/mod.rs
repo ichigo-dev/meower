@@ -60,6 +60,7 @@ pub fn RadioGroup<G: Html>( props: RadioGroupProps<G> ) -> View<G>
     {
         div
         (
+            ref=props.node_ref,
             class=classes(),
             name=props.name.get_clone(),
             ..props.attributes

@@ -34,7 +34,7 @@ pub fn Tooltip<G: Html>( props: TooltipProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        span(class=classes(), ..props.attributes)
+        span(ref=props.node_ref, class=classes(), ..props.attributes)
         {
             span
             (

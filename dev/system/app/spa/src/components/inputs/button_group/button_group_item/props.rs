@@ -45,6 +45,9 @@ pub struct ButtonGroupItemProps<G: Html>
     pub name: ReadSignal<String>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub right_icon: View<G>,
 
     #[prop(default)]

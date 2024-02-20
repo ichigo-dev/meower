@@ -27,4 +27,7 @@ pub struct TypographyProps<G: Html>
 
     #[prop(default)]
     pub font_weight: ReadSignal<TypographyFontWeight>,
+
+    #[prop(default)]
+    pub node_ref: NodeRef<G>,
 }

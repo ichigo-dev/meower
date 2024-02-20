@@ -38,7 +38,7 @@ pub fn Pagination<G: Html>( props: PaginationProps<G> ) -> View<G>
     let pages = create_signal((1..=total()).collect::<Vec<isize>>());
     view!
     {
-        div(class=classes(), ..props.attributes)
+        div(ref=props.node_ref, class=classes(), ..props.attributes)
         {
             (
                 if props.show_first_button.get()

@@ -34,6 +34,9 @@ pub struct CheckboxProps<G: Html>
     pub name: ReadSignal<String>,
 
     #[prop(default)]
+    pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
     pub required: ReadSignal<bool>,
 
     #[prop(default)]

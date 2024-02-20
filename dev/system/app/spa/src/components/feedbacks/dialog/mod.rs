@@ -59,6 +59,7 @@ pub fn Dialog<G: Html>( props: DialogProps<G> ) -> View<G>
         {
             dialog
             (
+                ref=props.node_ref,
                 class="dialog",
                 on:click=move |event: MouseEvent|
                 {

@@ -38,7 +38,7 @@ pub fn Alert<G: Html>( props: AlertProps<G> ) -> View<G>
     let children = props.children.call();
     view!
     {
-        div(class=classes(), ..props.attributes)
+        div(ref=props.node_ref, class=classes(), ..props.attributes)
         {
             (props.left_icon)
             (children)

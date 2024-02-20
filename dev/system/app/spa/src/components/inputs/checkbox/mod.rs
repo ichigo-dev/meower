@@ -61,6 +61,7 @@ pub fn Checkbox<G: Html>( props: CheckboxProps<G> ) -> View<G>
     {
         input
         (
+            ref=props.node_ref,
             class=classes(),
             type="checkbox",
             name=props.name.get_clone(),

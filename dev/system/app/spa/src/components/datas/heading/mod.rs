@@ -51,7 +51,12 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h1(class=classes(), ..props.attributes)
+                        h1
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -62,7 +67,12 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h2(class=classes(), ..props.attributes)
+                        h2
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -73,7 +83,12 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h3(class=classes(), ..props.attributes)
+                        h3
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -84,7 +99,12 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h4(class=classes(), ..props.attributes)
+                        h4
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -95,7 +115,12 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h5(class=classes(), ..props.attributes)
+                        h5
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }
@@ -106,7 +131,12 @@ pub fn Heading<G: Html>( props: HeadingProps<G> ) -> View<G>
                     let children = children.clone();
                     view!
                     {
-                        h6(class=classes(), ..props.attributes)
+                        h6
+                        (
+                            ref=props.node_ref,
+                            class=classes(),
+                            ..props.attributes
+                        )
                         {
                             (children)
                         }

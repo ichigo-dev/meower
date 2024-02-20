@@ -10,3 +10,4 @@ common:
     account_menu_button:
       avatar:
         alt: "アバター画像"
+      create: "アカウントを作成"

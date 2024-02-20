@@ -44,6 +44,7 @@ pub fn TabItem<G: Html>( props: TabItemProps<G> ) -> View<G>
     {
         button
         (
+            ref=props.node_ref,
             class=classes(),
             disabled=props.disabled.get(),
             on:click=move |_|

@@ -50,6 +50,7 @@ pub fn Radio<G: Html>( props: RadioProps<G> ) -> View<G>
     {
         input
         (
+            ref=props.node_ref,
             class=classes(),
             type="radio",
             name=props.name.get_clone(),

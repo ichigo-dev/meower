@@ -41,6 +41,9 @@ pub struct FloatingButtonProps<G: Html>
 
     #[prop(default)]
     pub name: ReadSignal<String>,
+
+    #[prop(default)]
+    pub node_ref: NodeRef<G>,
  
     #[prop(default)]
     pub size: ReadSignal<FloatingButtonSize>,

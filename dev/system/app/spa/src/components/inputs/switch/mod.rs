@@ -61,6 +61,7 @@ pub fn Switch<G: Html>( props: SwitchProps<G> ) -> View<G>
     {
         input
         (
+            ref=props.node_ref,
             class=classes(),
             type="checkbox",
             name=props.name.get_clone(),
