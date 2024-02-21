@@ -31,5 +31,5 @@ pub struct MiniProfileProps<G: Html>
     pub node_ref: NodeRef<G>,
 
     #[prop(default)]
-    pub show_selected_icon: bool,
+    pub selected: bool,
 }

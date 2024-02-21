@@ -24,7 +24,7 @@ pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
         let mut classes = "flex flex_row flex_align_center flex_gap_sm width_full".to_string();
         if props.clickable
         {
-            classes.push_str(" cursor_pointer");
+            classes.push_str(" clickable");
         }
         classes
     };
@@ -43,16 +43,35 @@ pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
                 file_key=OptionProp(props.file_key).into(),
                 alt=StringProp(t!("common.aside.account_menu_button.avatar.alt")).into(),
             )
-            Box(classes=StrProp("flex flex_column overflow_hidden").into())
+            Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm overflow_hidden width_full").into())
             {
-                Box(classes=StrProp("text_overflow_ellipsis").into())
+                Box(classes=StrProp("flex flex_column overflow_hidden width_full").into())
                 {
-                    (props.name)
+                    Box(classes=StrProp("text_overflow_ellipsis").into())
+                    {
+                        (props.name)
+                    }
+                    Box(classes=StrProp("text_overflow_ellipsis fs_xs").into())
+                    {
+                        "@"(props.account_name)
+                    }
                 }
-                Box(classes=StrProp("text_overflow_ellipsis fs_xs").into())
-                {
-                    "@"(props.account_name)
-                }
+                (
+                    if props.selected
+                    {
+                        view!
+                        {
+                            Chip(size=ChipSize::Small.into())
+                            {
+                                "selected"
+                            }
+                        }
+                    }
+                    else
+                    {
+                        view! {}
+                    }
+                )
             }
         }
     }

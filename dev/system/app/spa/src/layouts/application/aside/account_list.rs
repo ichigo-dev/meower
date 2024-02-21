@@ -98,7 +98,8 @@ pub async fn AccountList<G: Html>() -> View<G>
                                 name=name,
                                 account_name=account_name,
                                 file_key=file_key,
-                                show_selected_icon=selected,
+                                clickable=!selected,
+                                selected=selected,
                             )
                         }
                     }
@@ -130,6 +131,7 @@ pub async fn AccountList<G: Html>() -> View<G>
                 (
                     classes=StrProp("width_full").into(),
                     color=Colors::Transparent.into(),
+                    href=OptionProp(Some("/account/create".to_string())).into(),
                 )
                 {
                     (t!("common.aside.account_menu_button.button.add_account"))
