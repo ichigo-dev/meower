@@ -62,7 +62,7 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
                         {
                             TableCell(is_head=BoolProp(true).into())
                             {
-                                (t!("pages.account.detail.table.name.head"))
+                                (t!("pages.account.profile.table.name.head"))
                             }
                             TableCell { (account_profile.name) }
                         }
@@ -70,7 +70,7 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
                         {
                             TableCell(is_head=BoolProp(true).into())
                             {
-                                (t!("pages.account.detail.table.affiliation.head"))
+                                (t!("pages.account.profile.table.affiliation.head"))
                             }
                             TableCell { (account_profile.affiliation) }
                         }
@@ -78,7 +78,7 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
                         {
                             TableCell(is_head=BoolProp(true).into())
                             {
-                                (t!("pages.account.detail.table.email.head"))
+                                (t!("pages.account.profile.table.email.head"))
                             }
                             TableCell { (account_profile.email) }
                         }
@@ -86,7 +86,7 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
                         {
                             TableCell(is_head=BoolProp(true).into())
                             {
-                                (t!("pages.account.detail.table.bio.head"))
+                                (t!("pages.account.profile.table.bio.head"))
                             }
                             TableCell
                             {
@@ -97,7 +97,7 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
                         {
                             TableCell(is_head=BoolProp(true).into())
                             {
-                                (t!("pages.account.detail.table.birthdate.head"))
+                                (t!("pages.account.profile.table.birthdate.head"))
                             }
                             TableCell
                             {
@@ -119,7 +119,7 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
                         {
                             TableCell(is_head=BoolProp(true).into())
                             {
-                                (t!("pages.account.detail.table.gender.head"))
+                                (t!("pages.account.profile.table.gender.head"))
                             }
                             TableCell
                             {
@@ -130,15 +130,15 @@ pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
                                         {
                                             get_account_profiles::Gender::MALE =>
                                             {
-                                                t!("pages.account.detail.table.gender.male")
+                                                t!("pages.account.profile.table.gender.male")
                                             },
                                             get_account_profiles::Gender::FEMALE =>
                                             {
-                                                t!("pages.account.detail.table.gender.female")
+                                                t!("pages.account.profile.table.gender.female")
                                             },
                                             get_account_profiles::Gender::OTHER =>
                                             {
-                                                t!("pages.account.detail.table.gender.other")
+                                                t!("pages.account.profile.table.gender.other")
                                             },
                                             _ =>
                                             {

@@ -6,6 +6,7 @@ use super::account::Column as AccountColumn;
 use super::account::Entity as AccountEntity;
 use super::account::Model as AccountModel;
 use super::account_profile_avatar::Model as AccountProfileAvatar;
+use super::account_profile_cover::Model as AccountProfileCover;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
@@ -140,6 +141,22 @@ impl Model
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         self.find_related(super::account_profile_avatar::Entity)
+            .one(tsx)
+            .await
+            .unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the cover.
+    //--------------------------------------------------------------------------
+    pub async fn cover
+    (
+        &self,
+        ctx: &Context<'_>,
+    ) -> Option<AccountProfileCover>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(super::account_profile_cover::Entity)
             .one(tsx)
             .await
             .unwrap()
@@ -403,6 +420,9 @@ pub enum Relation
     #[sea_orm(has_one = "super::account_profile_avatar::Entity")]
     AccountProfileAvatar,
 
+    #[sea_orm(has_one = "super::account_profile_cover::Entity")]
+    AccountProfileCover,
+
     #[sea_orm(has_many = "super::group_member::Entity")]
     GroupMember,
 }
@@ -422,6 +442,15 @@ impl Related<super::account_profile_avatar::Entity> for Entity
         Relation::AccountProfileAvatar.def()
     }
 }
+
+impl Related<super::account_profile_cover::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::AccountProfileCover.def()
+    }
+}
+
 impl Related<super::group_member::Entity> for Entity
 {
     fn to() -> RelationDef

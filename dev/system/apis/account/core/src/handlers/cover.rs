@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
-//! Avatar handler.
+//! Cover handler.
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use meower_account_entity::account_profile_avatar::Column as AccountProfileAvatarColumn;
-use meower_account_entity::account_profile_avatar::Entity as AccountProfileAvatarEntity;
+use meower_account_entity::account_profile_cover::Column as AccountProfileCoverColumn;
+use meower_account_entity::account_profile_cover::Entity as AccountProfileCoverEntity;
 
 use axum::extract::{ Path, State };
 use axum::http::{ header, StatusCode };
@@ -33,35 +33,35 @@ pub async fn get_handler
     let config = &state.config;
     let storage = state.storage.clone();
 
-    let (avatar_file, mime_type) = match AccountProfileAvatarEntity::find()
-        .filter(AccountProfileAvatarColumn::FileKey.eq(&file_key))
+    let (cover_file, mime_type) = match AccountProfileCoverEntity::find()
+        .filter(AccountProfileCoverColumn::FileKey.eq(&file_key))
         .one(&tsx)
         .await
         .unwrap()
     {
-        Some(avatar_entity) =>
+        Some(cover_entity) =>
         {
-            let avatar_path = StoragePath::from
+            let cover_path = StoragePath::from
             (
-                config.avatar_path.clone() + "/" + &file_key
+                config.cover_path.clone() + "/" + &file_key
             );
-            match storage.get(&avatar_path).await
+            match storage.get(&cover_path).await
             {
-                Ok(avatar) =>
+                Ok(cover) =>
                 {
-                    (avatar, avatar_entity.content_type.clone())
+                    (cover, cover_entity.content_type.clone())
                 },
                 Err(_) =>
                 {
                     let default_path = StoragePath::from
                     (
-                        config.default_avatar_path.clone()
+                        config.default_cover_path.clone()
                     );
                     match storage.get(&default_path).await
                     {
                         Ok(default) =>
                         {
-                            (default, config.default_avatar_mime.clone())
+                            (default, config.default_cover_mime.clone())
                         },
                         Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
                     }
@@ -72,13 +72,13 @@ pub async fn get_handler
         {
             let default_path = StoragePath::from
             (
-                config.default_avatar_path.clone()
+                config.default_cover_path.clone()
             );
             match storage.get(&default_path).await
             {
                 Ok(default) =>
                 {
-                    (default, config.default_avatar_mime.clone())
+                    (default, config.default_cover_mime.clone())
                 },
                 Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
             }
@@ -86,6 +86,7 @@ pub async fn get_handler
     };
 
     let headers = [(header::CONTENT_TYPE, mime_type)];
-    let bytes = avatar_file.bytes().await.unwrap();
+    let bytes = cover_file.bytes().await.unwrap();
     Ok((headers, bytes).into_response())
+
 }

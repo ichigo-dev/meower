@@ -42,6 +42,7 @@ async fn main()
     let routes = Router::new()
         .route("/graphql", post(graphql::handler))
         .route("/avatar/:file_key", get(avatar::get_handler))
+        .route("/cover/:file_key", get(cover::get_handler))
         .layer
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)

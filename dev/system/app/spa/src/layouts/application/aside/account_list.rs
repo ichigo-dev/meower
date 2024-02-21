@@ -64,6 +64,18 @@ pub async fn AccountList<G: Html>() -> View<G>
                 {
                     let href = format!("/account/{}", account.account_name);
                     let account_name = account.account_name.clone();
+                    let mut name = "".to_string();
+                    let mut file_key = "".to_string();
+
+                    if let Some(profile) = account.default_account_profile
+                    {
+                        name = profile.name.clone();
+                        if let Some(avatar) = profile.avatar
+                        {
+                            file_key = avatar.file_key.clone();
+                        }
+                    };
+
                     view!
                     {
                         ListItem
@@ -78,7 +90,12 @@ pub async fn AccountList<G: Html>() -> View<G>
                                 classes=StrProp("display_block padding_vertical_sm padding_horizontal_md").into(),
                             )
                             {
-                                (account_name)
+                                MiniProfile
+                                (
+                                    name=name,
+                                    account_name=account_name,
+                                    file_key=file_key,
+                                )
                             }
                         }
                     }
@@ -87,7 +104,7 @@ pub async fn AccountList<G: Html>() -> View<G>
             ListItem
             (
                 clickable=BoolProp(true).into(),
-                classes=StrProp("padding_zero").into(),
+                classes=StrProp("border_top padding_zero").into(),
             )
             {
                 Button
@@ -102,7 +119,7 @@ pub async fn AccountList<G: Html>() -> View<G>
             ListItem
             (
                 clickable=BoolProp(true).into(),
-                classes=StrProp("padding_zero").into(),
+                classes=StrProp("border_top padding_zero").into(),
             )
             {
                 Button

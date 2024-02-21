@@ -51,8 +51,26 @@ pub(crate) enum AccountProfileAvatar
     Table,
     AccountProfileAvatarId,
     AccountProfileId,
-    FileSize,
     FileKey,
+    FileName,
+    FileSize,
+    ContentType,
+    CreatedAt,
+}
+
+
+//------------------------------------------------------------------------------
+/// AccountProfileCover.
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum AccountProfileCover
+{
+    Table,
+    AccountProfileCoverId,
+    AccountProfileId,
+    FileKey,
+    FileName,
+    FileSize,
     ContentType,
     CreatedAt,
 }

@@ -90,7 +90,6 @@ impl AppState
                 if let Some(avatar) = profile.avatar
                 {
                     selected_account.avatar_file_key = avatar.file_key.clone();
-                
                 };
             };
             state.selected_account.set(Some(selected_account));

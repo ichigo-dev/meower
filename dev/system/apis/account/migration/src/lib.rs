@@ -32,6 +32,7 @@ impl MigratorTrait for Migrator
             Box::new(m20240129152205_create_account_workspace_table::Migration),
             Box::new(m20240129152701_create_group_workspace_table::Migration),
             Box::new(m20240214185125_create_account_profile_avatar_table::Migration),
+            Box::new(m20240221084000_create_account_profile_cover_table::Migration),
         ]
     }
 }

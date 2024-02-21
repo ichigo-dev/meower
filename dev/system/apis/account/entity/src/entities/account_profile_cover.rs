@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! AccountProfileAvatar model.
+//! AccountProfileCover model.
 //------------------------------------------------------------------------------
 
 use meower_entity_ext::ValidateExt;
@@ -17,11 +17,11 @@ use thiserror::Error;
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
-#[sea_orm(table_name = "account_profile_avatar")]
+#[sea_orm(table_name = "account_profile_cover")]
 pub struct Model
 {
     #[sea_orm(primary_key)]
-    pub account_profile_avatar_id: i64,
+    pub account_profile_cover_id: i64,
     pub account_profile_id: i64,
     #[sea_orm(unique)]
     pub file_key: String,
@@ -31,7 +31,7 @@ pub struct Model
     pub created_at: DateTime,
 }
 
-#[Object(name = "AccountProfileAvatar")]
+#[Object(name = "AccountProfileCover")]
 impl Model
 {
     //--------------------------------------------------------------------------
@@ -113,13 +113,13 @@ impl Column
     {
         match self
         {
-            Self::AccountProfileAvatarId => t!("entities.account_profile_avatar.account_profile_avatar_id.name"),
-            Self::AccountProfileId => t!("entities.account_profile_avatar.account_profile_id.name"),
-            Self::FileKey => t!("entities.account_profile_avatar.file_key.name"),
-            Self::FileName => t!("entities.account_profile_avatar.file_name.name"),
-            Self::FileSize => t!("entities.account_profile_avatar.file_size.name"),
-            Self::ContentType => t!("entities.account_profile_avatar.content_type.name"),
-            Self::CreatedAt => t!("entities.account_profile_avatar.created_at.name"),
+            Self::AccountProfileCoverId => t!("entities.account_profile_cover.account_profile_cover_id.name"),
+            Self::AccountProfileId => t!("entities.account_profile_cover.account_profile_id.name"),
+            Self::FileKey => t!("entities.account_profile_cover.file_key.name"),
+            Self::FileName => t!("entities.account_profile_cover.file_name.name"),
+            Self::FileSize => t!("entities.account_profile_cover.file_size.name"),
+            Self::ContentType => t!("entities.account_profile_cover.content_type.name"),
+            Self::CreatedAt => t!("entities.account_profile_cover.created_at.name"),
         }
     }
 }
@@ -131,10 +131,10 @@ impl Column
 #[derive(Debug, Error)]
 pub enum Error
 {
-    #[error("AccountProfileAvatar: {column:?} {error:?}")]
+    #[error("AccountProfileCover: {column:?} {error:?}")]
     Validation { column: Column, error: ValidationError },
 
-    #[error("AccountProfileAvatar: Database error.")]
+    #[error("AccountProfileCover: Database error.")]
     DbError(#[from] DbErr),
 }
 

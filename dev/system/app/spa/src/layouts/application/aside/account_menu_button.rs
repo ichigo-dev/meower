@@ -4,7 +4,6 @@
 
 use crate::AppState;
 use crate::components::*;
-use crate::utils::props::*;
 use crate::variables::*;
 
 use rust_i18n::t;
@@ -33,25 +32,17 @@ pub fn AccountMenuButton<G: Html>
                     let file_key = selected_account.avatar_file_key.clone();
                     view!
                     {
-                        Box
+                        MiniProfile
                         (
+                            name=selected_account.name.clone(),
+                            account_name=selected_account.name.clone(),
+                            file_key=file_key,
                             node_ref=node_ref,
-                            classes=StrProp("clickable flex flex_row flex_align_center flex_gap_sm width_full").into(),
-                            tag=BoxTag::Button.into(),
-                            on:click=move |_| { open.set(!open.get()); },
-                        )
-                        {
-                            Avatar
-                            (
-                                classes=StrProp("flex_no_shrink").into(),
-                                file_key=OptionProp(Some(file_key)).into(),
-                                alt=StringProp(t!("common.aside.account_menu_button.avatar.alt")).into(),
-                            )
-                            Box(classes=StrProp("text_overflow_ellipsis").into())
+                            on:click=move |_|
                             {
-                                (selected_account.name)
-                            }
-                        }
+                                open.set(!open.get());
+                            },
+                        )
                     }
                 },
                 None =>

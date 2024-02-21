@@ -1,6 +1,6 @@
 pages:
   account:
-    detail:
+    profile:
       heading: "アカウント詳細"
       table:
         name:

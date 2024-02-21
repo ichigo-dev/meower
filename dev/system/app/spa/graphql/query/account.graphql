@@ -20,6 +20,12 @@ query InitializeAccountState($publicUserId: String!) {
 query GetAccountList($publicUserId: String!) {
   accounts(publicUserId: $publicUserId) {
     accountName
+    defaultAccountProfile {
+      name
+      avatar {
+        fileKey
+      }
+    }
   }
 }
 

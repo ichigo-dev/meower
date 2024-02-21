@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-//! Creates account_profile_avatar table.
+//! Creates account_profile_cover table.
 //------------------------------------------------------------------------------
 
-use crate::table_def::{ AccountProfile, AccountProfileAvatar };
+use crate::table_def::{ AccountProfile, AccountProfileCover };
 
 use sea_orm::Statement;
 use sea_orm_migration::prelude::*;
@@ -23,11 +23,11 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(AccountProfileAvatar::Table)
+            .table(AccountProfileCover::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(AccountProfileAvatar::AccountProfileAvatarId)
+                ColumnDef::new(AccountProfileCover::AccountProfileCoverId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -35,13 +35,13 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(AccountProfileAvatar::AccountProfileId)
+                ColumnDef::new(AccountProfileCover::AccountProfileId)
                     .big_integer()
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(AccountProfileAvatar::FileKey)
+                ColumnDef::new(AccountProfileCover::FileKey)
                     .string()
                     .string_len(255)
                     .not_null()
@@ -49,26 +49,26 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(AccountProfileAvatar::FileName)
+                ColumnDef::new(AccountProfileCover::FileName)
                     .string()
                     .string_len(255)
             )
             .col
             (
-                ColumnDef::new(AccountProfileAvatar::FileSize)
+                ColumnDef::new(AccountProfileCover::FileSize)
                     .big_integer()
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(AccountProfileAvatar::ContentType)
+                ColumnDef::new(AccountProfileCover::ContentType)
                     .string()
                     .string_len(255)
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(AccountProfileAvatar::CreatedAt)
+                ColumnDef::new(AccountProfileCover::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
@@ -76,8 +76,8 @@ impl MigrationTrait for Migration
             .foreign_key
             (
                 ForeignKey::create()
-                    .name("account_profile_avatar_account_profile_id_fkey")
-                    .from(AccountProfileAvatar::Table, AccountProfileAvatar::AccountProfileId)
+                    .name("account_profile_cover_account_profile_id_fkey")
+                    .from(AccountProfileCover::Table, AccountProfileCover::AccountProfileId)
                     .to(AccountProfile::Table, AccountProfile::AccountProfileId)
                     .on_delete(ForeignKeyAction::Cascade)
             )
@@ -85,21 +85,21 @@ impl MigrationTrait for Migration
         manager.create_table(table).await?;
 
         let index = Index::create()
-            .name("account_profile_avatar_account_profile_id_idx")
-            .table(AccountProfileAvatar::Table)
-            .col(AccountProfileAvatar::AccountProfileId)
+            .name("account_profile_cover_account_profile_id_idx")
+            .table(AccountProfileCover::Table)
+            .col(AccountProfileCover::AccountProfileId)
             .to_owned();
         manager.create_index(index).await?;
 
         let querys = vec!
         [
-            "COMMENT ON TABLE \"account_profile_avatar\" IS 'Account profile avatar table'",
-            "COMMENT ON COLUMN \"account_profile_avatar\".\"account_profile_id\" IS 'Account profile ID'",
-            "COMMENT ON COLUMN \"account_profile_avatar\".\"file_key\" IS 'Avatar file key'",
-            "COMMENT ON COLUMN \"account_profile_avatar\".\"file_name\" IS 'Avatar file name'",
-            "COMMENT ON COLUMN \"account_profile_avatar\".\"file_size\" IS 'Avatar file size'",
-            "COMMENT ON COLUMN \"account_profile_avatar\".\"content_type\" IS 'Avatar file content type'",
-            "COMMENT ON COLUMN \"account_profile_avatar\".\"created_at\" IS 'Create date'",
+            "COMMENT ON TABLE \"account_profile_cover\" IS 'Account profile cover table'",
+            "COMMENT ON COLUMN \"account_profile_cover\".\"account_profile_id\" IS 'Account profile ID'",
+            "COMMENT ON COLUMN \"account_profile_cover\".\"file_key\" IS 'Cover file key'",
+            "COMMENT ON COLUMN \"account_profile_cover\".\"file_name\" IS 'Cover file name'",
+            "COMMENT ON COLUMN \"account_profile_cover\".\"file_size\" IS 'Cover file size'",
+            "COMMENT ON COLUMN \"account_profile_cover\".\"content_type\" IS 'Cover file content type'",
+            "COMMENT ON COLUMN \"account_profile_cover\".\"created_at\" IS 'Create date'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
@@ -117,7 +117,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(AccountProfileAvatar::Table).to_owned())
+            .drop_table(Table::drop().table(AccountProfileCover::Table).to_owned())
             .await?;
 
         Ok(())

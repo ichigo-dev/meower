@@ -1,7 +1,7 @@
 entities:
-  account_profile_avatar:
-    account_profile_avatar_id:
-      name: "アカウントプロフィールアバターID"
+  account_profile_cover:
+    account_profile_cover_id:
+      name: "アカウントプロフィールカバー画像ID"
     account_profile_id:
       name: "アカウントプロフィールID"
     file_key:

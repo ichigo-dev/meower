@@ -57,7 +57,6 @@ pub fn Aside<G: Html>() -> View<G>
                 )
                 {
                     NavItem(href="/", text="Home")
-                    NavItem(href="/account", text="Account")
                 }
             }
         }

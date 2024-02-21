@@ -82,9 +82,32 @@ type AccountProfile {
 	Gets the avatar.
 	"""
 	avatar: AccountProfileAvatar
+	"""
+	Gets the cover.
+	"""
+	cover: AccountProfileCover
 }
 
 type AccountProfileAvatar {
+	"""
+	Gets the file key.
+	"""
+	fileKey: String!
+	"""
+	Gets the file size.
+	"""
+	fileSize: Int!
+	"""
+	Gets the content type.
+	"""
+	contentType: String!
+	"""
+	Gets the create date.
+	"""
+	createdAt: NaiveDateTime!
+}
+
+type AccountProfileCover {
 	"""
 	Gets the file key.
 	"""

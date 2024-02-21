@@ -27,6 +27,9 @@ pub(crate) struct Config
     pub(crate) avatar_path: String,
     pub(crate) default_avatar_path: String,
     pub(crate) default_avatar_mime: String,
+    pub(crate) cover_path: String,
+    pub(crate) default_cover_path: String,
+    pub(crate) default_cover_mime: String,
 }
 
 impl Config
@@ -59,6 +62,9 @@ impl Config
         let avatar_path = "avatar".to_string();
         let default_avatar_path = "avatar/default.png".to_string();
         let default_avatar_mime = "image/png".to_string();
+        let cover_path = "cover".to_string();
+        let default_cover_path = "cover/default.jpg".to_string();
+        let default_cover_mime = "image/jpg".to_string();
 
         Self
         {
@@ -78,6 +84,9 @@ impl Config
             avatar_path,
             default_avatar_path,
             default_avatar_mime,
+            cover_path,
+            default_cover_path,
+            default_cover_mime,
         }
     }
 }

@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//! Account detail page.
+//! Account profile page.
 //------------------------------------------------------------------------------
 
 mod account_profile_tables;
@@ -16,11 +16,11 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub fn Detail<G: Html>( account_name: String ) -> View<G>
+pub fn Profile<G: Html>( account_name: String ) -> View<G>
 {
     view!
     {
-        Main(heading=t!("pages.account.detail.heading"))
+        Main(heading=t!("pages.account.profile.heading"))
         {
             AccountProfileTables(account_name=account_name)
         }
