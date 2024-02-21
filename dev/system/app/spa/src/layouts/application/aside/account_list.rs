@@ -32,6 +32,7 @@ struct GetAccountList;
 pub async fn AccountList<G: Html>() -> View<G>
 {
     let mut state: AppState = use_context();
+    let selected_account = state.selected_account.get_clone();
     let config = state.config.clone();
     let public_user_id = config.public_user_id.clone();
     let data = match post_graphql::<GetAccountList>
@@ -49,6 +50,15 @@ pub async fn AccountList<G: Html>() -> View<G>
     };
     let accounts = create_signal(data.accounts);
 
+    let show_profile_href = if let Some(selected_account) = selected_account
+    {
+        format!("/account/{}", selected_account.account_name)
+    }
+    else
+    {
+        "/account/create".to_string()
+    };
+
     view!
     {
         List
@@ -62,7 +72,6 @@ pub async fn AccountList<G: Html>() -> View<G>
                 iterable=*accounts,
                 view=|account|
                 {
-                    let href = format!("/account/{}", account.account_name);
                     let account_name = account.account_name.clone();
                     let mut name = "".to_string();
                     let mut file_key = "".to_string();
@@ -78,25 +87,14 @@ pub async fn AccountList<G: Html>() -> View<G>
 
                     view!
                     {
-                        ListItem
-                        (
-                            clickable=BoolProp(true).into(),
-                            classes=StrProp("padding_zero").into(),
-                        )
+                        ListItem(clickable=BoolProp(true).into())
                         {
-                            Link
+                            MiniProfile
                             (
-                                href=StringProp(href).into(),
-                                classes=StrProp("display_block padding_vertical_sm padding_horizontal_md").into(),
+                                name=name,
+                                account_name=account_name,
+                                file_key=file_key,
                             )
-                            {
-                                MiniProfile
-                                (
-                                    name=name,
-                                    account_name=account_name,
-                                    file_key=file_key,
-                                )
-                            }
                         }
                     }
                 }
@@ -111,6 +109,7 @@ pub async fn AccountList<G: Html>() -> View<G>
                 (
                     classes=StrProp("width_full").into(),
                     color=Colors::Transparent.into(),
+                    href=OptionProp(Some(show_profile_href)).into(),
                 )
                 {
                     (t!("common.aside.account_menu_button.button.show_profile"))
