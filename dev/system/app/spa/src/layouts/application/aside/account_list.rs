@@ -50,13 +50,16 @@ pub async fn AccountList<G: Html>() -> View<G>
     };
     let accounts = create_signal(data.accounts);
 
-    let show_profile_href = if let Some(selected_account) = selected_account
+    let mut show_profile_href = "/account/create".to_string();
+    let mut selected_account_name = "".to_string();
+    if let Some(selected_account) = selected_account
     {
-        format!("/account/{}", selected_account.account_name)
-    }
-    else
-    {
-        "/account/create".to_string()
+        show_profile_href = format!
+        (
+            "/account/{}",
+            selected_account.account_name
+        );
+        selected_account_name = selected_account.account_name;
     };
 
     view!
@@ -70,9 +73,10 @@ pub async fn AccountList<G: Html>() -> View<G>
             Indexed
             (
                 iterable=*accounts,
-                view=|account|
+                view=move |account|
                 {
                     let account_name = account.account_name.clone();
+                    let selected = account_name == selected_account_name;
                     let mut name = "".to_string();
                     let mut file_key = "".to_string();
 
@@ -87,13 +91,14 @@ pub async fn AccountList<G: Html>() -> View<G>
 
                     view!
                     {
-                        ListItem(clickable=BoolProp(true).into())
+                        ListItem(clickable=BoolProp(!selected).into())
                         {
                             MiniProfile
                             (
                                 name=name,
                                 account_name=account_name,
                                 file_key=file_key,
+                                show_selected_icon=selected,
                             )
                         }
                     }

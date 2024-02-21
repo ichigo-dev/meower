@@ -19,12 +19,21 @@ use sycamore::prelude::*;
 #[component]
 pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
 {
+    let classes = move || -> String
+    {
+        let mut classes = "flex flex_row flex_align_center flex_gap_sm width_full".to_string();
+        if props.clickable
+        {
+            classes.push_str(" cursor_pointer");
+        }
+        classes
+    };
     view!
     {
         button
         (
             ref=props.node_ref,
-            class="clickable flex flex_row flex_align_center flex_gap_sm width_full",
+            class=classes(),
             ..props.attributes
         )
         {
@@ -34,7 +43,7 @@ pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
                 file_key=OptionProp(props.file_key).into(),
                 alt=StringProp(t!("common.aside.account_menu_button.avatar.alt")).into(),
             )
-            Box(classes=StrProp("flex flex_column").into())
+            Box(classes=StrProp("flex flex_column overflow_hidden").into())
             {
                 Box(classes=StrProp("text_overflow_ellipsis").into())
                 {

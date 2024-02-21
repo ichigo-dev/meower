@@ -19,6 +19,9 @@ pub struct MiniProfileProps<G: Html>
     pub attributes: Attributes<G>,
 
     #[prop(default)]
+    pub clickable: bool,
+
+    #[prop(default)]
     pub file_key: Option<String>,
 
     #[prop(default)]
@@ -26,4 +29,7 @@ pub struct MiniProfileProps<G: Html>
 
     #[prop(default)]
     pub node_ref: NodeRef<G>,
+
+    #[prop(default)]
+    pub show_selected_icon: bool,
 }

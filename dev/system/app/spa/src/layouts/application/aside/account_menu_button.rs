@@ -4,6 +4,7 @@
 
 use crate::AppState;
 use crate::components::*;
+use crate::utils::props::*;
 use crate::variables::*;
 
 use rust_i18n::t;
@@ -34,6 +35,7 @@ pub fn AccountMenuButton<G: Html>
                     {
                         MiniProfile
                         (
+                            clickable=true,
                             name=selected_account.name.clone(),
                             account_name=selected_account.name.clone(),
                             file_key=file_key,
@@ -52,6 +54,8 @@ pub fn AccountMenuButton<G: Html>
                         Button
                         (
                             color=Colors::Primary.into(),
+                            size=ButtonSize::Small.into(),
+                            href=OptionProp(Some("/account/create".to_string())).into(),
                         )
                         {
                             (t!("common.aside.account_menu_button.button.create"))
