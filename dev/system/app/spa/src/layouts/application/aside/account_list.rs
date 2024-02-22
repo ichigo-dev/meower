@@ -106,6 +106,17 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                                     return;
                                 }
                                 open.set(false);
+
+                                let selected_account = SelectedAccount
+                                {
+                                    account_name: account_name.clone(),
+                                    name: name.clone(),
+                                    avatar_file_key: file_key.clone(),
+                                };
+                                state.selected_account.set
+                                (
+                                    Some(selected_account)
+                                );
                             },
                         )
                         {
