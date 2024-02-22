@@ -21,7 +21,6 @@ pub async fn Index<G: Html>() -> View<G>
             a
             (
                 href="/dev/ui_catalog",
-                rel="external",
                 class="ui_button primary flex_align_self_start",
             )
             {

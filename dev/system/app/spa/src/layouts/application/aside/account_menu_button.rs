@@ -35,7 +35,7 @@ pub fn AccountMenuButton<G: Html>
                     {
                         MiniProfile
                         (
-                            clickable=true,
+                            clickable=BoolProp(true).into(),
                             name=selected_account.name.clone(),
                             account_name=selected_account.name.clone(),
                             file_key=file_key,

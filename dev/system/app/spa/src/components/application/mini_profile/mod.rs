@@ -22,7 +22,7 @@ pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
     let classes = move || -> String
     {
         let mut classes = "flex flex_row flex_align_center flex_gap_sm width_full".to_string();
-        if props.clickable
+        if props.clickable.get()
         {
             classes.push_str(" clickable");
         }
@@ -57,7 +57,7 @@ pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
                     }
                 }
                 (
-                    if props.selected
+                    if props.selected.get()
                     {
                         view!
                         {

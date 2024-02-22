@@ -58,7 +58,6 @@ pub fn Button<G: Html>( props: ButtonProps<G> ) -> View<G>
                             ref=props.node_ref,
                             class=classes(),
                             href=href,
-                            rel="external",
                             ..props.attributes
                         )
                         {

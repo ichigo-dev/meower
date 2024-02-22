@@ -51,7 +51,6 @@ pub fn FloatingButton<G: Html>( props: FloatingButtonProps<G> ) -> View<G>
                             ref=props.node_ref,
                             class=classes(),
                             href=href,
-                            rel="external",
                             ..props.attributes
                         )
                         {

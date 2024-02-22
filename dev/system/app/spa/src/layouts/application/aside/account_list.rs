@@ -12,7 +12,7 @@ use crate::variables::*;
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
-use sycamore::futures::create_resource;
+use sycamore::futures::{ create_resource, spawn_local_scoped };
 
 
 //------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
         };
     });
 
-    let show_profile_href = create_signal("/account/create".to_string());
+    let show_profile_href = create_signal(Some("/account/create".to_string()));
     let selected_account_name = create_signal(String::new());
 
     create_effect(move ||
@@ -71,33 +71,30 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
         let selected_account = state.selected_account.get_clone();
         if let Some(selected_account) = selected_account
         {
-            show_profile_href.set
+            show_profile_href.set(Some
             (
                 format!
                 (
                     "/account/{}",
                     selected_account.account_name
                 )
-            );
+            ));
             selected_account_name.set(selected_account.account_name);
-        };
 
-        /*
-            let data = match post_graphql::<SelectAccount>
-            (
-                &mut state,
-                "/account/graphql",
-                 select_account::Variables
-                 {
-                     account_name: account_name.clone(),
-                 },
-            ).await
+            spawn_local_scoped(async move
             {
-                Ok(data) => data,
-                Err(e) => return,
-            };
-            let account = create_signal(data.select_account);
-        */
+                let mut state: AppState = use_context();
+                let _ = post_graphql::<SelectAccount>
+                (
+                    &mut state,
+                    "/account/graphql",
+                     select_account::Variables
+                     {
+                         account_name: selected_account_name.get_clone(),
+                     },
+                ).await;
+            });
+        };
     });
 
     view!
@@ -114,10 +111,8 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                 view=move |account|
                 {
                     let account_name = account.account_name.clone();
-                    let selected = account_name == selected_account_name.get_clone();
                     let mut name = "".to_string();
                     let mut file_key = "".to_string();
-
                     if let Some(profile) = account.default_account_profile
                     {
                         name = profile.name.clone();
@@ -127,6 +122,19 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                         }
                     };
 
+                    // List item states.
+                    let selected = create_signal(false);
+                    let clickable = create_signal(true);
+                    let compared_account_name = account_name.clone();
+                    create_effect(move ||
+                    {
+                        selected.set
+                        (
+                            compared_account_name == selected_account_name.get_clone()
+                        );
+                        clickable.set(!selected.get());
+                    });
+
                     let cloned_account_name = account_name.clone();
                     let cloned_name = name.clone();
                     let cloned_file_key = file_key.clone();
@@ -135,10 +143,10 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                     {
                         ListItem
                         (
-                            clickable=BoolProp(!selected).into(),
+                            clickable=BoolProp(clickable.get()).into(),
                             on:click=move |_|
                             {
-                                if selected
+                                if selected.get()
                                 {
                                     return;
                                 }
@@ -154,6 +162,16 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                                 (
                                     Some(selected_account)
                                 );
+
+                                let href = format!
+                                (
+                                    "/account/{}",
+                                    &account_name
+                                );
+                                let _ = web_sys::window()
+                                    .unwrap()
+                                    .location()
+                                    .set_href(&href);
                             },
                         )
                         {
@@ -162,8 +180,8 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                                 name=cloned_name,
                                 account_name=cloned_account_name,
                                 file_key=cloned_file_key,
-                                clickable=!selected,
-                                selected=selected,
+                                clickable=*clickable,
+                                selected=*selected,
                             )
                         }
                     }
@@ -179,7 +197,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                 (
                     classes=StrProp("width_full").into(),
                     color=Colors::Transparent.into(),
-                    href=OptionProp(Some(show_profile_href.get_clone())).into(),
+                    href=*show_profile_href,
                 )
                 {
                     (t!("common.aside.account_menu_button.button.show_profile"))

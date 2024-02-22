@@ -108,6 +108,7 @@ impl AccountQuery
 
         let accounts = AccountEntity::find()
             .filter(AccountColumn::PublicUserId.eq(&public_user_id))
+            .order_by_desc(AccountColumn::CreatedAt)
             .all(tsx)
             .await
             .unwrap();

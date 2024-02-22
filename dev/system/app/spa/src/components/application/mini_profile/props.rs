@@ -19,7 +19,7 @@ pub struct MiniProfileProps<G: Html>
     pub attributes: Attributes<G>,
 
     #[prop(default)]
-    pub clickable: bool,
+    pub clickable: ReadSignal<bool>,
 
     #[prop(default)]
     pub file_key: Option<String>,
@@ -31,5 +31,5 @@ pub struct MiniProfileProps<G: Html>
     pub node_ref: NodeRef<G>,
 
     #[prop(default)]
-    pub selected: bool,
+    pub selected: ReadSignal<bool>,
 }

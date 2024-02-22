@@ -49,7 +49,6 @@ pub fn ButtonGroupItem<G: Html>( props: ButtonGroupItemProps<G> ) -> View<G>
                             ref=props.node_ref,
                             class=classes(),
                             href=href,
-                            rel="external",
                             ..props.attributes
                         )
                         {
