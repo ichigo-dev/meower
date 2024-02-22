@@ -4,6 +4,7 @@
 
 use crate::AppState;
 use crate::components::*;
+use crate::types::SelectedAccount;
 use crate::utils::request_graphql::post_graphql;
 use crate::utils::props::*;
 use crate::variables::*;
@@ -28,8 +29,8 @@ struct GetAccountList;
 //------------------------------------------------------------------------------
 /// Component.
 //------------------------------------------------------------------------------
-#[component]
-pub async fn AccountList<G: Html>() -> View<G>
+#[component(inline_props)]
+pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
 {
     let mut state: AppState = use_context();
     let selected_account = state.selected_account.get_clone();
@@ -51,7 +52,7 @@ pub async fn AccountList<G: Html>() -> View<G>
     let accounts = create_signal(data.accounts);
 
     let mut show_profile_href = "/account/create".to_string();
-    let mut selected_account_name = "".to_string();
+    let mut selected_account_name = String::new();
     if let Some(selected_account) = selected_account
     {
         show_profile_href = format!
@@ -89,15 +90,30 @@ pub async fn AccountList<G: Html>() -> View<G>
                         }
                     };
 
+                    let cloned_account_name = account_name.clone();
+                    let cloned_name = name.clone();
+                    let cloned_file_key = file_key.clone();
+
                     view!
                     {
-                        ListItem(clickable=BoolProp(!selected).into())
+                        ListItem
+                        (
+                            clickable=BoolProp(!selected).into(),
+                            on:click=move |_|
+                            {
+                                if selected
+                                {
+                                    return;
+                                }
+                                open.set(false);
+                            },
+                        )
                         {
                             MiniProfile
                             (
-                                name=name,
-                                account_name=account_name,
-                                file_key=file_key,
+                                name=cloned_name,
+                                account_name=cloned_account_name,
+                                file_key=cloned_file_key,
                                 clickable=!selected,
                                 selected=selected,
                             )

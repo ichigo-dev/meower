@@ -26,7 +26,7 @@ pub fn AccountMenu<G: Html>( anchor: NodeRef<G>, open: Signal<bool> ) -> View<G>
         {
             Box(classes=StrProp("width_8xl").into())
             {
-                AccountList
+                AccountList(open=open)
             }
         }
     }
