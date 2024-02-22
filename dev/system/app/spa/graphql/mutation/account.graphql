@@ -1,0 +1,14 @@
+################################################################################
+# Selects account
+################################################################################
+mutation SelectAccount($accountName: String!) {
+  selectAccount(accountName: $accountName) {
+    accountName
+    defaultAccountProfile {
+      name
+      avatar {
+        fileKey
+      }
+    }
+  }
+}

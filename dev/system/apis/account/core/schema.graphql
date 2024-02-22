@@ -233,7 +233,11 @@ Mutation root.
 """
 type MutationRoot {
 	"""
-	Creates accounts.
+	Select account.
+	"""
+	selectAccount(accountName: String!): Account!
+	"""
+	Creates account.
 	"""
 	createAccount(input: CreateAccountInput!): Account!
 	"""

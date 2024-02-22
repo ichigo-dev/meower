@@ -12,6 +12,7 @@ use crate::variables::*;
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
+use sycamore::futures::create_resource;
 
 
 //------------------------------------------------------------------------------
@@ -25,6 +26,14 @@ use sycamore::prelude::*;
 )]
 struct GetAccountList;
 
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
+struct SelectAccount;
+
 
 //------------------------------------------------------------------------------
 /// Component.
@@ -32,36 +41,64 @@ struct GetAccountList;
 #[component(inline_props)]
 pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
 {
-    let mut state: AppState = use_context();
-    let selected_account = state.selected_account.get_clone();
+    let state: AppState = use_context();
     let config = state.config.clone();
     let public_user_id = config.public_user_id.clone();
-    let data = match post_graphql::<GetAccountList>
-    (
-        &mut state,
-        "/account/graphql",
-         get_account_list::Variables
-         {
-             public_user_id: public_user_id,
-         },
-    ).await
-    {
-        Ok(data) => data,
-        Err(e) => return view! { Alert { (e) } },
-    };
-    let accounts = create_signal(data.accounts);
+    let accounts = create_signal(Vec::new());
 
-    let mut show_profile_href = "/account/create".to_string();
-    let mut selected_account_name = String::new();
-    if let Some(selected_account) = selected_account
+    create_resource(async move
     {
-        show_profile_href = format!
+        let mut state: AppState = use_context();
+        if let Ok(data) = post_graphql::<GetAccountList>
         (
-            "/account/{}",
-            selected_account.account_name
-        );
-        selected_account_name = selected_account.account_name;
-    };
+            &mut state,
+            "/account/graphql",
+             get_account_list::Variables
+             {
+                 public_user_id: public_user_id,
+             },
+        ).await
+        {
+            accounts.set(data.accounts);
+        };
+    });
+
+    let show_profile_href = create_signal("/account/create".to_string());
+    let selected_account_name = create_signal(String::new());
+
+    create_effect(move ||
+    {
+        let selected_account = state.selected_account.get_clone();
+        if let Some(selected_account) = selected_account
+        {
+            show_profile_href.set
+            (
+                format!
+                (
+                    "/account/{}",
+                    selected_account.account_name
+                )
+            );
+            selected_account_name.set(selected_account.account_name);
+        };
+
+        /*
+            let data = match post_graphql::<SelectAccount>
+            (
+                &mut state,
+                "/account/graphql",
+                 select_account::Variables
+                 {
+                     account_name: account_name.clone(),
+                 },
+            ).await
+            {
+                Ok(data) => data,
+                Err(e) => return,
+            };
+            let account = create_signal(data.select_account);
+        */
+    });
 
     view!
     {
@@ -77,7 +114,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                 view=move |account|
                 {
                     let account_name = account.account_name.clone();
-                    let selected = account_name == selected_account_name;
+                    let selected = account_name == selected_account_name.get_clone();
                     let mut name = "".to_string();
                     let mut file_key = "".to_string();
 
@@ -142,7 +179,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                 (
                     classes=StrProp("width_full").into(),
                     color=Colors::Transparent.into(),
-                    href=OptionProp(Some(show_profile_href)).into(),
+                    href=OptionProp(Some(show_profile_href.get_clone())).into(),
                 )
                 {
                     (t!("common.aside.account_menu_button.button.show_profile"))

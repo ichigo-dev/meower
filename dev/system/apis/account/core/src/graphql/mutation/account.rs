@@ -3,6 +3,8 @@
 //------------------------------------------------------------------------------
 
 use meower_account_entity::account::ActiveModel as AccountActiveModel;
+use meower_account_entity::account::Column as AccountColumn;
+use meower_account_entity::account::Entity as AccountEntity;
 use meower_account_entity::account::Model as AccountModel;
 use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
 use meower_account_entity::account_workspace::ActiveModel as AccountWorkspaceActiveModel;
@@ -13,8 +15,15 @@ use meower_shared::JwtClaims;
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
+use chrono::Utc;
 use rust_i18n::t;
-use sea_orm::{ ActiveValue, DatabaseTransaction };
+use sea_orm::{
+    ActiveValue,
+    ColumnTrait,
+    DatabaseTransaction,
+    EntityTrait,
+    QueryFilter,
+};
 
 
 //------------------------------------------------------------------------------
@@ -38,7 +47,46 @@ pub(crate) struct AccountMutation;
 impl AccountMutation
 {
     //--------------------------------------------------------------------------
-    /// Creates accounts.
+    /// Select account.
+    //--------------------------------------------------------------------------
+    async fn select_account
+    (
+        &self,
+        ctx: &Context<'_>,
+        account_name: String,
+    ) -> Result<AccountModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+
+        let account = match AccountEntity::find()
+            .filter(AccountColumn::AccountName.eq(account_name))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account) => account,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+        if account.public_user_id != jwt_claims.public_user_id
+        {
+            return Err(t!("system.error.unauthorized").into());
+        }
+
+        let mut account: AccountActiveModel = account.into();
+        let now = Utc::now().naive_utc();
+        account.last_login_at = ActiveValue::Set(now);
+        let account = match account.validate_and_update(tsx).await
+        {
+            Ok(account) => account,
+            Err(e) => return Err(e.get_message().into()),
+        };
+
+        Ok(account)
+    }
+
+    //--------------------------------------------------------------------------
+    /// Creates account.
     //--------------------------------------------------------------------------
     async fn create_account
     (
