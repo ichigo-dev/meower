@@ -40,27 +40,31 @@ pub fn AppRouter<G: Html>() -> View<G>
         Router
         (
             integration=HistoryIntegration::new(),
-            view=|route: ReadSignal<AppRoutes>|
-            {
-                match route.get_clone()
-                {
-                    AppRoutes::Home => view! { Home },
-                    AppRoutes::Dev(route) =>
-                    {
-                        let state: AppState = use_context();
-                        if state.config.dev_mode
-                        {
-                            return view!{ dev::Router(route=route.clone()) };
-                        }
-                        view! { NotFound }
-                    },
-                    AppRoutes::Account(route) =>
-                    {
-                        view! { account::Router(route=route.clone()) }
-                    },
-                    AppRoutes::NotFound => view! { NotFound },
-                }
-            }
+            view=switch
         )
     }
+}
+
+fn switch<G: Html>( route: ReadSignal<AppRoutes> ) -> View<G>
+{
+    let view = create_memo(on(route, move || match route.get_clone()
+    {
+        AppRoutes::Home => view! { Home },
+        AppRoutes::Dev(route) =>
+        {
+            let state: AppState = use_context();
+            if state.config.dev_mode
+            {
+                return view!{ dev::Router(route=route.clone()) };
+            }
+            view! { NotFound }
+        },
+        AppRoutes::Account(route) =>
+        {
+            view! { account::Router(route=route.clone()) }
+        },
+        AppRoutes::NotFound => view! { NotFound },
+    }));
+
+    view! { (view.get_clone() ) }
 }
