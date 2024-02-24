@@ -64,7 +64,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
         };
     });
 
-    let show_profile_href = create_signal(Some("/account/create".to_string()));
+    let show_profile_href = create_signal("/account/create".to_string());
     let selected_account_name = create_signal(String::new());
 
     create_effect(move ||
@@ -72,14 +72,14 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
         let selected_account = state.selected_account.get_clone();
         if let Some(selected_account) = selected_account
         {
-            show_profile_href.set(Some
+            show_profile_href.set
             (
                 format!
                 (
                     "/account/{}",
                     selected_account.account_name
                 )
-            ));
+            );
             selected_account_name.set(selected_account.account_name);
 
             spawn_local_scoped(async move
@@ -131,7 +131,8 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                     {
                         selected.set
                         (
-                            compared_account_name == selected_account_name.get_clone()
+                            compared_account_name
+                                == selected_account_name.get_clone()
                         );
                         clickable.set(!selected.get());
                     });
@@ -195,7 +196,10 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                 (
                     classes=StrProp("width_full").into(),
                     color=Colors::Transparent.into(),
-                    href=*show_profile_href,
+                    on:click=move |_|
+                    {
+                        navigate(&show_profile_href.get_clone());
+                    },
                 )
                 {
                     (t!("common.aside.account_menu_button.button.show_profile"))
@@ -211,7 +215,10 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                 (
                     classes=StrProp("width_full").into(),
                     color=Colors::Transparent.into(),
-                    href=OptionProp(Some("/account/create".to_string())).into(),
+                    on:click=move |_|
+                    {
+                        navigate("/account/create");
+                    },
                 )
                 {
                     (t!("common.aside.account_menu_button.button.add_account"))

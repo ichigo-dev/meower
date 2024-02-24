@@ -20,9 +20,8 @@ pub fn Layout<G: Html>( children: Children<G> ) -> View<G>
     {
         Box(classes=StrProp("flex flex_column min_height_full_viewport").into())
         {
-            Box(classes=StrProp("theme_meower_light flex_grow flex flex_row").into())
+            Box(classes=StrProp("theme_meower_light flex_grow flex flex_row_reverse").into())
             {
-                Aside()
                 Box(classes=StrProp("flex_grow flex flex_column overflow_auto_x").into())
                 {
                     Header()
@@ -32,6 +31,7 @@ pub fn Layout<G: Html>( children: Children<G> ) -> View<G>
                     }
                     Footer()
                 }
+                Aside()
             }
         }
     }
