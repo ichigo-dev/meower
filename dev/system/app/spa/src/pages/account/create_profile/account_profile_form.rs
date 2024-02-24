@@ -63,18 +63,37 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
             {
                 match gender
                 {
-                    s if &s == "male" => Some(create_account::Gender::MALE),
-                    s if &s == "female" => Some(create_account::Gender::FEMALE),
-                    s if &s == "other" => Some(create_account::Gender::OTHER),
+                    s if &s == "male" =>
+                    {
+                        Some(create_account_profile::Gender::MALE)
+                    },
+                    s if &s == "female" =>
+                    {
+                        Some(create_account_profile::Gender::FEMALE)
+                    },
+                    s if &s == "other" =>
+                    {
+                        Some(create_account_profile::Gender::OTHER)
+                    },
                     _ => None,
                 }
             },
             None => None,
         };
 
-        let create_account_profile_input = create_account_profile::CreateAccountProfileInput
+        let selected_account = match state.selected_account.get_clone()
         {
-            account_name: state.selected_account_name.get_clone(),
+            Some(selected_account) => selected_account,
+            None =>
+            {
+                alert_message.set(t!("pages.account.create_profile.form.error.account_not_selected"));
+                return;
+            },
+        };
+        let create_account_profile_input
+            = create_account_profile::CreateAccountProfileInput
+        {
+            account_name: selected_account.account_name.clone(),
             name: values.get("name").unwrap_or("".to_string()),
             affiliation: values.get("affiliation").clone(),
             email: values.get("email").unwrap_or("".to_string()),
@@ -89,16 +108,22 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
             (
                 &mut state,
                 "/account/graphql",
-                 create_account::Variables { create_account_profile_input },
+                 create_account_profile::Variables
+                 {
+                     create_account_profile_input
+                 },
             ).await
             {
                 Ok(data) =>
                 {
-                    let href = format!
-                    (
-                        "/account/{}",
-                        data.create_account_profile.account_name,
-                    );
+                    let href = match data.create_account_profile.account
+                    {
+                        Some(account) =>
+                        {
+                            format!("/account/{}", account.account_name)
+                        },
+                        None => "/".to_string(),
+                    };
                     navigate(&href);
                 },
                 Err(e) => 
@@ -137,49 +162,49 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
             )
             Label
             (
-                label=t!("pages.account_profile.create.form.name.label"),
+                label=t!("pages.account.create_profile.form.name.label"),
                 required=BoolProp(true).into(),
             )
             {
                 TextField
                 (
                     name=StrProp("name").into(),
-                    placeholder=StringProp(t!("pages.account_profile.create.form.name.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.create_profile.form.name.placeholder")).into(),
                     required=BoolProp(true).into(),
                 )
             }
-            Label(label=t!("pages.account_profile.create.form.affiliation.label"))
+            Label(label=t!("pages.account.create_profile.form.affiliation.label"))
             {
                 TextField
                 (
                     name=StrProp("affiliation").into(),
-                    placeholder=StringProp(t!("pages.account_profile.create.form.affiliation.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.create_profile.form.affiliation.placeholder")).into(),
                 )
             }
             Label
             (
-                label=t!("pages.account_profile.create.form.email.label"),
+                label=t!("pages.account.create_profile.form.email.label"),
                 required=BoolProp(true).into(),
             )
             {
                 TextField
                 (
                     name=StrProp("email").into(),
-                    placeholder=StringProp(t!("pages.account_profile.create.form.email.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.create_profile.form.email.placeholder")).into(),
                     field_type=StrProp("email").into(),
                     required=BoolProp(true).into(),
                 )
             }
-            Label(label=t!("pages.account_profile.create.form.bio.label"))
+            Label(label=t!("pages.account.create_profile.form.bio.label"))
             {
                 TextField
                 (
                     name=StrProp("bio").into(),
-                    placeholder=StringProp(t!("pages.account_profile.create.form.bio.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.create_profile.form.bio.placeholder")).into(),
                     multiline=BoolProp(true).into(),
                 )
             }
-            Label(label=t!("pages.account_profile.create.form.birthdate.label"))
+            Label(label=t!("pages.account.create_profile.form.birthdate.label"))
             {
                 TextField
                 (
@@ -187,7 +212,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     field_type=StrProp("date").into(),
                 )
             }
-            Label(label=t!("pages.account_profile.create.form.gender.label"))
+            Label(label=t!("pages.account.create_profile.form.gender.label"))
             {
                 RadioGroup
                 (
@@ -204,7 +229,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                             (
                                 classes=StrProp("width_6xl flex_align_center").into(),
                                 direction=LabelDirection::Row.into(),
-                                label=t!(&format!("pages.account_profile.create.form.gender.{}.label", gender)),
+                                label=t!(&format!("pages.account.create_profile.form.gender.{}.label", gender)),
                             )
                             {
                                 Radio
@@ -220,7 +245,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
             }
             Button(button_type=StrProp("submit").into())
             {
-                (t!("pages.account_profile.create.form.button.send"))
+                (t!("pages.account.create_profile.form.button.send"))
             }
         }
     }

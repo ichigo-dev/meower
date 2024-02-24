@@ -16,7 +16,7 @@ use sycamore::prelude::*;
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn Create<G: Html>() -> View<G>
+pub fn CreateProfile<G: Html>() -> View<G>
 {
     view!
     {

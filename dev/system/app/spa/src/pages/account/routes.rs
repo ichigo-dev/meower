@@ -18,6 +18,9 @@ pub enum Routes
     #[to("/create")]
     Create,
 
+    #[to("/create_profile")]
+    CreateProfile,
+
     #[to("/<account_name>")]
     Profile
     {
@@ -40,6 +43,7 @@ pub fn Router<G: Html>( route: Routes ) -> View<G>
         (match &route
         {
             Routes::Create => view! { Create },
+            Routes::CreateProfile => view! { CreateProfile },
             Routes::Profile { account_name } =>
             {
                 view! { Profile(account_name=account_name.clone()) }

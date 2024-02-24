@@ -27,3 +27,5 @@ pages:
             label: "その他"
         button:
           send: "作成"
+        error:
+          account_not_selected: "アカウントが選択されていません"

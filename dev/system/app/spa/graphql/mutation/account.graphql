@@ -41,5 +41,8 @@ mutation CreateAccountProfile($createAccountProfileInput: CreateAccountProfileIn
     bio
     birthdate
     gender
+    account {
+      accountName
+    }
   }
 }
