@@ -28,6 +28,7 @@ pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
         }
         classes
     };
+
     view!
     {
         button

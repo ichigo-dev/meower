@@ -2,11 +2,13 @@
 //! Account profile page.
 //------------------------------------------------------------------------------
 
-mod account_profile_tables;
+mod account_profile;
 
-use account_profile_tables::AccountProfileTables;
+use account_profile::AccountProfile;
 
+use crate::components::*;
 use crate::layouts::application::{ Layout, Main };
+use crate::utils::props::*;
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -24,7 +26,11 @@ pub fn Profile<G: Html>( account_name: String ) -> View<G>
         {
             Main(heading=t!("pages.account.profile.heading"))
             {
-                AccountProfileTables(account_name=account_name)
+                Button(href=OptionProp(Some("/account/create_profile".to_string())).into())
+                {
+                    (t!("pages.account.profile.button.create_profile"))
+                }
+                AccountProfile(account_name=account_name)
             }
         }
     }

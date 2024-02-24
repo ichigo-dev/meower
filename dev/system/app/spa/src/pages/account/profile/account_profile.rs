@@ -26,10 +26,10 @@ struct GetAccountProfiles;
 
 
 //------------------------------------------------------------------------------
-/// AccountProfileTables.
+/// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub async fn AccountProfileTables<G: Html>( account_name: String ) -> View<G>
+pub async fn AccountProfile<G: Html>( account_name: String ) -> View<G>
 {
     let mut state: AppState = use_context();
     let data = match post_graphql::<GetAccountProfiles>

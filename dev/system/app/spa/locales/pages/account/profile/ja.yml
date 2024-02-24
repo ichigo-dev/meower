@@ -2,6 +2,8 @@ pages:
   account:
     profile:
       heading: "アカウント詳細"
+      button:
+        create_profile: "プロフィール追加"
       table:
         name:
           head: "表示名"
