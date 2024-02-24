@@ -6,7 +6,7 @@ mod account_form;
 
 use account_form::AccountForm;
 
-use crate::layouts::application::Main;
+use crate::layouts::application::{ Layout, Main };
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -20,9 +20,12 @@ pub fn Create<G: Html>() -> View<G>
 {
     view!
     {
-        Main(heading=t!("pages.account.create.heading"))
+        Layout
         {
-            AccountForm
+            Main(heading=t!("pages.account.create.heading"))
+            {
+                AccountForm
+            }
         }
     }
 }

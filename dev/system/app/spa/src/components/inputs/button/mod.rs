@@ -56,8 +56,8 @@ pub fn Button<G: Html>( props: ButtonProps<G> ) -> View<G>
                         a
                         (
                             ref=props.node_ref,
-                            class=classes(),
                             href=href,
+                            class=classes(),
                             ..props.attributes
                         )
                         {

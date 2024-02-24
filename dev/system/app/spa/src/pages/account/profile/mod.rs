@@ -6,7 +6,7 @@ mod account_profile_tables;
 
 use account_profile_tables::AccountProfileTables;
 
-use crate::layouts::application::Main;
+use crate::layouts::application::{ Layout, Main };
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -20,9 +20,12 @@ pub fn Profile<G: Html>( account_name: String ) -> View<G>
 {
     view!
     {
-        Main(heading=t!("pages.account.profile.heading"))
+        Layout
         {
-            AccountProfileTables(account_name=account_name)
+            Main(heading=t!("pages.account.profile.heading"))
+            {
+                AccountProfileTables(account_name=account_name)
+            }
         }
     }
 }

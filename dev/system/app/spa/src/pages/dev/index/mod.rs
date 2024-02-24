@@ -2,7 +2,7 @@
 //! Dev page.
 //------------------------------------------------------------------------------
 
-use crate::layouts::application::Main;
+use crate::layouts::application::{ Layout, Main };
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -16,15 +16,18 @@ pub async fn Index<G: Html>() -> View<G>
 {
     view!
     {
-        Main(heading=t!("pages.dev.index.heading"))
+        Layout
         {
-            a
-            (
-                href="/dev/ui_catalog",
-                class="ui_button primary flex_align_self_start",
-            )
+            Main(heading=t!("pages.dev.index.heading"))
             {
-                (t!("pages.dev.index.button.ui_catalog"))
+                a
+                (
+                    href="/dev/ui_catalog",
+                    class="ui_button primary flex_align_self_start",
+                )
+                {
+                    (t!("pages.dev.index.button.ui_catalog"))
+                }
             }
         }
     }

@@ -2,6 +2,7 @@
 //! Home page.
 //------------------------------------------------------------------------------
 
+use crate::layouts::application::Layout;
 use crate::components::*;
 
 use rust_i18n::t;
@@ -16,9 +17,12 @@ pub fn Home<G: Html>() -> View<G>
 {
     view!
     {
-        Heading(level=HeadingLevel::H1.into())
+        Layout
         {
-            (t!("pages.home.heading"))
+            Heading(level=HeadingLevel::H1.into())
+            {
+                (t!("pages.home.heading"))
+            }
         }
     }
 }

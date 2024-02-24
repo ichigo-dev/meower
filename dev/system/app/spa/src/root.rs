@@ -2,7 +2,6 @@
 //! Application root component.
 //------------------------------------------------------------------------------
 
-use crate::layouts::application::Layout;
 use crate::routes::AppRouter;
 use crate::state::AppState;
 
@@ -27,6 +26,6 @@ pub async fn Root<G: Html>() -> View<G>
 
     view!
     {
-        Layout { AppRouter }
+        AppRouter
     }
 }

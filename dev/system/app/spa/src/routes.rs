@@ -40,7 +40,7 @@ pub fn AppRouter<G: Html>() -> View<G>
         Router
         (
             integration=HistoryIntegration::new(),
-            view=switch
+            view=switch,
         )
     }
 }

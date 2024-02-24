@@ -12,6 +12,7 @@ use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
 use sycamore::futures::spawn_local_scoped;
+use sycamore_router::navigate;
 
 
 //------------------------------------------------------------------------------
@@ -93,15 +94,12 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
             {
                 Ok(data) =>
                 {
-                    let window = web_sys::window().unwrap();
                     let href = format!
                     (
                         "/account/{}",
                         data.create_account_profile.account_name,
                     );
-                    window
-                        .location()
-                        .set_href(&href).unwrap();
+                    navigate(&href);
                 },
                 Err(e) => 
                 {

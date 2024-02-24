@@ -13,6 +13,7 @@ use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
 use sycamore::futures::{ create_resource, spawn_local_scoped };
+use sycamore_router::navigate;
 
 
 //------------------------------------------------------------------------------
@@ -168,10 +169,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                                     "/account/{}",
                                     &account_name
                                 );
-                                let _ = web_sys::window()
-                                    .unwrap()
-                                    .location()
-                                    .set_href(&href);
+                                navigate(&href);
                             },
                         )
                         {
