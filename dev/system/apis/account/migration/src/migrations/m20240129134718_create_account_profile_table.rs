@@ -5,7 +5,6 @@
 use crate::table_def::{ Account, AccountProfile };
 
 use sea_orm::Statement;
-use sea_orm::entity::prelude::DateTime;
 use sea_orm_migration::prelude::*;
 
 
@@ -69,7 +68,6 @@ impl MigrationTrait for Migration
             (
                 ColumnDef::new(AccountProfile::Birthdate)
                     .timestamp()
-                    .default(DateTime::from_timestamp_millis(0))
             )
             .col
             (

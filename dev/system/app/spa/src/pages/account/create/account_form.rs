@@ -4,6 +4,7 @@
 
 use crate::AppState;
 use crate::components::*;
+use crate::types::SelectedAccount;
 use crate::utils::request_graphql::post_graphql;
 use crate::utils::props::*;
 
@@ -20,7 +21,7 @@ use sycamore_router::navigate;
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "graphql/schema/account.graphql",
-    query_path = "graphql/query/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
 struct CreateAccount;
@@ -60,10 +61,33 @@ pub fn AccountForm<G: Html>() -> View<G>
             {
                 Ok(data) =>
                 {
+                    let account = data.create_account;
+                    let mut selected_account = SelectedAccount
+                    {
+                        account_name: account.account_name.clone(),
+                        name: "".to_string(),
+                        avatar_file_key: "".to_string(),
+                    };
+
+                    if let Some(profile) = account.default_account_profile
+                    {
+                        selected_account.name = profile.name;
+
+                        if let Some(avatar) = profile.avatar
+                        {
+                            selected_account.avatar_file_key = avatar.file_key;
+                        }
+                    }
+
+                    state.selected_account.set
+                    (
+                        Some(selected_account)
+                    );
+
                     let href = format!
                     (
                         "/account/{}",
-                        data.create_account.account_name,
+                        account.account_name,
                     );
                     navigate(&href);
                 },

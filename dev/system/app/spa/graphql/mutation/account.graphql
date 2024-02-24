@@ -12,3 +12,34 @@ mutation SelectAccount($accountName: String!) {
     }
   }
 }
+
+
+################################################################################
+# Creates account
+################################################################################
+mutation CreateAccount($createAccountInput: CreateAccountInput!) {
+  createAccount(input: $createAccountInput) {
+    accountName
+    defaultAccountProfile {
+      name
+      avatar {
+        fileKey
+      }
+    }
+  }
+}
+
+
+################################################################################
+# Creates account profile
+################################################################################
+mutation CreateAccountProfile($createAccountProfileInput: CreateAccountProfileInput!) {
+  createAccountProfile(input: $createAccountProfileInput) {
+    name
+    affiliation
+    email
+    bio
+    birthdate
+    gender
+  }
+}

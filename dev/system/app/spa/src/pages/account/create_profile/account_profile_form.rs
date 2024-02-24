@@ -21,7 +21,7 @@ use sycamore_router::navigate;
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "graphql/schema/account.graphql",
-    query_path = "graphql/query/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
 struct CreateAccountProfile;
