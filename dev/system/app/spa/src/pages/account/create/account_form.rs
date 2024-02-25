@@ -131,7 +131,12 @@ pub fn AccountForm<G: Html>() -> View<G>
                     required=BoolProp(true).into(),
                 )
             }
-            Button(button_type=StrProp("submit").into())
+            Button
+            (
+                button_type=StrProp("submit").into(),
+                classes=StrProp("flex_align_self_end").into(),
+                round=ButtonRound::Full.into(),
+            )
             {
                 (t!("pages.account.create.form.button.send"))
             }
