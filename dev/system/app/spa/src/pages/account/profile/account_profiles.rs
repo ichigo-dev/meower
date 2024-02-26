@@ -30,6 +30,7 @@ struct GetAccountProfiles;
 #[component(inline_props)]
 pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
 {
+    let state = use_context::<AppState>();
     let account_profiles = create_signal(Vec::new());
     create_resource(async move
     {
@@ -53,7 +54,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
         Indexed
         (
             iterable=*account_profiles,
-            view=|profile|
+            view=move |profile|
             {
                 let account_name = match profile.account
                 {
@@ -71,12 +72,32 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                     None => "".to_string(),
                 };
 
+                let birthdate = match profile.birthdate
+                {
+                    Some(birthdate) =>
+                    {
+                        birthdate
+                            .and_utc()
+                            .format_localized
+                            (
+                                "%x",
+                                state.datetime_locale.clone()
+                            )
+                            .to_string()
+                    },
+                    None => "".to_string(),
+                };
                 view!
                 {
                     AccountProfileCard
                     (
                         account_name=account_name,
-                        name=profile.name.clone(),
+                        name=profile.name,
+                        bio=profile.bio.unwrap_or_default(),
+                        affiliation=profile.affiliation.unwrap_or_default(),
+                        email=profile.email,
+                        birthdate=birthdate,
+                        gender="".to_string(),
                         avatar_file_key=avatar_file_key,
                         cover_file_key=cover_file_key,
                     )

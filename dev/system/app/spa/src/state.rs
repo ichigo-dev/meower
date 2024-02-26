@@ -6,6 +6,9 @@ use crate::Config;
 use crate::utils::request_graphql::post_graphql;
 use crate::types::SelectedAccount;
 
+use std::str::FromStr;
+
+use chrono::Locale;
 use graphql_client::GraphQLQuery;
 use reqwest::Client;
 use reqwest::header::HeaderMap;
@@ -33,6 +36,7 @@ pub struct AppState
     pub config: Config,
     pub client: Client,
     pub selected_account: Signal<Option<SelectedAccount>>,
+    pub datetime_locale: Locale,
 }
 
 impl AppState
@@ -56,11 +60,19 @@ impl AppState
             .unwrap_or(Client::new());
 
         let public_user_id = config.public_user_id.clone();
+        let datetime_locale = Locale::from_str
+            (
+                &sys_locale::get_locale()
+                    .unwrap_or("en-US".to_string())
+                    .replace("-", "_")
+            )
+            .unwrap_or(Locale::en_US);
         let mut state = Self
         {
             config,
             client,
             selected_account: create_signal(None),
+            datetime_locale,
         };
 
         // Initializes the account state.

@@ -17,6 +17,11 @@ pub struct AccountProfileCardProps
 {
     pub account_name: String,
     pub name: String,
+    pub bio: String,
+    pub affiliation: String,
+    pub email: String,
+    pub birthdate: String,
+    pub gender: String,
     pub avatar_file_key: String,
     pub cover_file_key: String,
 }
@@ -40,9 +45,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
             {
                 ProfileCover
                 (
-                    attr:style="
-                        border-radius: var(--radius-md) var(--radius-md) 0 0;
-                    ",
+                    attr:style="border-radius: var(--radius-md) var(--radius-md) 0 0;",
                     file_key=OptionProp(Some(props.cover_file_key)).into(),
                 )
                 ProfileAvatar
@@ -59,8 +62,55 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
             }
             Box(classes=StrProp("flex flex_column flex_align_center").into())
             {
-                Typography { (props.name) }
-                Typography { (props.account_name) }
+                Typography(font_size=TypographyFontSize::XL.into())
+                {
+                    (props.name)
+                }
+                Typography(font_weight=TypographyFontWeight::Light.into())
+                {
+                    (props.account_name)
+                }
+                Box(classes=StrProp("flex flex_column flex_gap_sm margin_top_lg").into())
+                {
+                    Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                    {
+                        Icon(icon=IconKind::Building.into())
+                        Typography(font_weight=TypographyFontWeight::Light.into())
+                        {
+                            (props.affiliation)
+                        }
+                    }
+                    Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                    {
+                        Icon(icon=IconKind::Envelope.into())
+                        Typography(font_weight=TypographyFontWeight::Light.into())
+                        {
+                            (props.email)
+                        }
+                    }
+                    Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                    {
+                        Icon(icon=IconKind::Birthday.into())
+                        Typography(font_weight=TypographyFontWeight::Light.into())
+                        {
+                            (props.birthdate)
+                        }
+                    }
+                    Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                    {
+                        Icon(icon=IconKind::Gender.into())
+                        Typography(font_weight=TypographyFontWeight::Light.into())
+                        {
+                            (props.gender)
+                        }
+                    }
+                }
+                Divider
+                MultiLineText
+                (
+                    classes=StrProp("width_full text_align_center").into(),
+                    text=StringProp(props.bio).into(),
+                )
             }
         }
     }
