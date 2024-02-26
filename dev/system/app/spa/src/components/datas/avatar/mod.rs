@@ -8,12 +8,7 @@ mod size;
 pub use props::AvatarProps;
 pub use size::AvatarSize;
 
-use crate::AppState;
-use crate::utils::request::get;
-
-use base64::prelude::*;
 use sycamore::prelude::*;
-use sycamore::futures::spawn_local_scoped;
 
 
 //------------------------------------------------------------------------------
@@ -46,30 +41,6 @@ pub async fn Avatar<G: Html>( props: AvatarProps<G> ) -> View<G>
             props.src.get_clone()
         }
     };
-
-    spawn_local_scoped(async move
-    {
-        if let Some(file_key) = props.file_key.get_clone()
-        {
-            let file_key = if file_key.len() > 0
-            {
-                file_key
-            }
-            else
-            {
-                "default".to_string()
-            };
-
-            let mut state: AppState = use_context();
-            let path = format!("account/avatar/{}", file_key);
-            let avatar = get(&mut state, &path, "")
-                .await
-                .unwrap();
-            let bytes = avatar.bytes().await.unwrap();
-            let base64 = BASE64_STANDARD.encode(&bytes);
-            props.base64.set(Some(base64));
-        }
-    });
 
     view!
     {

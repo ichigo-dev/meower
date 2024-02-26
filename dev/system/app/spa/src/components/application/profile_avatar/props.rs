@@ -2,7 +2,7 @@
 /// Props.
 //------------------------------------------------------------------------------
 
-use super::*;
+use crate::components::*;
 use crate::utils::props::*;
 
 use sycamore::prelude::*;
@@ -13,7 +13,7 @@ use sycamore::prelude::*;
 //------------------------------------------------------------------------------
 #[allow(dead_code)]
 #[derive(Props)]
-pub struct AvatarProps<G: Html>
+pub struct ProfileAvatarProps<G: Html>
 {
     #[prop(default)]
     pub alt: ReadSignal<String>,
@@ -27,8 +27,11 @@ pub struct AvatarProps<G: Html>
     #[prop(default)]
     pub classes: ReadSignal<String>,
 
+    #[prop(default)]
+    pub file_key: ReadSignal<Option<String>>,
+
     #[prop(default = StrProp("image/png").into())]
-    pub mime_type: ReadSignal<String>,
+    pub mime_type: Signal<String>,
 
     #[prop(default)]
     pub node_ref: NodeRef<G>,

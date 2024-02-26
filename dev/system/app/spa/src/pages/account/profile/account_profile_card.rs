@@ -29,7 +29,8 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
 {
     view!
     {
-        Avatar(file_key=OptionProp(Some(props.avatar_file_key)).into())
+        ProfileCover(file_key=OptionProp(Some(props.cover_file_key)).into())
+        ProfileAvatar(file_key=OptionProp(Some(props.avatar_file_key)).into())
         (props.account_name)
     }
 }

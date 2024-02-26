@@ -38,7 +38,7 @@ pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
             ..props.attributes
         )
         {
-            Avatar
+            ProfileAvatar
             (
                 classes=StrProp("flex_no_shrink").into(),
                 file_key=OptionProp(props.file_key).into(),
