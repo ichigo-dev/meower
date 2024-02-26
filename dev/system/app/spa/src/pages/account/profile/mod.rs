@@ -2,9 +2,10 @@
 //! Account profile page.
 //------------------------------------------------------------------------------
 
-mod account_profile;
+mod account_profiles;
+mod account_profile_card;
 
-use account_profile::AccountProfile;
+use account_profiles::AccountProfiles;
 
 use crate::components::*;
 use crate::layouts::application::{ Layout, Main };
@@ -30,7 +31,7 @@ pub fn Profile<G: Html>( account_name: String ) -> View<G>
                 {
                     (t!("pages.account.profile.button.create_profile"))
                 }
-                AccountProfile(account_name=account_name)
+                AccountProfiles(account_name=account_name)
             }
         }
     }

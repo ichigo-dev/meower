@@ -41,5 +41,14 @@ query GetAccountProfiles($accountName: String!) {
     email
     birthdate
     gender
+    account {
+      accountName
+    }
+    avatar {
+      fileKey
+    }
+    cover {
+      fileKey
+    }
   }
 }
