@@ -19,12 +19,6 @@ pages:
           label: "生年月日"
         gender:
           label: "性別"
-          male:
-            label: "男性"
-          female:
-            label: "女性"
-          other:
-            label: "その他"
         button:
           send: "作成"
         error:

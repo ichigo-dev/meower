@@ -14,3 +14,9 @@ common:
         create: "アカウントを作成"
         show_profile: "プロフィールを見る"
         add_account: "アカウントを追加"
+
+  constants:
+    gender:
+      male: "男性"
+      female: "女性"
+      other: "その他"

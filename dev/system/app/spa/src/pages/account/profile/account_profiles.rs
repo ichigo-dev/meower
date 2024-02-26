@@ -8,6 +8,7 @@ use crate::utils::request_graphql::post_graphql;
 
 use chrono::NaiveDateTime;
 use graphql_client::GraphQLQuery;
+use rust_i18n::t;
 use sycamore::prelude::*;
 use sycamore::futures::create_resource;
 
@@ -71,7 +72,6 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                     Some(cover) => cover.file_key.clone(),
                     None => "".to_string(),
                 };
-
                 let birthdate = match profile.birthdate
                 {
                     Some(birthdate) =>
@@ -87,6 +87,30 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                     },
                     None => "".to_string(),
                 };
+                let gender = match profile.gender
+                {
+                    Some(gender) =>
+                    {
+                        match gender
+                        {
+                            get_account_profiles::Gender::MALE =>
+                            {
+                                t!("common.constants.gender.male")
+                            },
+                            get_account_profiles::Gender::FEMALE =>
+                            {
+                                t!("common.constants.gender.female")
+                            },
+                            get_account_profiles::Gender::OTHER =>
+                            {
+                                t!("common.constants.gender.other")
+                            },
+                            _ => "".to_string(),
+                        }
+                    },
+                    None => "".to_string(),
+                };
+
                 view!
                 {
                     AccountProfileCard
@@ -97,7 +121,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                         affiliation=profile.affiliation.unwrap_or_default(),
                         email=profile.email,
                         birthdate=birthdate,
-                        gender="".to_string(),
+                        gender=gender,
                         avatar_file_key=avatar_file_key,
                         cover_file_key=cover_file_key,
                     )

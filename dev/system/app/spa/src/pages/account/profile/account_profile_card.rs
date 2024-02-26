@@ -5,7 +5,6 @@
 use crate::components::*;
 use crate::utils::props::*;
 
-use rust_i18n::t;
 use sycamore::prelude::*;
 
 
@@ -68,48 +67,113 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                 }
                 Typography(font_weight=TypographyFontWeight::Light.into())
                 {
-                    (props.account_name)
+                    "@" (props.account_name)
                 }
                 Box(classes=StrProp("flex flex_column flex_gap_sm margin_top_lg").into())
                 {
-                    Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
-                    {
-                        Icon(icon=IconKind::Building.into())
-                        Typography(font_weight=TypographyFontWeight::Light.into())
+                    (
+                        if props.affiliation.len() > 0
                         {
-                            (props.affiliation)
+                            let cloned_affiliation = props.affiliation.clone();
+                            view!
+                            {
+                                Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                                {
+                                    Icon(icon=IconKind::Building.into())
+                                    Typography(font_weight=TypographyFontWeight::Light.into())
+                                    {
+                                        (cloned_affiliation)
+                                    }
+                                }
+                            }
                         }
-                    }
-                    Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
-                    {
-                        Icon(icon=IconKind::Envelope.into())
-                        Typography(font_weight=TypographyFontWeight::Light.into())
+                        else
                         {
-                            (props.email)
+                            view! {}
                         }
-                    }
-                    Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
-                    {
-                        Icon(icon=IconKind::Birthday.into())
-                        Typography(font_weight=TypographyFontWeight::Light.into())
+                    )
+                    (
+                        if props.email.len() > 0
                         {
-                            (props.birthdate)
+                            let cloned_email = props.email.clone();
+                            view!
+                            {
+                                Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                                {
+                                    Icon(icon=IconKind::Envelope.into())
+                                    Typography(font_weight=TypographyFontWeight::Light.into())
+                                    {
+                                        (cloned_email)
+                                    }
+                                }
+                            }
                         }
-                    }
-                    Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
-                    {
-                        Icon(icon=IconKind::Gender.into())
-                        Typography(font_weight=TypographyFontWeight::Light.into())
+                        else
                         {
-                            (props.gender)
+                            view! {}
                         }
-                    }
+                    )
+                    (
+                        if props.birthdate.len() > 0
+                        {
+                            let cloned_birthdate = props.birthdate.clone();
+                            view!
+                            {
+                                Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                                {
+                                    Icon(icon=IconKind::Birthday.into())
+                                    Typography(font_weight=TypographyFontWeight::Light.into())
+                                    {
+                                        (cloned_birthdate)
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            view! {}
+                        }
+                    )
+                    (
+                        if props.gender.len() > 0
+                        {
+                            let cloned_gender = props.gender.clone();
+                            view!
+                            {
+                                Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                                {
+                                    Icon(icon=IconKind::Gender.into())
+                                    Typography(font_weight=TypographyFontWeight::Light.into())
+                                    {
+                                        (cloned_gender)
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            view! {}
+                        }
+                    )
                 }
-                Divider
-                MultiLineText
                 (
-                    classes=StrProp("width_full text_align_center").into(),
-                    text=StringProp(props.bio).into(),
+                    if props.bio.len() > 0
+                    {
+                        let cloned_bio = props.bio.clone();
+                        view!
+                        {
+                            Divider
+                            MultiLineText
+                            (
+                                classes=StrProp("width_full text_align_center").into(),
+                                text=StringProp(cloned_bio).into(),
+                            )
+                        }
+                    }
+                    else
+                    {
+                        view! {}
+                    }
                 )
             }
         }

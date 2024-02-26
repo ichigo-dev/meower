@@ -229,7 +229,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                             (
                                 classes=StrProp("width_6xl flex_align_center").into(),
                                 direction=LabelDirection::Row.into(),
-                                label=t!(&format!("pages.account.create_profile.form.gender.{}.label", gender)),
+                                label=t!(&format!("common.constatns.gender.{}", gender)),
                             )
                             {
                                 Radio
