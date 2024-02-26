@@ -2,9 +2,11 @@
 //	UI box
 //------------------------------------------------------------------------------
 
+@use "sass:string" as sass_string;
 @use "../../functions/string" as string;
 @use "../../variables/colors" as colors;
 @use "../../variables/radii" as radii;
+@use "../../variables/shadows" as shadows;
 
 .ui_box
 {
@@ -21,20 +23,25 @@
 
 
 	//--------------------------------------------------------------------------
-	//	Theme colors
+	//	Colors
 	//--------------------------------------------------------------------------
 
 	@each $color in colors.$colors
 	{
 		$class_name: string.str-replace(#{$color}, "-", "_");
-		&.#{$class_name}
-		{
-			background-color: var(--color-#{$color});
-		}
 
-		&.text_#{$class_name}
+		@if string.starts-with($color, "border") == false and
+			string.starts-with($color, "shadow") == false
 		{
-			color: var(--color-#{$color});
+			&.#{$class_name}
+			{
+				background-color: var(--color-#{$color});
+			}
+
+			&.text_#{$class_name}
+			{
+				color: var(--color-#{$color});
+			}
 		}
 	}
 
@@ -45,7 +52,7 @@
 		@each $color in colors.$colors
 		{
 			$class_name: string.str-replace(#{$color}, "-", "_");
-			&.#{$class_name}
+			&_#{$class_name}
 			{
 				border-color: var(--color-#{$color});
 			}
@@ -70,6 +77,20 @@
 		{
 			$class_name: string.str-replace(#{$radius}, "-", "_");
 			&_#{$class_name} { border-radius: var(--radius-#{$radius}); }
+		}
+	}
+
+
+	//--------------------------------------------------------------------------
+	//	Shadow
+	//--------------------------------------------------------------------------
+
+	&.shadow
+	{
+		@each $shadow in shadows.$shadows
+		{
+			$class_name: string.str-replace(#{$shadow}, "-", "_");
+			&_#{$class_name} { box-shadow: var(--shadow-#{$shadow}); }
 		}
 	}
 }

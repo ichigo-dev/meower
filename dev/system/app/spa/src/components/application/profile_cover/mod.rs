@@ -22,6 +22,17 @@ use sycamore::futures::spawn_local_scoped;
 #[component]
 pub async fn ProfileCover<G: Html>( props: ProfileCoverProps<G> ) -> View<G>
 {
+    let classes = move ||
+    {
+        let mut classes = vec!
+        [
+            "width_full height_7xl object_fit_cover".to_string(),
+            props.classes.get_clone(),
+        ];
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
+    };
+
     let src = move ||
     {
         if let Some(base64) = props.base64.get_clone()
@@ -72,9 +83,10 @@ pub async fn ProfileCover<G: Html>( props: ProfileCoverProps<G> ) -> View<G>
         img
         (
             ref=props.node_ref,
-            class=props.classes,
+            class=classes(),
             src=src(),
             alt=props.alt,
+            style="display: block;",
             ..props.attributes
         )
     }

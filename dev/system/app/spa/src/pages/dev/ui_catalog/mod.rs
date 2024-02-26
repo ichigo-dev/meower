@@ -5,7 +5,7 @@
 mod examples;
 use examples::*;
 
-use crate::layouts::application::Main;
+use crate::layouts::application::{ Layout, Main };
 use crate::variables::Colors;
 
 use rust_i18n::t;
@@ -30,34 +30,37 @@ pub fn UiCatalog<G: Html>() -> View<G>
 
     view!
     {
-        Main(heading=t!("pages.dev.ui_catalog.heading_top"))
+        Layout
         {
-            BadgeExamples(colors=*theme_colors)
-            ChipExamples(colors=*theme_colors)
-            HeadingExamples(colors=*theme_colors)
-            IconExamples(colors=*theme_colors)
-            ListExamples(colors=*theme_colors)
-            TableExamples(colors=*theme_colors)
-            TooltipExamples(colors=*theme_colors)
-            AlertExamples()
-            DialogExamples(colors=*theme_colors)
-            PopoverExamples()
-            ProgressExamples(colors=*theme_colors)
-            SkeletonExamples()
-            SnackbarExamples(colors=*theme_colors)
-            ButtonExamples(colors=*theme_colors)
-            ButtonGroupExamples(colors=*theme_colors)
-            CheckboxExamples(colors=*theme_colors)
-            FloatingButtonExamples(colors=*theme_colors)
-            RadioExamples(colors=*theme_colors)
-            RangeSliderExamples()
-            SelectExamples()
-            SwitchExamples(colors=*theme_colors)
-            TextFieldExamples(colors=*theme_colors)
-            CrumbsExamples()
-            DrawerExamples()
-            PaginationExamples(colors=*theme_colors)
-            TabExamples(colors=*theme_colors)
+            Main(heading=t!("pages.dev.ui_catalog.heading_top"))
+            {
+                BadgeExamples(colors=*theme_colors)
+                ChipExamples(colors=*theme_colors)
+                HeadingExamples(colors=*theme_colors)
+                IconExamples(colors=*theme_colors)
+                ListExamples(colors=*theme_colors)
+                TableExamples(colors=*theme_colors)
+                TooltipExamples(colors=*theme_colors)
+                AlertExamples()
+                DialogExamples(colors=*theme_colors)
+                PopoverExamples()
+                ProgressExamples(colors=*theme_colors)
+                SkeletonExamples()
+                SnackbarExamples(colors=*theme_colors)
+                ButtonExamples(colors=*theme_colors)
+                ButtonGroupExamples(colors=*theme_colors)
+                CheckboxExamples(colors=*theme_colors)
+                FloatingButtonExamples(colors=*theme_colors)
+                RadioExamples(colors=*theme_colors)
+                RangeSliderExamples()
+                SelectExamples()
+                SwitchExamples(colors=*theme_colors)
+                TextFieldExamples(colors=*theme_colors)
+                CrumbsExamples()
+                DrawerExamples()
+                PaginationExamples(colors=*theme_colors)
+                TabExamples(colors=*theme_colors)
+            }
         }
     }
 }

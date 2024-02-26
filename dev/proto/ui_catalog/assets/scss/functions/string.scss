@@ -13,3 +13,8 @@
 
 	@return $string;
 }
+
+@function starts-with( $string, $prefix )
+{
+	@return str_index($string, $prefix) == 1;
+}

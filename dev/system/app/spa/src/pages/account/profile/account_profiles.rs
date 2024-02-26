@@ -76,6 +76,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                     AccountProfileCard
                     (
                         account_name=account_name,
+                        name=profile.name.clone(),
                         avatar_file_key=avatar_file_key,
                         cover_file_key=cover_file_key,
                     )

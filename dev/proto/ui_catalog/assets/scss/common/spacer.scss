@@ -169,7 +169,7 @@
 			$class_name: string.str-replace(#{$space}, "-", "_");
 			&_#{$class_name}
 			{
-				padding: var(--spacing-#{$space}) !important;
+				padding-bottom: var(--spacing-#{$space}) !important;
 			}
 		}
 	}
@@ -184,7 +184,7 @@
 			$class_name: string.str-replace(#{$space}, "-", "_");
 			&_#{$class_name}
 			{
-				padding: var(--spacing-#{$space}) !important;
+				padding-left: var(--spacing-#{$space}) !important;
 			}
 		}
 	}

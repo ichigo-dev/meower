@@ -18,3 +18,8 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+@include responsive.responsive("object_fit_cover")
+{
+	object-fit: cover;
+}

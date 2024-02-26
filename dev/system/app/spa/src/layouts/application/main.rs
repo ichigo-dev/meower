@@ -23,7 +23,7 @@ pub fn Main<G: Html>
     {
         Box(classes=StrProp("flex flex_justify_center").into())
         {
-            Box(classes=StrProp("flex flex_column flex_gap_lg max_width_breakpoint_lg width_full overflow_hidden").into())
+            Box(classes=StrProp("flex flex_column flex_gap_lg max_width_breakpoint_lg width_full").into())
             {
                 Heading
                 (
