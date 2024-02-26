@@ -29,7 +29,7 @@ pub fn Aside<G: Html>() -> View<G>
 
     view!
     {
-        Box(classes=StrProp("ui_sidebar ui_box border_right z_index_drawer padding_zero width_8xl").into())
+        Box(classes=StrProp("ui_sidebar ui_box border_right z_index_drawer padding_zero width_8xl flex_no_shrink").into())
         {
             Box
             (
