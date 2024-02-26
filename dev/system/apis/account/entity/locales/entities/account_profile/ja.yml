@@ -8,10 +8,14 @@ entities:
       name: "名前"
     affiliation:
       name: "所属"
+    location:
+      name: "場所"
     bio:
       name: "自己紹介"
     email:
       name: "メールアドレス"
+    telno:
+      name: "電話番号"
     birthdate:
       name: "誕生日"
       error:

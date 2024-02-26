@@ -37,8 +37,10 @@ query GetAccountProfiles($accountName: String!) {
   accountProfiles(accountName: $accountName) {
     name
     affiliation
+    location
     bio
     email
+    telno
     birthdate
     gender
     account {

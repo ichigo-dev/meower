@@ -51,6 +51,10 @@ type AccountProfile {
 	"""
 	affiliation: String
 	"""
+	Gets the location.
+	"""
+	location: String
+	"""
 	Gets the bio.
 	"""
 	bio: String
@@ -58,6 +62,10 @@ type AccountProfile {
 	Gets the email.
 	"""
 	email: String!
+	"""
+	Gets the telno.
+	"""
+	telno: String
 	"""
 	Gets the birthdate.
 	"""
@@ -153,7 +161,9 @@ input CreateAccountProfileInput {
 	accountName: String!
 	name: String!
 	affiliation: String
+	location: String
 	email: String!
+	telno: String
 	bio: String
 	birthdate: NaiveDateTime
 	gender: Gender

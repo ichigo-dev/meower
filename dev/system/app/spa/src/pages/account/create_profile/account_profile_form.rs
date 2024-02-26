@@ -96,7 +96,9 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
             account_name: selected_account.account_name.clone(),
             name: values.get("name").unwrap_or("".to_string()),
             affiliation: values.get("affiliation").clone(),
+            location: values.get("location").clone(),
             email: values.get("email").unwrap_or("".to_string()),
+            telno: values.get("telno").clone(),
             bio: values.get("bio").clone(),
             birthdate: birthdate,
             gender: gender,
@@ -181,6 +183,14 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     placeholder=StringProp(t!("pages.account.create_profile.form.affiliation.placeholder")).into(),
                 )
             }
+            Label(label=t!("pages.account.create_profile.form.location.label"))
+            {
+                TextField
+                (
+                    name=StrProp("location").into(),
+                    placeholder=StringProp(t!("pages.account.create_profile.form.location.placeholder")).into(),
+                )
+            }
             Label
             (
                 label=t!("pages.account.create_profile.form.email.label"),
@@ -193,6 +203,14 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     placeholder=StringProp(t!("pages.account.create_profile.form.email.placeholder")).into(),
                     field_type=StrProp("email").into(),
                     required=BoolProp(true).into(),
+                )
+            }
+            Label(label=t!("pages.account.create_profile.form.telno.label"))
+            {
+                TextField
+                (
+                    name=StrProp("telno").into(),
+                    placeholder=StringProp(t!("pages.account.create_profile.form.telno.placeholder")).into(),
                 )
             }
             Label(label=t!("pages.account.create_profile.form.bio.label"))

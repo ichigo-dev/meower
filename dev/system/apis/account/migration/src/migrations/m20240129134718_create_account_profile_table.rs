@@ -54,6 +54,12 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(AccountProfile::Location)
+                    .string()
+                    .string_len(255)
+            )
+            .col
+            (
                 ColumnDef::new(AccountProfile::Bio)
                     .text()
             )
@@ -63,6 +69,12 @@ impl MigrationTrait for Migration
                     .string()
                     .string_len(255)
                     .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(AccountProfile::Telno)
+                    .string()
+                    .string_len(255)
             )
             .col
             (

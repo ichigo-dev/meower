@@ -33,10 +33,12 @@ pub(crate) enum AccountProfile
     AccountId,
     Name,
     Affiliation,
-    Bio,
+    Location,
     Email,
+    Telno,
     Birthdate,
     Gender,
+    Bio,
     CreatedAt,
     UpdatedAt,
 }

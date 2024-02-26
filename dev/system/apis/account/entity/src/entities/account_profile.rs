@@ -46,8 +46,10 @@ pub struct Model
     pub account_id: i64,
     pub name: String,
     pub affiliation: Option<String>,
+    pub location: Option<String>,
     pub bio: Option<String>,
     pub email: String,
+    pub telno: Option<String>,
     pub birthdate: Option<DateTime>,
     pub gender: Option<Gender>,
     pub created_at: DateTime,
@@ -74,6 +76,14 @@ impl Model
     }
 
     //--------------------------------------------------------------------------
+    /// Gets the location.
+    //--------------------------------------------------------------------------
+    pub async fn location( &self ) -> Option<String>
+    {
+        self.location.clone()
+    }
+
+    //--------------------------------------------------------------------------
     /// Gets the bio.
     //--------------------------------------------------------------------------
     pub async fn bio( &self ) -> Option<String>
@@ -87,6 +97,14 @@ impl Model
     pub async fn email( &self ) -> String
     {
         self.email.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the telno.
+    //--------------------------------------------------------------------------
+    pub async fn telno( &self ) -> Option<String>
+    {
+        self.telno.clone()
     }
 
     //--------------------------------------------------------------------------
@@ -215,6 +233,11 @@ impl ValidateExt for ActiveModel
             .take()
             .unwrap_or(None)
             .unwrap_or("".to_string());
+        let location = self.location
+            .clone()
+            .take()
+            .unwrap_or(None)
+            .unwrap_or("".to_string());
         let bio = self.bio
             .clone()
             .take()
@@ -223,6 +246,11 @@ impl ValidateExt for ActiveModel
         let email = self.email
             .clone()
             .take()
+            .unwrap_or("".to_string());
+        let telno = self.telno
+            .clone()
+            .take()
+            .unwrap_or(None)
             .unwrap_or("".to_string());
         let birthdate = self
             .birthdate
@@ -251,6 +279,16 @@ impl ValidateExt for ActiveModel
         }
 
         if let Err(e) = Validator::new()
+            .max_length(32)
+            .validate(&location)
+        {
+            return Err
+            (
+                Error::Validation { column: Column::Location, error: e }
+            );
+        }
+
+        if let Err(e) = Validator::new()
             .max_length(1024)
             .validate(&bio)
         {
@@ -264,6 +302,16 @@ impl ValidateExt for ActiveModel
             .validate(&email)
         {
             return Err(Error::Validation { column: Column::Email, error: e });
+        }
+
+        if let Err(e) = Validator::new()
+            .max_length(32)
+            .validate(&telno)
+        {
+            return Err
+            (
+                Error::Validation { column: Column::Telno, error: e }
+            );
         }
 
         if let Err(e) = Validator::new()
@@ -339,8 +387,10 @@ impl Column
             Self::AccountId => t!("entities.account_profile.account_id.name"),
             Self::Name => t!("entities.account_profile.name.name"),
             Self::Affiliation => t!("entities.account_profile.affiliation.name"),
+            Self::Location => t!("entities.account_profile.location.name"),
             Self::Bio => t!("entities.account_profile.bio.name"),
             Self::Email => t!("entities.account_profile.email.name"),
+            Self::Telno => t!("entities.account_profile.telno.name"),
             Self::Birthdate => t!("entities.account_profile.birthdate.name"),
             Self::Gender => t!("entities.account_profile.gender.name"),
             Self::CreatedAt => t!("entities.account_profile.created_at.name"),

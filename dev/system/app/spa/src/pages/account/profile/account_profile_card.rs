@@ -18,7 +18,9 @@ pub struct AccountProfileCardProps
     pub name: String,
     pub bio: String,
     pub affiliation: String,
+    pub location: String,
     pub email: String,
+    pub telno: String,
     pub birthdate: String,
     pub gender: String,
     pub avatar_file_key: String,
@@ -93,6 +95,27 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                         }
                     )
                     (
+                        if props.location.len() > 0
+                        {
+                            let cloned_location = props.location.clone();
+                            view!
+                            {
+                                Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                                {
+                                    Icon(icon=IconKind::Location.into())
+                                    Typography(font_weight=TypographyFontWeight::Light.into())
+                                    {
+                                        (cloned_location)
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            view! {}
+                        }
+                    )
+                    (
                         if props.email.len() > 0
                         {
                             let cloned_email = props.email.clone();
@@ -104,6 +127,27 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                     Typography(font_weight=TypographyFontWeight::Light.into())
                                     {
                                         (cloned_email)
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            view! {}
+                        }
+                    )
+                    (
+                        if props.telno.len() > 0
+                        {
+                            let cloned_telno = props.telno.clone();
+                            view!
+                            {
+                                Box(classes=StrProp("flex flex_row flex_align_center flex_gap_sm").into())
+                                {
+                                    Icon(icon=IconKind::Phone.into())
+                                    Typography(font_weight=TypographyFontWeight::Light.into())
+                                    {
+                                        (cloned_telno)
                                     }
                                 }
                             }

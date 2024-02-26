@@ -9,9 +9,15 @@ pages:
         affiliation:
           label: "所属"
           placeholder: "会社名、学校名、組織名..."
+        location:
+          label: "場所"
+          placeholder: "国、都道府県..."
         email:
           label: "メールアドレス"
           placeholder: "meower@example.com"
+        telno:
+          label: "電話番号"
+          placeholder: "xxx-xxxx-xxxx"
         bio:
           label: "自己紹介"
           placeholder: "自己紹介"
