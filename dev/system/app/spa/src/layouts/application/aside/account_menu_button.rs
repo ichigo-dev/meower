@@ -53,6 +53,7 @@ pub fn AccountMenuButton<G: Html>
                     {
                         Button
                         (
+                            classes=StrProp("width_full").into(),
                             color=Colors::Primary.into(),
                             size=ButtonSize::Small.into(),
                             href=OptionProp(Some("/account/create".to_string())).into(),

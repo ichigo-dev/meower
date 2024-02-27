@@ -2,11 +2,8 @@
 //! Account create page.
 //------------------------------------------------------------------------------
 
-mod account_profile_form;
-
-use account_profile_form::AccountProfileForm;
-
 use crate::layouts::application::{ Layout, Main };
+use super::components::AccountProfileForm;
 
 use rust_i18n::t;
 use sycamore::prelude::*;

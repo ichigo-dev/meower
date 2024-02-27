@@ -22,27 +22,32 @@ pub enum IconKind
     AnglesLeft,
     AnglesRight,
     AnglesUp,
+
     CaretDown,
     CaretLeft,
     CaretRight,
     CaretUp,
+    LeftRight,
+
+    Ellipsis,
+    Plus,
+    Minus,
     Check,
     Copy,
+    Pen,
+    Xmark,
+
     Desktop,
-    Ellipsis,
+    Laptop,
+    Tablet,
+    Mobile,
+
     Building,
     Envelope,
     Birthday,
     Gender,
     Location,
     Phone,
-    Laptop,
-    LeftRight,
-    Minus,
-    Mobile,
-    Plus,
-    Tablet,
-    Xmark,
 }
 
 impl IconKind
@@ -64,27 +69,32 @@ impl IconKind
             Self::AnglesLeft => "icon_angles_left".to_string(),
             Self::AnglesRight => "icon_angles_right".to_string(),
             Self::AnglesUp => "icon_angles_up".to_string(),
+
             Self::CaretDown => "icon_caret_down".to_string(),
             Self::CaretLeft => "icon_caret_left".to_string(),
             Self::CaretRight => "icon_caret_right".to_string(),
             Self::CaretUp => "icon_caret_up".to_string(),
+            Self::LeftRight => "icon_left_right".to_string(),
+
+            Self::Ellipsis => "icon_ellipsis".to_string(),
+            Self::Plus => "icon_plus".to_string(),
+            Self::Minus => "icon_minus".to_string(),
             Self::Check => "icon_check".to_string(),
             Self::Copy => "icon_copy".to_string(),
+            Self::Pen => "icon_pen".to_string(),
+            Self::Xmark => "icon_xmark".to_string(),
+
             Self::Desktop => "icon_desktop".to_string(),
-            Self::Ellipsis => "icon_ellipsis".to_string(),
+            Self::Laptop => "icon_laptop".to_string(),
+            Self::Tablet => "icon_tablet".to_string(),
+            Self::Mobile => "icon_mobile".to_string(),
+
             Self::Building => "icon_building".to_string(),
             Self::Envelope => "icon_envelope".to_string(),
             Self::Birthday => "icon_birthday".to_string(),
             Self::Gender => "icon_gender".to_string(),
             Self::Location => "icon_location".to_string(),
             Self::Phone => "icon_phone".to_string(),
-            Self::Laptop => "icon_laptop".to_string(),
-            Self::LeftRight => "icon_left_right".to_string(),
-            Self::Minus => "icon_minus".to_string(),
-            Self::Mobile => "icon_mobile".to_string(),
-            Self::Plus => "icon_plus".to_string(),
-            Self::Tablet => "icon_tablet".to_string(),
-            Self::Xmark => "icon_xmark".to_string(),
         }
     }
 }

@@ -60,6 +60,15 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                     file_key=OptionProp(Some(props.avatar_file_key)).into(),
                     size=AvatarSize::XXXXL.into(),
                 )
+                FloatingButton
+                (
+                    icon=view! { Icon(icon=IconKind::Pen.into()) },
+                    attr:style="
+                        position: absolute;
+                        top: var(--spacing-sm);
+                        right: var(--spacing-sm);
+                    ",
+                )
             }
             Box(classes=StrProp("flex flex_column flex_align_center").into())
             {
