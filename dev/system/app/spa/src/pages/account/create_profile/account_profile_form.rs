@@ -259,7 +259,12 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     )
                 }
             }
-            Button(button_type=StrProp("submit").into())
+            Button
+            (
+                button_type=StrProp("submit").into(),
+                classes=StrProp("flex_align_self_end").into(),
+                round=ButtonRound::Full.into(),
+            )
             {
                 (t!("pages.account.create_profile.form.button.send"))
             }

@@ -27,11 +27,16 @@ pub fn Profile<G: Html>( account_name: String ) -> View<G>
         {
             Main(heading=t!("pages.account.profile.heading"))
             {
-                Button(href=OptionProp(Some("/account/create_profile".to_string())).into())
+                AccountProfiles(account_name=account_name)
+                Button
+                (
+                    href=OptionProp(Some("/account/create_profile".to_string())).into(),
+                    classes=StrProp("flex_align_self_end").into(),
+                    round=ButtonRound::Full.into(),
+                )
                 {
                     (t!("pages.account.profile.button.create_profile"))
                 }
-                AccountProfiles(account_name=account_name)
             }
         }
     }
