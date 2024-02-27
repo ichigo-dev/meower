@@ -21,7 +21,7 @@ pub fn MultiLineText<G: Html>( props: MultiLineTextProps<G> ) -> View<G>
     {
         let text = props.text.get_clone();
         let text_lines = text
-            .split("\\n")
+            .split("\n")
             .map(|line| line.to_string())
             .collect();
         lines.set(text_lines);

@@ -67,6 +67,7 @@ impl AppState
                     .replace("-", "_")
             )
             .unwrap_or(Locale::en_US);
+
         let mut state = Self
         {
             config,

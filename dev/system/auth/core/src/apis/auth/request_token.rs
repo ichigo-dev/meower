@@ -33,6 +33,7 @@ use sea_orm::{
 pub(crate) struct Response
 {
     public_user_id: String,
+    user_email: String,
     access_token: String,
     refresh_token: String,
 }
@@ -124,6 +125,7 @@ pub(crate) async fn get_handler
     let res = Response
     {
         public_user_id: user.public_user_id,
+        user_email: user.email,
         access_token: access_token,
         refresh_token: jwt_refresh_token.token,
     };

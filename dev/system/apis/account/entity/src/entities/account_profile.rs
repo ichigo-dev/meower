@@ -48,7 +48,7 @@ pub struct Model
     pub affiliation: Option<String>,
     pub location: Option<String>,
     pub bio: Option<String>,
-    pub email: String,
+    pub email: Option<String>,
     pub telno: Option<String>,
     pub birthdate: Option<DateTime>,
     pub gender: Option<Gender>,
@@ -94,7 +94,7 @@ impl Model
     //--------------------------------------------------------------------------
     /// Gets the email.
     //--------------------------------------------------------------------------
-    pub async fn email( &self ) -> String
+    pub async fn email( &self ) -> Option<String>
     {
         self.email.clone()
     }
@@ -246,6 +246,7 @@ impl ValidateExt for ActiveModel
         let email = self.email
             .clone()
             .take()
+            .unwrap_or(None)
             .unwrap_or("".to_string());
         let telno = self.telno
             .clone()
@@ -296,9 +297,7 @@ impl ValidateExt for ActiveModel
         }
 
         if let Err(e) = Validator::new()
-            .required()
             .max_length(255)
-            .is_email()
             .validate(&email)
         {
             return Err(Error::Validation { column: Column::Email, error: e });

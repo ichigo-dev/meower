@@ -35,6 +35,7 @@ pub fn AccountForm<G: Html>() -> View<G>
 {
     let state: AppState = use_context();
     let alert_message = create_signal("".to_string());
+    let user_email = state.config.user_email.clone();
 
     let save_handler = move |values: FormValues, _|
     {
@@ -43,11 +44,16 @@ pub fn AccountForm<G: Html>() -> View<G>
             .get("account_name")
             .unwrap_or("".to_string())
             .to_string();
+        let email = values
+            .get("email")
+            .unwrap_or("".to_string())
+            .to_string();
 
         let create_account_input = create_account::CreateAccountInput
         {
             public_user_id: state.config.public_user_id.clone(),
             account_name: account_name.clone(),
+            email: email.clone(),
         };
 
         spawn_local_scoped(async move
@@ -129,6 +135,21 @@ pub fn AccountForm<G: Html>() -> View<G>
                     name=StrProp("account_name").into(),
                     placeholder=StringProp(t!("pages.account.create.form.account_name.placeholder")).into(),
                     required=BoolProp(true).into(),
+                )
+            }
+            Label
+            (
+                label=t!("pages.account.create.form.email.label"),
+                required=BoolProp(true).into(),
+            )
+            {
+                TextField
+                (
+                    name=StrProp("email").into(),
+                    placeholder=StringProp(t!("pages.account.create.form.email.placeholder")).into(),
+                    field_type=StrProp("email").into(),
+                    required=BoolProp(true).into(),
+                    value=StringProp(user_email).into(),
                 )
             }
             Button

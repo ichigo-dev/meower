@@ -34,7 +34,7 @@ struct CreateAccountProfileInput
     name: String,
     affiliation: Option<String>,
     location: Option<String>,
-    email: String,
+    email: Option<String>,
     telno: Option<String>,
     bio: Option<String>,
     birthdate: Option<DateTime>,

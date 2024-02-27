@@ -4,6 +4,10 @@ type Account {
 	"""
 	accountName: String!
 	"""
+	Gets the email.
+	"""
+	email: String!
+	"""
 	Gets the public user id.
 	"""
 	publicUserId: String!
@@ -61,7 +65,7 @@ type AccountProfile {
 	"""
 	Gets the email.
 	"""
-	email: String!
+	email: String
 	"""
 	Gets the telno.
 	"""
@@ -152,6 +156,7 @@ Inputs.
 input CreateAccountInput {
 	publicUserId: String!
 	accountName: String!
+	email: String!
 }
 
 """
@@ -162,7 +167,7 @@ input CreateAccountProfileInput {
 	name: String!
 	affiliation: String
 	location: String
-	email: String!
+	email: String
 	telno: String
 	bio: String
 	birthdate: NaiveDateTime

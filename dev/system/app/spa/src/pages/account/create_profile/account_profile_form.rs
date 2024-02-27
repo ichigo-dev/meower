@@ -97,7 +97,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
             name: values.get("name").unwrap_or("".to_string()),
             affiliation: values.get("affiliation").clone(),
             location: values.get("location").clone(),
-            email: values.get("email").unwrap_or("".to_string()),
+            email: values.get("email").clone(),
             telno: values.get("telno").clone(),
             bio: values.get("bio").clone(),
             birthdate: birthdate,
@@ -194,7 +194,6 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
             Label
             (
                 label=t!("pages.account.create_profile.form.email.label"),
-                required=BoolProp(true).into(),
             )
             {
                 TextField
@@ -202,7 +201,6 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     name=StrProp("email").into(),
                     placeholder=StringProp(t!("pages.account.create_profile.form.email.placeholder")).into(),
                     field_type=StrProp("email").into(),
-                    required=BoolProp(true).into(),
                 )
             }
             Label(label=t!("pages.account.create_profile.form.telno.label"))
@@ -247,7 +245,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                             (
                                 classes=StrProp("width_6xl flex_align_center").into(),
                                 direction=LabelDirection::Row.into(),
-                                label=t!(&format!("common.constatns.gender.{}", gender)),
+                                label=t!(&format!("common.constants.gender.{}", gender)),
                             )
                             {
                                 Radio

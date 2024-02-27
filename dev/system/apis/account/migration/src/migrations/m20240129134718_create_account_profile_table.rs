@@ -68,7 +68,6 @@ impl MigrationTrait for Migration
                 ColumnDef::new(AccountProfile::Email)
                     .string()
                     .string_len(255)
-                    .not_null()
             )
             .col
             (

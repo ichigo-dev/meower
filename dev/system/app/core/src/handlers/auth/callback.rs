@@ -35,6 +35,7 @@ pub(crate) struct Params
 pub(crate) struct AuthResponse
 {
     public_user_id: String,
+    user_email: String,
     access_token: String,
     refresh_token: String,
 }
@@ -84,6 +85,7 @@ pub(crate) async fn get_handler
     let user_token = UserTokenActiveModel
     {
         public_user_id: ActiveValue::Set(res.public_user_id.into()),
+        user_email: ActiveValue::Set(res.user_email.into()),
         access_token: ActiveValue::Set(res.access_token.into()),
         refresh_token: ActiveValue::Set(res.refresh_token.into()),
         ..Default::default()

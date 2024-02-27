@@ -14,8 +14,9 @@ pub struct Config
     pub api_url: String,
     pub client_id_key: String,
     pub client_id: String,
-    pub public_user_id: String,
     pub access_token: String,
+    pub public_user_id: String,
+    pub user_email: String,
 }
 
 impl Config
@@ -41,6 +42,11 @@ impl Config
             .unwrap()
             .get_attribute("data-value")
             .unwrap_or("".to_string());
+        let user_email = document
+            .get_element_by_id(std::env!("USER_EMAIL_KEY"))
+            .unwrap()
+            .get_attribute("data-value")
+            .unwrap_or("".to_string());
 
         let dev_mode = std::env!("DEV_MODE") == "true";
         let app_url = std::env!("APP_URL").to_string();
@@ -54,8 +60,9 @@ impl Config
             api_url,
             client_id_key,
             client_id,
-            public_user_id,
             access_token,
+            public_user_id,
+            user_email,
         }
     }
 

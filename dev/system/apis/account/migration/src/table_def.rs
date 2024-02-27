@@ -14,6 +14,7 @@ pub(crate) enum Account
     Table,
     AccountId,
     AccountName,
+    Email,
     PublicUserId,
     DefaultAccountProfileId,
     DefaultWorkspaceId,

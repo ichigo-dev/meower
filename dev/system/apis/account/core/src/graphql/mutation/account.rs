@@ -34,6 +34,7 @@ struct CreateAccountInput
 {
     public_user_id: String,
     account_name: String,
+    email: String,
 }
 
 
@@ -106,6 +107,7 @@ impl AccountMutation
         {
             public_user_id: ActiveValue::Set(input.public_user_id),
             account_name: ActiveValue::Set(input.account_name),
+            email: ActiveValue::Set(input.email),
             default_account_profile_id: ActiveValue::Set(0),
             default_workspace_id: ActiveValue::Set(0),
             ..Default::default()
@@ -120,7 +122,6 @@ impl AccountMutation
         {
             account_id: ActiveValue::Set(account.account_id),
             name: ActiveValue::Set(account.account_name.clone()),
-            email: ActiveValue::Set(jwt_claims.user_email.clone()),
             ..Default::default()
         };
         let account_profile = match account_profile

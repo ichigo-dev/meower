@@ -38,6 +38,7 @@ pub struct Model
     pub account_id: i64,
     #[sea_orm(unique)]
     pub account_name: String,
+    pub email: String,
     pub public_user_id: String,
     pub default_account_profile_id: i64,
     pub default_workspace_id: i64,
@@ -54,6 +55,14 @@ impl Model
     pub async fn account_name( &self ) -> String
     {
         self.account_name.clone()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the email.
+    //--------------------------------------------------------------------------
+    pub async fn email( &self ) -> String
+    {
+        self.email.clone()
     }
 
     //--------------------------------------------------------------------------
@@ -216,6 +225,10 @@ impl ValidateExt for ActiveModel
             .clone()
             .take()
             .unwrap_or("".to_string());
+        let email = self.email
+            .clone()
+            .take()
+            .unwrap_or("".to_string());
 
         // Checks if the user already exists.
         if self.get_primary_key_value().is_none()
@@ -244,6 +257,15 @@ impl ValidateExt for ActiveModel
             );
         }
 
+        if let Err(e) = Validator::new()
+            .required()
+            .max_length(255)
+            .is_email()
+            .validate(&email)
+        {
+            return Err(Error::Validation { column: Column::Email, error: e });
+        }
+
         Ok(())
     }
 }
@@ -263,6 +285,7 @@ impl Column
         {
             Self::AccountId => t!("entities.account.account_id.name"),
             Self::AccountName => t!("entities.account.account_name.name"),
+            Self::Email => t!("entities.account.email.name"),
             Self::PublicUserId => t!("entities.account.public_user_id.name"),
             Self::DefaultAccountProfileId => t!("entities.account.default_account_profile_id.name"),
             Self::DefaultWorkspaceId => t!("entities.account.default_workspace_id.name"),

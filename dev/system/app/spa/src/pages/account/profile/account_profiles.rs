@@ -120,7 +120,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                         bio=profile.bio.unwrap_or_default(),
                         affiliation=profile.affiliation.unwrap_or_default(),
                         location=profile.location.unwrap_or_default(),
-                        email=profile.email,
+                        email=profile.email.unwrap_or_default(),
                         telno=profile.telno.unwrap_or_default(),
                         birthdate=birthdate,
                         gender=gender,

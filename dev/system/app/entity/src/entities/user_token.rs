@@ -27,6 +27,7 @@ pub struct Model
     pub token: String,
     #[sea_orm(unique)]
     pub public_user_id: String,
+    pub user_email: String,
     pub access_token: String,
     pub refresh_token: String,
     pub created_at: DateTime,
@@ -113,6 +114,7 @@ impl Column
             Self::UserTokenId => t!("entities.user_token.user_token_id.name"),
             Self::Token => t!("entities.user_token.token.name"),
             Self::PublicUserId => t!("entities.user_token.public_user_id.name"),
+            Self::UserEmail => t!("entities.user_token.user_email.name"),
             Self::AccessToken => t!("entities.user_token.access_token.name"),
             Self::RefreshToken => t!("entities.user_token.refresh_token.name"),
             Self::CreatedAt => t!("entities.user_token.created_at.name"),

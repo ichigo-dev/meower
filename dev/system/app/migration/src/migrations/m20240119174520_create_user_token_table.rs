@@ -51,6 +51,13 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(UserToken::UserEmail)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
                 ColumnDef::new(UserToken::AccessToken)
                     .text()
                     .not_null()

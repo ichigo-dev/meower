@@ -6,5 +6,8 @@ pages:
         account_name:
           label: "アカウント名"
           placeholder: "半角英数字、アンダーバー(_)が使用可能"
+        email:
+          label: "メールアドレス"
+          placeholder: "meower@example.com"
         button:
           send: "作成"

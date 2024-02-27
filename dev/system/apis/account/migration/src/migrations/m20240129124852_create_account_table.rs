@@ -43,6 +43,13 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(Account::Email)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
                 ColumnDef::new(Account::PublicUserId)
                     .string()
                     .string_len(255)
