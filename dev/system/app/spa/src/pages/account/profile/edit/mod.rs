@@ -30,7 +30,7 @@ struct GetEditAccountProfilePageDataQuery;
 /// Component.
 //------------------------------------------------------------------------------
 #[component(inline_props)]
-pub async fn EditProfile<G: Html>( token: String ) -> View<G>
+pub async fn Edit<G: Html>( token: String ) -> View<G>
 {
     let mut state: AppState = use_context();
     let account_profile = match post_graphql::<GetEditAccountProfilePageDataQuery>

@@ -15,20 +15,20 @@ use sycamore_router::Route;
 #[derive(Clone, Route)]
 pub enum Routes
 {
-    #[to("/create")]
-    Create,
+    #[to("/profile/create")]
+    ProfileCreate,
 
-    #[to("/create_profile")]
-    CreateProfile,
-
-    #[to("/edit_profile/<token>")]
-    EditProfile
+    #[to("/profile/edit/<token>")]
+    ProfileEdit
     {
         token: String,
     },
 
+    #[to("/create")]
+    Create,
+
     #[to("/<account_name>")]
-    Profile
+    Detail
     {
         account_name: String,
     },
@@ -48,15 +48,15 @@ pub fn Router<G: Html>( route: Routes ) -> View<G>
     {
         (match &route
         {
-            Routes::Create => view! { Create },
-            Routes::CreateProfile => view! { CreateProfile },
-            Routes::EditProfile { token } =>
+            Routes::ProfileCreate => view! { profile::Create },
+            Routes::ProfileEdit { token } =>
             {
-                view! { EditProfile(token=token.clone()) }
+                view! { profile::Edit(token=token.clone()) }
             },
-            Routes::Profile { account_name } =>
+            Routes::Create => view! { Create },
+            Routes::Detail { account_name } =>
             {
-                view! { Profile(account_name=account_name.clone()) }
+                view! { Detail(account_name=account_name.clone()) }
             },
             Routes::NotFound => view! { NotFound },
         })
