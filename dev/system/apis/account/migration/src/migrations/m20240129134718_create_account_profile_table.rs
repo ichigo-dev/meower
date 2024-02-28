@@ -35,6 +35,14 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(AccountProfile::Token)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+                    .unique_key()
+            )
+            .col
+            (
                 ColumnDef::new(AccountProfile::AccountId)
                     .big_integer()
                     .not_null()
@@ -121,11 +129,14 @@ impl MigrationTrait for Migration
         [
             "COMMENT ON TABLE \"account_profile\" IS 'Account profile table'",
             "COMMENT ON COLUMN \"account_profile\".\"account_profile_id\" IS 'Account profile ID'",
+            "COMMENT ON COLUMN \"account_profile\".\"token\" IS 'Token'",
             "COMMENT ON COLUMN \"account_profile\".\"account_id\" IS 'Account ID'",
             "COMMENT ON COLUMN \"account_profile\".\"name\" IS 'Name'",
             "COMMENT ON COLUMN \"account_profile\".\"affiliation\" IS 'Affiliation'",
+            "COMMENT ON COLUMN \"account_profile\".\"location\" IS 'Location'",
             "COMMENT ON COLUMN \"account_profile\".\"bio\" IS 'Biography'",
             "COMMENT ON COLUMN \"account_profile\".\"email\" IS 'Email'",
+            "COMMENT ON COLUMN \"account_profile\".\"telno\" IS 'Telephone number'",
             "COMMENT ON COLUMN \"account_profile\".\"birthdate\" IS 'Birthdate'",
             "COMMENT ON COLUMN \"account_profile\".\"gender\" IS 'Gender'",
             "COMMENT ON COLUMN \"account_profile\".\"created_at\" IS 'Create date'",

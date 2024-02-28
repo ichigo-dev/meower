@@ -17,7 +17,7 @@ use sycamore_router::navigate;
 
 
 //------------------------------------------------------------------------------
-/// Gets acount list.
+/// GraphQL.
 //------------------------------------------------------------------------------
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -25,7 +25,7 @@ use sycamore_router::navigate;
     query_path = "graphql/query/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
-struct GetAccountList;
+struct GetAsideDataQuery;
 
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -50,11 +50,11 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
     create_resource(async move
     {
         let mut state: AppState = use_context();
-        if let Ok(data) = post_graphql::<GetAccountList>
+        if let Ok(data) = post_graphql::<GetAsideDataQuery>
         (
             &mut state,
             "/account/graphql",
-             get_account_list::Variables
+             get_aside_data_query::Variables
              {
                  public_user_id: public_user_id,
              },

@@ -2,6 +2,8 @@ entities:
   account_profile:
     account_profile_id:
       name: "アカウントプロフィールID"
+    token:
+      name: "ランダムトークン"
     account_id:
       name: "アカウントID"
     name:

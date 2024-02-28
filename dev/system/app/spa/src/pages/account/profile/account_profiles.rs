@@ -14,7 +14,7 @@ use sycamore::futures::create_resource;
 
 
 //------------------------------------------------------------------------------
-/// Gets a account profile.
+/// GraphQL.
 //------------------------------------------------------------------------------
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -22,7 +22,7 @@ use sycamore::futures::create_resource;
     query_path = "graphql/query/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
-struct GetAccountProfiles;
+struct GetAccountProfilePageDataQuery;
 
 
 //------------------------------------------------------------------------------
@@ -36,11 +36,11 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
     create_resource(async move
     {
         let mut state: AppState = use_context();
-        if let Ok(data) = post_graphql::<GetAccountProfiles>
+        if let Ok(data) = post_graphql::<GetAccountProfilePageDataQuery>
         (
             &mut state,
             "/account/graphql",
-             get_account_profiles::Variables
+             get_account_profile_page_data_query::Variables
              {
                  account_name: account_name,
              },
@@ -93,15 +93,15 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                     {
                         match gender
                         {
-                            get_account_profiles::Gender::MALE =>
+                            get_account_profile_page_data_query::Gender::MALE =>
                             {
                                 t!("common.constants.gender.male")
                             },
-                            get_account_profiles::Gender::FEMALE =>
+                            get_account_profile_page_data_query::Gender::FEMALE =>
                             {
                                 t!("common.constants.gender.female")
                             },
-                            get_account_profiles::Gender::OTHER =>
+                            get_account_profile_page_data_query::Gender::OTHER =>
                             {
                                 t!("common.constants.gender.other")
                             },
@@ -115,6 +115,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                 {
                     AccountProfileCard
                     (
+                        token=profile.token,
                         account_name=account_name,
                         name=profile.name,
                         bio=profile.bio.unwrap_or_default(),

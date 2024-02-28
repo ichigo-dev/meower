@@ -21,8 +21,11 @@ pub enum Routes
     #[to("/create_profile")]
     CreateProfile,
 
-    #[to("/edit_profile")]
-    EditProfile,
+    #[to("/edit_profile/<token>")]
+    EditProfile
+    {
+        token: String,
+    },
 
     #[to("/<account_name>")]
     Profile
@@ -47,7 +50,10 @@ pub fn Router<G: Html>( route: Routes ) -> View<G>
         {
             Routes::Create => view! { Create },
             Routes::CreateProfile => view! { CreateProfile },
-            Routes::EditProfile => view! { EditProfile },
+            Routes::EditProfile { token } =>
+            {
+                view! { EditProfile(token=token.clone()) }
+            },
             Routes::Profile { account_name } =>
             {
                 view! { Profile(account_name=account_name.clone()) }

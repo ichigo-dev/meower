@@ -1,7 +1,7 @@
 ################################################################################
-# Gets default account
+# Common: Gets account state data.
 ################################################################################
-query InitializeAccountState($publicUserId: String!) {
+query GetAccountStateDataQuery($publicUserId: String!) {
   defaultAccount(publicUserId: $publicUserId) {
     accountName
     defaultAccountProfile {
@@ -15,9 +15,9 @@ query InitializeAccountState($publicUserId: String!) {
 
 
 ################################################################################
-# Gets account list
+# Common: Gets aside data.
 ################################################################################
-query GetAccountList($publicUserId: String!) {
+query GetAsideDataQuery($publicUserId: String!) {
   accounts(publicUserId: $publicUserId) {
     accountName
     defaultAccountProfile {
@@ -31,10 +31,38 @@ query GetAccountList($publicUserId: String!) {
 
 
 ################################################################################
-# Gets account profiles
+# Account profile.
 ################################################################################
-query GetAccountProfiles($accountName: String!) {
+query GetAccountProfilePageDataQuery($accountName: String!) {
   accountProfiles(accountName: $accountName) {
+    token
+    name
+    affiliation
+    location
+    bio
+    email
+    telno
+    birthdate
+    gender
+    account {
+      accountName
+    }
+    avatar {
+      fileKey
+    }
+    cover {
+      fileKey
+    }
+  }
+}
+
+
+################################################################################
+# Account profile edit.
+################################################################################
+query GetEditAccountProfilePageDataQuery($token: String!) {
+  accountProfile(token: $token) {
+    token
     name
     affiliation
     location

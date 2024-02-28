@@ -31,6 +31,7 @@ pub(crate) enum AccountProfile
 {
     Table,
     AccountProfileId,
+    Token,
     AccountId,
     Name,
     Affiliation,

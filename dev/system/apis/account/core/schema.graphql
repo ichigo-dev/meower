@@ -47,6 +47,10 @@ type Account {
 
 type AccountProfile {
 	"""
+	Gets the token.
+	"""
+	token: String!
+	"""
 	Gets the name.
 	"""
 	name: String!
@@ -286,6 +290,10 @@ type QueryRoot {
 	Gets accounts.
 	"""
 	accounts(publicUserId: String!): [Account!]!
+	"""
+	Gets account profile.
+	"""
+	accountProfile(token: String!): AccountProfile!
 	"""
 	Gets account profiles.
 	"""

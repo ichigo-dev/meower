@@ -16,7 +16,7 @@ use sycamore::prelude::*;
 
 
 //------------------------------------------------------------------------------
-/// Gets acount list.
+/// GraphQL.
 //------------------------------------------------------------------------------
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -24,7 +24,7 @@ use sycamore::prelude::*;
     query_path = "graphql/query/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
-struct InitializeAccountState;
+struct GetAccountStateDataQuery;
 
 
 //------------------------------------------------------------------------------
@@ -77,11 +77,11 @@ impl AppState
         };
 
         // Initializes the account state.
-        let data = post_graphql::<InitializeAccountState>
+        let data = post_graphql::<GetAccountStateDataQuery>
         (
             &mut state,
             "/account/graphql",
-            initialize_account_state::Variables
+            get_account_state_data_query::Variables
             {
                 public_user_id: public_user_id,
             },

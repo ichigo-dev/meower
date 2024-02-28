@@ -14,6 +14,7 @@ use sycamore::prelude::*;
 #[derive(Props)]
 pub struct AccountProfileCardProps
 {
+    pub token: String,
     pub account_name: String,
     pub name: String,
     pub bio: String,
@@ -34,6 +35,7 @@ pub struct AccountProfileCardProps
 #[component]
 pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
 {
+    let edit_href = format!("/account/edit_profile/{}", props.token);
     view!
     {
         Box(classes=StrProp("padding_bottom_md filled shadow_md radius_md").into())
@@ -68,6 +70,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                         top: var(--spacing-sm);
                         right: var(--spacing-sm);
                     ",
+                    href=OptionProp(Some(edit_href)).into(),
                 )
             }
             Box(classes=StrProp("flex flex_column flex_align_center").into())

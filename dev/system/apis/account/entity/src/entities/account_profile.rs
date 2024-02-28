@@ -43,6 +43,8 @@ pub struct Model
 {
     #[sea_orm(primary_key)]
     pub account_profile_id: i64,
+    #[sea_orm(unique)]
+    pub token: String,
     pub account_id: i64,
     pub name: String,
     pub affiliation: Option<String>,
@@ -59,6 +61,14 @@ pub struct Model
 #[Object(name = "AccountProfile")]
 impl Model
 {
+    //--------------------------------------------------------------------------
+    /// Gets the token.
+    //--------------------------------------------------------------------------
+    pub async fn token( &self ) -> String
+    {
+        self.token.clone()
+    }
+
     //--------------------------------------------------------------------------
     /// Gets the name.
     //--------------------------------------------------------------------------
@@ -204,6 +214,9 @@ impl ActiveModelBehavior for ActiveModel
         let now = Utc::now().naive_utc();
         if insert
         {
+            let token = meower_utility::get_random_str(128);
+            self.set(Column::Token, token.into());
+
             self.set(Column::CreatedAt, now.into());
         }
         self.set(Column::UpdatedAt, now.into());
@@ -383,6 +396,7 @@ impl Column
         match self
         {
             Self::AccountProfileId => t!("entities.account_profile.account_profile_id.name"),
+            Self::Token => t!("entities.account_profile.token.name"),
             Self::AccountId => t!("entities.account_profile.account_id.name"),
             Self::Name => t!("entities.account_profile.name.name"),
             Self::Affiliation => t!("entities.account_profile.affiliation.name"),
