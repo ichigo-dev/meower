@@ -34,7 +34,7 @@ pub async fn Avatar<G: Html>( props: AvatarProps<G> ) -> View<G>
     {
         if let Some(base64) = props.base64.get_clone()
         {
-            format!("data:{};base64,{}", props.mime_type, &base64)
+            base64
         }
         else
         {

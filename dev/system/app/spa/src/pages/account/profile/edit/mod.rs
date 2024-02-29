@@ -51,8 +51,6 @@ pub async fn Edit<G: Html>( token: String ) -> View<G>
         },
     };
 
-    log::info!("account_profile: {:?}", account_profile);
-
     let birthdate = match account_profile.birthdate
     {
         Some(birthdate) => birthdate.format("%Y-%m-%d").to_string(),

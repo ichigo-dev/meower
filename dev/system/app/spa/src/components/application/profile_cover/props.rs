@@ -2,8 +2,6 @@
 /// Props.
 //------------------------------------------------------------------------------
 
-use crate::utils::props::*;
-
 use sycamore::prelude::*;
 
 
@@ -28,9 +26,6 @@ pub struct ProfileCoverProps<G: Html>
 
     #[prop(default)]
     pub file_key: ReadSignal<Option<String>>,
-
-    #[prop(default = StrProp("image/png").into())]
-    pub mime_type: Signal<String>,
 
     #[prop(default)]
     pub node_ref: NodeRef<G>,

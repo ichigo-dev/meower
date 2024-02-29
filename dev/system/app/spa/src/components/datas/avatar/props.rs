@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 
 use super::*;
-use crate::utils::props::*;
 
 use sycamore::prelude::*;
 
@@ -26,9 +25,6 @@ pub struct AvatarProps<G: Html>
 
     #[prop(default)]
     pub classes: ReadSignal<String>,
-
-    #[prop(default = StrProp("image/png").into())]
-    pub mime_type: ReadSignal<String>,
 
     #[prop(default)]
     pub node_ref: NodeRef<G>,

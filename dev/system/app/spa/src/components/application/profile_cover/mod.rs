@@ -37,7 +37,7 @@ pub async fn ProfileCover<G: Html>( props: ProfileCoverProps<G> ) -> View<G>
     {
         if let Some(base64) = props.base64.get_clone()
         {
-            format!("data:{};base64,{}", props.mime_type, &base64)
+            base64
         }
         else
         {
@@ -70,10 +70,10 @@ pub async fn ProfileCover<G: Html>( props: ProfileCoverProps<G> ) -> View<G>
                 .to_str()
                 .unwrap_or("image/png")
                 .to_string();
-            props.mime_type.set(content_type);
 
             let bytes = cover.bytes().await.unwrap();
             let base64 = BASE64_STANDARD.encode(&bytes);
+            let base64 = format!("data:{};base64,{}", content_type, base64);
             props.base64.set(Some(base64));
         }
     });

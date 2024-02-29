@@ -3,6 +3,10 @@ pages:
     components:
       account_profile:
         form:
+          avatar:
+            label: "アバター画像"
+          cover:
+            label: "カバー画像"
           name:
             label: "表示名"
             placeholder: "表示名"

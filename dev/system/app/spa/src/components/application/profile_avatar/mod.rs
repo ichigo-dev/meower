@@ -25,6 +25,11 @@ pub async fn ProfileAvatar<G: Html>( props: ProfileAvatarProps<G> ) -> View<G>
 {
     spawn_local_scoped(async move
     {
+        if props.base64.get_clone().is_some() || props.src.get_clone().len() > 0
+        {
+            return;
+        }
+
         if let Some(file_key) = props.file_key.get_clone()
         {
             let file_key = if file_key.len() > 0
@@ -48,10 +53,10 @@ pub async fn ProfileAvatar<G: Html>( props: ProfileAvatarProps<G> ) -> View<G>
                 .to_str()
                 .unwrap_or("image/png")
                 .to_string();
-            props.mime_type.set(content_type);
 
             let bytes = avatar.bytes().await.unwrap();
             let base64 = BASE64_STANDARD.encode(&bytes);
+            let base64 = format!("data:{};base64,{}", content_type, base64);
             props.base64.set(Some(base64));
         }
     });
@@ -64,7 +69,6 @@ pub async fn ProfileAvatar<G: Html>( props: ProfileAvatarProps<G> ) -> View<G>
             attributes=props.attributes,
             base64=props.base64,
             classes=props.classes,
-            mime_type=*props.mime_type,
             node_ref=props.node_ref,
             size=props.size,
             src=props.src,

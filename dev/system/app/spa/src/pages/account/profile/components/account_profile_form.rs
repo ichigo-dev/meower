@@ -13,6 +13,9 @@ use rust_i18n::t;
 use sycamore::prelude::*;
 use sycamore::futures::spawn_local_scoped;
 use sycamore_router::navigate;
+use wasm_bindgen::JsCast;
+use wasm_bindgen::closure::Closure;
+use web_sys::{ Event, FileReader, HtmlInputElement, ProgressEvent };
 
 
 //------------------------------------------------------------------------------
@@ -51,8 +54,10 @@ pub struct AccountProfileFormProps
     pub birthdate: Option<String>,
     #[prop(default = "other".to_string())]
     pub gender: String,
-    pub avatar_file_key: Option<String>,
-    pub cover_file_key: Option<String>,
+    #[prop(default)]
+    pub avatar_file_key: String,
+    #[prop(default)]
+    pub cover_file_key: String,
 }
 
 
@@ -242,6 +247,8 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
         };
     };
 
+    let avatar_base64 = create_signal(None);
+    let cover_base64 = create_signal(None);
     let genders = create_signal(vec!
     [
         "male".to_string(),
@@ -267,6 +274,104 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     view! {}
                 }
             )
+            Label(label=t!("pages.account.components.account_profile.form.cover.label"))
+            {
+                ProfileCover
+                (
+                    file_key=OptionProp(Some(props.cover_file_key)).into(),
+                    base64=cover_base64,
+                )
+                input
+                (
+                    class="hide",
+                    type="file",
+                    accept="image/*",
+                    on:change=move |event: Event|
+                    {
+                        let file = match event
+                            .target()
+                            .unwrap()
+                            .dyn_into::<HtmlInputElement>()
+                            .unwrap()
+                            .files()
+                        {
+                            Some(files) =>
+                            {
+                                match files.get(0)
+                                {
+                                    Some(file) => file,
+                                    None => return,
+                                }
+                            }
+                            None => return,
+                        };
+                        let reader = FileReader::new().unwrap();
+                        let cloned_reader = reader.clone();
+                        let closure = Closure::wrap(Box::new(move |_|
+                        {
+                            let base64 = cloned_reader
+                                .result()
+                                .unwrap()
+                                .as_string()
+                                .unwrap();
+                            cover_base64.set(Some(base64));
+                        }) as Box<dyn Fn(ProgressEvent)>);
+                        reader.set_onload(Some(closure.as_ref().unchecked_ref()));
+                        reader.read_as_data_url(&file).unwrap();
+                        closure.forget();
+                    },
+                )
+            }
+
+            Label(label=t!("pages.account.components.account_profile.form.avatar.label"))
+            {
+                ProfileAvatar
+                (
+                    file_key=OptionProp(Some(props.avatar_file_key)).into(),
+                    size=AvatarSize::XXXXXL.into(),
+                    base64=avatar_base64,
+                )
+                input
+                (
+                    class="hide",
+                    type="file",
+                    accept="image/*",
+                    on:change=move |event: Event|
+                    {
+                        let file = match event
+                            .target()
+                            .unwrap()
+                            .dyn_into::<HtmlInputElement>()
+                            .unwrap()
+                            .files()
+                        {
+                            Some(files) =>
+                            {
+                                match files.get(0)
+                                {
+                                    Some(file) => file,
+                                    None => return,
+                                }
+                            }
+                            None => return,
+                        };
+                        let reader = FileReader::new().unwrap();
+                        let cloned_reader = reader.clone();
+                        let closure = Closure::wrap(Box::new(move |_|
+                        {
+                            let base64 = cloned_reader
+                                .result()
+                                .unwrap()
+                                .as_string()
+                                .unwrap();
+                            avatar_base64.set(Some(base64));
+                        }) as Box<dyn Fn(ProgressEvent)>);
+                        reader.set_onload(Some(closure.as_ref().unchecked_ref()));
+                        reader.read_as_data_url(&file).unwrap();
+                        closure.forget();
+                    },
+                )
+            }
             Label
             (
                 label=t!("pages.account.components.account_profile.form.name.label"),
