@@ -71,6 +71,9 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
     let alert_message = create_signal("".to_string());
     let token = props.token.clone();
 
+    let avatar_base64 = create_signal(None);
+    let cover_base64 = create_signal(None);
+
     let save_handler = move |values: FormValues, _|
     {
         let mut state = state.clone();
@@ -221,7 +224,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     "/account/graphql",
                      create_account_profile::Variables
                      {
-                         create_account_profile_input
+                         create_account_profile_input,
                      },
                 ).await
                 {
@@ -247,8 +250,6 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
         };
     };
 
-    let avatar_base64 = create_signal(None);
-    let cover_base64 = create_signal(None);
     let genders = create_signal(vec!
     [
         "male".to_string(),
@@ -355,6 +356,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                             }
                             None => return,
                         };
+
                         let reader = FileReader::new().unwrap();
                         let cloned_reader = reader.clone();
                         let closure = Closure::wrap(Box::new(move |_|

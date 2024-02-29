@@ -267,6 +267,10 @@ type MutationRoot {
 	Updates account profile.
 	"""
 	updateAccountProfile(input: UpdateAccountProfileInput!): AccountProfile!
+	"""
+	Uploads avatar.
+	"""
+	uploadAvatar(file: Upload!): Boolean!
 }
 
 """
@@ -324,6 +328,8 @@ input UpdateAccountProfileInput {
 	birthdate: NaiveDateTime
 	gender: Gender
 }
+
+scalar Upload
 
 type Workspace {
 	"""

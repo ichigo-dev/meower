@@ -5,8 +5,8 @@
 use crate::AppState;
 use crate::utils::request::refresh_token;
 
-use reqwest::Response as ReqwestResponse;
 use graphql_client::{ Response, GraphQLQuery, QueryBody };
+use reqwest::Response as ReqwestResponse;
 use reqwest::{ StatusCode, Method };
 use rust_i18n::t;
 
