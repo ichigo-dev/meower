@@ -40,3 +40,15 @@ mutation CreateAccountProfile($createAccountProfileInput: CreateAccountProfileIn
     }
   }
 }
+
+
+################################################################################
+# Updates account profile
+################################################################################
+mutation UpdateAccountProfile($updateAccountProfileInput: UpdateAccountProfileInput!) {
+  updateAccountProfile(input: $updateAccountProfileInput) {
+    account {
+      accountName
+    }
+  }
+}

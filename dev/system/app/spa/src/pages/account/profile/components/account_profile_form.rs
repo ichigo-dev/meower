@@ -26,6 +26,14 @@ use sycamore_router::navigate;
 )]
 struct CreateAccountProfile;
 
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
+struct UpdateAccountProfile;
+
 
 //------------------------------------------------------------------------------
 /// Props.
@@ -56,6 +64,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 {
     let state: AppState = use_context();
     let alert_message = create_signal("".to_string());
+    let token = props.token.clone();
 
     let save_handler = move |values: FormValues, _|
     {
@@ -78,84 +87,159 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
             None => None,
         };
 
-        let gender = match values.get("gender")
+        if let Some(token) = token.clone()
         {
-            Some(gender) =>
+            let gender = match values.get("gender")
             {
-                match gender
+                Some(gender) =>
                 {
-                    s if &s == "male" =>
+                    match gender
                     {
-                        Some(create_account_profile::Gender::MALE)
-                    },
-                    s if &s == "female" =>
-                    {
-                        Some(create_account_profile::Gender::FEMALE)
-                    },
-                    s if &s == "other" =>
-                    {
-                        Some(create_account_profile::Gender::OTHER)
-                    },
-                    _ => None,
-                }
-            },
-            None => None,
-        };
-
-        let selected_account = match state.selected_account.get_clone()
-        {
-            Some(selected_account) => selected_account,
-            None =>
-            {
-                alert_message.set(t!("pages.account.components.account_profile.form.error.account_not_selected"));
-                return;
-            },
-        };
-        let create_account_profile_input
-            = create_account_profile::CreateAccountProfileInput
-        {
-            account_name: selected_account.account_name.clone(),
-            name: values.get("name").unwrap_or("".to_string()),
-            affiliation: values.get("affiliation").clone(),
-            location: values.get("location").clone(),
-            email: values.get("email").clone(),
-            telno: values.get("telno").clone(),
-            bio: values.get("bio").clone(),
-            birthdate: birthdate,
-            gender: gender,
-        };
-
-        spawn_local_scoped(async move
-        {
-            match post_graphql::<CreateAccountProfile>
-            (
-                &mut state,
-                "/account/graphql",
-                 create_account_profile::Variables
-                 {
-                     create_account_profile_input
-                 },
-            ).await
-            {
-                Ok(data) =>
-                {
-                    let href = match data.create_account_profile.account
-                    {
-                        Some(account) =>
+                        s if &s == "male" =>
                         {
-                            format!("/account/{}", account.account_name)
+                            Some(update_account_profile::Gender::MALE)
                         },
-                        None => "/".to_string(),
-                    };
-                    navigate(&href);
+                        s if &s == "female" =>
+                        {
+                            Some(update_account_profile::Gender::FEMALE)
+                        },
+                        s if &s == "other" =>
+                        {
+                            Some(update_account_profile::Gender::OTHER)
+                        },
+                        _ => None,
+                    }
                 },
-                Err(e) => 
+                None => None,
+            };
+
+            let update_account_profile_input
+                = update_account_profile::UpdateAccountProfileInput
+            {
+                token: token,
+                name: values.get("name").unwrap_or("".to_string()),
+                affiliation: values.get("affiliation").clone(),
+                location: values.get("location").clone(),
+                email: values.get("email").clone(),
+                telno: values.get("telno").clone(),
+                bio: values.get("bio").clone(),
+                birthdate: birthdate,
+                gender: gender,
+            };
+
+            spawn_local_scoped(async move
+            {
+                match post_graphql::<UpdateAccountProfile>
+                (
+                    &mut state,
+                    "/account/graphql",
+                     update_account_profile::Variables
+                     {
+                         update_account_profile_input
+                     },
+                ).await
                 {
-                    alert_message.set(e);
+                    Ok(data) =>
+                    {
+                        let href = match data.update_account_profile.account
+                        {
+                            Some(account) =>
+                            {
+                                format!("/account/{}", account.account_name)
+                            },
+                            None => "/".to_string(),
+                        };
+                        navigate(&href);
+                    },
+                    Err(e) => 
+                    {
+                        alert_message.set(e);
+                        return;
+                    },
+                };
+            });
+        }
+        else
+        {
+            let gender = match values.get("gender")
+            {
+                Some(gender) =>
+                {
+                    match gender
+                    {
+                        s if &s == "male" =>
+                        {
+                            Some(create_account_profile::Gender::MALE)
+                        },
+                        s if &s == "female" =>
+                        {
+                            Some(create_account_profile::Gender::FEMALE)
+                        },
+                        s if &s == "other" =>
+                        {
+                            Some(create_account_profile::Gender::OTHER)
+                        },
+                        _ => None,
+                    }
+                },
+                None => None,
+            };
+
+            let selected_account = match state.selected_account.get_clone()
+            {
+                Some(selected_account) => selected_account,
+                None =>
+                {
+                    alert_message.set(t!("pages.account.components.account_profile.form.error.account_not_selected"));
                     return;
                 },
             };
-        });
+            let create_account_profile_input
+                = create_account_profile::CreateAccountProfileInput
+            {
+                account_name: selected_account.account_name.clone(),
+                name: values.get("name").unwrap_or("".to_string()),
+                affiliation: values.get("affiliation").clone(),
+                location: values.get("location").clone(),
+                email: values.get("email").clone(),
+                telno: values.get("telno").clone(),
+                bio: values.get("bio").clone(),
+                birthdate: birthdate,
+                gender: gender,
+            };
+
+            spawn_local_scoped(async move
+            {
+                match post_graphql::<CreateAccountProfile>
+                (
+                    &mut state,
+                    "/account/graphql",
+                     create_account_profile::Variables
+                     {
+                         create_account_profile_input
+                     },
+                ).await
+                {
+                    Ok(data) =>
+                    {
+                        let href = match data.create_account_profile.account
+                        {
+                            Some(account) =>
+                            {
+                                format!("/account/{}", account.account_name)
+                            },
+                            None => "/".to_string(),
+                        };
+                        navigate(&href);
+                    },
+                    Err(e) => 
+                    {
+                        alert_message.set(e);
+                        return;
+                    },
+                };
+            });
+        };
     };
 
     let genders = create_signal(vec!
