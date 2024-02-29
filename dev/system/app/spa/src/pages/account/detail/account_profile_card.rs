@@ -35,7 +35,7 @@ pub struct AccountProfileCardProps
 #[component]
 pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
 {
-    let edit_href = format!("/account/edit_profile/{}", props.token);
+    let edit_href = format!("/account/profile/edit/{}", props.token);
     view!
     {
         Box(classes=StrProp("padding_bottom_md filled shadow_md radius_md").into())

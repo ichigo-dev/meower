@@ -45,16 +45,7 @@ pub fn MultiLineText<G: Html>( props: MultiLineTextProps<G> ) -> View<G>
                     view!
                     {
                         (cloned_line)
-                        (
-                            if &line != lines.get_clone().last().unwrap()
-                            {
-                                view! { br() }
-                            }
-                            else
-                            {
-                                view! {}
-                            }
-                        )
+                        br()
                     }
                 },
             )

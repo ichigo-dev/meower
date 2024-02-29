@@ -16,7 +16,7 @@ use sycamore_router::navigate;
 
 
 //------------------------------------------------------------------------------
-/// Creates a new account profile.
+/// GraphQL.
 //------------------------------------------------------------------------------
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -28,10 +28,31 @@ struct CreateAccountProfile;
 
 
 //------------------------------------------------------------------------------
+/// Props.
+//------------------------------------------------------------------------------
+#[derive(Props)]
+pub struct AccountProfileFormProps
+{
+    pub token: Option<String>,
+    pub name: Option<String>,
+    pub bio: Option<String>,
+    pub affiliation: Option<String>,
+    pub location: Option<String>,
+    pub email: Option<String>,
+    pub telno: Option<String>,
+    pub birthdate: Option<String>,
+    #[prop(default = "other".to_string())]
+    pub gender: String,
+    pub avatar_file_key: Option<String>,
+    pub cover_file_key: Option<String>,
+}
+
+
+//------------------------------------------------------------------------------
 /// Component.
 //------------------------------------------------------------------------------
 #[component]
-pub fn AccountProfileForm<G: Html>() -> View<G>
+pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 {
     let state: AppState = use_context();
     let alert_message = create_signal("".to_string());
@@ -173,6 +194,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     name=StrProp("name").into(),
                     placeholder=StringProp(t!("pages.account.components.account_profile.form.name.placeholder")).into(),
                     required=BoolProp(true).into(),
+                    value=StringProp(props.name.unwrap_or_default()).into(),
                 )
             }
             Label(label=t!("pages.account.components.account_profile.form.affiliation.label"))
@@ -181,6 +203,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                 (
                     name=StrProp("affiliation").into(),
                     placeholder=StringProp(t!("pages.account.components.account_profile.form.affiliation.placeholder")).into(),
+                    value=StringProp(props.affiliation.unwrap_or_default()).into(),
                 )
             }
             Label(label=t!("pages.account.components.account_profile.form.location.label"))
@@ -189,6 +212,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                 (
                     name=StrProp("location").into(),
                     placeholder=StringProp(t!("pages.account.components.account_profile.form.location.placeholder")).into(),
+                    value=StringProp(props.location.unwrap_or_default()).into(),
                 )
             }
             Label
@@ -201,6 +225,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     name=StrProp("email").into(),
                     placeholder=StringProp(t!("pages.account.components.account_profile.form.email.placeholder")).into(),
                     field_type=StrProp("email").into(),
+                    value=StringProp(props.email.unwrap_or_default()).into(),
                 )
             }
             Label(label=t!("pages.account.components.account_profile.form.telno.label"))
@@ -209,6 +234,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                 (
                     name=StrProp("telno").into(),
                     placeholder=StringProp(t!("pages.account.components.account_profile.form.telno.placeholder")).into(),
+                    value=StringProp(props.telno.unwrap_or_default()).into(),
                 )
             }
             Label(label=t!("pages.account.components.account_profile.form.bio.label"))
@@ -218,6 +244,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     name=StrProp("bio").into(),
                     placeholder=StringProp(t!("pages.account.components.account_profile.form.bio.placeholder")).into(),
                     multiline=BoolProp(true).into(),
+                    value=StringProp(props.bio.unwrap_or_default()).into(),
                 )
             }
             Label(label=t!("pages.account.components.account_profile.form.birthdate.label"))
@@ -226,6 +253,7 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                 (
                     name=StrProp("birthdate").into(),
                     field_type=StrProp("date").into(),
+                    value=StringProp(props.birthdate.unwrap_or_default()).into(),
                 )
             }
             Label(label=t!("pages.account.components.account_profile.form.gender.label"))
@@ -239,21 +267,25 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                     Indexed
                     (
                         iterable=*genders,
-                        view=|gender| view!
+                        view=move |gender|
                         {
-                            Label
-                            (
-                                classes=StrProp("width_6xl flex_align_center").into(),
-                                direction=LabelDirection::Row.into(),
-                                label=t!(&format!("common.constants.gender.{}", gender)),
-                            )
+                            let default_gender = props.gender.clone();
+                            view!
                             {
-                                Radio
+                                Label
                                 (
-                                    name=StrProp("gender").into(),
-                                    checked=BoolProp(&gender == "other").into(),
-                                    value=*create_signal(gender),
+                                    classes=StrProp("width_6xl flex_align_center").into(),
+                                    direction=LabelDirection::Row.into(),
+                                    label=t!(&format!("common.constants.gender.{}", gender)),
                                 )
+                                {
+                                    Radio
+                                    (
+                                        name=StrProp("gender").into(),
+                                        checked=BoolProp(gender == default_gender).into(),
+                                        value=*create_signal(gender),
+                                    )
+                                }
                             }
                         },
                     )
@@ -266,7 +298,16 @@ pub fn AccountProfileForm<G: Html>() -> View<G>
                 round=ButtonRound::Full.into(),
             )
             {
-                (t!("pages.account.components.account_profile.form.button.send"))
+                (
+                    if props.token.is_some()
+                    {
+                        t!("pages.account.components.account_profile.form.button.update")
+                    }
+                    else
+                    {
+                        t!("pages.account.components.account_profile.form.button.send")
+                    }
+                )
             }
         }
     }

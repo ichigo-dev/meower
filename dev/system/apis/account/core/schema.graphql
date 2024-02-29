@@ -263,6 +263,10 @@ type MutationRoot {
 	Creates account profile.
 	"""
 	createAccountProfile(input: CreateAccountProfileInput!): AccountProfile!
+	"""
+	Updates account profile.
+	"""
+	updateAccountProfile(input: UpdateAccountProfileInput!): AccountProfile!
 }
 
 """
@@ -308,6 +312,18 @@ enum Role {
 	MEMBER
 }
 
+
+input UpdateAccountProfileInput {
+	token: String!
+	name: String!
+	affiliation: String
+	location: String
+	email: String
+	telno: String
+	bio: String
+	birthdate: NaiveDateTime
+	gender: Gender
+}
 
 type Workspace {
 	"""

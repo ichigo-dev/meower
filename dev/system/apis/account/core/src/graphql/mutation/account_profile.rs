@@ -4,6 +4,8 @@
 
 use meower_account_entity::account::Column as AccountColumn;
 use meower_account_entity::account::Entity as AccountEntity;
+use meower_account_entity::account_profile::Column as AccountProfileColumn;
+use meower_account_entity::account_profile::Entity as AccountProfileEntity;
 use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
 use meower_account_entity::account_profile::Gender as AccountProfileGender;
 use meower_account_entity::account_profile::Model as AccountProfileModel;
@@ -31,6 +33,20 @@ use sea_orm::entity::prelude::*;
 struct CreateAccountProfileInput
 {
     account_name: String,
+    name: String,
+    affiliation: Option<String>,
+    location: Option<String>,
+    email: Option<String>,
+    telno: Option<String>,
+    bio: Option<String>,
+    birthdate: Option<DateTime>,
+    gender: Option<AccountProfileGender>,
+}
+
+#[derive(InputObject, Debug)]
+struct UpdateAccountProfileInput
+{
+    token: String,
     name: String,
     affiliation: Option<String>,
     location: Option<String>,
@@ -99,6 +115,63 @@ impl AccountProfileMutation
             Ok(account_profile) => account_profile,
             Err(e) => return Err(e.get_message().into()),
         };
+        Ok(account_profile)
+    }
+
+    //--------------------------------------------------------------------------
+    /// Updates account profile.
+    //--------------------------------------------------------------------------
+    async fn update_account_profile
+    (
+        &self,
+        ctx: &Context<'_>,
+        input: UpdateAccountProfileInput,
+    ) -> Result<AccountProfileModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+
+        let account_profile = match AccountProfileEntity::find()
+            .filter(AccountProfileColumn::Token.eq(&input.token))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account_profile) => account_profile,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        let account = match account_profile.find_related(AccountEntity)
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account) => account,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        if jwt_claims.public_user_id != account.public_user_id
+        {
+            return Err(t!("system.error.unauthorized").into());
+        }
+
+        let mut account_profile: AccountProfileActiveModel
+            = account_profile.into();
+        account_profile.name = ActiveValue::Set(input.name);
+        account_profile.affiliation = ActiveValue::Set(input.affiliation);
+        account_profile.location = ActiveValue::Set(input.location);
+        account_profile.email = ActiveValue::Set(input.email);
+        account_profile.telno = ActiveValue::Set(input.telno);
+        account_profile.bio = ActiveValue::Set(input.bio);
+        account_profile.birthdate = ActiveValue::Set(input.birthdate);
+        let account_profile = match account_profile
+            .validate_and_update(tsx)
+            .await
+        {
+            Ok(account_profile) => account_profile,
+            Err(e) => return Err(e.get_message().into()),
+        };
+
         Ok(account_profile)
     }
 }

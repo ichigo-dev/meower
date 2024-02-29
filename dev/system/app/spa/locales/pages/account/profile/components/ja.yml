@@ -27,5 +27,6 @@ pages:
             label: "性別"
           button:
             send: "作成"
+            update: "更新"
           error:
             account_not_selected: "アカウントが選択されていません"

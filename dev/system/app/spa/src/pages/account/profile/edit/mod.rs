@@ -39,7 +39,7 @@ pub async fn Edit<G: Html>( token: String ) -> View<G>
         "/account/graphql",
          get_edit_account_profile_page_data_query::Variables
          {
-             token: token,
+             token: token.clone(),
          },
     ).await
     {
@@ -53,6 +53,30 @@ pub async fn Edit<G: Html>( token: String ) -> View<G>
 
     log::info!("account_profile: {:?}", account_profile);
 
+    let birthdate = match account_profile.birthdate
+    {
+        Some(birthdate) => birthdate.format("%Y-%m-%d").to_string(),
+        None => "".to_string(),
+    };
+    let gender = match account_profile.gender
+    {
+        Some(gender) =>
+        {
+            match gender
+            {
+                get_edit_account_profile_page_data_query::Gender::MALE =>
+                {
+                    "male".to_string()
+                },
+                get_edit_account_profile_page_data_query::Gender::FEMALE =>
+                {
+                    "female".to_string()
+                },
+                _ => "other".to_string(),
+            }
+        },
+        None => "other".to_string(),
+    };
     view!
     {
         Layout
@@ -60,6 +84,17 @@ pub async fn Edit<G: Html>( token: String ) -> View<G>
             Main(heading=t!("pages.account.edit_profile.heading"))
             {
                 AccountProfileForm
+                (
+                    token=token,
+                    name=account_profile.name,
+                    bio=account_profile.bio.unwrap_or_default(),
+                    affiliation=account_profile.affiliation.unwrap_or_default(),
+                    location=account_profile.location.unwrap_or_default(),
+                    email=account_profile.email.unwrap_or_default(),
+                    telno=account_profile.telno.unwrap_or_default(),
+                    birthdate=birthdate,
+                    gender=gender,
+                )
             }
         }
     }

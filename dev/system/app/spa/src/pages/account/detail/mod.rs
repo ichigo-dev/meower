@@ -30,7 +30,7 @@ pub fn Detail<G: Html>( account_name: String ) -> View<G>
                 AccountProfiles(account_name=account_name)
                 Button
                 (
-                    href=OptionProp(Some("/account/create_profile".to_string())).into(),
+                    href=OptionProp(Some("/account/profile/create".to_string())).into(),
                     classes=StrProp("flex_align_self_end").into(),
                     round=ButtonRound::Full.into(),
                 )
