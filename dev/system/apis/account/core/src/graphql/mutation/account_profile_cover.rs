@@ -2,7 +2,7 @@
 //! AccountProfileCover mutation.
 //------------------------------------------------------------------------------
 
-use async_graphql::{ Context, Object, Upload, Result };
+use async_graphql::{ Context, Object, Result };
 
 
 //------------------------------------------------------------------------------
@@ -21,10 +21,10 @@ impl AccountProfileCoverMutation
     (
         &self,
         ctx: &Context<'_>,
-        file: Option<Upload>,
+        base64: String,
     ) -> Result<bool>
     {
-        println!("upload_cover: {:?}", file);
+        println!("upload_cover: {:?}", base64);
         Ok(true)
     }
 }

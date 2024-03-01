@@ -2,7 +2,7 @@
 //! AccountProfileAvatar mutation.
 //------------------------------------------------------------------------------
 
-use async_graphql::{ Context, Object, Upload, Result };
+use async_graphql::{ Context, Object, Result };
 
 
 //------------------------------------------------------------------------------
@@ -21,10 +21,10 @@ impl AccountProfileAvatarMutation
     (
         &self,
         ctx: &Context<'_>,
-        file: Option<Upload>,
+        base64: String,
     ) -> Result<bool>
     {
-        println!("upload_avatar: {:?}", file);
+        println!("upload_avatar: {:?}", base64);
         Ok(true)
     }
 }
