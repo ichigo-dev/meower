@@ -21,7 +21,7 @@ impl AccountProfileAvatarMutation
     (
         &self,
         ctx: &Context<'_>,
-        file: Option<Upload>,
+        file: Upload,
     ) -> Result<bool>
     {
         println!("upload_avatar: {:?}", file.value(ctx).unwrap().filename);
