@@ -2,13 +2,15 @@
 //! GraphQL mutation.
 //------------------------------------------------------------------------------
 
-pub mod account;
-pub mod account_profile;
-pub mod account_profile_avatar;
+mod account;
+mod account_profile;
+mod account_profile_avatar;
+mod account_profile_cover;
 
 use account::AccountMutation;
 use account_profile::AccountProfileMutation;
 use account_profile_avatar::AccountProfileAvatarMutation;
+use account_profile_cover::AccountProfileCoverMutation;
 
 use async_graphql::MergedObject;
 
@@ -22,4 +24,5 @@ pub(crate) struct MutationRoot
     AccountMutation,
     AccountProfileMutation,
     AccountProfileAvatarMutation,
+    AccountProfileCoverMutation,
 );

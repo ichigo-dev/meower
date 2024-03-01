@@ -33,22 +33,36 @@ mutation CreateAccount($createAccountInput: CreateAccountInput!) {
 ################################################################################
 # Creates account profile
 ################################################################################
-mutation CreateAccountProfile($createAccountProfileInput: CreateAccountProfileInput!) {
+mutation CreateAccountProfile(
+  $createAccountProfileInput: CreateAccountProfileInput!
+  $avatarFile: Upload
+  $coverFile: Upload
+) {
   createAccountProfile(input: $createAccountProfileInput) {
     account {
       accountName
     }
   }
+
+  uploadAvatar(file: $avatarFile)
+  uploadCover(file: $coverFile)
 }
 
 
 ################################################################################
 # Updates account profile
 ################################################################################
-mutation UpdateAccountProfile($updateAccountProfileInput: UpdateAccountProfileInput!) {
+mutation UpdateAccountProfile(
+  $updateAccountProfileInput: UpdateAccountProfileInput!
+  $avatarFile: Upload
+  $coverFile: Upload
+) {
   updateAccountProfile(input: $updateAccountProfileInput) {
     account {
       accountName
     }
   }
+
+  uploadAvatar(file: $avatarFile)
+  uploadCover(file: $coverFile)
 }

@@ -1,22 +1,19 @@
 //------------------------------------------------------------------------------
-//! GraphQL query.
+//! UploadFile.
 //------------------------------------------------------------------------------
 
-mod account;
-mod account_profile;
-
-use account::AccountQuery;
-use account_profile::AccountProfileQuery;
-
-use async_graphql::MergedObject;
+use reqwest::header::HeaderMap;
 
 
 //------------------------------------------------------------------------------
-/// Query root.
+/// UploadFile.
 //------------------------------------------------------------------------------
-#[derive(MergedObject, Default)]
-pub(crate) struct QueryRoot
-(
-    AccountQuery,
-    AccountProfileQuery,
-);
+#[derive(Clone, Debug, Default)]
+pub struct UploadFile
+{
+    pub name: String,
+    pub content: Vec<u8>,
+    pub file_name: String,
+    pub mime: String,
+    pub headers: HeaderMap,
+}

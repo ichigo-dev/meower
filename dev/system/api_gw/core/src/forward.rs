@@ -4,6 +4,7 @@
 
 use meower_shared::JwtClaims;
 
+use axum::body::Bytes;
 use axum::extract::{ Extension, Path, State };
 use axum::http::{ Method, HeaderMap };
 use axum::http::header::HeaderName;
@@ -21,7 +22,7 @@ pub(crate) async fn handler
     Path(path): Path<String>,
     Extension(jwt_claims): Extension<JwtClaims>,
     method: Method,
-    body: String,
+    body: Bytes,
 ) -> impl IntoResponse
 {
     let client = Client::new();

@@ -3,11 +3,12 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
+use crate::types::UploadFile;
 use crate::utils::request::refresh_token;
 
 use graphql_client::{ Response, GraphQLQuery, QueryBody };
-use reqwest::Response as ReqwestResponse;
-use reqwest::{ StatusCode, Method };
+use reqwest::{ Method, Response as ReqwestResponse, StatusCode };
+use reqwest::multipart::{ Form, Part };
 use rust_i18n::t;
 
 
@@ -22,6 +23,7 @@ pub async fn try_request_graphql_inner<Q: GraphQLQuery>
     state: &mut AppState,
     endpoint: &str,
     body: &QueryBody<Q::Variables>,
+    files: Vec<UploadFile>,
     method: Method,
 ) -> Result<ReqwestResponse, String>
 {
@@ -30,10 +32,36 @@ pub async fn try_request_graphql_inner<Q: GraphQLQuery>
 
     let endpoint = endpoint.trim_start_matches('/');
     let url = format!("{}/{}", config.api_url, endpoint);
-    match client
+    let mut request = client
         .request(method.clone(), url.clone())
         .bearer_auth(&config.access_token)
-        .json(&body)
+        .json(&body);
+
+    if files.len() > 0
+    {
+        let part = Part::text(serde_json::to_string(&body).unwrap())
+            .mime_str("application/json")
+            .unwrap();
+        let mut form = Form::new()
+            .part("operations", part);
+
+        for file in files
+        {
+            let part = match Part::bytes(file.content)
+                .file_name(file.file_name)
+                .headers(file.headers)
+                .mime_str(&file.mime)
+            {
+                Ok(part) => part,
+                Err(_) => continue,
+            };
+            form = form.part(file.name, part);
+        }
+
+        request = request.multipart(form);
+    }
+
+    match request
         .send()
         .await
     {
@@ -48,6 +76,7 @@ pub async fn request_graphql_inner<Q: GraphQLQuery>
     state: &mut AppState,
     endpoint: &str,
     variables: Q::Variables,
+    files: Vec<UploadFile>,
     method: Method,
 ) -> Result<ReqwestResponse, String>
 {
@@ -61,6 +90,7 @@ pub async fn request_graphql_inner<Q: GraphQLQuery>
             state,
             endpoint,
             &body,
+            files.clone(),
             method.clone()
         ).await
         {
@@ -85,6 +115,7 @@ pub async fn request_graphql<Q: GraphQLQuery>
     state: &mut AppState,
     endpoint: &str,
     variables: Q::Variables,
+    files: Vec<UploadFile>,
     method: Method,
 ) -> Result<Q::ResponseData, String>
 {
@@ -93,6 +124,7 @@ pub async fn request_graphql<Q: GraphQLQuery>
         state,
         endpoint,
         variables,
+        files,
         method.clone()
     ).await
     {
@@ -129,5 +161,24 @@ pub async fn post_graphql<Q: GraphQLQuery>
     variables: Q::Variables,
 ) -> Result<Q::ResponseData, String>
 {
-    request_graphql::<Q>(state, endpoint, variables, Method::POST).await
+    request_graphql::<Q>
+    (
+        state,
+        endpoint,
+        variables,
+        Vec::new(),
+        Method::POST,
+    ).await
+}
+
+#[allow(dead_code)]
+pub async fn post_graphql_with_files<Q: GraphQLQuery>
+(
+    state: &mut AppState,
+    endpoint: &str,
+    variables: Q::Variables,
+    files: Vec<UploadFile>,
+) -> Result<Q::ResponseData, String>
+{
+    request_graphql::<Q>(state, endpoint, variables, files, Method::POST).await
 }

@@ -270,7 +270,11 @@ type MutationRoot {
 	"""
 	Uploads avatar.
 	"""
-	uploadAvatar(file: Upload!): Boolean!
+	uploadAvatar(file: Upload): Boolean!
+	"""
+	Uploads cover.
+	"""
+	uploadCover(file: Upload): Boolean!
 }
 
 """

@@ -4,9 +4,11 @@
 
 use crate::AppState;
 use crate::components::*;
-use crate::utils::request_graphql::post_graphql;
+use crate::types::UploadFile;
+use crate::utils::request_graphql::post_graphql_with_files;
 use crate::utils::props::*;
 
+use base64::prelude::*;
 use chrono::{ NaiveDate, NaiveDateTime };
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
@@ -21,6 +23,8 @@ use web_sys::{ Event, FileReader, HtmlInputElement, ProgressEvent };
 //------------------------------------------------------------------------------
 /// GraphQL.
 //------------------------------------------------------------------------------
+type Upload = ();
+
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "graphql/schema/account.graphql",
@@ -72,7 +76,9 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
     let token = props.token.clone();
 
     let avatar_base64 = create_signal(None);
+    let avatar_file = create_signal(None);
     let cover_base64 = create_signal(None);
+    let cover_file = create_signal(None);
 
     let save_handler = move |values: FormValues, _|
     {
@@ -93,6 +99,16 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                 }
             },
             None => None,
+        };
+
+        let mut files = Vec::new();
+        if let Some(avatar_file) = avatar_file.get_clone()
+        {
+            files.push(avatar_file);
+        };
+        if let Some(cover_file) = cover_file.get_clone()
+        {
+            files.push(cover_file);
         };
 
         if let Some(token) = token.clone()
@@ -137,14 +153,17 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
             spawn_local_scoped(async move
             {
-                match post_graphql::<UpdateAccountProfile>
+                match post_graphql_with_files::<UpdateAccountProfile>
                 (
                     &mut state,
                     "/account/graphql",
                      update_account_profile::Variables
                      {
-                         update_account_profile_input
+                         update_account_profile_input,
+                         avatar_file: Some(()),
+                         cover_file: Some(()),
                      },
+                     files,
                 ).await
                 {
                     Ok(data) =>
@@ -218,14 +237,17 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
             spawn_local_scoped(async move
             {
-                match post_graphql::<CreateAccountProfile>
+                match post_graphql_with_files::<CreateAccountProfile>
                 (
                     &mut state,
                     "/account/graphql",
                      create_account_profile::Variables
                      {
                          create_account_profile_input,
+                         avatar_file: Some(()),
+                         cover_file: Some(()),
                      },
+                     files,
                 ).await
                 {
                     Ok(data) =>
@@ -306,8 +328,10 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                             }
                             None => return,
                         };
+
                         let reader = FileReader::new().unwrap();
                         let cloned_reader = reader.clone();
+                        let cloned_file = file.clone();
                         let closure = Closure::wrap(Box::new(move |_|
                         {
                             let base64 = cloned_reader
@@ -315,7 +339,23 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                                 .unwrap()
                                 .as_string()
                                 .unwrap();
-                            cover_base64.set(Some(base64));
+                            cover_base64.set(Some(base64.clone()));
+
+                            let base64 = base64
+                                .split(",")
+                                .collect::<Vec<&str>>()[1];
+                            let buffer = BASE64_STANDARD
+                                .decode(base64.as_bytes())
+                                .unwrap();
+                            let upload_file = UploadFile
+                            {
+                                name: "cover_file".to_string(),
+                                content: buffer,
+                                file_name: cloned_file.name(),
+                                mime: cloned_file.type_(),
+                                headers: Default::default(),
+                            };
+                            cover_file.set(Some(upload_file));
                         }) as Box<dyn Fn(ProgressEvent)>);
                         reader.set_onload(Some(closure.as_ref().unchecked_ref()));
                         reader.read_as_data_url(&file).unwrap();
@@ -359,6 +399,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
                         let reader = FileReader::new().unwrap();
                         let cloned_reader = reader.clone();
+                        let cloned_file = file.clone();
                         let closure = Closure::wrap(Box::new(move |_|
                         {
                             let base64 = cloned_reader
@@ -366,7 +407,23 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                                 .unwrap()
                                 .as_string()
                                 .unwrap();
-                            avatar_base64.set(Some(base64));
+                            avatar_base64.set(Some(base64.clone()));
+
+                            let base64 = base64
+                                .split(",")
+                                .collect::<Vec<&str>>()[1];
+                            let buffer = BASE64_STANDARD
+                                .decode(base64.as_bytes())
+                                .unwrap();
+                            let upload_file = UploadFile
+                            {
+                                name: "cover_file".to_string(),
+                                content: buffer,
+                                file_name: cloned_file.name(),
+                                mime: cloned_file.type_(),
+                                headers: Default::default(),
+                            };
+                            avatar_file.set(Some(upload_file));
                         }) as Box<dyn Fn(ProgressEvent)>);
                         reader.set_onload(Some(closure.as_ref().unchecked_ref()));
                         reader.read_as_data_url(&file).unwrap();
