@@ -11,11 +11,14 @@ pub(crate) use config::Config;
 pub(crate) use state::AppState;
 
 use axum::{ Router, middleware };
+use axum::extract::DefaultBodyLimit;
 use axum::http::{ header, Method };
+use axum::routing::any;
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
-use axum::routing::any;
+// Body limit.
+const BODY_LIMIT: usize = 30_000_000;
 
 
 //------------------------------------------------------------------------------
@@ -67,6 +70,7 @@ async fn main()
                 layers::cors_ext::layer
             )
         )
+        .layer(DefaultBodyLimit::max(BODY_LIMIT))
         .with_state(state.clone());
 
     // Starts the server.

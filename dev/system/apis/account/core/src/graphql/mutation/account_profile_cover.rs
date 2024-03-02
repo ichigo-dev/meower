@@ -21,7 +21,8 @@ impl AccountProfileCoverMutation
     (
         &self,
         ctx: &Context<'_>,
-        base64: String,
+        account_profile_token: String,
+        base64: Option<String>,
     ) -> Result<bool>
     {
         println!("upload_cover: {:?}", base64);

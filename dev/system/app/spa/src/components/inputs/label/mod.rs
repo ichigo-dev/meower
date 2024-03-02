@@ -22,7 +22,7 @@ pub fn Label<G: Html>( props: LabelProps<G> ) -> View<G>
     {
         let mut classes = vec!
         [
-            "width_full flex flex_gap_sm".to_string(),
+            "flex flex_gap_sm".to_string(),
             props.direction.get().get_class_name(),
             props.classes.get_clone(),
         ];

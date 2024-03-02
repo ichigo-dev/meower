@@ -3,3 +3,4 @@ system:
     fatal: "システムエラーが発生しました"
     unauthorized: "権限がありません"
     not_found: "データが見つかりませんでした"
+    invalid_format: "データ形式が正しくありません"

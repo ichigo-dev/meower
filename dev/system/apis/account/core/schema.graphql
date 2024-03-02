@@ -270,11 +270,11 @@ type MutationRoot {
 	"""
 	Uploads avatar.
 	"""
-	uploadAvatar(base64: String!): Boolean!
+	uploadAvatar(accountProfileToken: String!, base64: String): Boolean!
 	"""
 	Uploads cover.
 	"""
-	uploadCover(base64: String!): Boolean!
+	uploadCover(accountProfileToken: String!, base64: String): Boolean!
 }
 
 """

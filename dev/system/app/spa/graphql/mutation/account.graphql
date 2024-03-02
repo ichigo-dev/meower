@@ -35,18 +35,24 @@ mutation CreateAccount($createAccountInput: CreateAccountInput!) {
 ################################################################################
 mutation CreateAccountProfile(
   $createAccountProfileInput: CreateAccountProfileInput!
-  $avatarBase64: String
-  $coverBase64: String
 ) {
   createAccountProfile(input: $createAccountProfileInput) {
+    token
     account {
       accountName
     }
   }
-
-  uploadAvatar(base64: $avatarBase64)
-  uploadCover(base64: $coverBase64)
 }
+
+mutation CreateAccountProfileAdditional(
+  $accountProfileToken: String!
+  $avatarBase64: String
+  $coverBase64: String
+) {
+  uploadAvatar(base64: $avatarBase64, accountProfileToken: $accountProfileToken)
+  uploadCover(base64: $coverBase64, accountProfileToken: $accountProfileToken)
+}
+
 
 
 ################################################################################
@@ -54,6 +60,7 @@ mutation CreateAccountProfile(
 ################################################################################
 mutation UpdateAccountProfile(
   $updateAccountProfileInput: UpdateAccountProfileInput!
+  $accountProfileToken: String!
   $avatarBase64: String
   $coverBase64: String
 ) {
@@ -63,6 +70,6 @@ mutation UpdateAccountProfile(
     }
   }
 
-  uploadAvatar(base64: $avatarBase64)
-  uploadCover(base64: $coverBase64)
+  uploadAvatar(base64: $avatarBase64, accountProfileToken: $accountProfileToken)
+  uploadCover(base64: $coverBase64, accountProfileToken: $accountProfileToken)
 }

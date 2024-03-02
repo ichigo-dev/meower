@@ -16,11 +16,15 @@ use std::fs::File;
 use std::io::Write;
 
 use axum::{ Router, middleware };
+use axum::extract::DefaultBodyLimit;
 use axum::routing::{ get, post };
 use tokio::net::TcpListener;
 
 // Loads the locales.
 rust_i18n::i18n!("locales");
+
+// Body limit.
+const BODY_LIMIT: usize = 30_000_000;
 
 
 //------------------------------------------------------------------------------
@@ -47,6 +51,7 @@ async fn main()
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
+        .layer(DefaultBodyLimit::max(BODY_LIMIT))
         .with_state(state.clone());
 
     // Starts the server.

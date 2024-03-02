@@ -35,6 +35,14 @@ struct CreateAccountProfile;
     query_path = "graphql/mutation/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
+struct CreateAccountProfileAdditional;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
 struct UpdateAccountProfile;
 
 
@@ -72,7 +80,9 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
     let token = props.token.clone();
 
     let avatar_base64 = create_signal(None);
+    let upload_avatar_base64 = create_signal(None);
     let cover_base64 = create_signal(None);
+    let upload_cover_base64 = create_signal(None);
 
     let save_handler = move |values: FormValues, _|
     {
@@ -124,7 +134,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
             let update_account_profile_input
                 = update_account_profile::UpdateAccountProfileInput
             {
-                token: token,
+                token: token.clone(),
                 name: values.get("name").unwrap_or("".to_string()),
                 affiliation: values.get("affiliation").clone(),
                 location: values.get("location").clone(),
@@ -144,8 +154,9 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                      update_account_profile::Variables
                      {
                          update_account_profile_input,
-                         avatar_base64: avatar_base64.get_clone(),
-                         cover_base64: cover_base64.get_clone(),
+                         account_profile_token: token,
+                         avatar_base64: upload_avatar_base64.get_clone(),
+                         cover_base64: upload_cover_base64.get_clone(),
                      },
                 ).await
                 {
@@ -227,13 +238,23 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                      create_account_profile::Variables
                      {
                          create_account_profile_input,
-                         avatar_base64: avatar_base64.get_clone(),
-                         cover_base64: cover_base64.get_clone(),
                      },
                 ).await
                 {
                     Ok(data) =>
                     {
+                        post_graphql::<CreateAccountProfileAdditional>
+                        (
+                            &mut state,
+                            "/account/graphql",
+                            create_account_profile_additional::Variables
+                            {
+                                account_profile_token: data.create_account_profile.token,
+                                avatar_base64: upload_avatar_base64.get_clone(),
+                                cover_base64: upload_cover_base64.get_clone(),
+                            },
+                        ).await.unwrap();
+
                         let href = match data.create_account_profile.account
                         {
                             Some(account) =>
@@ -321,6 +342,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                                 .as_string()
                                 .unwrap();
                             cover_base64.set(Some(base64.clone()));
+                            upload_cover_base64.set(Some(base64.clone()));
                         }) as Box<dyn Fn(ProgressEvent)>);
                         reader.set_onload(Some(closure.as_ref().unchecked_ref()));
                         reader.read_as_data_url(&file).unwrap();
@@ -329,7 +351,11 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                 )
             }
 
-            Label(label=t!("pages.account.components.account_profile.form.avatar.label"))
+            Label
+            (
+                label=t!("pages.account.components.account_profile.form.avatar.label"),
+                attr:style="align-self: flex-start; width: auto;",
+            )
             {
                 ProfileAvatar
                 (
@@ -372,6 +398,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                                 .as_string()
                                 .unwrap();
                             avatar_base64.set(Some(base64.clone()));
+                            upload_avatar_base64.set(Some(base64.clone()));
                         }) as Box<dyn Fn(ProgressEvent)>);
                         reader.set_onload(Some(closure.as_ref().unchecked_ref()));
                         reader.read_as_data_url(&file).unwrap();

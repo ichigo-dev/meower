@@ -2,7 +2,30 @@
 //! AccountProfileAvatar mutation.
 //------------------------------------------------------------------------------
 
+use crate::Config;
+use meower_account_entity::account::Entity as AccountEntity;
+use meower_account_entity::account_profile::Column as AccountProfileColumn;
+use meower_account_entity::account_profile::Entity as AccountProfileEntity;
+use meower_account_entity::account_profile_avatar::ActiveModel as AccountProfileAvatarActiveModel;
+use meower_account_entity::account_profile_avatar::Entity as AccountProfileAvatarEntity;
+use meower_entity_ext::ValidateExt;
+use meower_shared::JwtClaims;
+
+use std::sync::Arc;
+
 use async_graphql::{ Context, Object, Result };
+use base64::prelude::*;
+use object_store::ObjectStore;
+use object_store::path::Path as StoragePath;
+use rust_i18n::t;
+use sea_orm::{
+    ActiveValue,
+    ColumnTrait,
+    DatabaseTransaction,
+    EntityTrait,
+    ModelTrait,
+    QueryFilter,
+};
 
 
 //------------------------------------------------------------------------------
@@ -21,10 +44,95 @@ impl AccountProfileAvatarMutation
     (
         &self,
         ctx: &Context<'_>,
-        base64: String,
+        account_profile_token: String,
+        base64: Option<String>,
     ) -> Result<bool>
     {
-        println!("upload_avatar: {:?}", base64);
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+        let config = ctx.data::<Config>().unwrap();
+        let storage = ctx.data::<Arc<Box<dyn ObjectStore>>>().unwrap().as_ref();
+
+        let account_profile = match AccountProfileEntity::find()
+            .filter(AccountProfileColumn::Token.eq(account_profile_token))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account_profile) => account_profile,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        let account = match account_profile
+            .find_related(AccountEntity)
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account) => account,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+        if jwt_claims.public_user_id != account.public_user_id
+        {
+            return Err(t!("system.error.unauthorized").into());
+        }
+
+        if let Some(exists_avatar) = account_profile
+            .find_related(AccountProfileAvatarEntity)
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            let exists_avatar_path = StoragePath::from
+            (
+                config.avatar_path.clone() + "/" + &exists_avatar.file_key
+            );
+            storage.delete(&exists_avatar_path).await.unwrap();
+            exists_avatar.delete(tsx).await.unwrap();
+        };
+
+        if let Some(base64) = base64
+        {
+            let (prefix, base64) = match base64.split_once(",")
+            {
+                Some((content_type, base64)) => (content_type, base64),
+                None => return Err(t!("system.error.invalid_format").into()),
+            };
+            let content_type = prefix
+                .split(";")
+                .next()
+                .unwrap()
+                .split(":")
+                .last()
+                .unwrap();
+            let binary = BASE64_STANDARD.decode(base64.as_bytes()).unwrap();
+            let file_len = binary.len().try_into().unwrap_or_default();
+
+            let account_profile_id = account_profile.account_profile_id;
+            let avatar = AccountProfileAvatarActiveModel
+            {
+                account_profile_id: ActiveValue::Set(account_profile_id),
+                content_type: ActiveValue::Set(content_type.to_string()),
+                file_size: ActiveValue::Set(file_len),
+                ..Default::default()
+            };
+            let avatar = match avatar.validate_and_insert(tsx).await
+            {
+                Ok(avatar) => avatar,
+                Err(e) => return Err(e.get_message().into()),
+            };
+
+            let avatar_path = StoragePath::from
+            (
+                config.avatar_path.clone() + "/" + &avatar.file_key
+            );
+            if let Err(e) = storage.put(&avatar_path, binary.into()).await
+            {
+                avatar.delete(tsx).await.unwrap();
+                return Err(e.to_string().into());
+            }
+        }
+
         Ok(true)
     }
 }

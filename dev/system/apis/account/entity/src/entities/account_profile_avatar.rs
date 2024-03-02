@@ -91,6 +91,9 @@ impl ActiveModelBehavior for ActiveModel
         {
             let now = Utc::now().naive_utc();
             self.set(Column::CreatedAt, now.into());
+
+            let file_key = meower_utility::get_random_str(128);
+            self.set(Column::FileKey, file_key.into());
         }
 
         Ok(self)
