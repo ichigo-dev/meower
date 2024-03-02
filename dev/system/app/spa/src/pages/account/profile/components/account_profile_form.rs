@@ -15,7 +15,7 @@ use sycamore::futures::spawn_local_scoped;
 use sycamore_router::navigate;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::closure::Closure;
-use web_sys::{ Event, FileReader, HtmlInputElement, ProgressEvent };
+use web_sys::{ Event, FileReader, HtmlInputElement, MouseEvent, ProgressEvent };
 
 
 //------------------------------------------------------------------------------
@@ -80,9 +80,13 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
     let token = props.token.clone();
 
     let avatar_base64 = create_signal(None);
+    let upload_avatar_file_name = create_signal(None);
     let upload_avatar_base64 = create_signal(None);
+    let delete_avatar_file = create_signal(false);
     let cover_base64 = create_signal(None);
+    let upload_cover_file_name = create_signal(None);
     let upload_cover_base64 = create_signal(None);
+    let delete_cover_file = create_signal(false);
 
     let save_handler = move |values: FormValues, _|
     {
@@ -145,6 +149,22 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                 gender: gender,
             };
 
+            let upload_avatar_input = update_account_profile::UploadAvatarInput
+            {
+                account_profile_token: token.clone(),
+                file_name: upload_avatar_file_name.get_clone(),
+                base64: upload_avatar_base64.get_clone(),
+                delete_file: delete_avatar_file.get_clone(),
+            };
+
+            let upload_cover_input = update_account_profile::UploadCoverInput
+            {
+                account_profile_token: token.clone(),
+                file_name: upload_cover_file_name.get_clone(),
+                base64: upload_cover_base64.get_clone(),
+                delete_file: delete_cover_file.get_clone(),
+            };
+
             spawn_local_scoped(async move
             {
                 match post_graphql::<UpdateAccountProfile>
@@ -154,9 +174,8 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                      update_account_profile::Variables
                      {
                          update_account_profile_input,
-                         account_profile_token: token,
-                         avatar_base64: upload_avatar_base64.get_clone(),
-                         cover_base64: upload_cover_base64.get_clone(),
+                         upload_avatar_input,
+                         upload_cover_input,
                      },
                 ).await
                 {
@@ -243,15 +262,30 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                 {
                     Ok(data) =>
                     {
+                        let upload_avatar_input = create_account_profile_additional::UploadAvatarInput
+                        {
+                            account_profile_token: data.create_account_profile.token.clone(),
+                            file_name: upload_avatar_file_name.get_clone(),
+                            base64: upload_avatar_base64.get_clone(),
+                            delete_file: false,
+                        };
+
+                        let upload_cover_input = create_account_profile_additional::UploadCoverInput
+                        {
+                            account_profile_token: data.create_account_profile.token,
+                            file_name: upload_cover_file_name.get_clone(),
+                            base64: upload_cover_base64.get_clone(),
+                            delete_file: false,
+                        };
+
                         post_graphql::<CreateAccountProfileAdditional>
                         (
                             &mut state,
                             "/account/graphql",
                             create_account_profile_additional::Variables
                             {
-                                account_profile_token: data.create_account_profile.token,
-                                avatar_base64: upload_avatar_base64.get_clone(),
-                                cover_base64: upload_cover_base64.get_clone(),
+                                upload_avatar_input,
+                                upload_cover_input,
                             },
                         ).await.unwrap();
 
@@ -282,6 +316,9 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
         "other".to_string(),
     ]);
 
+    let avatar_file_key = create_signal(Some(props.avatar_file_key.clone()));
+    let cover_file_key = create_signal(Some(props.cover_file_key.clone()));
+
     view!
     {
         Form
@@ -304,7 +341,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
             {
                 ProfileCover
                 (
-                    file_key=OptionProp(Some(props.cover_file_key)).into(),
+                    file_key=*cover_file_key,
                     base64=cover_base64,
                 )
                 input
@@ -334,6 +371,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
                         let reader = FileReader::new().unwrap();
                         let cloned_reader = reader.clone();
+                        let cloned_file = file.clone();
                         let closure = Closure::wrap(Box::new(move |_|
                         {
                             let base64 = cloned_reader
@@ -343,11 +381,41 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                                 .unwrap();
                             cover_base64.set(Some(base64.clone()));
                             upload_cover_base64.set(Some(base64.clone()));
+                            upload_cover_file_name.set(Some(cloned_file.name()));
                         }) as Box<dyn Fn(ProgressEvent)>);
                         reader.set_onload(Some(closure.as_ref().unchecked_ref()));
                         reader.read_as_data_url(&file).unwrap();
                         closure.forget();
                     },
+                )
+                (
+                    if cover_file_key.get_clone().unwrap_or_default().len() > 0
+                        || upload_cover_file_name.get_clone().is_some()
+                    {
+                        view!
+                        {
+                            Button
+                            (
+                                attr:style="align-self: flex-start;",
+                                on:click=move |event: MouseEvent|
+                                {
+                                    delete_cover_file.set(true);
+                                    upload_cover_base64.set(None);
+                                    upload_cover_file_name.set(None);
+                                    cover_base64.set(None);
+                                    cover_file_key.set(Some("".to_string()));
+                                    event.prevent_default();
+                                },
+                            )
+                            {
+                                (t!("pages.account.components.account_profile.form.cover.button.remove"))
+                            }
+                        }
+                    }
+                    else
+                    {
+                        view! {}
+                    }
                 )
             }
 
@@ -359,7 +427,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
             {
                 ProfileAvatar
                 (
-                    file_key=OptionProp(Some(props.avatar_file_key)).into(),
+                    file_key=*avatar_file_key,
                     size=AvatarSize::XXXXXL.into(),
                     base64=avatar_base64,
                 )
@@ -390,6 +458,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
                         let reader = FileReader::new().unwrap();
                         let cloned_reader = reader.clone();
+                        let cloned_file = file.clone();
                         let closure = Closure::wrap(Box::new(move |_|
                         {
                             let base64 = cloned_reader
@@ -399,13 +468,44 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                                 .unwrap();
                             avatar_base64.set(Some(base64.clone()));
                             upload_avatar_base64.set(Some(base64.clone()));
+                            upload_avatar_file_name.set(Some(cloned_file.name()));
                         }) as Box<dyn Fn(ProgressEvent)>);
                         reader.set_onload(Some(closure.as_ref().unchecked_ref()));
                         reader.read_as_data_url(&file).unwrap();
                         closure.forget();
                     },
                 )
+                (
+                    if avatar_file_key.get_clone().unwrap_or_default().len() > 0
+                        || upload_avatar_file_name.get_clone().is_some()
+                    {
+                        view!
+                        {
+                            Button
+                            (
+                                attr:style="align-self: flex-start;",
+                                on:click=move |event: MouseEvent|
+                                {
+                                    delete_avatar_file.set(true);
+                                    upload_avatar_base64.set(None);
+                                    upload_avatar_file_name.set(None);
+                                    avatar_base64.set(None);
+                                    avatar_file_key.set(Some("".to_string()));
+                                    event.prevent_default();
+                                },
+                            )
+                            {
+                                (t!("pages.account.components.account_profile.form.avatar.button.remove"))
+                            }
+                        }
+                    }
+                    else
+                    {
+                        view! {}
+                    }
+                )
             }
+
             Label
             (
                 label=t!("pages.account.components.account_profile.form.name.label"),

@@ -45,37 +45,41 @@ pub async fn ProfileCover<G: Html>( props: ProfileCoverProps<G> ) -> View<G>
         }
     };
 
-    spawn_local_scoped(async move
+    create_effect(move ||
     {
-        if let Some(file_key) = props.file_key.get_clone()
+        props.file_key.track();
+        spawn_local_scoped(async move
         {
-            let file_key = if file_key.len() > 0
+            if let Some(file_key) = props.file_key.get_clone()
             {
-                file_key
+                let file_key = if file_key.len() > 0
+                {
+                    file_key
+                }
+                else
+                {
+                    "default".to_string()
+                };
+
+                let mut state: AppState = use_context();
+                let path = format!("account/cover/{}", file_key);
+                let cover = get(&mut state, &path, "")
+                    .await
+                    .unwrap();
+                let headers = cover.headers();
+                let content_type = headers
+                    .get(header::CONTENT_TYPE)
+                    .unwrap()
+                    .to_str()
+                    .unwrap_or("image/png")
+                    .to_string();
+
+                let bytes = cover.bytes().await.unwrap();
+                let base64 = BASE64_STANDARD.encode(&bytes);
+                let base64 = format!("data:{};base64,{}", content_type, base64);
+                props.base64.set(Some(base64));
             }
-            else
-            {
-                "default".to_string()
-            };
-
-            let mut state: AppState = use_context();
-            let path = format!("account/cover/{}", file_key);
-            let cover = get(&mut state, &path, "")
-                .await
-                .unwrap();
-            let headers = cover.headers();
-            let content_type = headers
-                .get(header::CONTENT_TYPE)
-                .unwrap()
-                .to_str()
-                .unwrap_or("image/png")
-                .to_string();
-
-            let bytes = cover.bytes().await.unwrap();
-            let base64 = BASE64_STANDARD.encode(&bytes);
-            let base64 = format!("data:{};base64,{}", content_type, base64);
-            props.base64.set(Some(base64));
-        }
+        });
     });
 
     view!

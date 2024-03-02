@@ -5,8 +5,12 @@ pages:
         form:
           avatar:
             label: "アバター画像"
+            button:
+              remove: "削除"
           cover:
             label: "カバー画像"
+            button:
+              remove: "削除"
           name:
             label: "表示名"
             placeholder: "表示名"

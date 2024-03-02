@@ -23,42 +23,46 @@ use sycamore::futures::spawn_local_scoped;
 #[component]
 pub async fn ProfileAvatar<G: Html>( props: ProfileAvatarProps<G> ) -> View<G>
 {
-    spawn_local_scoped(async move
+    create_effect(move ||
     {
-        if props.base64.get_clone().is_some() || props.src.get_clone().len() > 0
+        props.file_key.track();
+        spawn_local_scoped(async move
         {
-            return;
-        }
-
-        if let Some(file_key) = props.file_key.get_clone()
-        {
-            let file_key = if file_key.len() > 0
+            if props.base64.get_clone().is_some() || props.src.get_clone().len() > 0
             {
-                file_key
+                return;
             }
-            else
+
+            if let Some(file_key) = props.file_key.get_clone()
             {
-                "default".to_string()
-            };
+                let file_key = if file_key.len() > 0
+                {
+                    file_key
+                }
+                else
+                {
+                    "default".to_string()
+                };
 
-            let mut state: AppState = use_context();
-            let path = format!("account/avatar/{}", file_key);
-            let avatar = get(&mut state, &path, "")
-                .await
-                .unwrap();
-            let headers = avatar.headers();
-            let content_type = headers
-                .get(header::CONTENT_TYPE)
-                .unwrap()
-                .to_str()
-                .unwrap_or("image/png")
-                .to_string();
+                let mut state: AppState = use_context();
+                let path = format!("account/avatar/{}", file_key);
+                let avatar = get(&mut state, &path, "")
+                    .await
+                    .unwrap();
+                let headers = avatar.headers();
+                let content_type = headers
+                    .get(header::CONTENT_TYPE)
+                    .unwrap()
+                    .to_str()
+                    .unwrap_or("image/png")
+                    .to_string();
 
-            let bytes = avatar.bytes().await.unwrap();
-            let base64 = BASE64_STANDARD.encode(&bytes);
-            let base64 = format!("data:{};base64,{}", content_type, base64);
-            props.base64.set(Some(base64));
-        }
+                let bytes = avatar.bytes().await.unwrap();
+                let base64 = BASE64_STANDARD.encode(&bytes);
+                let base64 = format!("data:{};base64,{}", content_type, base64);
+                props.base64.set(Some(base64));
+            }
+        });
     });
 
     view!

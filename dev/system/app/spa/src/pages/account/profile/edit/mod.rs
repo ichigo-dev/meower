@@ -75,6 +75,18 @@ pub async fn Edit<G: Html>( token: String ) -> View<G>
         },
         None => "other".to_string(),
     };
+
+    let avatar_file_key = match account_profile.avatar
+    {
+        Some(avatar) => avatar.file_key,
+        None => "".to_string(),
+    };
+    let cover_file_key = match account_profile.cover
+    {
+        Some(cover) => cover.file_key,
+        None => "".to_string(),
+    };
+
     view!
     {
         Layout
@@ -92,6 +104,8 @@ pub async fn Edit<G: Html>( token: String ) -> View<G>
                     telno=account_profile.telno.unwrap_or_default(),
                     birthdate=birthdate,
                     gender=gender,
+                    avatar_file_key=avatar_file_key,
+                    cover_file_key=cover_file_key,
                 )
             }
         }

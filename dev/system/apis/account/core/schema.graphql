@@ -270,11 +270,11 @@ type MutationRoot {
 	"""
 	Uploads avatar.
 	"""
-	uploadAvatar(accountProfileToken: String!, base64: String): Boolean!
+	uploadAvatar(input: UploadAvatarInput!): Boolean!
 	"""
 	Uploads cover.
 	"""
-	uploadCover(accountProfileToken: String!, base64: String): Boolean!
+	uploadCover(input: UploadCoverInput!): Boolean!
 }
 
 """
@@ -331,6 +331,26 @@ input UpdateAccountProfileInput {
 	bio: String
 	birthdate: NaiveDateTime
 	gender: Gender
+}
+
+"""
+Inputs.
+"""
+input UploadAvatarInput {
+	accountProfileToken: String!
+	fileName: String
+	base64: String
+	deleteFile: Boolean!
+}
+
+"""
+Inputs.
+"""
+input UploadCoverInput {
+	accountProfileToken: String!
+	fileName: String
+	base64: String
+	deleteFile: Boolean!
 }
 
 type Workspace {
