@@ -13,6 +13,7 @@ pub(crate) struct Config
 {
     // Server config.
     pub(crate) port: u16,
+    pub(crate) body_limit: usize,
 
     // Locale config.
     pub(crate) fallback_locale: String,
@@ -44,6 +45,10 @@ impl Config
             .expect("PORT must be set")
             .parse::<u16>()
             .expect("PORT must be a number");
+        let body_limit = env::var("BODY_LIMIT")
+            .expect("BODY_LIMIT must be set")
+            .parse::<usize>()
+            .expect("BODY_LIMIT must be a number");
 
         // Locale config.
         let fallback_locale = env::var("FALLBACK_LOCALE")
@@ -70,6 +75,7 @@ impl Config
         {
             // Server config.
             port,
+            body_limit,
 
             // Locale config.
             fallback_locale,

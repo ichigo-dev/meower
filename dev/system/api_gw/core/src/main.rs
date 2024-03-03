@@ -17,9 +17,6 @@ use axum::routing::any;
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
-// Body limit.
-const BODY_LIMIT: usize = 30_000_000;
-
 
 //------------------------------------------------------------------------------
 /// Main entry point.
@@ -70,7 +67,7 @@ async fn main()
                 layers::cors_ext::layer
             )
         )
-        .layer(DefaultBodyLimit::max(BODY_LIMIT))
+        .layer(DefaultBodyLimit::max(state.config.body_limit))
         .with_state(state.clone());
 
     // Starts the server.

@@ -152,6 +152,7 @@ services:
       - ./env/${ENV}/${JWT_PUBLIC_KEY}:/system/api_gw/core/env/${JWT_PUBLIC_KEY}
     environment:
       PORT: ${API_GW_PORT}
+      BODY_LIMIT: ${BODY_LIMIT}
       CLIENT_ID_KEY: ${CLIENT_ID_KEY}
       JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
       AUTH_API_URL: ${AUTH_API_URL}
@@ -182,6 +183,7 @@ services:
       - ./system/common:/system/common
     environment:
       PORT: ${ACCOUNT_PORT}
+      BODY_LIMIT: ${BODY_LIMIT}
       DATABASE_URL: ${ACCOUNT_DB_URL}
       FALLBACK_LOCALE: ${FALLBACK_LOCALE}
       STORAGE_URL: ${ACCOUNT_STORAGE_URL}

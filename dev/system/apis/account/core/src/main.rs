@@ -23,9 +23,6 @@ use tokio::net::TcpListener;
 // Loads the locales.
 rust_i18n::i18n!("locales");
 
-// Body limit.
-const BODY_LIMIT: usize = 30_000_000;
-
 
 //------------------------------------------------------------------------------
 /// Main entry point.
@@ -51,7 +48,7 @@ async fn main()
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)
         )
-        .layer(DefaultBodyLimit::max(BODY_LIMIT))
+        .layer(DefaultBodyLimit::max(state.config.body_limit))
         .with_state(state.clone());
 
     // Starts the server.

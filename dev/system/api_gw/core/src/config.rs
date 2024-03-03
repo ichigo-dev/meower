@@ -13,6 +13,7 @@ pub(crate) struct Config
 {
     // Server config.
     pub(crate) port: u16,
+    pub(crate) body_limit: usize,
 
     // JWT config.
     pub(crate) client_id_key: String,
@@ -39,6 +40,10 @@ impl Config
             .expect("PORT must be set")
             .parse::<u16>()
             .expect("PORT must be a number");
+        let body_limit = env::var("BODY_LIMIT")
+            .expect("BODY_LIMIT must be set")
+            .parse::<usize>()
+            .expect("BODY_LIMIT must be a number");
 
         // JWT config.
         let client_id_key = env::var("CLIENT_ID_KEY")
@@ -62,6 +67,7 @@ impl Config
         {
             // Server config.
             port,
+            body_limit,
 
             // JWT config.
             client_id_key,
