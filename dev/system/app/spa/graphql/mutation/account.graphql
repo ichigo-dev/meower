@@ -81,6 +81,8 @@ mutation SetDefaultAccountProfile(
 ) {
   setDefaultAccountProfile(
     accountName: $accountName,
-    token: $accountProfileToken
-  )
+    accountProfileToken: $accountProfileToken
+  ) {
+    accountName
+  }
 }
