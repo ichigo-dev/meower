@@ -42,6 +42,7 @@ pub enum IconKind
     Tablet,
     Mobile,
 
+    Person,
     Building,
     Envelope,
     Birthday,
@@ -89,6 +90,7 @@ impl IconKind
             Self::Tablet => "icon_tablet".to_string(),
             Self::Mobile => "icon_mobile".to_string(),
 
+            Self::Person => "icon_person".to_string(),
             Self::Building => "icon_building".to_string(),
             Self::Envelope => "icon_envelope".to_string(),
             Self::Birthday => "icon_birthday".to_string(),

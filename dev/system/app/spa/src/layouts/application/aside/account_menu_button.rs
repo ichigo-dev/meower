@@ -37,7 +37,7 @@ pub fn AccountMenuButton<G: Html>
                         (
                             clickable=BoolProp(true).into(),
                             name=selected_account.name.clone(),
-                            account_name=selected_account.name.clone(),
+                            account_name=selected_account.account_name.clone(),
                             file_key=file_key,
                             node_ref=node_ref,
                             on:click=move |_|

@@ -44,6 +44,7 @@ query GetAccountProfilePageDataQuery($accountName: String!) {
     telno
     birthdate
     gender
+    isDefault
     account {
       accountName
     }

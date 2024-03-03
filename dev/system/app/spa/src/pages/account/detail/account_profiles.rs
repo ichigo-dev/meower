@@ -127,6 +127,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                         gender=gender,
                         avatar_file_key=avatar_file_key,
                         cover_file_key=cover_file_key,
+                        is_default=profile.is_default,
                     )
                 }
             }

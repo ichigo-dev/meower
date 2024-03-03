@@ -2,10 +2,27 @@
 //! Account profile card.
 //------------------------------------------------------------------------------
 
+use crate::AppState;
 use crate::components::*;
 use crate::utils::props::*;
+use crate::utils::request_graphql::post_graphql;
 
+use graphql_client::GraphQLQuery;
+use rust_i18n::t;
 use sycamore::prelude::*;
+use sycamore::futures::spawn_local_scoped;
+
+
+//------------------------------------------------------------------------------
+/// GraphQL.
+//------------------------------------------------------------------------------
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
+struct SetDefaultAccountProfile;
 
 
 //------------------------------------------------------------------------------
@@ -26,6 +43,7 @@ pub struct AccountProfileCardProps
     pub gender: String,
     pub avatar_file_key: String,
     pub cover_file_key: String,
+    pub is_default: bool,
 }
 
 
@@ -36,6 +54,7 @@ pub struct AccountProfileCardProps
 pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
 {
     let edit_href = format!("/account/profile/edit/{}", props.token);
+
     view!
     {
         Box(classes=StrProp("padding_bottom_md filled shadow_md radius_md").into())
@@ -62,15 +81,80 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                     file_key=OptionProp(Some(props.avatar_file_key)).into(),
                     size=AvatarSize::XXXXL.into(),
                 )
-                FloatingButton
                 (
-                    icon=view! { Icon(icon=IconKind::Pen.into()) },
+                    if props.is_default
+                    {
+                        view!
+                        {
+                            Chip
+                            (
+                                variant=ChipVariant::Filled.into(),
+                                attr:style="
+                                    position: absolute;
+                                    top: var(--spacing-sm);
+                                    left: var(--spacing-sm);
+                                ",
+                            )
+                            {
+                                "default"
+                            }
+                        }
+                    }
+                    else
+                    {
+                        view! {}
+                    }
+                )
+                Tooltip
+                (
+                    description=view!
+                    {
+                        (t!("pages.account.profile.account_profile_card.button.edit"))
+                    },
+                    position=TooltipPosition::Bottom.into(),
                     attr:style="
                         position: absolute;
                         top: var(--spacing-sm);
                         right: var(--spacing-sm);
                     ",
-                    href=OptionProp(Some(edit_href)).into(),
+                )
+                {
+                    FloatingButton
+                    (
+                        icon=view! { Icon(icon=IconKind::Pen.into()) },
+                        href=OptionProp(Some(edit_href)).into(),
+                    )
+                }
+                (
+                    if props.is_default
+                    {
+                        view! {}
+                    }
+                    else
+                    {
+                        view!
+                        {
+                            Tooltip
+                            (
+                                description=view!
+                                {
+                                    (t!("pages.account.profile.account_profile_card.button.default"))
+                                },
+                                position=TooltipPosition::Bottom.into(),
+                                attr:style="
+                                    position: absolute;
+                                    top: var(--spacing-sm);
+                                    right: calc(44px + var(--spacing-sm) * 2);
+                                ",
+                            )
+                            {
+                                FloatingButton
+                                (
+                                    icon=view! { Icon(icon=IconKind::Person.into()) },
+                                )
+                            }
+                        }
+                    }
                 )
             }
             Box(classes=StrProp("flex flex_column flex_align_center").into())

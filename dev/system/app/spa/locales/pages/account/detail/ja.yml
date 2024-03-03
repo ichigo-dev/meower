@@ -4,3 +4,7 @@ pages:
       heading: "アカウント詳細"
       button:
         create_profile: "プロフィールを追加"
+      account_profile_card:
+        button:
+          edit: "プロフィールを編集"
+          default: "デフォルトに設定"

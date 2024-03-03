@@ -6,6 +6,8 @@ use meower_account_entity::account::ActiveModel as AccountActiveModel;
 use meower_account_entity::account::Column as AccountColumn;
 use meower_account_entity::account::Entity as AccountEntity;
 use meower_account_entity::account::Model as AccountModel;
+use meower_account_entity::account_profile::Column as AccountProfileColumn;
+use meower_account_entity::account_profile::Entity as AccountProfileEntity;
 use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
 use meower_account_entity::account_workspace::ActiveModel as AccountWorkspaceActiveModel;
 use meower_account_entity::workspace::ActiveModel as WorkspaceActiveModel;
@@ -163,6 +165,56 @@ impl AccountMutation
             account_profile.account_profile_id
         );
         account.default_workspace_id = ActiveValue::Set(workspace.workspace_id);
+        let account = match account.validate_and_update(tsx).await
+        {
+            Ok(account) => account,
+            Err(e) => return Err(e.get_message().into()),
+        };
+
+        Ok(account)
+    }
+
+    //--------------------------------------------------------------------------
+    /// Sets default account profile.
+    //--------------------------------------------------------------------------
+    async fn set_default_account_profile
+    (
+        &self,
+        ctx: &Context<'_>,
+        account_name: String,
+        account_profile_token: String,
+    ) -> Result<AccountModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+
+        let account = match AccountEntity::find()
+            .filter(AccountColumn::AccountName.eq(account_name))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account) => account,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+        if account.public_user_id != jwt_claims.public_user_id
+        {
+            return Err(t!("system.error.unauthorized").into());
+        }
+
+        let account_profile = match AccountProfileEntity::find()
+            .filter(AccountProfileColumn::Token.eq(account_profile_token))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account_profile) => account_profile,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        let mut account: AccountActiveModel = account.into();
+        account.default_account_profile_id
+            = ActiveValue::Set(account_profile.account_profile_id);
         let account = match account.validate_and_update(tsx).await
         {
             Ok(account) => account,

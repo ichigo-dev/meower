@@ -102,6 +102,10 @@ type AccountProfile {
 	Gets the cover.
 	"""
 	cover: AccountProfileCover
+	"""
+	Gets flag if this is the default account profile.
+	"""
+	isDefault: Boolean!
 }
 
 type AccountProfileAvatar {
@@ -259,6 +263,10 @@ type MutationRoot {
 	Creates account.
 	"""
 	createAccount(input: CreateAccountInput!): Account!
+	"""
+	Sets default account profile.
+	"""
+	setDefaultAccountProfile(accountName: String!, accountProfileToken: String!): Account!
 	"""
 	Creates account profile.
 	"""

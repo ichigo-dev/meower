@@ -189,6 +189,23 @@ impl Model
             .await
             .unwrap()
     }
+
+    //--------------------------------------------------------------------------
+    /// Gets flag if this is the default account profile.
+    //--------------------------------------------------------------------------
+    pub async fn is_default( &self, ctx: &Context<'_> ) -> bool
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let account = self.find_related(AccountEntity).one(tsx).await.unwrap();
+        match account
+        {
+            Some(account) =>
+            {
+                account.default_account_profile_id == self.account_profile_id
+            },
+            None => false,
+        }
+    }
 }
 
 

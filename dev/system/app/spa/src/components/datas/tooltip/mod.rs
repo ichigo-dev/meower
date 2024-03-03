@@ -45,11 +45,10 @@ pub fn Tooltip<G: Html>( props: TooltipProps<G> ) -> View<G>
                 span
                 (
                     class="width_full",
-                    style=
-                    "
-                    display: inline-block;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                    style="
+                        display: inline-block;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     ",
                 )
                 {
