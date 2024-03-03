@@ -123,6 +123,11 @@ impl AccountProfileCoverMutation
             let binary = BASE64_STANDARD.decode(base64.as_bytes()).unwrap();
             let file_len = binary.len().try_into().unwrap_or_default();
 
+            if content_type.starts_with("image/") == false
+            {
+                return Err(t!("system.error.invalid_format").into());
+            }
+
             let account_profile_id = account_profile.account_profile_id;
             let cover = AccountProfileCoverActiveModel
             {

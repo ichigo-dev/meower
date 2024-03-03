@@ -114,16 +114,6 @@ pub fn AccountForm<G: Html>() -> View<G>
             on_submit=Box::new(save_handler),
         )
         {
-            (
-                if alert_message.get_clone().len() > 0
-                {
-                    view! { Alert { (alert_message.get_clone()) } }
-                }
-                else
-                {
-                    view! {}
-                }
-            )
             Label
             (
                 label=t!("pages.account.create.form.account_name.label"),
@@ -152,6 +142,16 @@ pub fn AccountForm<G: Html>() -> View<G>
                     value=StringProp(user_email).into(),
                 )
             }
+            (
+                if alert_message.get_clone().len() > 0
+                {
+                    view! { Alert { (alert_message.get_clone()) } }
+                }
+                else
+                {
+                    view! {}
+                }
+            )
             Box(classes=StrProp("flex flex_row flex_justify_between width_full").into())
             {
                 Button

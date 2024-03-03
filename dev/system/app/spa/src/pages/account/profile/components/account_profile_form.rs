@@ -327,16 +327,6 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
             on_submit=Box::new(save_handler),
         )
         {
-            (
-                if alert_message.get_clone().len() > 0
-                {
-                    view! { Alert { (alert_message.get_clone()) } }
-                }
-                else
-                {
-                    view! {}
-                }
-            )
             Label(label=t!("pages.account.components.account_profile.form.cover.label"))
             {
                 ProfileCover
@@ -614,6 +604,16 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     )
                 }
             }
+            (
+                if alert_message.get_clone().len() > 0
+                {
+                    view! { Alert { (alert_message.get_clone()) } }
+                }
+                else
+                {
+                    view! {}
+                }
+            )
             Box(classes=StrProp("flex flex_row flex_justify_between width_full").into())
             {
                 Button
