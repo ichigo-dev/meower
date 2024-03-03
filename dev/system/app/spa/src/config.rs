@@ -14,9 +14,12 @@ pub struct Config
     pub api_url: String,
     pub client_id_key: String,
     pub client_id: String,
-    pub access_token: String,
     pub public_user_id: String,
     pub user_email: String,
+
+    // This is the initial value of the access token, and the access token
+    // actually used is managed by the AppState.
+    pub initial_access_token: String,
 }
 
 impl Config
@@ -37,7 +40,7 @@ impl Config
             .unwrap()
             .get_attribute("data-value")
             .unwrap_or("".to_string());
-        let access_token = document
+        let initial_access_token = document
             .get_element_by_id(std::env!("ACCESS_TOKEN_KEY"))
             .unwrap()
             .get_attribute("data-value")
@@ -60,17 +63,9 @@ impl Config
             api_url,
             client_id_key,
             client_id,
-            access_token,
             public_user_id,
             user_email,
+            initial_access_token,
         }
-    }
-
-    //--------------------------------------------------------------------------
-    /// Updates the access token.
-    //--------------------------------------------------------------------------
-    pub fn update_access_token( &mut self, access_token: &str )
-    {
-        self.access_token = access_token.to_string();
     }
 }

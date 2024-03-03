@@ -44,9 +44,9 @@ pub async fn ProfileAvatar<G: Html>( props: ProfileAvatarProps<G> ) -> View<G>
                     "default".to_string()
                 };
 
-                let mut state: AppState = use_context();
+                let state: AppState = use_context();
                 let path = format!("account/avatar/{}", file_key);
-                let avatar = get(&mut state, &path, "")
+                let avatar = get(&state, &path, "")
                     .await
                     .unwrap();
                 let headers = avatar.headers();

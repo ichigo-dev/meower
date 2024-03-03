@@ -61,9 +61,9 @@ pub async fn ProfileCover<G: Html>( props: ProfileCoverProps<G> ) -> View<G>
                     "default".to_string()
                 };
 
-                let mut state: AppState = use_context();
+                let state: AppState = use_context();
                 let path = format!("account/cover/{}", file_key);
-                let cover = get(&mut state, &path, "")
+                let cover = get(&state, &path, "")
                     .await
                     .unwrap();
                 let headers = cover.headers();

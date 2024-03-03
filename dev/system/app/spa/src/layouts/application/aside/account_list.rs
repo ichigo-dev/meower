@@ -49,10 +49,10 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
 
     create_resource(async move
     {
-        let mut state: AppState = use_context();
+        let state: AppState = use_context();
         if let Ok(data) = post_graphql::<GetAsideDataQuery>
         (
-            &mut state,
+            &state,
             "/account/graphql",
              get_aside_data_query::Variables
              {
@@ -84,10 +84,10 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
 
             spawn_local_scoped(async move
             {
-                let mut state: AppState = use_context();
+                let state: AppState = use_context();
                 let _ = post_graphql::<SelectAccount>
                 (
-                    &mut state,
+                    &state,
                     "/account/graphql",
                      select_account::Variables
                      {

@@ -18,20 +18,20 @@ use rust_i18n::t;
 #[allow(dead_code)]
 pub async fn try_request_graphql_inner<Q: GraphQLQuery>
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     body: &QueryBody<Q::Variables>,
     method: Method,
 ) -> Result<ReqwestResponse, String>
 {
     let client = &state.client;
-    let config = &mut state.config;
+    let config = &state.config;
 
     let endpoint = endpoint.trim_start_matches('/');
     let url = format!("{}/{}", config.api_url, endpoint);
     match client
         .request(method.clone(), url.clone())
-        .bearer_auth(&config.access_token)
+        .bearer_auth(&state.access_token.read().unwrap())
         .json(&body)
         .send()
         .await
@@ -44,7 +44,7 @@ pub async fn try_request_graphql_inner<Q: GraphQLQuery>
 // Request
 pub async fn request_graphql_inner<Q: GraphQLQuery>
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     variables: Q::Variables,
     method: Method,
@@ -81,7 +81,7 @@ pub async fn request_graphql_inner<Q: GraphQLQuery>
 
 pub async fn request_graphql<Q: GraphQLQuery>
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     variables: Q::Variables,
     method: Method,
@@ -123,7 +123,7 @@ pub async fn request_graphql<Q: GraphQLQuery>
 #[allow(dead_code)]
 pub async fn post_graphql<Q: GraphQLQuery>
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     variables: Q::Variables,
 ) -> Result<Q::ResponseData, String>

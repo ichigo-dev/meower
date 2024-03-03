@@ -7,6 +7,7 @@ use crate::utils::request_graphql::post_graphql;
 use crate::types::SelectedAccount;
 
 use std::str::FromStr;
+use std::sync::{ Arc, RwLock };
 
 use chrono::Locale;
 use graphql_client::GraphQLQuery;
@@ -37,6 +38,7 @@ pub struct AppState
     pub client: Client,
     pub selected_account: Signal<Option<SelectedAccount>>,
     pub datetime_locale: Locale,
+    pub access_token: Arc<RwLock<String>>,
 }
 
 impl AppState
@@ -68,18 +70,24 @@ impl AppState
             )
             .unwrap_or(Locale::en_US);
 
-        let mut state = Self
+        let access_token = Arc::new
+        (
+            RwLock::new(config.initial_access_token.clone())
+        );
+
+        let state = Self
         {
             config,
             client,
             selected_account: create_signal(None),
             datetime_locale,
+            access_token,
         };
 
         // Initializes the account state.
         let data = post_graphql::<GetAccountStateDataQuery>
         (
-            &mut state,
+            &state,
             "/account/graphql",
             get_account_state_data_query::Variables
             {

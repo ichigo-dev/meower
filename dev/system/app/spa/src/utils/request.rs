@@ -11,10 +11,10 @@ use rust_i18n::t;
 //------------------------------------------------------------------------------
 /// Refreshes the access token.
 //------------------------------------------------------------------------------
-pub async fn refresh_token( state: &mut AppState ) -> Result<(), String>
+pub async fn refresh_token( state: &AppState ) -> Result<(), String>
 {
     let client = &state.client;
-    let config = &mut state.config;
+    let config = &state.config;
 
     let refresh_url = format!("{}/auth/refresh_token", config.app_url);
     let refresh_response = match client.get(refresh_url).send().await
@@ -27,7 +27,8 @@ pub async fn refresh_token( state: &mut AppState ) -> Result<(), String>
     {
         return Err(t!("common.api.unauthorized.error"));
     }
-    config.update_access_token(&token);
+    let mut access_token = state.access_token.write().unwrap();
+    *access_token = token.clone();
     Ok(())
 }
 
@@ -39,21 +40,21 @@ pub async fn refresh_token( state: &mut AppState ) -> Result<(), String>
 // Tries a request.
 pub async fn try_request
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     body: &str,
     method: Method,
 ) -> Result<Response, String>
 {
     let client = &state.client;
-    let config = &mut state.config;
+    let config = &state.config;
     let body = body.to_string();
 
     let endpoint = endpoint.trim_start_matches('/');
     let url = format!("{}/{}", config.api_url, endpoint);
     match client
         .request(method.clone(), url.clone())
-        .bearer_auth(&config.access_token)
+        .bearer_auth(&state.access_token.read().unwrap())
         .body(body.clone())
         .send()
         .await
@@ -66,7 +67,7 @@ pub async fn try_request
 // Request
 pub async fn request
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     body: &str,
     method: Method,
@@ -103,7 +104,7 @@ pub async fn request
 #[allow(dead_code)]
 pub async fn get
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     body: &str,
 ) -> Result<Response, String>
@@ -115,7 +116,7 @@ pub async fn get
 #[allow(dead_code)]
 pub async fn post
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     body: &str,
 ) -> Result<Response, String>
@@ -127,7 +128,7 @@ pub async fn post
 #[allow(dead_code)]
 pub async fn put
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     body: &str,
 ) -> Result<Response, String>
@@ -139,7 +140,7 @@ pub async fn put
 #[allow(dead_code)]
 pub async fn delete
 (
-    state: &mut AppState,
+    state: &AppState,
     endpoint: &str,
     body: &str,
 ) -> Result<Response, String>

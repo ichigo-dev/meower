@@ -90,7 +90,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
     let save_handler = move |values: FormValues, _|
     {
-        let mut state = state.clone();
+        let state = state.clone();
 
         let birthdate = match values.get("birthdate")
         {
@@ -169,7 +169,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
             {
                 match post_graphql::<UpdateAccountProfile>
                 (
-                    &mut state,
+                    &state,
                     "/account/graphql",
                      update_account_profile::Variables
                      {
@@ -252,7 +252,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
             {
                 match post_graphql::<CreateAccountProfile>
                 (
-                    &mut state,
+                    &state,
                     "/account/graphql",
                      create_account_profile::Variables
                      {
@@ -280,7 +280,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
                         post_graphql::<CreateAccountProfileAdditional>
                         (
-                            &mut state,
+                            &state,
                             "/account/graphql",
                             create_account_profile_additional::Variables
                             {

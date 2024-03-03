@@ -35,10 +35,10 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
     let account_profiles = create_signal(Vec::new());
     create_resource(async move
     {
-        let mut state: AppState = use_context();
+        let state: AppState = use_context();
         if let Ok(data) = post_graphql::<GetAccountProfilePageDataQuery>
         (
-            &mut state,
+            &state,
             "/account/graphql",
              get_account_profile_page_data_query::Variables
              {
