@@ -614,23 +614,40 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     )
                 }
             }
-            Button
-            (
-                button_type=StrProp("submit").into(),
-                classes=StrProp("flex_align_self_end").into(),
-                round=ButtonRound::Full.into(),
-            )
+            Box(classes=StrProp("flex flex_row flex_justify_between width_full").into())
             {
+                Button
                 (
-                    if props.token.is_some()
+                    button_type=StrProp("button").into(),
+                    round=ButtonRound::Full.into(),
+                    variant=ButtonVariant::Outlined.into(),
+                    on:click=move |_|
                     {
-                        t!("pages.account.components.account_profile.form.button.update")
-                    }
-                    else
-                    {
-                        t!("pages.account.components.account_profile.form.button.send")
-                    }
+                        let window = web_sys::window().unwrap();
+                        let history = window.history().unwrap();
+                        let _ = history.back();
+                    },
                 )
+                {
+                    (t!("pages.account.components.account_profile.form.button.cancel"))
+                }
+                Button
+                (
+                    button_type=StrProp("submit").into(),
+                    round=ButtonRound::Full.into(),
+                )
+                {
+                    (
+                        if props.token.is_some()
+                        {
+                            t!("pages.account.components.account_profile.form.button.update")
+                        }
+                        else
+                        {
+                            t!("pages.account.components.account_profile.form.button.send")
+                        }
+                    )
+                }
             }
         }
     }

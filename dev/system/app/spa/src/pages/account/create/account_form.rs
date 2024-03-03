@@ -152,14 +152,32 @@ pub fn AccountForm<G: Html>() -> View<G>
                     value=StringProp(user_email).into(),
                 )
             }
-            Button
-            (
-                button_type=StrProp("submit").into(),
-                classes=StrProp("flex_align_self_end").into(),
-                round=ButtonRound::Full.into(),
-            )
+            Box(classes=StrProp("flex flex_row flex_justify_between width_full").into())
             {
-                (t!("pages.account.create.form.button.send"))
+                Button
+                (
+                    button_type=StrProp("button").into(),
+                    round=ButtonRound::Full.into(),
+                    variant=ButtonVariant::Outlined.into(),
+                    on:click=move |_|
+                    {
+                        let window = web_sys::window().unwrap();
+                        let history = window.history().unwrap();
+                        let _ = history.back();
+                    },
+                )
+                {
+                    (t!("pages.account.create.form.button.cancel"))
+                }
+                Button
+                (
+                    button_type=StrProp("submit").into(),
+                    classes=StrProp("flex_align_self_end").into(),
+                    round=ButtonRound::Full.into(),
+                )
+                {
+                    (t!("pages.account.create.form.button.send"))
+                }
             }
         }
     }

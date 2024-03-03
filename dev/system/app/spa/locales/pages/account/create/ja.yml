@@ -11,3 +11,4 @@ pages:
           placeholder: "meower@example.com"
         button:
           send: "作成"
+          cancel: "キャンセル"
