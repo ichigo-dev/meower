@@ -127,8 +127,6 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                     let cloned_name = name.clone();
                     let cloned_file_key = file_key.clone();
                     let cloned_state = state.clone();
-                    let cloned_selected_account_name = selected_account_name
-                        .get_clone();
 
                     view!
                     {
@@ -162,8 +160,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                                 navigate(&href);
 
                                 let state = cloned_state.clone();
-                                let account_name = cloned_selected_account_name
-                                    .clone();
+                                let account_name = account_name.clone();
                                 spawn_local_scoped(async move
                                 {
                                     let _ = post_graphql::<SelectAccount>

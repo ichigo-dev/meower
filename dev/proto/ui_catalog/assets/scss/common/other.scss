@@ -6,9 +6,11 @@
 
 @include responsive.responsive("clickable")
 {
+	cursor: pointer;
+
 	&:hover
 	{
-		cursor: pointer;
+		opacity: 0.8;
 	}
 }
 
