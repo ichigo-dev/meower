@@ -43,7 +43,7 @@ pub struct AccountProfileCardProps
     pub gender: String,
     pub avatar_file_key: String,
     pub cover_file_key: String,
-    pub is_default: bool,
+    pub default_token: Signal<String>,
 }
 
 
@@ -53,7 +53,17 @@ pub struct AccountProfileCardProps
 #[component]
 pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
 {
+    let state: AppState = use_context();
     let edit_href = format!("/account/profile/edit/{}", props.token);
+
+    let cloned_state = state.clone();
+    let cloned_account_name = props.account_name.clone();
+    let cloned_token = props.token.clone();
+
+    let this_token = props.token.clone();
+    let is_default = move || props.default_token.get_clone() == this_token;
+    let this_token2 = props.token.clone();
+    let is_default2 = move || props.default_token.get_clone() == this_token2;
 
     view!
     {
@@ -82,7 +92,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                     size=AvatarSize::XXXXL.into(),
                 )
                 (
-                    if props.is_default
+                    if is_default()
                     {
                         view!
                         {
@@ -126,12 +136,39 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                     )
                 }
                 (
-                    if props.is_default
+                    if is_default2()
                     {
                         view! {}
                     }
                     else
                     {
+                        let cloned_state_inner = cloned_state.clone();
+                        let cloned_account_name_inner = cloned_account_name.clone();
+                        let cloned_token_inner = cloned_token.clone();
+                        let set_default_handler = move |_|
+                        {
+                            let state = cloned_state_inner.clone();
+                            let account_name = cloned_account_name_inner.clone();
+                            let account_profile_token = cloned_token_inner.clone();
+                            props.default_token.set
+                            (
+                                account_profile_token.clone()
+                            );
+                            spawn_local_scoped(async move
+                            {
+                                let _ = post_graphql::<SetDefaultAccountProfile>
+                                (
+                                    &state,
+                                    "/account/graphql",
+                                     set_default_account_profile::Variables
+                                     {
+                                         account_name,
+                                         account_profile_token,
+                                     },
+                                ).await;
+                            });
+                        };
+
                         view!
                         {
                             Tooltip
@@ -150,7 +187,11 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                             {
                                 FloatingButton
                                 (
-                                    icon=view! { Icon(icon=IconKind::Person.into()) },
+                                    icon=view!
+                                    {
+                                        Icon(icon=IconKind::Person.into())
+                                    },
+                                    on:click=set_default_handler,
                                 )
                             }
                         }

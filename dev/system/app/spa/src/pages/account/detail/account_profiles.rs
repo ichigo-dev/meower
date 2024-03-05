@@ -49,6 +49,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
             account_profiles.set(data.account_profiles);
         };
     });
+    let default_token = create_signal(String::new());
 
     view!
     {
@@ -111,6 +112,11 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                     None => "".to_string(),
                 };
 
+                if profile.is_default
+                {
+                    default_token.set(profile.token.clone());
+                };
+
                 view!
                 {
                     AccountProfileCard
@@ -127,7 +133,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                         gender=gender,
                         avatar_file_key=avatar_file_key,
                         cover_file_key=cover_file_key,
-                        is_default=profile.is_default,
+                        default_token=default_token,
                     )
                 }
             }
