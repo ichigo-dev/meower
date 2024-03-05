@@ -169,6 +169,7 @@ impl AccountProfileMutation
         account_profile.telno = ActiveValue::Set(input.telno);
         account_profile.bio = ActiveValue::Set(input.bio);
         account_profile.birthdate = ActiveValue::Set(input.birthdate);
+        account_profile.gender = ActiveValue::Set(input.gender);
         let account_profile = match account_profile
             .validate_and_update(tsx)
             .await
