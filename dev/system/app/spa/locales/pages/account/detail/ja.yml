@@ -9,3 +9,10 @@ pages:
           edit: "プロフィールを編集"
           default: "デフォルトに設定"
           remove: "プロフィールを削除"
+        dialog:
+          remove:
+            head: "プロフィールを削除しますか？"
+            body: "この操作は取り消せません。"
+            button:
+              cancel: "キャンセル"
+              remove: "削除"

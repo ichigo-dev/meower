@@ -183,6 +183,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
 
                         let cloned_state_inner2 = cloned_state.clone();
                         let cloned_token_inner2 = cloned_token.clone();
+                        let open_delete_confirm_dialog = create_signal(false);
                         let delete_handler = move |_|
                         {
                             let state = cloned_state_inner2.clone();
@@ -199,6 +200,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                      },
                                 ).await
                                 {
+                                    open_delete_confirm_dialog.set(false);
                                     props.update_list_signal.set(true);
                                 };
                             });
@@ -251,8 +253,45 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                     {
                                         Icon(icon=IconKind::Trash.into())
                                     },
-                                    on:click=delete_handler,
+                                    on:click=move |_|
+                                    {
+                                        open_delete_confirm_dialog.set(true);
+                                    },
                                 )
+                                Dialog(open=open_delete_confirm_dialog)
+                                {
+                                    DialogHead
+                                    {
+                                        (t!("pages.account.profile.account_profile_card.dialog.remove.head"))
+                                    }
+                                    DialogBody
+                                    {
+                                        (t!("pages.account.profile.account_profile_card.dialog.remove.body"))
+                                    }
+                                    DialogFoot(classes=StrProp("flex flex_gap_md").into())
+                                    {
+                                        Button
+                                        (
+                                            variant=ButtonVariant::Outlined.into(),
+                                            on:click=move |_|
+                                            {
+                                                open_delete_confirm_dialog.set(false);
+                                            },
+                                        )
+                                        {
+                                            (t!("pages.account.profile.account_profile_card.dialog.remove.button.cancel"))
+                                        }
+                                        Button
+                                        (
+                                            color=Colors::Error.into(),
+                                            variant=ButtonVariant::Filled.into(),
+                                            on:click=delete_handler,
+                                        )
+                                        {
+                                            (t!("pages.account.profile.account_profile_card.dialog.remove.button.remove"))
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

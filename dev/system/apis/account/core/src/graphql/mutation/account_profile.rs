@@ -2,6 +2,7 @@
 //! AccountProfile mutation.
 //------------------------------------------------------------------------------
 
+use crate::Config;
 use meower_account_entity::account::Column as AccountColumn;
 use meower_account_entity::account::Entity as AccountEntity;
 use meower_account_entity::account_profile::Column as AccountProfileColumn;
@@ -9,12 +10,16 @@ use meower_account_entity::account_profile::Entity as AccountProfileEntity;
 use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
 use meower_account_entity::account_profile::Gender as AccountProfileGender;
 use meower_account_entity::account_profile::Model as AccountProfileModel;
+use meower_account_entity::account_profile_avatar::Entity as AccountProfileAvatarEntity;
+use meower_account_entity::account_profile_cover::Entity as AccountProfileCoverEntity;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
 
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
+use object_store::ObjectStore;
+use object_store::path::Path as StoragePath;
 use rust_i18n::t;
 use sea_orm::{
     ActiveValue,
@@ -186,6 +191,8 @@ impl AccountProfileMutation
     ) -> Result<bool>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let config = ctx.data::<Config>().unwrap();
+        let storage = ctx.data::<Arc<Box<dyn ObjectStore>>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
 
         let account_profile = match AccountProfileEntity::find()
@@ -212,10 +219,37 @@ impl AccountProfileMutation
             return Err(t!("system.error.unauthorized").into());
         }
 
-        if account.default_account_profile_id == account_profile.account_profile_id
+        let default_account_profile_id = account.default_account_profile_id;
+        if default_account_profile_id == account_profile.account_profile_id
         {
             return Err(t!("system.error.fatal").into());
         }
+
+        if let Some(avatar) = account_profile
+            .find_related(AccountProfileAvatarEntity)
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            let path = StoragePath::from
+            (
+                config.avatar_path.clone() + "/" + &avatar.file_key
+            );
+            storage.delete(&path).await.unwrap();
+        };
+
+        if let Some(cover) = account_profile
+            .find_related(AccountProfileCoverEntity)
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            let path = StoragePath::from
+            (
+                config.cover_path.clone() + "/" + &cover.file_key
+            );
+            storage.delete(&path).await.unwrap();
+        };
 
         if let Err(e) = account_profile.delete(tsx).await
         {
