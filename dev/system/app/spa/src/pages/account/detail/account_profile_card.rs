@@ -25,6 +25,14 @@ use sycamore::futures::spawn_local_scoped;
 )]
 struct SetDefaultAccountProfile;
 
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
+struct DeleteAccountProfile;
+
 
 //------------------------------------------------------------------------------
 /// Props.
@@ -45,6 +53,7 @@ pub struct AccountProfileCardProps
     pub avatar_file_key: String,
     pub cover_file_key: String,
     pub default_token: Signal<String>,
+    pub update_list_signal: Signal<bool>,
 }
 
 
@@ -151,13 +160,9 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                             let state = cloned_state_inner.clone();
                             let account_name = cloned_account_name_inner.clone();
                             let account_profile_token = cloned_token_inner.clone();
-                            props.default_token.set
-                            (
-                                account_profile_token.clone()
-                            );
                             spawn_local_scoped(async move
                             {
-                                let _ = post_graphql::<SetDefaultAccountProfile>
+                                if let Ok(data) = post_graphql::<SetDefaultAccountProfile>
                                 (
                                     &state,
                                     "/account/graphql",
@@ -166,7 +171,36 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                          account_name,
                                          account_profile_token,
                                      },
-                                ).await;
+                                ).await
+                                {
+                                    let token = data
+                                        .set_default_account_profile
+                                        .token;
+                                    props.default_token.set(token);
+                                }
+                            });
+                        };
+
+                        let cloned_state_inner2 = cloned_state.clone();
+                        let cloned_token_inner2 = cloned_token.clone();
+                        let delete_handler = move |_|
+                        {
+                            let state = cloned_state_inner2.clone();
+                            let token = cloned_token_inner2.clone();
+                            spawn_local_scoped(async move
+                            {
+                                if let Ok(_) = post_graphql::<DeleteAccountProfile>
+                                (
+                                    &state,
+                                    "/account/graphql",
+                                     delete_account_profile::Variables
+                                     {
+                                         token,
+                                     },
+                                ).await
+                                {
+                                    props.update_list_signal.set(true);
+                                };
                             });
                         };
 
@@ -217,6 +251,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                     {
                                         Icon(icon=IconKind::Trash.into())
                                     },
+                                    on:click=delete_handler,
                                 )
                             }
                         }

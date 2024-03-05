@@ -83,6 +83,14 @@ mutation SetDefaultAccountProfile(
     accountName: $accountName,
     accountProfileToken: $accountProfileToken
   ) {
-    accountName
+    token
   }
+}
+
+
+################################################################################
+# Deletes account profile
+################################################################################
+mutation DeleteAccountProfile($token: String!) {
+  deleteAccountProfile(token: $token)
 }

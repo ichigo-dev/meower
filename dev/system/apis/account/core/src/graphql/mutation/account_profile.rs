@@ -174,4 +174,54 @@ impl AccountProfileMutation
 
         Ok(account_profile)
     }
+
+    //--------------------------------------------------------------------------
+    /// Deletes account profile.
+    //--------------------------------------------------------------------------
+    async fn delete_account_profile
+    (
+        &self,
+        ctx: &Context<'_>,
+        token: String,
+    ) -> Result<bool>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+
+        let account_profile = match AccountProfileEntity::find()
+            .filter(AccountProfileColumn::Token.eq(&token))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account_profile) => account_profile,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        let account = match account_profile.find_related(AccountEntity)
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account) => account,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        if jwt_claims.public_user_id != account.public_user_id
+        {
+            return Err(t!("system.error.unauthorized").into());
+        }
+
+        if account.default_account_profile_id == account_profile.account_profile_id
+        {
+            return Err(t!("system.error.fatal").into());
+        }
+
+        if let Err(e) = account_profile.delete(tsx).await
+        {
+            return Err(e.to_string().into());
+        };
+
+        Ok(true)
+    }
 }

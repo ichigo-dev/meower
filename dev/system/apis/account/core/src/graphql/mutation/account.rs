@@ -6,9 +6,10 @@ use meower_account_entity::account::ActiveModel as AccountActiveModel;
 use meower_account_entity::account::Column as AccountColumn;
 use meower_account_entity::account::Entity as AccountEntity;
 use meower_account_entity::account::Model as AccountModel;
+use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
 use meower_account_entity::account_profile::Column as AccountProfileColumn;
 use meower_account_entity::account_profile::Entity as AccountProfileEntity;
-use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
+use meower_account_entity::account_profile::Model as AccountProfileModel;
 use meower_account_entity::account_workspace::ActiveModel as AccountWorkspaceActiveModel;
 use meower_account_entity::workspace::ActiveModel as WorkspaceActiveModel;
 use meower_entity_ext::ValidateExt;
@@ -183,7 +184,7 @@ impl AccountMutation
         ctx: &Context<'_>,
         account_name: String,
         account_profile_token: String,
-    ) -> Result<AccountModel>
+    ) -> Result<AccountProfileModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
@@ -215,12 +216,11 @@ impl AccountMutation
         let mut account: AccountActiveModel = account.into();
         account.default_account_profile_id
             = ActiveValue::Set(account_profile.account_profile_id);
-        let account = match account.validate_and_update(tsx).await
+        if let Err(e) = account.validate_and_update(tsx).await
         {
-            Ok(account) => account,
-            Err(e) => return Err(e.get_message().into()),
+            return Err(e.get_message().into());
         };
 
-        Ok(account)
+        Ok(account_profile)
     }
 }

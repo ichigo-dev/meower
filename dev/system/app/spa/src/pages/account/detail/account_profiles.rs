@@ -10,7 +10,7 @@ use chrono::NaiveDateTime;
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
-use sycamore::futures::create_resource;
+use sycamore::futures::spawn_local_scoped;
 
 
 //------------------------------------------------------------------------------
@@ -31,25 +31,33 @@ struct GetAccountProfilePageDataQuery;
 #[component(inline_props)]
 pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
 {
-    let state = use_context::<AppState>();
+    let state: AppState = use_context();
     let account_profiles = create_signal(Vec::new());
-    create_resource(async move
+    let default_token = create_signal(String::new());
+    let update_list_signal = create_signal(false);
+
+    create_effect(move ||
     {
         let state: AppState = use_context();
-        if let Ok(data) = post_graphql::<GetAccountProfilePageDataQuery>
-        (
-            &state,
-            "/account/graphql",
-             get_account_profile_page_data_query::Variables
-             {
-                 account_name: account_name,
-             },
-        ).await
+        let cloned_account_name = account_name.clone();
+        update_list_signal.track();
+        spawn_local_scoped(async move
         {
-            account_profiles.set(data.account_profiles);
-        };
+            if let Ok(data) = post_graphql::<GetAccountProfilePageDataQuery>
+            (
+                &state,
+                "/account/graphql",
+                 get_account_profile_page_data_query::Variables
+                 {
+                     account_name: cloned_account_name,
+                 },
+            ).await
+            {
+                account_profiles.set(data.account_profiles);
+                update_list_signal.set_silent(true);
+            };
+        });
     });
-    let default_token = create_signal(String::new());
 
     view!
     {
@@ -134,6 +142,7 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                         avatar_file_key=avatar_file_key,
                         cover_file_key=cover_file_key,
                         default_token=default_token,
+                        update_list_signal=update_list_signal,
                     )
                 }
             }

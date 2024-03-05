@@ -266,7 +266,7 @@ type MutationRoot {
 	"""
 	Sets default account profile.
 	"""
-	setDefaultAccountProfile(accountName: String!, accountProfileToken: String!): Account!
+	setDefaultAccountProfile(accountName: String!, accountProfileToken: String!): AccountProfile!
 	"""
 	Creates account profile.
 	"""
@@ -275,6 +275,10 @@ type MutationRoot {
 	Updates account profile.
 	"""
 	updateAccountProfile(input: UpdateAccountProfileInput!): AccountProfile!
+	"""
+	Deletes account profile.
+	"""
+	deleteAccountProfile(token: String!): Boolean!
 	"""
 	Uploads avatar.
 	"""
