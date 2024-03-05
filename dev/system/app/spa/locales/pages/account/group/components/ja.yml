@@ -1,0 +1,8 @@
+pages:
+  account:
+    group:
+      components:
+        group_form:
+          group_name:
+            label: "グループ名"
+            placeholder: "半角英数字、アンダーバー(_)が使用可能"

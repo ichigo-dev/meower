@@ -1,13 +1,10 @@
 //------------------------------------------------------------------------------
-//! Account.
+//! Account group.
 //------------------------------------------------------------------------------
 
+mod components;
 mod create;
-mod detail;
-mod group;
-mod profile;
-mod routes;
+mod edit;
 
 pub use create::Create;
-pub use detail::Detail;
-pub use routes::{ Routes, Router };
+pub use edit::Edit;

@@ -230,7 +230,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                 Some(selected_account) => selected_account,
                 None =>
                 {
-                    alert_message.set(t!("pages.account.components.account_profile.form.error.account_not_selected"));
+                    alert_message.set(t!("pages.account.profile.components.account_profile_form.error.account_not_selected"));
                     return;
                 },
             };
@@ -327,7 +327,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
             on_submit=Box::new(save_handler),
         )
         {
-            Label(label=t!("pages.account.components.account_profile.form.cover.label"))
+            Label(label=t!("pages.account.profile.components.account_profile_form.cover.label"))
             {
                 ProfileCover
                 (
@@ -398,7 +398,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                                 },
                             )
                             {
-                                (t!("pages.account.components.account_profile.form.cover.button.remove"))
+                                (t!("pages.account.profile.components.account_profile_form.cover.button.remove"))
                             }
                         }
                     }
@@ -411,7 +411,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
             Label
             (
-                label=t!("pages.account.components.account_profile.form.avatar.label"),
+                label=t!("pages.account.profile.components.account_profile_form.avatar.label"),
                 attr:style="align-self: flex-start; width: auto;",
             )
             {
@@ -485,7 +485,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                                 },
                             )
                             {
-                                (t!("pages.account.components.account_profile.form.avatar.button.remove"))
+                                (t!("pages.account.profile.components.account_profile_form.avatar.button.remove"))
                             }
                         }
                     }
@@ -498,69 +498,69 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
             Label
             (
-                label=t!("pages.account.components.account_profile.form.name.label"),
+                label=t!("pages.account.profile.components.account_profile_form.name.label"),
                 required=BoolProp(true).into(),
             )
             {
                 TextField
                 (
                     name=StrProp("name").into(),
-                    placeholder=StringProp(t!("pages.account.components.account_profile.form.name.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.name.placeholder")).into(),
                     required=BoolProp(true).into(),
                     value=StringProp(props.name.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.components.account_profile.form.affiliation.label"))
+            Label(label=t!("pages.account.profile.components.account_profile_form.affiliation.label"))
             {
                 TextField
                 (
                     name=StrProp("affiliation").into(),
-                    placeholder=StringProp(t!("pages.account.components.account_profile.form.affiliation.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.affiliation.placeholder")).into(),
                     value=StringProp(props.affiliation.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.components.account_profile.form.location.label"))
+            Label(label=t!("pages.account.profile.components.account_profile_form.location.label"))
             {
                 TextField
                 (
                     name=StrProp("location").into(),
-                    placeholder=StringProp(t!("pages.account.components.account_profile.form.location.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.location.placeholder")).into(),
                     value=StringProp(props.location.unwrap_or_default()).into(),
                 )
             }
             Label
             (
-                label=t!("pages.account.components.account_profile.form.email.label"),
+                label=t!("pages.account.profile.components.account_profile_form.email.label"),
             )
             {
                 TextField
                 (
                     name=StrProp("email").into(),
-                    placeholder=StringProp(t!("pages.account.components.account_profile.form.email.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.email.placeholder")).into(),
                     field_type=StrProp("email").into(),
                     value=StringProp(props.email.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.components.account_profile.form.telno.label"))
+            Label(label=t!("pages.account.profile.components.account_profile_form.telno.label"))
             {
                 TextField
                 (
                     name=StrProp("telno").into(),
-                    placeholder=StringProp(t!("pages.account.components.account_profile.form.telno.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.telno.placeholder")).into(),
                     value=StringProp(props.telno.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.components.account_profile.form.bio.label"))
+            Label(label=t!("pages.account.profile.components.account_profile_form.bio.label"))
             {
                 TextField
                 (
                     name=StrProp("bio").into(),
-                    placeholder=StringProp(t!("pages.account.components.account_profile.form.bio.placeholder")).into(),
+                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.bio.placeholder")).into(),
                     multiline=BoolProp(true).into(),
                     value=StringProp(props.bio.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.components.account_profile.form.birthdate.label"))
+            Label(label=t!("pages.account.profile.components.account_profile_form.birthdate.label"))
             {
                 TextField
                 (
@@ -569,7 +569,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     value=StringProp(props.birthdate.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.components.account_profile.form.gender.label"))
+            Label(label=t!("pages.account.profile.components.account_profile_form.gender.label"))
             {
                 RadioGroup
                 (
@@ -629,7 +629,7 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     },
                 )
                 {
-                    (t!("pages.account.components.account_profile.form.button.cancel"))
+                    (t!("pages.account.profile.components.account_profile_form.button.cancel"))
                 }
                 Button
                 (
@@ -640,11 +640,11 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     (
                         if props.token.is_some()
                         {
-                            t!("pages.account.components.account_profile.form.button.update")
+                            t!("pages.account.profile.components.account_profile_form.button.update")
                         }
                         else
                         {
-                            t!("pages.account.components.account_profile.form.button.send")
+                            t!("pages.account.profile.components.account_profile_form.button.send")
                         }
                     )
                 }

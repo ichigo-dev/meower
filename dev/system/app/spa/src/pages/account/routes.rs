@@ -15,6 +15,7 @@ use sycamore_router::Route;
 #[derive(Clone, Route)]
 pub enum Routes
 {
+    // Profile
     #[to("/profile/create")]
     ProfileCreate,
 
@@ -24,6 +25,17 @@ pub enum Routes
         token: String,
     },
 
+    // Group
+    #[to("/group/create")]
+    GroupCreate,
+
+    #[to("/group/edit/<group_name>")]
+    GroupEdit
+    {
+        group_name: String,
+    },
+
+    // Account
     #[to("/create")]
     Create,
 
@@ -52,6 +64,11 @@ pub fn Router<G: Html>( route: Routes ) -> View<G>
             Routes::ProfileEdit { token } =>
             {
                 view! { profile::Edit(token=token.clone()) }
+            },
+            Routes::GroupCreate => view! { group::Create },
+            Routes::GroupEdit { group_name } =>
+            {
+                view! { group::Edit(group_name=group_name.clone()) }
             },
             Routes::Create => view! { Create },
             Routes::Detail { account_name } =>

@@ -1,0 +1,4 @@
+pages:
+  account:
+    edit_group:
+      heading: "グループ編集"

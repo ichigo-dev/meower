@@ -1,8 +1,8 @@
 pages:
   account:
-    components:
-      account_profile:
-        form:
+    profile:
+      components:
+        account_profile_form:
           avatar:
             label: "アバター画像"
             button:

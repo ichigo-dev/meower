@@ -1,13 +1,7 @@
 //------------------------------------------------------------------------------
-//! Account.
+//! Group components.
 //------------------------------------------------------------------------------
 
-mod create;
-mod detail;
-mod group;
-mod profile;
-mod routes;
+mod group_form;
 
-pub use create::Create;
-pub use detail::Detail;
-pub use routes::{ Routes, Router };
+pub use group_form::GroupForm;

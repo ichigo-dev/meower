@@ -1,0 +1,4 @@
+pages:
+  account:
+    create_group:
+      heading: "グループ追加"

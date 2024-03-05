@@ -129,7 +129,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                 (
                     description=view!
                     {
-                        (t!("pages.account.profile.account_profile_card.button.edit"))
+                        (t!("pages.account.detail.account_profile_card.button.edit"))
                     },
                     position=TooltipPosition::Bottom.into(),
                     attr:style="
@@ -212,7 +212,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                             (
                                 description=view!
                                 {
-                                    (t!("pages.account.profile.account_profile_card.button.default"))
+                                    (t!("pages.account.detail.account_profile_card.button.default"))
                                 },
                                 position=TooltipPosition::Bottom.into(),
                                 attr:style="
@@ -236,7 +236,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                 color=Colors::Error.into(),
                                 description=view!
                                 {
-                                    (t!("pages.account.profile.account_profile_card.button.remove"))
+                                    (t!("pages.account.detail.account_profile_card.button.remove"))
                                 },
                                 position=TooltipPosition::Bottom.into(),
                                 attr:style="
@@ -262,11 +262,11 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                 {
                                     DialogHead
                                     {
-                                        (t!("pages.account.profile.account_profile_card.dialog.remove.head"))
+                                        (t!("pages.account.detail.account_profile_card.dialog.remove.head"))
                                     }
                                     DialogBody
                                     {
-                                        (t!("pages.account.profile.account_profile_card.dialog.remove.body"))
+                                        (t!("pages.account.detail.account_profile_card.dialog.remove.body"))
                                     }
                                     DialogFoot(classes=StrProp("flex flex_gap_md").into())
                                     {
@@ -279,7 +279,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                             },
                                         )
                                         {
-                                            (t!("pages.account.profile.account_profile_card.dialog.remove.button.cancel"))
+                                            (t!("pages.account.detail.account_profile_card.dialog.remove.button.cancel"))
                                         }
                                         Button
                                         (
@@ -288,7 +288,7 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                             on:click=delete_handler,
                                         )
                                         {
-                                            (t!("pages.account.profile.account_profile_card.dialog.remove.button.remove"))
+                                            (t!("pages.account.detail.account_profile_card.dialog.remove.button.remove"))
                                         }
                                     }
                                 }

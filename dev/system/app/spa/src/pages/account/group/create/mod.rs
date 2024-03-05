@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------
-//! Account profile create page.
+//! Group create page.
 //------------------------------------------------------------------------------
 
 use crate::layouts::application::{ Layout, Main };
-use super::components::AccountProfileForm;
+use super::components::GroupForm;
 
 use rust_i18n::t;
 use sycamore::prelude::*;
@@ -19,9 +19,9 @@ pub fn Create<G: Html>() -> View<G>
     {
         Layout
         {
-            Main(heading=t!("pages.account.create_profile.heading"))
+            Main(heading=t!("pages.account.create_group.heading"))
             {
-                AccountProfileForm
+                GroupForm
             }
         }
     }

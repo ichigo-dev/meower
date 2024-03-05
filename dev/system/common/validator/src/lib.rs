@@ -172,14 +172,14 @@ impl ValidationRule
             // Length
             ValidationRule::MinLength(min) =>
             {
-                if value.len() < *min
+                if value.chars().count() < *min
                 {
                     return Err(ValidationError::TooShort(*min));
                 }
             },
             ValidationRule::MaxLength(max) =>
             {
-                if value.len() > *max
+                if value.chars().count() > *max
                 {
                     return Err(ValidationError::TooLong(*max));
                 }

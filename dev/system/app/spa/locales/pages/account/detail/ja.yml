@@ -1,9 +1,15 @@
 pages:
   account:
-    profile:
+    detail:
       heading: "アカウント詳細"
-      button:
-        create_profile: "プロフィールを追加"
+      profiles:
+        heading: "プロフィール"
+        button:
+          create: "プロフィールを追加"
+      groups:
+        heading: "グループ"
+        button:
+          create: "グループを追加"
       account_profile_card:
         button:
           edit: "プロフィールを編集"
