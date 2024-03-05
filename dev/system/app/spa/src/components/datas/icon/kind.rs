@@ -49,6 +49,8 @@ pub enum IconKind
     Gender,
     Location,
     Phone,
+
+    Trash,
 }
 
 impl IconKind
@@ -97,6 +99,8 @@ impl IconKind
             Self::Gender => "icon_gender".to_string(),
             Self::Location => "icon_location".to_string(),
             Self::Phone => "icon_phone".to_string(),
+
+            Self::Trash => "icon_trash".to_string(),
         }
     }
 }

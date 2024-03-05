@@ -8,3 +8,4 @@ pages:
         button:
           edit: "プロフィールを編集"
           default: "デフォルトに設定"
+          remove: "プロフィールを削除"

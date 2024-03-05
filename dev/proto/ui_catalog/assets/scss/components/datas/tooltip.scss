@@ -149,8 +149,33 @@
 
 				&:before
 				{
+					border: 7px solid transparent;
 					border-top-color: var(--color-#{$color});
 				}
+			}
+
+			&.top .description:before
+			{
+				border: 7px solid transparent;
+				border-top-color: var(--color-#{$color});
+			}
+
+			&.bottom .description:before
+			{
+				border: 7px solid transparent;
+				border-bottom-color: var(--color-#{$color});
+			}
+
+			&.left .description:before
+			{
+				border: 7px solid transparent;
+				border-left-color: var(--color-#{$color});
+			}
+
+			&.right .description:before
+			{
+				border: 7px solid transparent;
+				border-right-color: var(--color-#{$color});
 			}
 		}
 	}

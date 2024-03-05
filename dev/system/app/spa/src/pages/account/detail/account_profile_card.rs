@@ -6,6 +6,7 @@ use crate::AppState;
 use crate::components::*;
 use crate::utils::props::*;
 use crate::utils::request_graphql::post_graphql;
+use crate::variables::*;
 
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
@@ -192,6 +193,30 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                                         Icon(icon=IconKind::Person.into())
                                     },
                                     on:click=set_default_handler,
+                                )
+                            }
+                            Tooltip
+                            (
+                                color=Colors::Error.into(),
+                                description=view!
+                                {
+                                    (t!("pages.account.profile.account_profile_card.button.remove"))
+                                },
+                                position=TooltipPosition::Bottom.into(),
+                                attr:style="
+                                    position: absolute;
+                                    top: var(--spacing-sm);
+                                    right: calc(88px + var(--spacing-sm) * 3);
+                                ",
+                            )
+                            {
+                                FloatingButton
+                                (
+                                    color=Colors::Error.into(),
+                                    icon=view!
+                                    {
+                                        Icon(icon=IconKind::Trash.into())
+                                    },
                                 )
                             }
                         }
