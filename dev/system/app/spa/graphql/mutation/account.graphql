@@ -77,15 +77,21 @@ mutation UpdateAccountProfile(
 ################################################################################
 # Sets default account profile
 ################################################################################
-mutation SetDefaultAccountProfile(
-  $accountName: String!
-  $accountProfileToken: String!
-) {
-  setDefaultAccountProfile(
-    accountName: $accountName,
-    accountProfileToken: $accountProfileToken
-  ) {
-    token
+mutation SetDefaultAccountProfile($input: UpdateAccountInput!) {
+  updateAccount(input: $input) {
+    defaultAccountProfile {
+      token
+    }
+  }
+}
+
+
+################################################################################
+# Updates account public status
+################################################################################
+mutation UpdateAccountPublicStatus($input: UpdateAccountInput!) {
+  updateAccount(input: $input) {
+    accountName
   }
 }
 

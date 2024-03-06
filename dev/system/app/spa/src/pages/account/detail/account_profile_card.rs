@@ -162,21 +162,30 @@ pub fn AccountProfileCard<G: Html>( props: AccountProfileCardProps ) -> View<G>
                             let account_profile_token = cloned_token_inner.clone();
                             spawn_local_scoped(async move
                             {
+                                let input = set_default_account_profile::UpdateAccountInput
+                                {
+                                    account_name: account_name,
+                                    email: None,
+                                    is_public: None,
+                                    default_account_profile_token: Some(account_profile_token),
+                                    default_workspace_name: None,
+                                };
                                 if let Ok(data) = post_graphql::<SetDefaultAccountProfile>
                                 (
                                     &state,
                                     "/account/graphql",
                                      set_default_account_profile::Variables
                                      {
-                                         account_name,
-                                         account_profile_token,
+                                         input
                                      },
                                 ).await
                                 {
-                                    let token = data
-                                        .set_default_account_profile
-                                        .token;
-                                    props.default_token.set(token);
+                                    if let Some(profile) = data
+                                        .update_account
+                                        .default_account_profile
+                                    {
+                                        props.default_token.set(profile.token);
+                                    }
                                 }
                             });
                         };

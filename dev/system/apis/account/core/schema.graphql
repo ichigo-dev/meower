@@ -297,9 +297,9 @@ type MutationRoot {
 	"""
 	createAccount(input: CreateAccountInput!): Account!
 	"""
-	Sets default account profile.
+	Updates account.
 	"""
-	setDefaultAccountProfile(accountName: String!, accountProfileToken: String!): AccountProfile!
+	updateAccount(input: UpdateAccountInput!): Account!
 	"""
 	Creates account profile.
 	"""
@@ -365,6 +365,14 @@ enum Role {
 	MEMBER
 }
 
+
+input UpdateAccountInput {
+	accountName: String!
+	email: String
+	isPublic: Boolean
+	defaultAccountProfileToken: String
+	defaultWorkspaceName: String
+}
 
 input UpdateAccountProfileInput {
 	token: String!

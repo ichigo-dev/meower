@@ -9,9 +9,10 @@ use meower_account_entity::account::Model as AccountModel;
 use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
 use meower_account_entity::account_profile::Column as AccountProfileColumn;
 use meower_account_entity::account_profile::Entity as AccountProfileEntity;
-use meower_account_entity::account_profile::Model as AccountProfileModel;
 use meower_account_entity::account_workspace::ActiveModel as AccountWorkspaceActiveModel;
 use meower_account_entity::workspace::ActiveModel as WorkspaceActiveModel;
+use meower_account_entity::workspace::Column as WorkspaceColumn;
+use meower_account_entity::workspace::Entity as WorkspaceEntity;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
 
@@ -39,6 +40,16 @@ struct CreateAccountInput
     account_name: String,
     email: String,
     is_public: bool,
+}
+
+#[derive(InputObject)]
+struct UpdateAccountInput
+{
+    account_name: String,
+    email: Option<String>,
+    is_public: Option<bool>,
+    default_account_profile_token: Option<String>,
+    default_workspace_name: Option<String>,
 }
 
 
@@ -178,21 +189,20 @@ impl AccountMutation
     }
 
     //--------------------------------------------------------------------------
-    /// Sets default account profile.
+    /// Updates account.
     //--------------------------------------------------------------------------
-    async fn set_default_account_profile
+    async fn update_account
     (
         &self,
         ctx: &Context<'_>,
-        account_name: String,
-        account_profile_token: String,
-    ) -> Result<AccountProfileModel>
+        input: UpdateAccountInput,
+    ) -> Result<AccountModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
 
         let account = match AccountEntity::find()
-            .filter(AccountColumn::AccountName.eq(account_name))
+            .filter(AccountColumn::AccountName.eq(input.account_name))
             .one(tsx)
             .await
             .unwrap()
@@ -205,24 +215,53 @@ impl AccountMutation
             return Err(t!("system.error.unauthorized").into());
         }
 
-        let account_profile = match AccountProfileEntity::find()
-            .filter(AccountProfileColumn::Token.eq(account_profile_token))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account_profile) => account_profile,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
         let mut account: AccountActiveModel = account.into();
-        account.default_account_profile_id
-            = ActiveValue::Set(account_profile.account_profile_id);
-        if let Err(e) = account.validate_and_update(tsx).await
+
+        if let Some(email) = input.email
         {
-            return Err(e.get_message().into());
+            account.email = ActiveValue::Set(email);
+        };
+        if let Some(is_public) = input.is_public
+        {
+            account.is_public = ActiveValue::Set(is_public);
         };
 
-        Ok(account_profile)
+        if let Some(token) = input.default_account_profile_token
+        {
+            let account_profile = match AccountProfileEntity::find()
+                .filter(AccountProfileColumn::Token.eq(token))
+                .one(tsx)
+                .await
+                .unwrap()
+            {
+                Some(account_profile) => account_profile,
+                None => return Err(t!("system.error.not_found").into()),
+            };
+
+            account.default_account_profile_id
+                = ActiveValue::Set(account_profile.account_profile_id);
+        };
+        if let Some(workspace_name) = input.default_workspace_name
+        {
+            let workspace = match WorkspaceEntity::find()
+                .filter(WorkspaceColumn::WorkspaceName.eq(workspace_name))
+                .one(tsx)
+                .await
+                .unwrap()
+            {
+                Some(workspace) => workspace,
+                None => return Err(t!("system.error.not_found").into()),
+            };
+
+            account.default_workspace_id =
+                ActiveValue::Set(workspace.workspace_id);
+        };
+        let account = match account.validate_and_update(tsx).await
+        {
+            Ok(account) => account,
+            Err(e) => return Err(e.get_message().into()),
+        };
+
+        Ok(account)
     }
 }

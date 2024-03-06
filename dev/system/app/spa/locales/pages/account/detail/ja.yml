@@ -7,6 +7,15 @@ pages:
         account_name: "アカウント名: %{account_name}"
         public: "公開中のアカウント"
         private: "非公開のアカウント"
+        dialog:
+          change_public:
+            head: "アカウント公開ステータスの変更"
+            body:
+              to_public: "アカウントを公開にしますか？（公開にすると、グループからの招待を受けられるようになります）"
+              to_private: "アカウントを非公開にしますか？（非公開にすると、グループからの招待が受けられません）"
+            button:
+              cancel: "キャンセル"
+              submit: "変更"
       profiles:
         heading: "プロフィール"
         button:

@@ -153,7 +153,7 @@ pub fn AccountForm<G: Html>() -> View<G>
                 required=BoolProp(true).into(),
             )
             {
-                Checkbox(name=StrProp("is_public").into())
+                Switch(name=StrProp("is_public").into())
             }
             (
                 if alert_message.get_clone().len() > 0
