@@ -77,6 +77,7 @@ pub fn AccountForm<G: Html>() -> View<G>
                         account_name: account.account_name.clone(),
                         name: "".to_string(),
                         avatar_file_key: "".to_string(),
+                        is_public: account.is_public,
                     };
 
                     if let Some(profile) = account.default_account_profile

@@ -64,7 +64,6 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
         };
     });
 
-    let show_profile_href = create_signal("/account/create".to_string());
     let selected_account_name = create_signal(String::new());
 
     create_effect(move ||
@@ -72,14 +71,6 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
         let selected_account = state.selected_account.get_clone();
         if let Some(selected_account) = selected_account
         {
-            show_profile_href.set
-            (
-                format!
-                (
-                    "/account/{}",
-                    selected_account.account_name
-                )
-            );
             selected_account_name.set(selected_account.account_name);
         };
     });
@@ -141,29 +132,13 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                                 }
                                 open.set(false);
 
-                                let selected_account = SelectedAccount
-                                {
-                                    account_name: account_name.clone(),
-                                    name: name.clone(),
-                                    avatar_file_key: file_key.clone(),
-                                };
-                                state.selected_account.set
-                                (
-                                    Some(selected_account)
-                                );
-
-                                let href = format!
-                                (
-                                    "/account/{}",
-                                    &account_name
-                                );
-                                navigate(&href);
-
                                 let state = cloned_state.clone();
                                 let account_name = account_name.clone();
+                                let name = name.clone();
+                                let file_key = file_key.clone();
                                 spawn_local_scoped(async move
                                 {
-                                    let _ = post_graphql::<SelectAccount>
+                                    if let Ok(data) = post_graphql::<SelectAccount>
                                     (
                                         &state,
                                         "/account/graphql",
@@ -171,7 +146,22 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                                          {
                                              account_name,
                                          },
-                                    ).await;
+                                    ).await
+                                    {
+                                        let account = data.select_account;
+                                        let selected_account = SelectedAccount
+                                        {
+                                            account_name: account.account_name.clone(),
+                                            name: name,
+                                            avatar_file_key: file_key,
+                                            is_public: account.is_public,
+                                        };
+                                        state.selected_account.set
+                                        (
+                                            Some(selected_account)
+                                        );
+                                        navigate("/account");
+                                    };
                                 });
                             },
                         )
@@ -198,10 +188,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                 (
                     classes=StrProp("width_full").into(),
                     color=Colors::Transparent.into(),
-                    on:click=move |_|
-                    {
-                        navigate(&show_profile_href.get_clone());
-                    },
+                    href=OptionProp(Some("/account".to_string())).into(),
                 )
                 {
                     (t!("common.aside.account_menu_button.button.show_profile"))
@@ -217,10 +204,7 @@ pub async fn AccountList<G: Html>( open: Signal<bool> ) -> View<G>
                 (
                     classes=StrProp("width_full").into(),
                     color=Colors::Transparent.into(),
-                    on:click=move |_|
-                    {
-                        navigate("/account/create");
-                    },
+                    href=OptionProp(Some("/account/create".to_string())).into(),
                 )
                 {
                     (t!("common.aside.account_menu_button.button.add_account"))

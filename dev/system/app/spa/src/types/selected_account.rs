@@ -12,4 +12,5 @@ pub struct SelectedAccount
     pub account_name: String,
     pub name: String,
     pub avatar_file_key: String,
+    pub is_public: bool,
 }

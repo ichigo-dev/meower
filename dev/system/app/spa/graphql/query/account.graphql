@@ -4,6 +4,7 @@
 query GetAccountStateDataQuery($publicUserId: String!) {
   defaultAccount(publicUserId: $publicUserId) {
     accountName
+    isPublic
     defaultAccountProfile {
       name
       avatar {

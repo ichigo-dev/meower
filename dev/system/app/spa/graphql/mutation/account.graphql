@@ -4,6 +4,7 @@
 mutation SelectAccount($accountName: String!) {
   selectAccount(accountName: $accountName) {
     accountName
+    isPublic
     defaultAccountProfile {
       name
       avatar {
@@ -20,6 +21,7 @@ mutation SelectAccount($accountName: String!) {
 mutation CreateAccount($createAccountInput: CreateAccountInput!) {
   createAccount(input: $createAccountInput) {
     accountName
+    isPublic
     defaultAccountProfile {
       name
       avatar {

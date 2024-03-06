@@ -2,6 +2,11 @@ pages:
   account:
     detail:
       heading: "アカウント詳細"
+      account:
+        heading: "アカウント"
+        account_name: "アカウント名: %{account_name}"
+        public: "公開中のアカウント"
+        private: "非公開のアカウント"
       profiles:
         heading: "プロフィール"
         button:
