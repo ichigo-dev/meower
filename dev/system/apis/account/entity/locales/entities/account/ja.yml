@@ -16,3 +16,5 @@ entities:
       name: "作成日時"
     last_login_at:
       name: "最終ログイン日時"
+    is_public:
+      name: "公開/非公開"

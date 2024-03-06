@@ -9,6 +9,8 @@ pages:
         email:
           label: "メールアドレス"
           placeholder: "meower@example.com"
+        is_public:
+          label: "公開アカウント"
         button:
           send: "作成"
           cancel: "キャンセル"

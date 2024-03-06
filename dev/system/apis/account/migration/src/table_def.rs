@@ -20,6 +20,7 @@ pub(crate) enum Account
     DefaultWorkspaceId,
     CreatedAt,
     LastLoginAt,
+    IsPublic,
 }
 
 
@@ -90,8 +91,15 @@ pub(crate) enum Group
     GroupId,
     GroupName,
     Name,
+    Description,
+    Representative,
+    Location,
+    Email,
+    Telno,
+    FoundedAt,
     CreatedAt,
     UpdatedAt,
+    IsPublic,
 }
 
 

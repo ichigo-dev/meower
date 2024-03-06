@@ -81,6 +81,12 @@ impl MigrationTrait for Migration
                     .default(Expr::current_timestamp())
                     .not_null()
             )
+            .col
+            (
+                ColumnDef::new(Account::IsPublic)
+                    .boolean()
+                    .not_null()
+            )
             .to_owned();
         manager.create_table(table).await?;
 
@@ -94,6 +100,7 @@ impl MigrationTrait for Migration
             "COMMENT ON COLUMN \"account\".\"default_workspace_id\" IS 'Default workspace ID'",
             "COMMENT ON COLUMN \"account\".\"created_at\" IS 'Create date'",
             "COMMENT ON COLUMN \"account\".\"last_login_at\" IS 'Last login date'",
+            "COMMENT ON COLUMN \"account\".\"is_public\" IS 'Is public'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();

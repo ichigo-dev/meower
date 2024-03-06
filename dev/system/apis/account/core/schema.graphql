@@ -20,6 +20,10 @@ type Account {
 	"""
 	lastLoginAt: NaiveDateTime!
 	"""
+	Gets the is public.
+	"""
+	isPublic: Boolean!
+	"""
 	Gets the default account profile.
 	"""
 	defaultAccountProfile: AccountProfile
@@ -165,6 +169,7 @@ input CreateAccountInput {
 	publicUserId: String!
 	accountName: String!
 	email: String!
+	isPublic: Boolean!
 }
 
 """
@@ -202,6 +207,30 @@ type Group {
 	"""
 	name: String!
 	"""
+	Gets the description.
+	"""
+	description: String
+	"""
+	Gets the representative.
+	"""
+	representative: String
+	"""
+	Gets the location.
+	"""
+	location: String
+	"""
+	Gets the email.
+	"""
+	email: String
+	"""
+	Gets the telno.
+	"""
+	telno: String
+	"""
+	Gets the founded date.
+	"""
+	foundedAt: NaiveDateTime
+	"""
 	Gets the create date.
 	"""
 	createdAt: NaiveDateTime!
@@ -209,6 +238,10 @@ type Group {
 	Gets the update date.
 	"""
 	updatedAt: NaiveDateTime!
+	"""
+	Gets the is public.
+	"""
+	isPublic: Boolean!
 	"""
 	Gets the group members.
 	"""

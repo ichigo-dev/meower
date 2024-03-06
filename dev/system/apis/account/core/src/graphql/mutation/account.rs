@@ -38,6 +38,7 @@ struct CreateAccountInput
     public_user_id: String,
     account_name: String,
     email: String,
+    is_public: bool,
 }
 
 
@@ -113,6 +114,7 @@ impl AccountMutation
             email: ActiveValue::Set(input.email),
             default_account_profile_id: ActiveValue::Set(0),
             default_workspace_id: ActiveValue::Set(0),
+            is_public: ActiveValue::Set(input.is_public),
             ..Default::default()
         };
         let account = match account.validate_and_insert(tsx).await

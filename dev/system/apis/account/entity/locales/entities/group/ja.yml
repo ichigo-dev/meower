@@ -8,7 +8,21 @@ entities:
         already_exists: "そのグループ名は既に使用されています"
     name:
       name: "表示名"
+    description:
+      name: "概要"
+    representative:
+      name: "代表者"
+    location:
+      name: "場所"
+    email:
+      name: "連絡先メールアドレス"
+    telno:
+      name: "連絡先電話番号"
+    founded_at:
+      name: "設立日"
     created_at:
       name: "作成日時"
     updated_at:
       name: "更新日時"
+    is_public:
+      name: "公開/非公開"

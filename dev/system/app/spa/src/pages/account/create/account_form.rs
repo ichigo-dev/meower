@@ -48,12 +48,16 @@ pub fn AccountForm<G: Html>() -> View<G>
             .get("email")
             .unwrap_or("".to_string())
             .to_string();
+        let is_public = values
+            .get("is_public")
+            .is_some();
 
         let create_account_input = create_account::CreateAccountInput
         {
             public_user_id: state.config.public_user_id.clone(),
             account_name: account_name.clone(),
             email: email.clone(),
+            is_public: is_public,
         };
 
         spawn_local_scoped(async move
@@ -141,6 +145,14 @@ pub fn AccountForm<G: Html>() -> View<G>
                     required=BoolProp(true).into(),
                     value=StringProp(user_email).into(),
                 )
+            }
+            Label
+            (
+                label=t!("pages.account.create.form.is_public.label"),
+                required=BoolProp(true).into(),
+            )
+            {
+                Checkbox(name=StrProp("is_public").into())
             }
             (
                 if alert_message.get_clone().len() > 0

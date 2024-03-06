@@ -44,6 +44,7 @@ pub struct Model
     pub default_workspace_id: i64,
     pub created_at: DateTime,
     pub last_login_at: DateTime,
+    pub is_public: bool,
 }
 
 #[Object(name = "Account")]
@@ -87,6 +88,14 @@ impl Model
     pub async fn last_login_at( &self ) -> DateTime
     {
         self.last_login_at
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the is public.
+    //--------------------------------------------------------------------------
+    pub async fn is_public( &self ) -> bool
+    {
+        self.is_public
     }
 
     //--------------------------------------------------------------------------
@@ -291,6 +300,7 @@ impl Column
             Self::DefaultWorkspaceId => t!("entities.account.default_workspace_id.name"),
             Self::CreatedAt => t!("entities.account.created_at.name"),
             Self::LastLoginAt => t!("entities.account.last_login_at.name"),
+            Self::IsPublic => t!("entities.account.is_public.name"),
         }
     }
 }

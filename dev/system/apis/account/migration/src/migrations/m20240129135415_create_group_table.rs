@@ -50,6 +50,41 @@ impl MigrationTrait for Migration
             )
             .col
             (
+                ColumnDef::new(Group::Description)
+                    .text()
+            )
+            .col
+            (
+                ColumnDef::new(Group::Representative)
+                    .string()
+                    .string_len(255)
+            )
+            .col
+            (
+                ColumnDef::new(Group::Location)
+                    .string()
+                    .string_len(255)
+            )
+            .col
+            (
+                ColumnDef::new(Group::Email)
+                    .string()
+                    .string_len(255)
+            )
+            .col
+            (
+                ColumnDef::new(Group::Telno)
+                    .string()
+                    .string_len(255)
+            )
+            .col
+            (
+                ColumnDef::new(Group::FoundedAt)
+                    .timestamp()
+                    .default(Expr::current_timestamp())
+            )
+            .col
+            (
                 ColumnDef::new(Group::CreatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
@@ -62,6 +97,12 @@ impl MigrationTrait for Migration
                     .default(Expr::current_timestamp())
                     .not_null()
             )
+            .col
+            (
+                ColumnDef::new(Group::IsPublic)
+                    .boolean()
+                    .not_null()
+            )
             .to_owned();
         manager.create_table(table).await?;
 
@@ -71,8 +112,15 @@ impl MigrationTrait for Migration
             "COMMENT ON COLUMN \"group\".\"group_id\" IS 'Group ID'",
             "COMMENT ON COLUMN \"group\".\"group_name\" IS 'Group name'",
             "COMMENT ON COLUMN \"group\".\"name\" IS 'Name'",
+            "COMMENT ON COLUMN \"group\".\"description\" IS 'Description'",
+            "COMMENT ON COLUMN \"group\".\"representative\" IS 'Representative'",
+            "COMMENT ON COLUMN \"group\".\"location\" IS 'Location'",
+            "COMMENT ON COLUMN \"group\".\"email\" IS 'Email'",
+            "COMMENT ON COLUMN \"group\".\"telno\" IS 'Telno'",
+            "COMMENT ON COLUMN \"group\".\"founded_at\" IS 'Founded date'",
             "COMMENT ON COLUMN \"group\".\"created_at\" IS 'Create date'",
             "COMMENT ON COLUMN \"group\".\"updated_at\" IS 'Update date'",
+            "COMMENT ON COLUMN \"group\".\"is_public\" IS 'Is public'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
