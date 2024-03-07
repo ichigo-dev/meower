@@ -14,12 +14,15 @@ use crate::utils::props::*;
 use crate::utils::request_graphql::post_graphql;
 use crate::variables::*;
 
+use gloo_timers::callback::Timeout;
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
 use sycamore::futures::spawn_local;
 use sycamore_router::navigate;
 use web_sys::MouseEvent;
+
+const ANIMATION_DURATION: u32 = 300;
 
 
 //------------------------------------------------------------------------------
@@ -81,8 +84,12 @@ pub fn Detail<G: Html>() -> View<G>
                 },
             ).await
             {
-                is_public.set(!is_public.get());
                 open_change_public_dialog.set(false);
+                Timeout::new
+                (
+                    ANIMATION_DURATION,
+                    move || is_public.set(!is_public.get())
+                ).forget();
             };
         });
     };
