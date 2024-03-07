@@ -119,6 +119,40 @@ pub(crate) enum GroupMember
 
 
 //------------------------------------------------------------------------------
+/// GroupAvatar.
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum GroupAvatar
+{
+    Table,
+    GroupAvatarId,
+    GroupId,
+    FileKey,
+    FileName,
+    FileSize,
+    ContentType,
+    CreatedAt,
+}
+
+
+//------------------------------------------------------------------------------
+/// GroupCover.
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum GroupCover
+{
+    Table,
+    GroupCoverId,
+    GroupId,
+    FileKey,
+    FileName,
+    FileSize,
+    ContentType,
+    CreatedAt,
+}
+
+
+//------------------------------------------------------------------------------
 /// Workspace.
 //------------------------------------------------------------------------------
 #[derive(Iden)]

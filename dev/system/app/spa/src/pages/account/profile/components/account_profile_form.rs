@@ -181,15 +181,11 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                 {
                     Ok(data) =>
                     {
-                        let href = match data.update_account_profile.account
+                        match data.update_account_profile.account
                         {
-                            Some(account) =>
-                            {
-                                format!("/account/{}", account.account_name)
-                            },
-                            None => "/".to_string(),
-                        };
-                        navigate(&href);
+                            Some(_) => navigate("/account"),
+                            None => navigate("/"),
+                        }
                     },
                     Err(e) => 
                     {

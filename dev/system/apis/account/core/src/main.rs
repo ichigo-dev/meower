@@ -44,6 +44,8 @@ async fn main()
         .route("/graphql", post(graphql::handler))
         .route("/avatar/:file_key", get(avatar::get_handler))
         .route("/cover/:file_key", get(cover::get_handler))
+        .route("/group/avatar/:file_key", get(group_avatar::get_handler))
+        .route("/group/cover/:file_key", get(group_cover::get_handler))
         .layer
         (
             middleware::from_fn_with_state(state.clone(), layers::i18n::layer)

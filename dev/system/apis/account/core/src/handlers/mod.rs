@@ -4,3 +4,5 @@
 
 pub mod avatar;
 pub mod cover;
+pub mod group_avatar;
+pub mod group_cover;

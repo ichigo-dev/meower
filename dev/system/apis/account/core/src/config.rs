@@ -31,6 +31,13 @@ pub(crate) struct Config
     pub(crate) cover_path: String,
     pub(crate) default_cover_path: String,
     pub(crate) default_cover_mime: String,
+
+    pub(crate) group_avatar_path: String,
+    pub(crate) default_group_avatar_path: String,
+    pub(crate) default_group_avatar_mime: String,
+    pub(crate) group_cover_path: String,
+    pub(crate) default_group_cover_path: String,
+    pub(crate) default_group_cover_mime: String,
 }
 
 impl Config
@@ -71,6 +78,13 @@ impl Config
         let default_cover_path = "cover/default.jpg".to_string();
         let default_cover_mime = "image/jpg".to_string();
 
+        let group_avatar_path = "group/avatar".to_string();
+        let default_group_avatar_path = "group/avatar/default.png".to_string();
+        let default_group_avatar_mime = "image/png".to_string();
+        let group_cover_path = "group/cover".to_string();
+        let default_group_cover_path = "group/cover/default.jpg".to_string();
+        let default_group_cover_mime = "image/jpg".to_string();
+
         Self
         {
             // Server config.
@@ -93,6 +107,13 @@ impl Config
             cover_path,
             default_cover_path,
             default_cover_mime,
+
+            group_avatar_path,
+            default_group_avatar_path,
+            default_group_avatar_mime,
+            group_cover_path,
+            default_group_cover_path,
+            default_group_cover_mime,
         }
     }
 }

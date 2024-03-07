@@ -3,6 +3,40 @@ pages:
     group:
       components:
         group_form:
+          avatar:
+            label: "アバター画像"
+            button:
+              remove: "削除"
+          cover:
+            label: "カバー画像"
+            button:
+              remove: "削除"
           group_name:
             label: "グループ名"
             placeholder: "半角英数字、アンダーバー(_)が使用可能"
+          name:
+            label: "名前"
+            placeholder: "会社名、団体名、学校名..."
+          description:
+            label: "説明"
+            placeholder: "団体の説明を入力"
+          representative:
+            label: "代表者"
+            placeholder: "代表者"
+          location:
+            label: "場所"
+            placeholder: "国、都道府県..."
+          email:
+            label: "メールアドレス"
+            placeholder: "meower@example.com"
+          telno:
+            label: "電話番号"
+            placeholder: "xxx-xxxx-xxxx"
+          founded_at:
+            label: "設立日"
+          is_public:
+            label: "公開設定"
+          button:
+            send: "作成"
+            update: "更新"
+            cancel: "キャンセル"
