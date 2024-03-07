@@ -3,6 +3,7 @@ pages:
     group:
       components:
         group_form:
+          advanced_setting: "詳細を設定"
           avatar:
             label: "アバター画像"
             button:

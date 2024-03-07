@@ -244,6 +244,18 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
     let avatar_file_key = create_signal(Some(props.avatar_file_key.clone()));
     let cover_file_key = create_signal(Some(props.cover_file_key.clone()));
 
+    let advanced_setting = create_signal(false);
+    let advanced_setting_block_classes = create_signal("".to_string());
+    create_effect(move ||
+    {
+        let mut classes = "flex flex_column flex_gap_md".to_string();
+        if advanced_setting.get() == false
+        {
+            classes = classes + " hide";
+        }
+        advanced_setting_block_classes.set(classes);
+    });
+
     view!
     {
         Form
@@ -460,52 +472,6 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
                     value=StringProp(props.description.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.group.components.group_form.representative.label"))
-            {
-                TextField
-                (
-                    name=StrProp("representative").into(),
-                    placeholder=StringProp(t!("pages.account.group.components.group_form.representative.placeholder")).into(),
-                    value=StringProp(props.representative.unwrap_or_default()).into(),
-                )
-            }
-            Label(label=t!("pages.account.group.components.group_form.location.label"))
-            {
-                TextField
-                (
-                    name=StrProp("location").into(),
-                    placeholder=StringProp(t!("pages.account.group.components.group_form.location.placeholder")).into(),
-                    value=StringProp(props.location.unwrap_or_default()).into(),
-                )
-            }
-            Label(label=t!("pages.account.group.components.group_form.email.label"))
-            {
-                TextField
-                (
-                    name=StrProp("email").into(),
-                    placeholder=StringProp(t!("pages.account.group.components.group_form.email.placeholder")).into(),
-                    field_type=StrProp("email").into(),
-                    value=StringProp(props.email.unwrap_or_default()).into(),
-                )
-            }
-            Label(label=t!("pages.account.group.components.group_form.telno.label"))
-            {
-                TextField
-                (
-                    name=StrProp("telno").into(),
-                    placeholder=StringProp(t!("pages.account.group.components.group_form.telno.placeholder")).into(),
-                    value=StringProp(props.telno.unwrap_or_default()).into(),
-                )
-            }
-            Label(label=t!("pages.account.group.components.group_form.founded_at.label"))
-            {
-                TextField
-                (
-                    name=StrProp("founded_at").into(),
-                    field_type=StrProp("date").into(),
-                    value=StringProp(props.founded_at.unwrap_or_default()).into(),
-                )
-            }
             Label(label=t!("pages.account.group.components.group_form.is_public.label"))
             {
                 Switch
@@ -513,6 +479,73 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
                     name=StrProp("is_public").into(),
                     checked=BoolProp(props.is_public.unwrap_or_default()).into(),
                 )
+            }
+            Box
+            (
+                classes=StrProp("flex flex_row flex_align_center flex_gap_md flex_align_self_start clickable").into(),
+                on:click=move |_| advanced_setting.set(!advanced_setting.get()),
+            )
+            {
+                (
+                    if advanced_setting.get()
+                    {
+                        view! { Icon(icon=IconKind::Minus.into()) }
+                    }
+                    else
+                    {
+                        view! { Icon(icon=IconKind::Plus.into()) }
+                    }
+                )
+                (t!("pages.account.group.components.group_form.advanced_setting"))
+            }
+            Box(classes=*advanced_setting_block_classes)
+            {
+                Label(label=t!("pages.account.group.components.group_form.representative.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("representative").into(),
+                        placeholder=StringProp(t!("pages.account.group.components.group_form.representative.placeholder")).into(),
+                        value=StringProp(props.representative.unwrap_or_default()).into(),
+                    )
+                }
+                Label(label=t!("pages.account.group.components.group_form.location.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("location").into(),
+                        placeholder=StringProp(t!("pages.account.group.components.group_form.location.placeholder")).into(),
+                        value=StringProp(props.location.unwrap_or_default()).into(),
+                    )
+                }
+                Label(label=t!("pages.account.group.components.group_form.email.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("email").into(),
+                        placeholder=StringProp(t!("pages.account.group.components.group_form.email.placeholder")).into(),
+                        field_type=StrProp("email").into(),
+                        value=StringProp(props.email.unwrap_or_default()).into(),
+                    )
+                }
+                Label(label=t!("pages.account.group.components.group_form.telno.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("telno").into(),
+                        placeholder=StringProp(t!("pages.account.group.components.group_form.telno.placeholder")).into(),
+                        value=StringProp(props.telno.unwrap_or_default()).into(),
+                    )
+                }
+                Label(label=t!("pages.account.group.components.group_form.founded_at.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("founded_at").into(),
+                        field_type=StrProp("date").into(),
+                        value=StringProp(props.founded_at.unwrap_or_default()).into(),
+                    )
+                }
             }
             (
                 if alert_message.get_clone().len() > 0

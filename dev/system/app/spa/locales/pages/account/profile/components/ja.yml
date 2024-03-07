@@ -3,6 +3,7 @@ pages:
     profile:
       components:
         account_profile_form:
+          advanced_setting: "詳細を設定"
           avatar:
             label: "アバター画像"
             button:

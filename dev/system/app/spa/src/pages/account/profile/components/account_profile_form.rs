@@ -285,15 +285,11 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                             },
                         ).await.unwrap();
 
-                        let href = match data.create_account_profile.account
+                        match data.create_account_profile.account
                         {
-                            Some(account) =>
-                            {
-                                format!("/account/{}", account.account_name)
-                            },
-                            None => "/".to_string(),
+                            Some(_) => navigate("/account"),
+                            None => navigate("/"),
                         };
-                        navigate(&href);
                     },
                     Err(e) => 
                     {
@@ -314,6 +310,18 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
 
     let avatar_file_key = create_signal(Some(props.avatar_file_key.clone()));
     let cover_file_key = create_signal(Some(props.cover_file_key.clone()));
+
+    let advanced_setting = create_signal(false);
+    let advanced_setting_block_classes = create_signal("".to_string());
+    create_effect(move ||
+    {
+        let mut classes = "flex flex_column flex_gap_md".to_string();
+        if advanced_setting.get() == false
+        {
+            classes = classes + " hide";
+        }
+        advanced_setting_block_classes.set(classes);
+    });
 
     view!
     {
@@ -506,46 +514,6 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     value=StringProp(props.name.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.profile.components.account_profile_form.affiliation.label"))
-            {
-                TextField
-                (
-                    name=StrProp("affiliation").into(),
-                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.affiliation.placeholder")).into(),
-                    value=StringProp(props.affiliation.unwrap_or_default()).into(),
-                )
-            }
-            Label(label=t!("pages.account.profile.components.account_profile_form.location.label"))
-            {
-                TextField
-                (
-                    name=StrProp("location").into(),
-                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.location.placeholder")).into(),
-                    value=StringProp(props.location.unwrap_or_default()).into(),
-                )
-            }
-            Label
-            (
-                label=t!("pages.account.profile.components.account_profile_form.email.label"),
-            )
-            {
-                TextField
-                (
-                    name=StrProp("email").into(),
-                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.email.placeholder")).into(),
-                    field_type=StrProp("email").into(),
-                    value=StringProp(props.email.unwrap_or_default()).into(),
-                )
-            }
-            Label(label=t!("pages.account.profile.components.account_profile_form.telno.label"))
-            {
-                TextField
-                (
-                    name=StrProp("telno").into(),
-                    placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.telno.placeholder")).into(),
-                    value=StringProp(props.telno.unwrap_or_default()).into(),
-                )
-            }
             Label(label=t!("pages.account.profile.components.account_profile_form.bio.label"))
             {
                 TextField
@@ -556,48 +524,109 @@ pub fn AccountProfileForm<G: Html>( props: AccountProfileFormProps ) -> View<G>
                     value=StringProp(props.bio.unwrap_or_default()).into(),
                 )
             }
-            Label(label=t!("pages.account.profile.components.account_profile_form.birthdate.label"))
+            Box
+            (
+                classes=StrProp("flex flex_row flex_align_center flex_gap_md flex_align_self_start clickable").into(),
+                on:click=move |_| advanced_setting.set(!advanced_setting.get()),
+            )
             {
-                TextField
                 (
-                    name=StrProp("birthdate").into(),
-                    field_type=StrProp("date").into(),
-                    value=StringProp(props.birthdate.unwrap_or_default()).into(),
+                    if advanced_setting.get()
+                    {
+                        view! { Icon(icon=IconKind::Minus.into()) }
+                    }
+                    else
+                    {
+                        view! { Icon(icon=IconKind::Plus.into()) }
+                    }
                 )
+                (t!("pages.account.profile.components.account_profile_form.advanced_setting"))
             }
-            Label(label=t!("pages.account.profile.components.account_profile_form.gender.label"))
+            Box(classes=*advanced_setting_block_classes)
             {
-                RadioGroup
+                Label(label=t!("pages.account.profile.components.account_profile_form.affiliation.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("affiliation").into(),
+                        placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.affiliation.placeholder")).into(),
+                        value=StringProp(props.affiliation.unwrap_or_default()).into(),
+                    )
+                }
+                Label(label=t!("pages.account.profile.components.account_profile_form.location.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("location").into(),
+                        placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.location.placeholder")).into(),
+                        value=StringProp(props.location.unwrap_or_default()).into(),
+                    )
+                }
+                Label
                 (
-                    classes=StrProp("flex flex_row flex_align_center").into(),
-                    name=StrProp("gender").into(),
+                    label=t!("pages.account.profile.components.account_profile_form.email.label"),
                 )
                 {
-                    Indexed
+                    TextField
                     (
-                        iterable=*genders,
-                        view=move |gender|
-                        {
-                            let default_gender = props.gender.clone();
-                            view!
-                            {
-                                Label
-                                (
-                                    classes=StrProp("width_6xl flex_align_center").into(),
-                                    direction=LabelDirection::Row.into(),
-                                    label=t!(&format!("common.constants.gender.{}", gender)),
-                                )
-                                {
-                                    Radio
-                                    (
-                                        name=StrProp("gender").into(),
-                                        checked=BoolProp(gender == default_gender).into(),
-                                        value=*create_signal(gender),
-                                    )
-                                }
-                            }
-                        },
+                        name=StrProp("email").into(),
+                        placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.email.placeholder")).into(),
+                        field_type=StrProp("email").into(),
+                        value=StringProp(props.email.unwrap_or_default()).into(),
                     )
+                }
+                Label(label=t!("pages.account.profile.components.account_profile_form.telno.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("telno").into(),
+                        placeholder=StringProp(t!("pages.account.profile.components.account_profile_form.telno.placeholder")).into(),
+                        value=StringProp(props.telno.unwrap_or_default()).into(),
+                    )
+                }
+                Label(label=t!("pages.account.profile.components.account_profile_form.birthdate.label"))
+                {
+                    TextField
+                    (
+                        name=StrProp("birthdate").into(),
+                        field_type=StrProp("date").into(),
+                        value=StringProp(props.birthdate.unwrap_or_default()).into(),
+                    )
+                }
+                Label(label=t!("pages.account.profile.components.account_profile_form.gender.label"))
+                {
+                    RadioGroup
+                    (
+                        classes=StrProp("flex flex_row flex_align_center").into(),
+                        name=StrProp("gender").into(),
+                    )
+                    {
+                        Indexed
+                        (
+                            iterable=*genders,
+                            view=move |gender|
+                            {
+                                let default_gender = props.gender.clone();
+                                view!
+                                {
+                                    Label
+                                    (
+                                        classes=StrProp("width_6xl flex_align_center").into(),
+                                        direction=LabelDirection::Row.into(),
+                                        label=t!(&format!("common.constants.gender.{}", gender)),
+                                    )
+                                    {
+                                        Radio
+                                        (
+                                            name=StrProp("gender").into(),
+                                            checked=BoolProp(gender == default_gender).into(),
+                                            value=*create_signal(gender),
+                                        )
+                                    }
+                                }
+                            },
+                        )
+                    }
                 }
             }
             (

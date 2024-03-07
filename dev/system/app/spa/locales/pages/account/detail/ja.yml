@@ -24,6 +24,7 @@ pages:
         heading: "グループ"
         button:
           create: "グループを追加"
+        no_group: "まだグループに所属していません"
       account_profile_card:
         button:
           edit: "プロフィールを編集"

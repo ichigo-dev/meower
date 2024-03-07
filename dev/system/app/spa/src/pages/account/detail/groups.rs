@@ -9,6 +9,7 @@ use crate::utils::request_graphql::post_graphql;
 
 use chrono::NaiveDateTime;
 use graphql_client::GraphQLQuery;
+use rust_i18n::t;
 use sycamore::prelude::*;
 use sycamore::futures::spawn_local_scoped;
 
@@ -56,6 +57,22 @@ pub async fn Groups<G: Html>( account_name: String ) -> View<G>
 
     view!
     {
+        (
+            if groups.get_clone().len() > 0
+            {
+                view! {}
+            }
+            else
+            {
+                view!
+                {
+                    Typography(classes=StrProp("width_full text_align_center").into())
+                    {
+                        (t!("pages.account.detail.groups.no_group"))
+                    }
+                }
+            }
+        )
         List(variant=ListVariant::Simple.into())
         {
             Indexed
