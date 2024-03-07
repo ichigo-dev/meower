@@ -1,0 +1,19 @@
+//------------------------------------------------------------------------------
+//	Border
+//------------------------------------------------------------------------------
+
+@use "../functions/responsive" as responsive;
+@use "../variables/radii" as radii;
+
+@include responsive.responsive("radius")
+{
+	border-radius: var(--radius-md) !important;
+
+	@each $radius in radii.$radii
+	{
+		&_#{$radius}
+		{
+			border-radius: var(--radius-#{$radius}) !important;
+		}
+	}
+}

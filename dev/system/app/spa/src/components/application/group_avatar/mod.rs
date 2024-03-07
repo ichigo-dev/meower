@@ -65,6 +65,13 @@ pub async fn GroupAvatar<G: Html>( props: GroupAvatarProps<G> ) -> View<G>
         });
     });
 
+    let classes = create_signal("".to_string());
+    create_effect(move ||
+    {
+        let c = props.classes.get_clone() + " radius_md";
+        classes.set(c);
+    });
+
     view!
     {
         Avatar
@@ -72,7 +79,7 @@ pub async fn GroupAvatar<G: Html>( props: GroupAvatarProps<G> ) -> View<G>
             alt=props.alt,
             attributes=props.attributes,
             base64=props.base64,
-            classes=props.classes,
+            classes=*classes,
             node_ref=props.node_ref,
             size=props.size,
             src=props.src,
