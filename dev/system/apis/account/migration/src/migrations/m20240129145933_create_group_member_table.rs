@@ -54,7 +54,7 @@ impl MigrationTrait for Migration
             .col
             (
                 ColumnDef::new(GroupMember::Role)
-                    .tiny_integer()
+                    .integer()
             )
             .foreign_key
             (

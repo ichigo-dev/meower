@@ -427,11 +427,33 @@ impl Error
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation
 {
+    #[sea_orm(has_one = "super::group_avatar::Entity")]
+    GroupAvatar,
+
+    #[sea_orm(has_one = "super::group_cover::Entity")]
+    GroupCover,
+
     #[sea_orm(has_many = "super::group_member::Entity")]
     GroupMember,
 
     #[sea_orm(has_many = "super::group_workspace::Entity")]
     GroupWorkspace,
+}
+
+impl Related<super::group_avatar::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::GroupAvatar.def()
+    }
+}
+
+impl Related<super::group_cover::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::GroupCover.def()
+    }
 }
 
 impl Related<super::group_member::Entity> for Entity

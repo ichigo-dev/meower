@@ -25,7 +25,7 @@ use thiserror::Error;
 /// Role.
 //------------------------------------------------------------------------------
 #[derive(Copy, Clone, Debug, PartialEq, Eq, EnumIter, DeriveActiveEnum, Enum)]
-#[sea_orm(rs_type = "i8", db_type = "TinyInteger")]
+#[sea_orm(rs_type = "i32", db_type = "Integer")]
 pub enum Role
 {
     Admin = 99,

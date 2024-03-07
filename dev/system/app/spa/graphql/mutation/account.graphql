@@ -102,3 +102,34 @@ mutation UpdateAccountPublicStatus($input: UpdateAccountInput!) {
 mutation DeleteAccountProfile($token: String!) {
   deleteAccountProfile(token: $token)
 }
+
+
+################################################################################
+# Creates group
+################################################################################
+mutation CreateGroup($createGroupInput: CreateGroupInput!) {
+  createGroup(input: $createGroupInput) {
+    groupName
+  }
+}
+
+mutation CreateGroupAdditional(
+  $uploadGroupAvatarInput: UploadGroupAvatarInput!
+  $uploadGroupCoverInput: UploadGroupCoverInput!
+) {
+  uploadGroupAvatar(input: $uploadGroupAvatarInput)
+  uploadGroupCover(input: $uploadGroupCoverInput)
+}
+
+mutation UpdateGroup(
+  $updateGroupInput: UpdateGroupInput!
+  $uploadGroupAvatarInput: UploadGroupAvatarInput!
+  $uploadGroupCoverInput: UploadGroupCoverInput!
+) {
+  updateGroup(input: $updateGroupInput) {
+    groupName
+  }
+
+  uploadGroupAvatar(input: $uploadGroupAvatarInput)
+  uploadGroupCover(input: $uploadGroupCoverInput)
+}

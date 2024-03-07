@@ -4,13 +4,46 @@
 
 use crate::AppState;
 use crate::components::*;
+use crate::utils::request_graphql::post_graphql;
 use crate::utils::props::*;
 
+use chrono::{ NaiveDate, NaiveDateTime };
+use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
+use sycamore::futures::spawn_local_scoped;
+use sycamore_router::navigate;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::closure::Closure;
 use web_sys::{ Event, FileReader, HtmlInputElement, MouseEvent, ProgressEvent };
+
+
+//------------------------------------------------------------------------------
+/// GraphQL.
+//------------------------------------------------------------------------------
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
+struct CreateGroup;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
+struct CreateGroupAdditional;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/mutation/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
+struct UpdateGroup;
 
 
 //------------------------------------------------------------------------------
@@ -44,6 +77,7 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
     let state: AppState = use_context();
     let alert_message = create_signal("".to_string());
     let group_name = props.group_name.clone();
+    let cloned_group_name = group_name.clone();
 
     let avatar_base64 = create_signal(None);
     let upload_avatar_file_name = create_signal(None);
@@ -56,6 +90,155 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
 
     let save_handler = move |values: FormValues, _|
     {
+        let state = state.clone();
+
+        let founded_at = match values.get("founded_at")
+        {
+            Some(founded_at) =>
+            {
+                match NaiveDate::parse_from_str
+                (
+                    &founded_at,
+                    "%Y-%m-%d",
+                )
+                {
+                    Ok(naive_date) => Some(NaiveDateTime::from(naive_date)),
+                    Err(_) => None,
+                }
+            },
+            None => None,
+        };
+
+        if let Some(group_name) = cloned_group_name.clone()
+        {
+            let update_group_input = update_group::UpdateGroupInput
+            {
+                group_name: group_name.clone(),
+                name: values.get("name").unwrap_or("".to_string()),
+                description: values.get("description").clone(),
+                representative: values.get("representative").clone(),
+                location: values.get("location").clone(),
+                email: values.get("email").clone(),
+                telno: values.get("telno").clone(),
+                founded_at: founded_at,
+                is_public: values.get("is_public").is_some(),
+            };
+
+            let upload_group_avatar_input = update_group::UploadGroupAvatarInput
+            {
+                group_name: group_name.clone(),
+                file_name: upload_avatar_file_name.get_clone(),
+                base64: upload_avatar_base64.get_clone(),
+                delete_file: delete_avatar_file.get_clone(),
+            };
+
+            let upload_group_cover_input = update_group::UploadGroupCoverInput
+            {
+                group_name: group_name.clone(),
+                file_name: upload_cover_file_name.get_clone(),
+                base64: upload_cover_base64.get_clone(),
+                delete_file: delete_cover_file.get_clone(),
+            };
+
+            spawn_local_scoped(async move
+            {
+                match post_graphql::<UpdateGroup>
+                (
+                    &state,
+                    "/account/graphql",
+                     update_group::Variables
+                     {
+                         update_group_input,
+                         upload_group_avatar_input,
+                         upload_group_cover_input,
+                     },
+                ).await
+                {
+                    Ok(_) => navigate("/account"),
+                    Err(e) => 
+                    {
+                        alert_message.set(e);
+                        return;
+                    },
+                };
+            });
+        }
+        else
+        {
+            let selected_account = match state.selected_account.get_clone()
+            {
+                Some(selected_account) => selected_account,
+                None =>
+                {
+                    alert_message.set(t!("pages.account.profile.components.account_profile_form.error.account_not_selected"));
+                    return;
+                },
+            };
+            let create_group_input = create_group::CreateGroupInput
+            {
+                account_name: selected_account.account_name.clone(),
+                group_name: values.get("group_name").unwrap_or("".to_string()),
+                name: values.get("name").unwrap_or("".to_string()),
+                description: values.get("description").clone(),
+                representative: values.get("representative").clone(),
+                location: values.get("location").clone(),
+                email: values.get("email").clone(),
+                telno: values.get("telno").clone(),
+                founded_at: founded_at,
+                is_public: values.get("is_public").is_some(),
+            };
+
+            spawn_local_scoped(async move
+            {
+                match post_graphql::<CreateGroup>
+                (
+                    &state,
+                    "/account/graphql",
+                     create_group::Variables
+                     {
+                         create_group_input,
+                     },
+                ).await
+                {
+                    Ok(data) =>
+                    {
+                        let upload_group_avatar_input = create_group_additional::UploadGroupAvatarInput
+                        {
+                            group_name: data.create_group.group_name.clone(),
+                            file_name: upload_avatar_file_name.get_clone(),
+                            base64: upload_avatar_base64.get_clone(),
+                            delete_file: false,
+                        };
+
+                        let upload_group_cover_input = create_group_additional::UploadGroupCoverInput
+                        {
+                            group_name: data.create_group.group_name.clone(),
+                            file_name: upload_cover_file_name.get_clone(),
+                            base64: upload_cover_base64.get_clone(),
+                            delete_file: false,
+                        };
+
+                        post_graphql::<CreateGroupAdditional>
+                        (
+                            &state,
+                            "/account/graphql",
+                            create_group_additional::Variables
+                            {
+                                upload_group_avatar_input,
+                                upload_group_cover_input,
+                            },
+                        ).await.unwrap();
+                        navigate("/account");
+                    },
+                    Err(e) => 
+                    {
+                        alert_message.set(e);
+                        return;
+                    },
+                };
+            });
+        };
+
     };
 
     let avatar_file_key = create_signal(Some(props.avatar_file_key.clone()));

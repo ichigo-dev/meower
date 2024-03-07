@@ -94,13 +94,7 @@ pub fn AccountForm<G: Html>() -> View<G>
                     (
                         Some(selected_account)
                     );
-
-                    let href = format!
-                    (
-                        "/account/{}",
-                        account.account_name,
-                    );
-                    navigate(&href);
+                    navigate("/account");
                 },
                 Err(e) => 
                 {
@@ -147,11 +141,7 @@ pub fn AccountForm<G: Html>() -> View<G>
                     value=StringProp(user_email).into(),
                 )
             }
-            Label
-            (
-                label=t!("pages.account.create.form.is_public.label"),
-                required=BoolProp(true).into(),
-            )
+            Label(label=t!("pages.account.create.form.is_public.label"))
             {
                 Switch(name=StrProp("is_public").into())
             }

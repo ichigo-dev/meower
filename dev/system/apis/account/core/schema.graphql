@@ -187,6 +187,22 @@ input CreateAccountProfileInput {
 	gender: Gender
 }
 
+"""
+Inputs.
+"""
+input CreateGroupInput {
+	accountName: String!
+	groupName: String!
+	name: String!
+	description: String
+	representative: String
+	location: String
+	email: String
+	telno: String
+	foundedAt: NaiveDateTime
+	isPublic: Boolean!
+}
+
 
 """
 Gender.
@@ -320,6 +336,22 @@ type MutationRoot {
 	Uploads cover.
 	"""
 	uploadCover(input: UploadCoverInput!): Boolean!
+	"""
+	Creates group.
+	"""
+	createGroup(input: CreateGroupInput!): Group!
+	"""
+	Updates group.
+	"""
+	updateGroup(input: UpdateGroupInput!): Group!
+	"""
+	Uploads avatar.
+	"""
+	uploadGroupAvatar(input: UploadGroupAvatarInput!): Boolean!
+	"""
+	Uploads cover.
+	"""
+	uploadGroupCover(input: UploadGroupCoverInput!): Boolean!
 }
 
 """
@@ -386,6 +418,18 @@ input UpdateAccountProfileInput {
 	gender: Gender
 }
 
+input UpdateGroupInput {
+	groupName: String!
+	name: String!
+	description: String
+	representative: String
+	location: String
+	email: String
+	telno: String
+	foundedAt: NaiveDateTime
+	isPublic: Boolean!
+}
+
 """
 Inputs.
 """
@@ -401,6 +445,26 @@ Inputs.
 """
 input UploadCoverInput {
 	accountProfileToken: String!
+	fileName: String
+	base64: String
+	deleteFile: Boolean!
+}
+
+"""
+Inputs.
+"""
+input UploadGroupAvatarInput {
+	groupName: String!
+	fileName: String
+	base64: String
+	deleteFile: Boolean!
+}
+
+"""
+Inputs.
+"""
+input UploadGroupCoverInput {
+	groupName: String!
 	fileName: String
 	base64: String
 	deleteFile: Boolean!
