@@ -2,6 +2,8 @@
 //! Group model.
 //------------------------------------------------------------------------------
 
+use super::group_avatar::Model as GroupAvatarModel;
+use super::group_cover::Model as GroupCoverModel;
 use super::group_member::Entity as GroupMemberEntity;
 use super::group_member::Model as GroupMemberModel;
 use super::group_workspace::Entity as GroupWorkspaceEntity;
@@ -161,6 +163,38 @@ impl Model
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         self.find_related(GroupWorkspaceEntity).all(tsx).await.unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the avatar.
+    //--------------------------------------------------------------------------
+    pub async fn avatar
+    (
+        &self,
+        ctx: &Context<'_>,
+    ) -> Option<GroupAvatarModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(super::group_avatar::Entity)
+            .one(tsx)
+            .await
+            .unwrap()
+    }
+
+    //--------------------------------------------------------------------------
+    /// Gets the cover.
+    //--------------------------------------------------------------------------
+    pub async fn cover
+    (
+        &self,
+        ctx: &Context<'_>,
+    ) -> Option<GroupCoverModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        self.find_related(super::group_cover::Entity)
+            .one(tsx)
+            .await
+            .unwrap()
     }
 }
 

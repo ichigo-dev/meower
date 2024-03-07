@@ -5,8 +5,8 @@
 use super::account::Column as AccountColumn;
 use super::account::Entity as AccountEntity;
 use super::account::Model as AccountModel;
-use super::account_profile_avatar::Model as AccountProfileAvatar;
-use super::account_profile_cover::Model as AccountProfileCover;
+use super::account_profile_avatar::Model as AccountProfileAvatarModel;
+use super::account_profile_cover::Model as AccountProfileCoverModel;
 use meower_entity_ext::ValidateExt;
 use meower_validator::{ Validator, ValidationError };
 
@@ -165,7 +165,7 @@ impl Model
     (
         &self,
         ctx: &Context<'_>,
-    ) -> Option<AccountProfileAvatar>
+    ) -> Option<AccountProfileAvatarModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         self.find_related(super::account_profile_avatar::Entity)
@@ -181,7 +181,7 @@ impl Model
     (
         &self,
         ctx: &Context<'_>,
-    ) -> Option<AccountProfileCover>
+    ) -> Option<AccountProfileCoverModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         self.find_related(super::account_profile_cover::Entity)

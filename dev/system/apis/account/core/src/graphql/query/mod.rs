@@ -4,9 +4,11 @@
 
 mod account;
 mod account_profile;
+mod group;
 
 use account::AccountQuery;
 use account_profile::AccountProfileQuery;
+use group::GroupQuery;
 
 use async_graphql::MergedObject;
 
@@ -19,4 +21,5 @@ pub(crate) struct QueryRoot
 (
     AccountQuery,
     AccountProfileQuery,
+    GroupQuery,
 );

@@ -266,6 +266,52 @@ type Group {
 	Gets the group workspaces.
 	"""
 	groupWorkspaces: [GroupWorkspace!]!
+	"""
+	Gets the avatar.
+	"""
+	avatar: GroupAvatar
+	"""
+	Gets the cover.
+	"""
+	cover: GroupCover
+}
+
+type GroupAvatar {
+	"""
+	Gets the file key.
+	"""
+	fileKey: String!
+	"""
+	Gets the file size.
+	"""
+	fileSize: Int!
+	"""
+	Gets the content type.
+	"""
+	contentType: String!
+	"""
+	Gets the create date.
+	"""
+	createdAt: NaiveDateTime!
+}
+
+type GroupCover {
+	"""
+	Gets the file key.
+	"""
+	fileKey: String!
+	"""
+	Gets the file size.
+	"""
+	fileSize: Int!
+	"""
+	Gets the content type.
+	"""
+	contentType: String!
+	"""
+	Gets the create date.
+	"""
+	createdAt: NaiveDateTime!
 }
 
 type GroupMember {
@@ -387,6 +433,10 @@ type QueryRoot {
 	Gets account profiles.
 	"""
 	accountProfiles(accountName: String!): [AccountProfile!]!
+	"""
+	Gets groups.
+	"""
+	groups(accountName: String!): [Group!]!
 }
 
 """

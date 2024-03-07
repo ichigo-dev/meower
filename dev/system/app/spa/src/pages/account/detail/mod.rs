@@ -4,8 +4,10 @@
 
 mod account_profiles;
 mod account_profile_card;
+mod groups;
 
 use account_profiles::AccountProfiles;
+use groups::Groups;
 
 use crate::AppState;
 use crate::components::*;
@@ -57,13 +59,14 @@ pub fn Detail<G: Html>() -> View<G>
     };
     let account_name = selected_account.account_name.clone();
     let cloned_account_name = account_name.clone();
+    let cloned_account_name2 = account_name.clone();
     let is_public = create_signal(selected_account.is_public);
     let open_change_public_dialog = create_signal(false);
 
     let update_account_public_status_handler = move |_|
     {
         let cloned_state = state.clone();
-        let cloned_account_name = cloned_account_name.clone();
+        let cloned_account_name = account_name.clone();
         spawn_local(async move
         {
             let input = update_account_public_status::UpdateAccountInput
@@ -179,7 +182,7 @@ pub fn Detail<G: Html>() -> View<G>
                     {
                         (t!("pages.account.detail.profiles.heading"))
                     }
-                    AccountProfiles(account_name=account_name)
+                    AccountProfiles(account_name=cloned_account_name)
                     Button
                     (
                         href=OptionProp(Some("/account/profile/create".to_string())).into(),
@@ -204,6 +207,7 @@ pub fn Detail<G: Html>() -> View<G>
                     {
                         (t!("pages.account.detail.groups.heading"))
                     }
+                    Groups(account_name=cloned_account_name2)
                     Button
                     (
                         href=OptionProp(Some("/account/group/create".to_string())).into(),

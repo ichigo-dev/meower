@@ -2,11 +2,14 @@
 //! Group edit page.
 //------------------------------------------------------------------------------
 
-use crate::layouts::application::{ Layout, Main };
 use super::components::GroupForm;
+
+use crate::AppState;
+use crate::layouts::application::{ Layout, Main };
 
 use rust_i18n::t;
 use sycamore::prelude::*;
+use sycamore_router::navigate;
 
 
 //------------------------------------------------------------------------------
@@ -15,6 +18,13 @@ use sycamore::prelude::*;
 #[component(inline_props)]
 pub fn Edit<G: Html>( group_name: String ) -> View<G>
 {
+    let state: AppState = use_context();
+    if let None = state.selected_account.get_clone()
+    {
+        navigate("/");
+        return view! {};
+    };
+
     view!
     {
         Layout

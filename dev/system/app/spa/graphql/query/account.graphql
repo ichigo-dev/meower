@@ -32,9 +32,9 @@ query GetAsideDataQuery($publicUserId: String!) {
 
 
 ################################################################################
-# Account profile.
+# Gets account profiles.
 ################################################################################
-query GetAccountProfilePageDataQuery($accountName: String!) {
+query GetAccountProfiles($accountName: String!) {
   accountProfiles(accountName: $accountName) {
     token
     name
@@ -49,6 +49,30 @@ query GetAccountProfilePageDataQuery($accountName: String!) {
     account {
       accountName
     }
+    avatar {
+      fileKey
+    }
+    cover {
+      fileKey
+    }
+  }
+}
+
+
+################################################################################
+# Gets groups.
+################################################################################
+query GetGroups($accountName: String!) {
+  groups(accountName: $accountName) {
+    groupName
+    name
+    description
+    representative
+    location
+    email
+    telno
+    foundedAt
+    isPublic
     avatar {
       fileKey
     }

@@ -22,7 +22,7 @@ use sycamore::futures::spawn_local_scoped;
     query_path = "graphql/query/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
-struct GetAccountProfilePageDataQuery;
+struct GetAccountProfiles;
 
 
 //------------------------------------------------------------------------------
@@ -43,11 +43,11 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
         update_list_signal.track();
         spawn_local_scoped(async move
         {
-            if let Ok(data) = post_graphql::<GetAccountProfilePageDataQuery>
+            if let Ok(data) = post_graphql::<GetAccountProfiles>
             (
                 &state,
                 "/account/graphql",
-                 get_account_profile_page_data_query::Variables
+                 get_account_profiles::Variables
                  {
                      account_name: cloned_account_name,
                  },
@@ -102,15 +102,15 @@ pub async fn AccountProfiles<G: Html>( account_name: String ) -> View<G>
                     {
                         match gender
                         {
-                            get_account_profile_page_data_query::Gender::MALE =>
+                            get_account_profiles::Gender::MALE =>
                             {
                                 t!("common.constants.gender.male")
                             },
-                            get_account_profile_page_data_query::Gender::FEMALE =>
+                            get_account_profiles::Gender::FEMALE =>
                             {
                                 t!("common.constants.gender.female")
                             },
-                            get_account_profile_page_data_query::Gender::OTHER =>
+                            get_account_profiles::Gender::OTHER =>
                             {
                                 t!("common.constants.gender.other")
                             },
