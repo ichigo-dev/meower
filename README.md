@@ -11,11 +11,14 @@ WebAssembly. For the backend and authentication server, it uses Axum ([3]), a
 web server framework based on Tokio ([4]). It also uses SeaORM ([5]) as a tool
 for database migration and model generation.
 
+Casbin ([6]) is used to manage various privileges within the system.
+
 - [1] [Rust](https://www.rust-lang.org)
 - [2] [Sycamore](https://sycamore-rs.netlify.app)
 - [3] [Axum](https://github.com/tokio-rs/axum)
 - [4] [Tokio](https://tokio.rs)
 - [5] [SeaORM](https://www.sea-ql.org/SeaORM)
+- [6] [Casbin](https://casbin.org)
 
 
 ## Directory structure
@@ -82,7 +85,7 @@ everything.
 
 - Cargo does not currently support nested workspaces, but we would like to take
   advantage of this.
-  ([GitHub Issue](https://github.com/rust-lang/cargo/issues/5042)
+  ([GitHub Issue](https://github.com/rust-lang/cargo/issues/5042))
 - I want to change the callback URL based on the referrer URL so that the Auth
   server can link IDs with other services. Also, the JWT encryption method
   should be asymmetric key authentication.
