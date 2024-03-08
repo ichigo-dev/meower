@@ -5,12 +5,13 @@
 use crate::Config;
 use crate::graphql::{ QueryRoot, MutationRoot };
 
-use std::sync::Arc;
+use std::sync::{ Arc, RwLock };
 
 use async_graphql::{
     EmptySubscription,
     Schema,
 };
+use casbin::prelude::*;
 use object_store::ObjectStore;
 use object_store::local::LocalFileSystem;
 use sea_orm::{ Database, DbConn };
@@ -26,6 +27,7 @@ pub(crate) struct AppState
     pub(crate) hdb: DbConn,
     pub(crate) schema: Schema<QueryRoot, MutationRoot, EmptySubscription>,
     pub(crate) storage: Arc<Box<dyn ObjectStore>>,
+    pub(crate) enforcer: Arc<RwLock<Enforcer>>,
 }
 
 impl AppState
@@ -37,6 +39,8 @@ impl AppState
     {
         let config = Config::init();
         let hdb = Database::connect(&config.database_url).await.unwrap();
+
+        // GraphQL.
         let schema = Schema::build
         (
             QueryRoot::default(),
@@ -45,10 +49,19 @@ impl AppState
         )
         .finish();
 
+        // Storage.
         let _ = config.storage_url;
         let storage = LocalFileSystem::new_with_prefix(&config.storage_bucket)
             .unwrap();
         let storage: Arc<Box<dyn ObjectStore>> = Arc::new(Box::new(storage));
+
+        // Casbin.
+        let enforcer = Enforcer::new
+        (
+            "authorization/model.conf",
+            "authorization/policy.csv"
+        ).await.unwrap();
+        let enforcer = Arc::new(RwLock::new(enforcer));
 
         Self
         {
@@ -56,6 +69,7 @@ impl AppState
             hdb,
             schema,
             storage,
+            enforcer,
         }
     }
 }

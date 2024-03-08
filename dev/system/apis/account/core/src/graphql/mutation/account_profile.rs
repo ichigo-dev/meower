@@ -234,7 +234,12 @@ impl AccountProfileMutation
         {
             let path = StoragePath::from
             (
-                config.avatar_path.clone() + "/" + &avatar.file_key
+                format!
+                (
+                    "{}/{}",
+                    config.avatar_path,
+                    avatar.file_key
+                )
             );
             storage.delete(&path).await.unwrap();
         };
@@ -247,7 +252,12 @@ impl AccountProfileMutation
         {
             let path = StoragePath::from
             (
-                config.cover_path.clone() + "/" + &cover.file_key
+                format!
+                (
+                    "{}/{}",
+                    config.cover_path,
+                    cover.file_key
+                )
             );
             storage.delete(&path).await.unwrap();
         };

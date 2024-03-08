@@ -84,8 +84,12 @@ impl GroupAvatarMutation
             {
                 let exists_avatar_path = StoragePath::from
                 (
-                    config.group_avatar_path.clone() + "/" +
-                    &exists_avatar.file_key
+                    format!
+                    (
+                        "{}/{}",
+                        config.group_avatar_path,
+                        exists_avatar.file_key
+                    )
                 );
                 storage.delete(&exists_avatar_path).await.unwrap();
                 exists_avatar.delete(tsx).await.unwrap();
@@ -131,7 +135,7 @@ impl GroupAvatarMutation
 
             let avatar_path = StoragePath::from
             (
-                config.group_avatar_path.clone() + "/" + &avatar.file_key
+                format!("{}/{}", config.group_avatar_path, avatar.file_key)
             );
             if let Err(e) = storage.put(&avatar_path, binary.into()).await
             {

@@ -43,7 +43,7 @@ pub async fn get_handler
         {
             let cover_path = StoragePath::from
             (
-                config.cover_path.clone() + "/" + &file_key
+                format!("{}/{}", config.cover_path, file_key)
             );
             match storage.get(&cover_path).await
             {

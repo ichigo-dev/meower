@@ -189,7 +189,7 @@ services:
       STORAGE_URL: ${ACCOUNT_STORAGE_URL}
       STORAGE_BUCKET: ${ACCOUNT_STORAGE_BUCKET}
     working_dir: /system/apis/account/core
-    command: "cargo watch -x run --ignore 'schema.graphql' --ignore 'uploads/*'"
+    command: "cargo watch -x run --ignore 'schema.graphql' --ignore 'uploads/*' --ignore 'authorization/*'"
     depends_on:
       - account_db
     tty: true

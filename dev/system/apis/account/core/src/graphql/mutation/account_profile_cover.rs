@@ -99,7 +99,12 @@ impl AccountProfileCoverMutation
             {
                 let exists_cover_path = StoragePath::from
                 (
-                    config.cover_path.clone() + "/" + &exists_cover.file_key
+                    format!
+                    (
+                        "{}/{}",
+                        config.cover_path,
+                        exists_cover.file_key
+                    )
                 );
                 storage.delete(&exists_cover_path).await.unwrap();
                 exists_cover.delete(tsx).await.unwrap();
@@ -145,7 +150,7 @@ impl AccountProfileCoverMutation
 
             let cover_path = StoragePath::from
             (
-                config.cover_path.clone() + "/" + &cover.file_key
+                format!("{}/{}", config.cover_path, cover.file_key)
             );
             if let Err(e) = storage.put(&cover_path, binary.into()).await
             {

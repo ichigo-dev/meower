@@ -43,7 +43,7 @@ pub async fn get_handler
         {
             let avatar_path = StoragePath::from
             (
-                config.group_avatar_path.clone() + "/" + &file_key
+                format!("{}/{}", config.group_avatar_path, file_key)
             );
             match storage.get(&avatar_path).await
             {
