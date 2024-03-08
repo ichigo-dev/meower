@@ -11,6 +11,7 @@ User token table
 | user_token_id  | bigint                      | nextval('user_token_user_token_id_seq'::regclass) | false    |          |         | User token ID                                     |
 | token          | varchar(255)                |                                                   | false    |          |         | Token                                             |
 | public_user_id | varchar(255)                |                                                   | false    |          |         | User public ID (auth server user(public_user_id)) |
+| user_email     | varchar(255)                |                                                   | false    |          |         |                                                   |
 | access_token   | text                        |                                                   | false    |          |         |                                                   |
 | refresh_token  | varchar(255)                |                                                   | false    |          |         | Refresh token                                     |
 | created_at     | timestamp without time zone | CURRENT_TIMESTAMP                                 | false    |          |         | Create date                                       |

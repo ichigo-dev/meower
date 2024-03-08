@@ -10,6 +10,7 @@ Workspace table
 | -------------- | --------------------------- | ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------- | ------- | -------------- |
 | workspace_id   | bigint                      | nextval('workspace_workspace_id_seq'::regclass) | false    | [public.account_workspace](public.account_workspace.md) [public.group_workspace](public.group_workspace.md) |         | Workspace ID   |
 | workspace_name | varchar(255)                |                                                 | false    |                                                                                                             |         | Workspace name |
+| name           | varchar(255)                |                                                 | false    |                                                                                                             |         | Name           |
 | created_at     | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |                                                                                                             |         | Create date    |
 | updated_at     | timestamp without time zone | CURRENT_TIMESTAMP                               | false    |                                                                                                             |         | Update date    |
 

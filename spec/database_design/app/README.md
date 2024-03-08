@@ -4,7 +4,7 @@
 
 | Name                                      | Columns | Comment          | Type       |
 | ----------------------------------------- | ------- | ---------------- | ---------- |
-| [public.user_token](public.user_token.md) | 7       | User token table | BASE TABLE |
+| [public.user_token](public.user_token.md) | 8       | User token table | BASE TABLE |
 
 ## Relations
 

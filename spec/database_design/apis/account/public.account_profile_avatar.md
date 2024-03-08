@@ -6,13 +6,15 @@ Account profile avatar table
 
 ## Columns
 
-| Name                      | Type                        | Default                                                                   | Nullable | Children | Parents                                             | Comment               |
-| ------------------------- | --------------------------- | ------------------------------------------------------------------------- | -------- | -------- | --------------------------------------------------- | --------------------- |
-| account_profile_avatar_id | bigint                      | nextval('account_profile_avatar_account_profile_avatar_id_seq'::regclass) | false    |          |                                                     |                       |
-| account_profile_id        | bigint                      |                                                                           | false    |          | [public.account_profile](public.account_profile.md) | Account profile ID    |
-| file_key                  | varchar(255)                |                                                                           | false    |          |                                                     | Avatar file key       |
-| mime                      | varchar(255)                |                                                                           | false    |          |                                                     | Avatar file MIME type |
-| created_at                | timestamp without time zone | CURRENT_TIMESTAMP                                                         | false    |          |                                                     | Create date           |
+| Name                      | Type                        | Default                                                                   | Nullable | Children | Parents                                             | Comment                  |
+| ------------------------- | --------------------------- | ------------------------------------------------------------------------- | -------- | -------- | --------------------------------------------------- | ------------------------ |
+| account_profile_avatar_id | bigint                      | nextval('account_profile_avatar_account_profile_avatar_id_seq'::regclass) | false    |          |                                                     |                          |
+| account_profile_id        | bigint                      |                                                                           | false    |          | [public.account_profile](public.account_profile.md) | Account profile ID       |
+| file_key                  | varchar(255)                |                                                                           | false    |          |                                                     | Avatar file key          |
+| file_name                 | varchar(255)                |                                                                           | true     |          |                                                     | Avatar file name         |
+| file_size                 | bigint                      |                                                                           | false    |          |                                                     | Avatar file size         |
+| content_type              | varchar(255)                |                                                                           | false    |          |                                                     | Avatar file content type |
+| created_at                | timestamp without time zone | CURRENT_TIMESTAMP                                                         | false    |          |                                                     | Create date              |
 
 ## Constraints
 

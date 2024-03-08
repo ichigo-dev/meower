@@ -6,13 +6,13 @@ Group member table
 
 ## Columns
 
-| Name               | Type     | Default                                               | Nullable | Children | Parents                                             | Comment            |
-| ------------------ | -------- | ----------------------------------------------------- | -------- | -------- | --------------------------------------------------- | ------------------ |
-| group_member_id    | bigint   | nextval('group_member_group_member_id_seq'::regclass) | false    |          |                                                     | Group member ID    |
-| group_id           | bigint   |                                                       | false    |          | [public.group](public.group.md)                     | Group ID           |
-| account_id         | bigint   |                                                       | false    |          | [public.account](public.account.md)                 | Account ID         |
-| account_profile_id | bigint   |                                                       | false    |          | [public.account_profile](public.account_profile.md) | Account profile ID |
-| role               | smallint |                                                       | true     |          |                                                     | Role               |
+| Name               | Type    | Default                                               | Nullable | Children | Parents                                             | Comment            |
+| ------------------ | ------- | ----------------------------------------------------- | -------- | -------- | --------------------------------------------------- | ------------------ |
+| group_member_id    | bigint  | nextval('group_member_group_member_id_seq'::regclass) | false    |          |                                                     | Group member ID    |
+| group_id           | bigint  |                                                       | false    |          | [public.group](public.group.md)                     | Group ID           |
+| account_id         | bigint  |                                                       | false    |          | [public.account](public.account.md)                 | Account ID         |
+| account_profile_id | bigint  |                                                       | false    |          | [public.account_profile](public.account_profile.md) | Account profile ID |
+| role               | integer |                                                       | true     |          |                                                     | Role               |
 
 ## Constraints
 

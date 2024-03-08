@@ -12,36 +12,36 @@
 <!-- public.user -->
 <g id="node1" class="node">
 <title>public.user</title>
-<polygon fill="#efefef" stroke="transparent" points="713.5,-285.5 713.5,-320.5 1010.5,-320.5 1010.5,-285.5 713.5,-285.5"/>
-<polygon fill="none" stroke="#000000" points="713.5,-285.5 713.5,-320.5 1010.5,-320.5 1010.5,-285.5 713.5,-285.5"/>
+<polygon fill="#efefef" stroke="transparent" points="721.5,-285.5 721.5,-320.5 1002.5,-320.5 1002.5,-285.5 721.5,-285.5"/>
+<polygon fill="none" stroke="#000000" points="721.5,-285.5 721.5,-320.5 1002.5,-320.5 1002.5,-285.5 721.5,-285.5"/>
 <text text-anchor="start" x="754.7091" y="-298.3" font-family="Arial Bold" font-size="18.00" fill="#000000">public.user</text>
 <text text-anchor="start" x="841.7229" y="-298.3" font-family="Arial" font-size="14.00" fill="#000000">    </text>
 <text text-anchor="start" x="875.9277" y="-298.3" font-family="Arial" font-size="14.00" fill="#666666">[BASE TABLE]</text>
-<polygon fill="none" stroke="#000000" points="713.5,-255.5 713.5,-285.5 1010.5,-285.5 1010.5,-255.5 713.5,-255.5"/>
-<text text-anchor="start" x="720.5" y="-266.9" font-family="Arial" font-size="14.00" fill="#000000">user_id </text>
-<text text-anchor="start" x="770.2882" y="-266.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
-<polygon fill="none" stroke="#000000" points="713.5,-225.5 713.5,-255.5 1010.5,-255.5 1010.5,-225.5 713.5,-225.5"/>
-<text text-anchor="start" x="720.5" y="-236.9" font-family="Arial" font-size="14.00" fill="#000000">public_user_id </text>
-<text text-anchor="start" x="814.6318" y="-236.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
-<polygon fill="none" stroke="#000000" points="713.5,-195.5 713.5,-225.5 1010.5,-225.5 1010.5,-195.5 713.5,-195.5"/>
-<text text-anchor="start" x="720.5" y="-206.9" font-family="Arial" font-size="14.00" fill="#000000">jwt_subject </text>
-<text text-anchor="start" x="793.622" y="-206.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
-<polygon fill="none" stroke="#000000" points="713.5,-165.5 713.5,-195.5 1010.5,-195.5 1010.5,-165.5 713.5,-165.5"/>
-<text text-anchor="start" x="720.5" y="-176.9" font-family="Arial" font-size="14.00" fill="#000000">email </text>
-<text text-anchor="start" x="757.8296" y="-176.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
-<polygon fill="none" stroke="#000000" points="713.5,-135.5 713.5,-165.5 1010.5,-165.5 1010.5,-135.5 713.5,-135.5"/>
-<text text-anchor="start" x="720.5" y="-146.9" font-family="Arial" font-size="14.00" fill="#000000">created_at </text>
-<text text-anchor="start" x="790.528" y="-146.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
-<polygon fill="none" stroke="#000000" points="713.5,-105.5 713.5,-135.5 1010.5,-135.5 1010.5,-105.5 713.5,-105.5"/>
-<text text-anchor="start" x="720.5" y="-116.9" font-family="Arial" font-size="14.00" fill="#000000">updated_at </text>
-<text text-anchor="start" x="794.4326" y="-116.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
-<polygon fill="none" stroke="#000000" points="713.5,-75.5 713.5,-105.5 1010.5,-105.5 1010.5,-75.5 713.5,-75.5"/>
-<text text-anchor="start" x="720.4124" y="-86.9" font-family="Arial" font-size="14.00" fill="#000000">last_logined_at </text>
-<text text-anchor="start" x="818.4474" y="-86.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
-<polygon fill="none" stroke="#000000" points="713.5,-45.5 713.5,-75.5 1010.5,-75.5 1010.5,-45.5 713.5,-45.5"/>
-<text text-anchor="start" x="720.5" y="-56.9" font-family="Arial" font-size="14.00" fill="#000000">is_deleted </text>
-<text text-anchor="start" x="788.19" y="-56.9" font-family="Arial" font-size="14.00" fill="#666666">[boolean]</text>
-<polygon fill="none" stroke="#000000" stroke-width="3" points="711.5,-44.5 711.5,-322.5 1011.5,-322.5 1011.5,-44.5 711.5,-44.5"/>
+<polygon fill="none" stroke="#000000" points="721.5,-255.5 721.5,-285.5 1002.5,-285.5 1002.5,-255.5 721.5,-255.5"/>
+<text text-anchor="start" x="728.5" y="-266.9" font-family="Arial" font-size="14.00" fill="#000000">user_id </text>
+<text text-anchor="start" x="778.2882" y="-266.9" font-family="Arial" font-size="14.00" fill="#666666">[bigint]</text>
+<polygon fill="none" stroke="#000000" points="721.5,-225.5 721.5,-255.5 1002.5,-255.5 1002.5,-225.5 721.5,-225.5"/>
+<text text-anchor="start" x="728.5" y="-236.9" font-family="Arial" font-size="14.00" fill="#000000">public_user_id </text>
+<text text-anchor="start" x="822.6318" y="-236.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="721.5,-195.5 721.5,-225.5 1002.5,-225.5 1002.5,-195.5 721.5,-195.5"/>
+<text text-anchor="start" x="728.5" y="-206.9" font-family="Arial" font-size="14.00" fill="#000000">jwt_subject </text>
+<text text-anchor="start" x="801.622" y="-206.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="721.5,-165.5 721.5,-195.5 1002.5,-195.5 1002.5,-165.5 721.5,-165.5"/>
+<text text-anchor="start" x="728.5" y="-176.9" font-family="Arial" font-size="14.00" fill="#000000">email </text>
+<text text-anchor="start" x="765.8296" y="-176.9" font-family="Arial" font-size="14.00" fill="#666666">[varchar(255)]</text>
+<polygon fill="none" stroke="#000000" points="721.5,-135.5 721.5,-165.5 1002.5,-165.5 1002.5,-135.5 721.5,-135.5"/>
+<text text-anchor="start" x="728.5" y="-146.9" font-family="Arial" font-size="14.00" fill="#000000">created_at </text>
+<text text-anchor="start" x="798.528" y="-146.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<polygon fill="none" stroke="#000000" points="721.5,-105.5 721.5,-135.5 1002.5,-135.5 1002.5,-105.5 721.5,-105.5"/>
+<text text-anchor="start" x="728.5" y="-116.9" font-family="Arial" font-size="14.00" fill="#000000">updated_at </text>
+<text text-anchor="start" x="802.4326" y="-116.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<polygon fill="none" stroke="#000000" points="721.5,-75.5 721.5,-105.5 1002.5,-105.5 1002.5,-75.5 721.5,-75.5"/>
+<text text-anchor="start" x="728.195" y="-86.9" font-family="Arial" font-size="14.00" fill="#000000">last_login_at </text>
+<text text-anchor="start" x="810.6648" y="-86.9" font-family="Arial" font-size="14.00" fill="#666666">[timestamp without time zone]</text>
+<polygon fill="none" stroke="#000000" points="721.5,-45.5 721.5,-75.5 1002.5,-75.5 1002.5,-45.5 721.5,-45.5"/>
+<text text-anchor="start" x="728.5" y="-56.9" font-family="Arial" font-size="14.00" fill="#000000">is_deleted </text>
+<text text-anchor="start" x="796.19" y="-56.9" font-family="Arial" font-size="14.00" fill="#666666">[boolean]</text>
+<polygon fill="none" stroke="#000000" stroke-width="3" points="719.5,-44.5 719.5,-322.5 1003.5,-322.5 1003.5,-44.5 719.5,-44.5"/>
 </g>
 <!-- public.user_auth -->
 <g id="node2" class="node">
@@ -70,8 +70,8 @@
 <!-- public.user_auth&#45;&gt;public.user -->
 <g id="edge1" class="edge">
 <title>public.user_auth:user_id&#45;&gt;public.user:user_id</title>
-<path fill="none" stroke="#000000" d="M356.736,-549.6539C409.2181,-540.0385 353.4331,-450.8185 398.5,-403 502.6691,-292.4708 561.6188,-270.5 713.5,-270.5"/>
-<polygon fill="#000000" stroke="#000000" points="356.466,-549.6761 346.1293,-546.0153 351.483,-550.0881 346.5,-550.5 346.5,-550.5 346.5,-550.5 351.483,-550.0881 346.8707,-554.9847 356.466,-549.6761 356.466,-549.6761"/>
+<path fill="none" stroke="#000000" d="M356.7341,-549.6521C409.1949,-540.0165 353.2211,-450.6179 398.5,-403 505.4217,-290.5551 566.3353,-270.5 721.5,-270.5"/>
+<polygon fill="#000000" stroke="#000000" points="356.4659,-549.6742 346.1284,-546.0154 351.4829,-550.0871 346.5,-550.5 346.5,-550.5 346.5,-550.5 351.4829,-550.0871 346.8716,-554.9846 356.4659,-549.6742 356.4659,-549.6742"/>
 </g>
 <!-- public.reset_password_token -->
 <g id="node3" class="node">
@@ -100,8 +100,8 @@
 <!-- public.reset_password_token&#45;&gt;public.user -->
 <g id="edge2" class="edge">
 <title>public.reset_password_token:user_id&#45;&gt;public.user:user_id</title>
-<path fill="none" stroke="#000000" d="M834.7632,-549.6154C886.959,-539.9308 860.8636,-453.0218 824.5,-403 794.0044,-361.0501 743.9956,-408.9499 713.5,-367 688.2812,-332.309 670.6111,-270.5 713.5,-270.5"/>
-<polygon fill="#000000" stroke="#000000" points="834.4631,-549.6412 824.1135,-546.0166 829.4815,-550.0706 824.5,-550.5 824.5,-550.5 824.5,-550.5 829.4815,-550.0706 824.8865,-554.9834 834.4631,-549.6412 834.4631,-549.6412"/>
+<path fill="none" stroke="#000000" d="M834.7577,-549.6194C886.8946,-539.977 860.2954,-453.4299 824.5,-403 796.4312,-363.4557 749.5688,-406.5443 721.5,-367 696.6752,-332.0259 678.6111,-270.5 721.5,-270.5"/>
+<polygon fill="#000000" stroke="#000000" points="834.4633,-549.6445 824.115,-546.0165 829.4817,-550.0723 824.5,-550.5 824.5,-550.5 824.5,-550.5 829.4817,-550.0723 824.885,-554.9835 834.4633,-549.6445 834.4633,-549.6445"/>
 </g>
 <!-- public.jwt_token_code -->
 <g id="node4" class="node">
@@ -130,8 +130,8 @@
 <!-- public.jwt_token_code&#45;&gt;public.user -->
 <g id="edge3" class="edge">
 <title>public.jwt_token_code:user_id&#45;&gt;public.user:user_id</title>
-<path fill="none" stroke="#000000" d="M918.2614,-549.6323C866.3296,-540.1297 894.6837,-454.7779 928.5,-403 950.2643,-369.6756 988.7357,-400.3244 1010.5,-367 1033.9522,-331.0911 1053.3889,-270.5 1010.5,-270.5"/>
-<polygon fill="#000000" stroke="#000000" points="918.5357,-549.6555 928.12,-554.9839 923.5179,-550.0777 928.5,-550.5 928.5,-550.5 928.5,-550.5 923.5179,-550.0777 928.88,-546.0161 918.5357,-549.6555 918.5357,-549.6555"/>
+<path fill="none" stroke="#000000" d="M918.2712,-549.6386C866.445,-540.2034 895.7021,-455.4289 928.5,-403 947.897,-371.993 983.103,-398.007 1002.5,-367 1025.246,-330.6396 1045.3889,-270.5 1002.5,-270.5"/>
+<polygon fill="#000000" stroke="#000000" points="918.5353,-549.6607 928.1223,-554.9841 923.5176,-550.0804 928.5,-550.5 928.5,-550.5 928.5,-550.5 923.5176,-550.0804 928.8777,-546.0159 918.5353,-549.6607 918.5353,-549.6607"/>
 </g>
 <!-- public.jwt_refresh_token -->
 <g id="node5" class="node">
@@ -160,8 +160,8 @@
 <!-- public.jwt_refresh_token&#45;&gt;public.user -->
 <g id="edge4" class="edge">
 <title>public.jwt_refresh_token:user_id&#45;&gt;public.user:user_id</title>
-<path fill="none" stroke="#000000" d="M1341.2285,-549.6602C1288.4817,-540.1159 1343.0123,-451.5266 1298.5,-403 1203.2583,-299.1688 1151.3968,-270.5 1010.5,-270.5"/>
-<polygon fill="#000000" stroke="#000000" points="1341.5333,-549.6851 1351.1333,-554.985 1346.5166,-550.0925 1351.5,-550.5 1351.5,-550.5 1351.5,-550.5 1346.5166,-550.0925 1351.8667,-546.015 1341.5333,-549.6851 1341.5333,-549.6851"/>
+<path fill="none" stroke="#000000" d="M1341.2308,-549.6582C1288.509,-540.0908 1343.2618,-451.2965 1298.5,-403 1200.5234,-297.2865 1146.6345,-270.5 1002.5,-270.5"/>
+<polygon fill="#000000" stroke="#000000" points="1341.5334,-549.6829 1351.1323,-554.985 1346.5167,-550.0914 1351.5,-550.5 1351.5,-550.5 1351.5,-550.5 1346.5167,-550.0914 1351.8677,-546.015 1341.5334,-549.6829 1341.5334,-549.6829"/>
 </g>
 </g>
 </svg>
