@@ -4,6 +4,8 @@
 
 use meower_account_entity::account::Column as AccountColumn;
 use meower_account_entity::account::Entity as AccountEntity;
+use meower_account_entity::group::Column as GroupColumn;
+use meower_account_entity::group::Entity as GroupEntity;
 use meower_account_entity::group::Model as GroupModel;
 use meower_account_entity::entity_linked::AccountToGroup;
 use meower_shared::JwtClaims;
@@ -30,6 +32,34 @@ pub(crate) struct GroupQuery;
 #[Object]
 impl GroupQuery
 {
+    //--------------------------------------------------------------------------
+    /// Gets group.
+    //--------------------------------------------------------------------------
+    async fn group
+    (
+        &self,
+        ctx: &Context<'_>,
+        group_name: String,
+    ) -> Result<GroupModel>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+
+        let group = match GroupEntity::find()
+            .filter(GroupColumn::GroupName.eq(&group_name))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(group) => group,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        // TODO: Check if the user is the member of the group.
+
+        Ok(group)
+    }
+
     //--------------------------------------------------------------------------
     /// Gets groups.
     //--------------------------------------------------------------------------

@@ -42,6 +42,12 @@ pub enum Routes
         group_name: String,
     },
 
+    #[to("/group/<group_name>")]
+    GroupDetail
+    {
+        group_name: String,
+    },
+
     #[not_found]
     NotFound,
 }
@@ -65,6 +71,10 @@ pub fn Router<G: Html>( route: Routes ) -> View<G>
                 view! { profile::Edit(token=token.clone()) }
             },
             Routes::GroupCreate => view! { group::Create },
+            Routes::GroupDetail { group_name } =>
+            {
+                view! { group::Detail(group_name=group_name.clone()) }
+            },
             Routes::GroupEdit { group_name } =>
             {
                 view! { group::Edit(group_name=group_name.clone()) }

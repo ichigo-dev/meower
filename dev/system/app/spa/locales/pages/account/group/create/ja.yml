@@ -1,4 +1,5 @@
 pages:
   account:
-    create_group:
-      heading: "グループ追加"
+    group:
+      create:
+        heading: "グループ追加"

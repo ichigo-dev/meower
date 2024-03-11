@@ -1,0 +1,5 @@
+pages:
+  account:
+    group:
+      detail:
+        heading: "グループ詳細"

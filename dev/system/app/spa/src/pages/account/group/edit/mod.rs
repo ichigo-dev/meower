@@ -29,7 +29,7 @@ pub fn Edit<G: Html>( group_name: String ) -> View<G>
     {
         Layout
         {
-            Main(heading=t!("pages.account.edit_group.heading"))
+            Main(heading=t!("pages.account.group.edit.heading"))
             {
                 GroupForm
             }

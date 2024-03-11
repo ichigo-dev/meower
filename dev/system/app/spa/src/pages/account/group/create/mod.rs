@@ -29,7 +29,7 @@ pub fn Create<G: Html>() -> View<G>
     {
         Layout
         {
-            Main(heading=t!("pages.account.create_group.heading"))
+            Main(heading=t!("pages.account.group.create.heading"))
             {
                 GroupForm
             }

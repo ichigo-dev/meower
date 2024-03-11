@@ -1,4 +1,5 @@
 pages:
   account:
-    edit_group:
-      heading: "グループ編集"
+    group:
+      edit:
+        heading: "グループ編集"

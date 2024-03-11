@@ -60,6 +60,30 @@ query GetAccountProfiles($accountName: String!) {
 
 
 ################################################################################
+# Gets group.
+################################################################################
+query GetGroup($groupName: String!) {
+  group(groupName: $groupName) {
+    groupName
+    name
+    description
+    representative
+    location
+    email
+    telno
+    foundedAt
+    isPublic
+    avatar {
+      fileKey
+    }
+    cover {
+      fileKey
+    }
+  }
+}
+
+
+################################################################################
 # Gets groups.
 ################################################################################
 query GetGroups($accountName: String!) {

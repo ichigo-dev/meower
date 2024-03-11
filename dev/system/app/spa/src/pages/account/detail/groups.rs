@@ -12,6 +12,7 @@ use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
 use sycamore::futures::spawn_local_scoped;
+use sycamore_router::navigate;
 
 
 //------------------------------------------------------------------------------
@@ -85,6 +86,7 @@ pub async fn Groups<G: Html>( account_name: String ) -> View<G>
                         Some(avatar) => avatar.file_key.clone(),
                         None => "".to_string(),
                     };
+                    let cloned_group_name = group.group_name.clone();
 
                     view!
                     {
@@ -92,6 +94,17 @@ pub async fn Groups<G: Html>( account_name: String ) -> View<G>
                         (
                             classes=StrProp("flex flex_row flex_align_center flex_gap_md").into(),
                             clickable=BoolProp(true).into(),
+                            on:click=move |_|
+                            {
+                                navigate
+                                (
+                                    &format!
+                                    (
+                                        "/account/group/{}",
+                                        cloned_group_name
+                                    )
+                                );
+                            },
                         )
                         {
                             GroupAvatar

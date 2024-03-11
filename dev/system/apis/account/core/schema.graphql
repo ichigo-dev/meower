@@ -434,6 +434,10 @@ type QueryRoot {
 	"""
 	accountProfiles(accountName: String!): [AccountProfile!]!
 	"""
+	Gets group.
+	"""
+	group(groupName: String!): Group!
+	"""
 	Gets groups.
 	"""
 	groups(accountName: String!): [Group!]!
