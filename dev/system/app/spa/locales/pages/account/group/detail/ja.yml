@@ -6,3 +6,13 @@ pages:
         button:
           back: "戻る"
           edit: "編集"
+        table:
+          description: "概要"
+          representative: "代表者"
+          location: "場所"
+          email: "メールアドレス"
+          telno: "電話番号"
+          founded_at: "設立日"
+          is_public: "公開設定"
+          public: "公開"
+          private: "非公開"

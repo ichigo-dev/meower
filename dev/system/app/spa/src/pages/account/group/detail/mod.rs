@@ -126,6 +126,213 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                         }
                     }
                 }
+                Table
+                {
+                    TableBody
+                    {
+                        (
+                            match group.description.clone()
+                            {
+                                Some(description) if description.len() > 0 =>
+                                {
+                                    view!
+                                    {
+                                        TableRow
+                                        {
+                                            TableCell
+                                            (
+                                                is_head=BoolProp(true).into(),
+                                                min=BoolProp(true).into(),
+                                            )
+                                            {
+                                                (t!("pages.account.group.detail.table.description"))
+                                            }
+                                            TableCell
+                                            {
+                                                (description)
+                                            }
+                                        }
+                                    }
+                                },
+                                _ => view! {},
+                            }
+                        )
+                        (
+                            match group.representative.clone()
+                            {
+                                Some(representative) if representative.len() > 0 =>
+                                {
+                                    view!
+                                    {
+                                        TableRow
+                                        {
+                                            TableCell
+                                            (
+                                                is_head=BoolProp(true).into(),
+                                                min=BoolProp(true).into(),
+                                            )
+                                            {
+                                                (t!("pages.account.group.detail.table.representative"))
+                                            }
+                                            TableCell
+                                            {
+                                                (representative)
+                                            }
+                                        }
+                                    }
+                                },
+                                _ => view! {},
+                            }
+                        )
+                        (
+                            match group.location.clone()
+                            {
+                                Some(location) if location.len() > 0 =>
+                                {
+                                    view!
+                                    {
+                                        TableRow
+                                        {
+                                            TableCell
+                                            (
+                                                is_head=BoolProp(true).into(),
+                                                min=BoolProp(true).into(),
+                                            )
+                                            {
+                                                (t!("pages.account.group.detail.table.location"))
+                                            }
+                                            TableCell
+                                            {
+                                                (location)
+                                            }
+                                        }
+                                    }
+                                },
+                                _ => view! {},
+                            }
+                        )
+                        (
+                            match group.email.clone()
+                            {
+                                Some(email) if email.len() > 0 =>
+                                {
+                                    view!
+                                    {
+                                        TableRow
+                                        {
+                                            TableCell
+                                            (
+                                                is_head=BoolProp(true).into(),
+                                                min=BoolProp(true).into(),
+                                            )
+                                            {
+                                                (t!("pages.account.group.detail.table.email"))
+                                            }
+                                            TableCell
+                                            {
+                                                (email)
+                                            }
+                                        }
+                                    }
+                                },
+                                _ => view! {},
+                            }
+                        )
+                        (
+                            match group.telno.clone()
+                            {
+                                Some(telno) if telno.len() > 0 =>
+                                {
+                                    view!
+                                    {
+                                        TableRow
+                                        {
+                                            TableCell
+                                            (
+                                                is_head=BoolProp(true).into(),
+                                                min=BoolProp(true).into(),
+                                            )
+                                            {
+                                                (t!("pages.account.group.detail.table.telno"))
+                                            }
+                                            TableCell
+                                            {
+                                                (telno)
+                                            }
+                                        }
+                                    }
+                                },
+                                _ => view! {},
+                            }
+                        )
+                        (
+                            match group.founded_at.clone()
+                            {
+                                Some(founded_at) =>
+                                {
+                                    view!
+                                    {
+                                        TableRow
+                                        {
+                                            TableCell
+                                            (
+                                                is_head=BoolProp(true).into(),
+                                                min=BoolProp(true).into(),
+                                            )
+                                            {
+                                                (t!("pages.account.group.detail.table.founded_at"))
+                                            }
+                                            TableCell
+                                            {
+                                                (
+                                                    founded_at
+                                                        .and_utc()
+                                                        .format_localized
+                                                        (
+                                                            "%x",
+                                                            state.datetime_locale,
+                                                        )
+                                                        .to_string()
+                                                )
+                                            }
+                                        }
+                                    }
+                                },
+                                _ => view! {},
+                            }
+                        )
+                        TableRow
+                        {
+                            TableCell
+                            (
+                                is_head=BoolProp(true).into(),
+                                min=BoolProp(true).into(),
+                            )
+                            {
+                                (t!("pages.account.group.detail.table.is_public"))
+                            }
+                            TableCell
+                            {
+                                (
+                                    if group.is_public
+                                    {
+                                        view!
+                                        {
+                                            (t!("pages.account.group.detail.table.public"))
+                                        }
+                                    }
+                                    else
+                                    {
+                                        view!
+                                        {
+                                            (t!("pages.account.group.detail.table.private"))
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }

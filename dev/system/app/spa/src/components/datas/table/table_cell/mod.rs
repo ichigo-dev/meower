@@ -16,6 +16,17 @@ use sycamore::prelude::*;
 #[component]
 pub fn TableCell<G: Html>( props: TableCellProps<G> ) -> View<G>
 {
+    let classes = move ||
+    {
+        let mut classes = vec!
+        [
+            props.classes.get_clone(),
+        ];
+        if props.min.get() { classes.push("min".to_string()) }
+        classes.retain(|c| !c.is_empty());
+        classes.join(" ")
+    };
+
     let children = props.children.call();
     view!
     {
@@ -28,7 +39,7 @@ pub fn TableCell<G: Html>( props: TableCellProps<G> ) -> View<G>
                     th
                     (
                         ref=props.node_ref,
-                        class=props.classes,
+                        class=classes(),
                         ..props.attributes
                     )
                     {
@@ -44,7 +55,7 @@ pub fn TableCell<G: Html>( props: TableCellProps<G> ) -> View<G>
                     td
                     (
                         ref=props.node_ref,
-                        class=props.classes,
+                        class=classes(),
                         ..props.attributes
                     )
                     {

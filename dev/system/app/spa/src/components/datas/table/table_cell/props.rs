@@ -24,5 +24,8 @@ pub struct TableCellProps<G: Html>
     pub is_head: ReadSignal<bool>,
 
     #[prop(default)]
+    pub min: ReadSignal<bool>,
+
+    #[prop(default)]
     pub node_ref: NodeRef<G>,
 }
