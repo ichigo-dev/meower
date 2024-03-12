@@ -154,7 +154,15 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
                      },
                 ).await
                 {
-                    Ok(_) => navigate("/account"),
+                    Ok(data) =>
+                    {
+                        let href = format!
+                        (
+                            "/account/group/{}",
+                            data.update_group.group_name
+                        );
+                        navigate(&href);
+                    },
                     Err(e) => 
                     {
                         alert_message.set(e);
@@ -228,7 +236,12 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
                                 upload_group_cover_input,
                             },
                         ).await.unwrap();
-                        navigate("/account");
+                        let href = format!
+                        (
+                            "/account/group/{}",
+                            data.create_group.group_name
+                        );
+                        navigate(&href);
                     },
                     Err(e) => 
                     {

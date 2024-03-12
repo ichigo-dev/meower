@@ -3,3 +3,6 @@ pages:
     group:
       detail:
         heading: "グループ詳細"
+        button:
+          back: "戻る"
+          edit: "編集"
