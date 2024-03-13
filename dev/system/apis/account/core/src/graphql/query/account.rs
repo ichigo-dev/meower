@@ -114,4 +114,29 @@ impl AccountQuery
             .unwrap();
         Ok(accounts)
     }
+
+    //--------------------------------------------------------------------------
+    /// Searches accounts.
+    //--------------------------------------------------------------------------
+    async fn search_accounts
+    (
+        &self,
+        ctx: &Context<'_>,
+        search: String,
+    ) -> Result<Vec<AccountModel>>
+    {
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+
+        // TODO: Check if the user is the member of the group.
+
+        let accounts = AccountEntity::find()
+            .filter(AccountColumn::AccountName.like(search + "%"))
+            .filter(AccountColumn::IsPublic.eq(true))
+            .all(tsx)
+            .await
+            .unwrap();
+
+        Ok(accounts)
+    }
 }

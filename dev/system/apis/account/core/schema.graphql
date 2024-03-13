@@ -426,6 +426,10 @@ type QueryRoot {
 	"""
 	accounts(publicUserId: String!): [Account!]!
 	"""
+	Searches accounts.
+	"""
+	searchAccounts(search: String!): [Account!]!
+	"""
 	Gets account profile.
 	"""
 	accountProfile(token: String!): AccountProfile!

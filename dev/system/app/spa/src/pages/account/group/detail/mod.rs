@@ -12,6 +12,7 @@ use chrono::NaiveDateTime;
 use graphql_client::GraphQLQuery;
 use rust_i18n::t;
 use sycamore::prelude::*;
+use sycamore::futures::spawn_local_scoped;
 use sycamore_router::navigate;
 
 
@@ -24,7 +25,15 @@ use sycamore_router::navigate;
     query_path = "graphql/query/account.graphql",
     response_derives = "Debug, Clone, PartialEq",
 )]
-struct GetGroup;
+struct GetGroupWithMembers;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "graphql/schema/account.graphql",
+    query_path = "graphql/query/account.graphql",
+    response_derives = "Debug, Clone, PartialEq",
+)]
+struct SearchAccounts;
 
 
 //------------------------------------------------------------------------------
@@ -44,11 +53,11 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
     let avatar_file_key = create_signal(Some(String::new()));
     let edit_href = format!("/account/group/edit/{}", group_name.clone());
 
-    let group = match post_graphql::<GetGroup>
+    let group = match post_graphql::<GetGroupWithMembers>
     (
         &state,
         "/account/graphql",
-         get_group::Variables
+         get_group_with_members::Variables
          {
              group_name,
          },
@@ -72,6 +81,31 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
             navigate("/");
             return view! {};
         },
+    };
+    let members = create_signal(group.group_members);
+
+    // Invite members.
+    let open_invite_dialog = create_signal(false);
+    let invite_members = create_signal(Vec::new());
+    let cloned_state = state.clone();
+    let search_handler = move |values: FormValues, _|
+    {
+        let state = cloned_state.clone();
+        let search = values.get("search").unwrap_or("".to_string());
+
+        spawn_local_scoped(async move
+        {
+            if let Ok(data) = post_graphql::<SearchAccounts>
+            (
+                &state,
+                "/account/graphql",
+                 search_accounts::Variables { search },
+            ).await
+            {
+                invite_members.set(data.search_accounts);
+                open_invite_dialog.set(true);
+            };
+        });
     };
 
     view!
@@ -332,6 +366,147 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                             }
                         }
                     }
+                }
+                Heading(variant=HeadingVariant::Bullet.into())
+                {
+                    (t!("pages.account.group.detail.members.heading"))
+                }
+                Box
+                {
+                    Form
+                    (
+                        classes=StrProp("flex flex_row flex_align_center flex_gap_md").into(),
+                        on_submit=Box::new(search_handler),
+                    )
+                    {
+                        TextField
+                        (
+                            name=StrProp("search").into(),
+                            placeholder=StringProp(t!("pages.account.group.detail.members.invite.placeholder")).into(),
+                            full_width=BoolProp(true).into(),
+                        )
+                        Button
+                        (
+                            button_type=StrProp("submit").into(),
+                            round=ButtonRound::Full.into(),
+                        )
+                        {
+                            (t!("pages.account.group.detail.members.invite.button.search"))
+                        }
+                    }
+                    Dialog(open=open_invite_dialog)
+                    {
+                        DialogHead
+                        {
+                            (t!("pages.account.group.detail.members.invite.dialog.head"))
+                        }
+                        DialogBody
+                        {
+                            (
+                                if invite_members.get_clone().len() > 0
+                                {
+                                    view!
+                                    {
+                                        List(variant=ListVariant::Simple.into())
+                                        {
+                                            Indexed
+                                            (
+                                                iterable=*invite_members,
+                                                view=|member|
+                                                {
+                                                    let account_name = create_signal(member.account_name);
+                                                    let name = create_signal("".to_string());
+                                                    let avatar_file_key = create_signal("".to_string());
+
+                                                    if let Some(profile) = member.default_account_profile
+                                                    {
+                                                        name.set(profile.name);
+                                                        if let Some(avatar) = profile.avatar
+                                                        {
+                                                            avatar_file_key.set(avatar.file_key);
+                                                        };
+                                                    };
+
+                                                    view!
+                                                    {
+                                                        ListItem(clickable=BoolProp(true).into())
+                                                        {
+                                                            MiniProfile
+                                                            (
+                                                                account_name=account_name.get_clone(),
+                                                                name=name.get_clone(),
+                                                                file_key=avatar_file_key.get_clone(),
+                                                            )
+                                                        }
+                                                    }
+                                                },
+                                            )
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    view!
+                                    {
+                                        (t!("pages.account.group.detail.members.invite.dialog.not_found"))
+                                    }
+                                }
+                            )
+                        }
+                        DialogFoot
+                        {
+                            Button
+                            (
+                                variant=ButtonVariant::Outlined.into(),
+                                on:click=move |_|
+                                {
+                                    open_invite_dialog.set(false);
+                                },
+                            )
+                            {
+                                (t!("pages.account.group.detail.members.invite.dialog.button.cancel"))
+                            }
+                        }
+                    }
+                }
+                List(variant=ListVariant::Simple.into())
+                {
+                    Indexed
+                    (
+                        iterable=*members,
+                        view=|member|
+                        {
+                            let account_name = create_signal("".to_string());
+                            let name = create_signal("".to_string());
+                            let avatar_file_key = create_signal("".to_string());
+
+                            if let Some(account) = member.account
+                            {
+                                account_name.set(account.account_name);
+                            };
+                            if let Some(profile) = member.account_profile
+                            {
+                                name.set(profile.name);
+                                if let Some(avatar) = profile.avatar
+                                {
+                                    avatar_file_key.set(avatar.file_key);
+                                };
+                            };
+
+                            view!
+                            {
+                                ListItem
+                                {
+                                    MiniProfile
+                                    (
+                                        account_name=account_name.get_clone(),
+                                        name=name.get_clone(),
+                                        file_key=avatar_file_key.get_clone(),
+                                    )
+                                }
+                            }
+                        },
+                    )
                 }
             }
         }

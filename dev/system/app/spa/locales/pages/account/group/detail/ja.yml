@@ -16,3 +16,14 @@ pages:
           is_public: "公開設定"
           public: "公開"
           private: "非公開"
+        members:
+          heading: "メンバー一覧"
+          invite:
+            placeholder: "アカウント名で検索"
+            button:
+              search: "メンバーを招待"
+            dialog:
+              head: "アカウントをグループに招待"
+              not_found: "アカウントが見つかりませんでした"
+              button:
+                cancel: "キャンセル"
