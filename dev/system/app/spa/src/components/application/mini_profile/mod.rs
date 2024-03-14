@@ -73,6 +73,22 @@ pub fn MiniProfile<G: Html>( props: MiniProfileProps<G> ) -> View<G>
                         view! {}
                     }
                 )
+                (
+                    if props.is_member.get()
+                    {
+                        view!
+                        {
+                            Chip(size=ChipSize::Small.into())
+                            {
+                                "is member"
+                            }
+                        }
+                    }
+                    else
+                    {
+                        view! {}
+                    }
+                )
             }
         }
     }

@@ -32,4 +32,7 @@ pub struct MiniProfileProps<G: Html>
 
     #[prop(default)]
     pub selected: ReadSignal<bool>,
+
+    #[prop(default)]
+    pub is_member: ReadSignal<bool>,
 }

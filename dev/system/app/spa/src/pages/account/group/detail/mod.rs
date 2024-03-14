@@ -394,7 +394,11 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                             (t!("pages.account.group.detail.members.invite.button.search"))
                         }
                     }
-                    Dialog(open=open_invite_dialog)
+                    Dialog
+                    (
+                        open=open_invite_dialog,
+                        size=DialogSize::Small.into(),
+                    )
                     {
                         DialogHead
                         {
@@ -412,7 +416,7 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                                             Indexed
                                             (
                                                 iterable=*invite_members,
-                                                view=|member|
+                                                view=move |member|
                                                 {
                                                     let account_name = create_signal(member.account_name);
                                                     let name = create_signal("".to_string());
@@ -427,16 +431,29 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                                                         };
                                                     };
 
+                                                    let is_member = members
+                                                        .get_clone()
+                                                        .iter()
+                                                        .any(|m|
+                                                        {
+                                                            match &m.account
+                                                            {
+                                                                Some(account) => account.account_name == account_name.get_clone(),
+                                                                _ => false,
+                                                            }
+                                                        });
+
                                                     view!
                                                     {
-                                                        ListItem(clickable=BoolProp(true).into())
+                                                        ListItem(clickable=BoolProp(!is_member).into())
                                                         {
                                                             MiniProfile
                                                             (
                                                                 account_name=account_name.get_clone(),
                                                                 name=name.get_clone(),
                                                                 file_key=avatar_file_key.get_clone(),
-                                                                clickable=BoolProp(true).into(),
+                                                                clickable=BoolProp(!is_member).into(),
+                                                                is_member=BoolProp(is_member).into(),
                                                             )
                                                         }
                                                     }
