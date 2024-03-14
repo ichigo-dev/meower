@@ -436,6 +436,7 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                                                                 account_name=account_name.get_clone(),
                                                                 name=name.get_clone(),
                                                                 file_key=avatar_file_key.get_clone(),
+                                                                clickable=BoolProp(true).into(),
                                                             )
                                                         }
                                                     }

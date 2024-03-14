@@ -88,5 +88,4 @@ pub async fn get_handler
     let headers = [(header::CONTENT_TYPE, mime_type)];
     let bytes = cover_file.bytes().await.unwrap();
     Ok((headers, bytes).into_response())
-
 }

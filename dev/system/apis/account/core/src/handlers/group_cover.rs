@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------
 
 use crate::AppState;
-use meower_account_entity::account_profile_cover::Column as GroupCoverColumn;
-use meower_account_entity::account_profile_cover::Entity as GroupCoverEntity;
+use meower_account_entity::group_cover::Column as GroupCoverColumn;
+use meower_account_entity::group_cover::Entity as GroupCoverEntity;
 
 use axum::extract::{ Path, State };
 use axum::http::{ header, StatusCode };
@@ -88,5 +88,4 @@ pub async fn get_handler
     let headers = [(header::CONTENT_TYPE, mime_type)];
     let bytes = cover_file.bytes().await.unwrap();
     Ok((headers, bytes).into_response())
-
 }
