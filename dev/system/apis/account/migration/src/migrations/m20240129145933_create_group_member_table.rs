@@ -51,11 +51,6 @@ impl MigrationTrait for Migration
                     .big_integer()
                     .not_null()
             )
-            .col
-            (
-                ColumnDef::new(GroupMember::Role)
-                    .integer()
-            )
             .foreign_key
             (
                 ForeignKey::create()
@@ -103,7 +98,6 @@ impl MigrationTrait for Migration
             "COMMENT ON COLUMN \"group_member\".\"group_id\" IS 'Group ID'",
             "COMMENT ON COLUMN \"group_member\".\"account_id\" IS 'Account ID'",
             "COMMENT ON COLUMN \"group_member\".\"account_profile_id\" IS 'Account profile ID'",
-            "COMMENT ON COLUMN \"group_member\".\"role\" IS 'Role'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();

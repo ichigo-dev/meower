@@ -1,0 +1,10 @@
+entities:
+  group_member:
+    group_member_id:
+      name: "グループメンバーID"
+    group_id:
+      name: "グループID"
+    account_id:
+      name: "アカウントID"
+    account_profile_id:
+      name: "アカウントプロフィールID"

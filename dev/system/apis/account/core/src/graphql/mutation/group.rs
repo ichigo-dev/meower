@@ -9,7 +9,6 @@ use meower_account_entity::group::Entity as GroupEntity;
 use meower_account_entity::group::ActiveModel as GroupActiveModel;
 use meower_account_entity::group::Model as GroupModel;
 use meower_account_entity::group_member::ActiveModel as GroupMemberActiveModel;
-use meower_account_entity::group_member::Role as GroupMemberRole;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
 
@@ -121,7 +120,6 @@ impl GroupMutation
             group_id: ActiveValue::Set(group.group_id),
             account_id: ActiveValue::Set(account.account_id),
             account_profile_id: ActiveValue::Set(account.default_account_profile_id),
-            role: ActiveValue::Set(GroupMemberRole::Admin),
             ..Default::default()
         };
         if let Err(e) = group_member.validate_and_insert(tsx).await

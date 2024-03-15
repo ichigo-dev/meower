@@ -1,0 +1,16 @@
+entities:
+  group_cover:
+    group_cover_id:
+      name: "グループカバー画像ID"
+    group_id:
+      name: "グループID"
+    file_key:
+      name: "ファイルキー"
+    file_name:
+      name: "ファイル名"
+    file_size:
+      name: "ファイルサイズ"
+    content_type:
+      name: "ファイル種別"
+    created_at:
+      name: "作成日時"

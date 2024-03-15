@@ -316,10 +316,6 @@ type GroupCover {
 
 type GroupMember {
 	"""
-	Gets the role.
-	"""
-	role: Role!
-	"""
 	Gets the group.
 	"""
 	group: Group
@@ -445,14 +441,6 @@ type QueryRoot {
 	Gets groups.
 	"""
 	groups(accountName: String!): [Group!]!
-}
-
-"""
-Role.
-"""
-enum Role {
-	ADMIN
-	MEMBER
 }
 
 

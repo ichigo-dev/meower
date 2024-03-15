@@ -22,18 +22,6 @@ use thiserror::Error;
 
 
 //------------------------------------------------------------------------------
-/// Role.
-//------------------------------------------------------------------------------
-#[derive(Copy, Clone, Debug, PartialEq, Eq, EnumIter, DeriveActiveEnum, Enum)]
-#[sea_orm(rs_type = "i32", db_type = "Integer")]
-pub enum Role
-{
-    Admin = 99,
-    Member = 30,
-}
-
-
-//------------------------------------------------------------------------------
 /// Model.
 //------------------------------------------------------------------------------
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
@@ -45,20 +33,11 @@ pub struct Model
     pub group_id: i64,
     pub account_id: i64,
     pub account_profile_id: i64,
-    pub role: Role,
 }
 
 #[Object(name = "GroupMember")]
 impl Model
 {
-    //--------------------------------------------------------------------------
-    /// Gets the role.
-    //--------------------------------------------------------------------------
-    pub async fn role( &self ) -> Role
-    {
-        self.role
-    }
-
     //--------------------------------------------------------------------------
     /// Gets the group.
     //--------------------------------------------------------------------------
@@ -121,7 +100,6 @@ impl Column
             Self::GroupId => t!("entities.group_member.group_id.name"),
             Self::AccountId => t!("entities.group_member.account_id.name"),
             Self::AccountProfileId => t!("entities.group_member.account_profile_id.name"),
-            Self::Role => t!("entities.group_member.role.name"),
         }
     }
 }

@@ -114,7 +114,6 @@ pub(crate) enum GroupMember
     GroupId,
     AccountId,
     AccountProfileId,
-    Role,
 }
 
 
