@@ -33,6 +33,8 @@ impl AccountProfileQuery
 {
     //--------------------------------------------------------------------------
     /// Gets account profile.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn account_profile
     (
@@ -42,8 +44,6 @@ impl AccountProfileQuery
     ) -> Result<AccountProfileModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account_profile = match AccountProfileEntity::find()
             .filter(AccountProfileColumn::Token.eq(token))
             .one(tsx)
@@ -64,6 +64,8 @@ impl AccountProfileQuery
             None => return Err(t!("system.error.not_found").into()),
         };
 
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != account.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
@@ -73,7 +75,9 @@ impl AccountProfileQuery
     }
 
     //--------------------------------------------------------------------------
-    /// Gets account profiles.
+    /// Gets account profiles of the logged in user.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn account_profiles
     (
@@ -83,8 +87,6 @@ impl AccountProfileQuery
     ) -> Result<Vec<AccountProfileModel>>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account = match AccountEntity::find()
             .filter(AccountColumn::AccountName.eq(&account_name))
             .one(tsx)
@@ -95,6 +97,8 @@ impl AccountProfileQuery
             None => return Err(t!("system.error.not_found").into()),
         };
 
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != account.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());

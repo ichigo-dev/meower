@@ -50,7 +50,6 @@ impl AppState
         .finish();
 
         // Storage.
-        let _ = config.storage_url;
         let storage = LocalFileSystem::new_with_prefix(&config.storage_bucket)
             .unwrap();
         let storage: Arc<Box<dyn ObjectStore>> = Arc::new(Box::new(storage));

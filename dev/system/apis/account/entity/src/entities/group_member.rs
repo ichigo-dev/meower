@@ -13,7 +13,7 @@ use meower_validator::ValidationError;
 
 use std::sync::Arc;
 
-use async_graphql::{ Context, Enum, Object };
+use async_graphql::{ Context, Object };
 use async_trait::async_trait;
 use rust_i18n::t;
 use sea_orm::DatabaseTransaction;

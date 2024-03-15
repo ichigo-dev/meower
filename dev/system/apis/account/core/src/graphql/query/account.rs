@@ -30,7 +30,9 @@ pub(crate) struct AccountQuery;
 impl AccountQuery
 {
     //--------------------------------------------------------------------------
-    /// Gets a default account.
+    /// Gets the default account of the logged in user.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn default_account
     (
@@ -39,13 +41,14 @@ impl AccountQuery
         public_user_id: String,
     ) -> Result<Option<AccountModel>>
     {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        // Protects the access.
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
         }
 
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let account = AccountEntity::find()
             .order_by_desc(AccountColumn::LastLoginAt)
             .one(tsx)
@@ -55,7 +58,9 @@ impl AccountQuery
     }
 
     //--------------------------------------------------------------------------
-    /// Gets an account.
+    /// Gets an account from the account name.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn account
     (
@@ -65,8 +70,6 @@ impl AccountQuery
     ) -> Result<Option<AccountModel>>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account = match AccountEntity::find()
             .filter(AccountColumn::AccountName.eq(&account_name))
             .one(tsx)
@@ -77,6 +80,8 @@ impl AccountQuery
             None => return Err(t!("system.error.not_found").into()),
         };
 
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != account.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
@@ -90,7 +95,9 @@ impl AccountQuery
     }
 
     //--------------------------------------------------------------------------
-    /// Gets accounts.
+    /// Gets accounts of the logged in user.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn accounts
     (
@@ -99,13 +106,14 @@ impl AccountQuery
         public_user_id: String,
     ) -> Result<Vec<AccountModel>>
     {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        // Protects the access.
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
         }
 
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let accounts = AccountEntity::find()
             .filter(AccountColumn::PublicUserId.eq(&public_user_id))
             .order_by_asc(AccountColumn::CreatedAt)
@@ -116,7 +124,8 @@ impl AccountQuery
     }
 
     //--------------------------------------------------------------------------
-    /// Searches accounts.
+    /// Searches for accounts by starting with the account name.
+    /// Private accounts are not included.
     //--------------------------------------------------------------------------
     async fn search_accounts
     (
@@ -126,17 +135,12 @@ impl AccountQuery
     ) -> Result<Vec<AccountModel>>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
-        // TODO: Check if the user is the member of the group.
-
         let accounts = AccountEntity::find()
             .filter(AccountColumn::AccountName.like(search + "%"))
             .filter(AccountColumn::IsPublic.eq(true))
             .all(tsx)
             .await
             .unwrap();
-
         Ok(accounts)
     }
 }

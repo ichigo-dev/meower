@@ -51,7 +51,10 @@ pub(crate) struct AccountProfileAvatarMutation;
 impl AccountProfileAvatarMutation
 {
     //--------------------------------------------------------------------------
-    /// Uploads avatar.
+    /// Uploads the avatar of the account profile. The existing avatar will be
+    /// deleted.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn upload_avatar
     (
@@ -61,10 +64,6 @@ impl AccountProfileAvatarMutation
     ) -> Result<bool>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-        let config = ctx.data::<Config>().unwrap();
-        let storage = ctx.data::<Arc<Box<dyn ObjectStore>>>().unwrap().as_ref();
-
         let account_profile = match AccountProfileEntity::find()
             .filter(AccountProfileColumn::Token.eq(input.account_profile_token))
             .one(tsx)
@@ -84,11 +83,17 @@ impl AccountProfileAvatarMutation
             Some(account) => account,
             None => return Err(t!("system.error.not_found").into()),
         };
+
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != account.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
         }
 
+        // Deletes the existing avatar.
+        let config = ctx.data::<Config>().unwrap();
+        let storage = ctx.data::<Arc<Box<dyn ObjectStore>>>().unwrap().as_ref();
         if input.base64.is_some() || input.delete_file
         {
             if let Some(exists_avatar) = account_profile
@@ -111,6 +116,7 @@ impl AccountProfileAvatarMutation
             };
         }
 
+        // Uploads the new avatar.
         if let Some(base64) = input.base64
         {
             let (prefix, base64) = match base64.split_once(",")
@@ -158,7 +164,6 @@ impl AccountProfileAvatarMutation
                 return Err(e.to_string().into());
             }
         }
-
         Ok(true)
     }
 }

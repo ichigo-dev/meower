@@ -69,7 +69,10 @@ pub(crate) struct GroupMutation;
 impl GroupMutation
 {
     //--------------------------------------------------------------------------
-    /// Creates group.
+    /// Creates a new group with the specified account as administrator. The
+    /// account must belong to the logged in user.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn create_group
     (
@@ -79,8 +82,6 @@ impl GroupMutation
     ) -> Result<GroupModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account = match AccountEntity::find()
             .filter(AccountColumn::AccountName.eq(&input.account_name))
             .one(tsx)
@@ -91,6 +92,8 @@ impl GroupMutation
             None => return Err(t!("system.error.not_found").into()),
         };
 
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != account.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
@@ -115,6 +118,7 @@ impl GroupMutation
             Err(e) => return Err(e.get_message().into()),
         };
 
+        // Adds the group member as the administrator.
         let group_member = GroupMemberActiveModel
         {
             group_id: ActiveValue::Set(group.group_id),
@@ -130,7 +134,9 @@ impl GroupMutation
     }
 
     //--------------------------------------------------------------------------
-    /// Updates group.
+    /// Updates the group.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn update_group
     (

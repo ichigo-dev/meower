@@ -347,43 +347,67 @@ Mutation root.
 """
 type MutationRoot {
 	"""
-	Select account.
+	Switch the account used by the logged in user.
+	
+	* Access is protected from users other than the owner.
 	"""
 	selectAccount(accountName: String!): Account!
 	"""
-	Creates account.
+	Creates a new account for the logged in user. A default account profile
+	and a default workspace are also created.
+	
+	* Access is protected from users other than the owner.
 	"""
 	createAccount(input: CreateAccountInput!): Account!
 	"""
-	Updates account.
+	Updates the account of the logged in user.
+	
+	* Access is protected from users other than the owner.
 	"""
 	updateAccount(input: UpdateAccountInput!): Account!
 	"""
-	Creates account profile.
+	Creates a new account profile for the logged in user's account.
+	
+	* Access is protected from users other than the owner.
 	"""
 	createAccountProfile(input: CreateAccountProfileInput!): AccountProfile!
 	"""
-	Updates account profile.
+	Updates the account profile of the logged in user's account.
+	
+	* Access is protected from users other than the owner.
 	"""
 	updateAccountProfile(input: UpdateAccountProfileInput!): AccountProfile!
 	"""
-	Deletes account profile.
+	Deletes the account profile of the logged in user's account. Also
+	deletes the avatar and cover.
+	The default account profile cannot be deleted.
+	
+	* Access is protected from users other than the owner.
 	"""
 	deleteAccountProfile(token: String!): Boolean!
 	"""
-	Uploads avatar.
+	Uploads the avatar of the account profile. The existing avatar will be
+	deleted.
+	
+	* Access is protected from users other than the owner.
 	"""
 	uploadAvatar(input: UploadAvatarInput!): Boolean!
 	"""
-	Uploads cover.
+	Uploads the cover of the account profile. The existing cover will be
+	deleted.
 	"""
 	uploadCover(input: UploadCoverInput!): Boolean!
 	"""
-	Creates group.
+	Creates a new group with the specified account as administrator. The
+	account must belong to the logged in user.
+	
+	* Access is protected from users other than the owner.
 	"""
 	createGroup(input: CreateGroupInput!): Group!
 	"""
-	Updates group.
+	Updates the group.
+	
+	* Access is protected from users other than the owner.
 	"""
 	updateGroup(input: UpdateGroupInput!): Group!
 	"""
@@ -410,27 +434,38 @@ Query root.
 """
 type QueryRoot {
 	"""
-	Gets a default account.
+	Gets the default account of the logged in user.
+	
+	* Access is protected from users other than the owner.
 	"""
 	defaultAccount(publicUserId: String!): Account
 	"""
-	Gets an account.
+	Gets an account from the account name.
+	
+	* Access is protected from users other than the owner.
 	"""
 	account(accountName: String!): Account
 	"""
-	Gets accounts.
+	Gets accounts of the logged in user.
+	
+	* Access is protected from users other than the owner.
 	"""
 	accounts(publicUserId: String!): [Account!]!
 	"""
-	Searches accounts.
+	Searches for accounts by starting with the account name.
+	Private accounts are not included.
 	"""
 	searchAccounts(search: String!): [Account!]!
 	"""
 	Gets account profile.
+	
+	* Access is protected from users other than the owner.
 	"""
 	accountProfile(token: String!): AccountProfile!
 	"""
-	Gets account profiles.
+	Gets account profiles of the logged in user.
+	
+	* Access is protected from users other than the owner.
 	"""
 	accountProfiles(accountName: String!): [AccountProfile!]!
 	"""

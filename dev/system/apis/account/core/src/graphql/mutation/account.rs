@@ -63,7 +63,9 @@ pub(crate) struct AccountMutation;
 impl AccountMutation
 {
     //--------------------------------------------------------------------------
-    /// Select account.
+    /// Switch the account used by the logged in user.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn select_account
     (
@@ -73,8 +75,6 @@ impl AccountMutation
     ) -> Result<AccountModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account = match AccountEntity::find()
             .filter(AccountColumn::AccountName.eq(account_name))
             .one(tsx)
@@ -84,25 +84,31 @@ impl AccountMutation
             Some(account) => account,
             None => return Err(t!("system.error.not_found").into()),
         };
+
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if account.public_user_id != jwt_claims.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
         }
 
-        let mut account: AccountActiveModel = account.into();
+        // Updates the last login time.
         let now = Utc::now().naive_utc();
+        let mut account: AccountActiveModel = account.into();
         account.last_login_at = ActiveValue::Set(now);
         let account = match account.validate_and_update(tsx).await
         {
             Ok(account) => account,
             Err(e) => return Err(e.get_message().into()),
         };
-
         Ok(account)
     }
 
     //--------------------------------------------------------------------------
-    /// Creates account.
+    /// Creates a new account for the logged in user. A default account profile
+    /// and a default workspace are also created.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn create_account
     (
@@ -111,13 +117,14 @@ impl AccountMutation
         input: CreateAccountInput,
     ) -> Result<AccountModel>
     {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
+        // Protects the access.
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != input.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
         }
 
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let account = AccountActiveModel
         {
             public_user_id: ActiveValue::Set(input.public_user_id),
@@ -134,6 +141,7 @@ impl AccountMutation
             Err(e) => return Err(e.get_message().into()),
         };
 
+        // Creates a default account profile.
         let account_profile = AccountProfileActiveModel
         {
             account_id: ActiveValue::Set(account.account_id),
@@ -148,6 +156,7 @@ impl AccountMutation
             Err(e) => return Err(e.get_message().into()),
         };
 
+        // Creates a default workspace.
         let workspace_name = meower_utility::get_random_str(32);
         let name = account.account_name.clone() + "'s workspace";
         let workspace = WorkspaceActiveModel
@@ -173,6 +182,7 @@ impl AccountMutation
             return Err(e.get_message().into());
         };
 
+        // Assigns the default account profile and the default workspace.
         let mut account: AccountActiveModel = account.into();
         account.default_account_profile_id = ActiveValue::Set
         (
@@ -184,12 +194,13 @@ impl AccountMutation
             Ok(account) => account,
             Err(e) => return Err(e.get_message().into()),
         };
-
         Ok(account)
     }
 
     //--------------------------------------------------------------------------
-    /// Updates account.
+    /// Updates the account of the logged in user.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn update_account
     (
@@ -199,8 +210,6 @@ impl AccountMutation
     ) -> Result<AccountModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account = match AccountEntity::find()
             .filter(AccountColumn::AccountName.eq(input.account_name))
             .one(tsx)
@@ -210,13 +219,16 @@ impl AccountMutation
             Some(account) => account,
             None => return Err(t!("system.error.not_found").into()),
         };
+
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if account.public_user_id != jwt_claims.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
         }
 
+        // Updates the account.
         let mut account: AccountActiveModel = account.into();
-
         if let Some(email) = input.email
         {
             account.email = ActiveValue::Set(email);
@@ -225,9 +237,9 @@ impl AccountMutation
         {
             account.is_public = ActiveValue::Set(is_public);
         };
-
         if let Some(token) = input.default_account_profile_token
         {
+            // Assigns the account profile.
             let account_profile = match AccountProfileEntity::find()
                 .filter(AccountProfileColumn::Token.eq(token))
                 .one(tsx)
@@ -237,12 +249,12 @@ impl AccountMutation
                 Some(account_profile) => account_profile,
                 None => return Err(t!("system.error.not_found").into()),
             };
-
             account.default_account_profile_id
                 = ActiveValue::Set(account_profile.account_profile_id);
         };
         if let Some(workspace_name) = input.default_workspace_name
         {
+            // Assigns the workspace.
             let workspace = match WorkspaceEntity::find()
                 .filter(WorkspaceColumn::WorkspaceName.eq(workspace_name))
                 .one(tsx)
@@ -261,7 +273,6 @@ impl AccountMutation
             Ok(account) => account,
             Err(e) => return Err(e.get_message().into()),
         };
-
         Ok(account)
     }
 }

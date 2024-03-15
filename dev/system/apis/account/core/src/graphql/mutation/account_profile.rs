@@ -73,7 +73,9 @@ pub(crate) struct AccountProfileMutation;
 impl AccountProfileMutation
 {
     //--------------------------------------------------------------------------
-    /// Creates account profile.
+    /// Creates a new account profile for the logged in user's account.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn create_account_profile
     (
@@ -83,8 +85,6 @@ impl AccountProfileMutation
     ) -> Result<AccountProfileModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account = match AccountEntity::find()
             .filter(AccountColumn::AccountName.eq(&input.account_name))
             .one(tsx)
@@ -95,6 +95,8 @@ impl AccountProfileMutation
             None => return Err(t!("system.error.not_found").into()),
         };
 
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != account.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
@@ -124,7 +126,9 @@ impl AccountProfileMutation
     }
 
     //--------------------------------------------------------------------------
-    /// Updates account profile.
+    /// Updates the account profile of the logged in user's account.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn update_account_profile
     (
@@ -134,8 +138,6 @@ impl AccountProfileMutation
     ) -> Result<AccountProfileModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account_profile = match AccountProfileEntity::find()
             .filter(AccountProfileColumn::Token.eq(&input.token))
             .one(tsx)
@@ -155,6 +157,8 @@ impl AccountProfileMutation
             None => return Err(t!("system.error.not_found").into()),
         };
 
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != account.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
@@ -177,12 +181,15 @@ impl AccountProfileMutation
             Ok(account_profile) => account_profile,
             Err(e) => return Err(e.get_message().into()),
         };
-
         Ok(account_profile)
     }
 
     //--------------------------------------------------------------------------
-    /// Deletes account profile.
+    /// Deletes the account profile of the logged in user's account. Also
+    /// deletes the avatar and cover.
+    /// The default account profile cannot be deleted.
+    ///
+    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn delete_account_profile
     (
@@ -192,10 +199,6 @@ impl AccountProfileMutation
     ) -> Result<bool>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let config = ctx.data::<Config>().unwrap();
-        let storage = ctx.data::<Arc<Box<dyn ObjectStore>>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-
         let account_profile = match AccountProfileEntity::find()
             .filter(AccountProfileColumn::Token.eq(&token))
             .one(tsx)
@@ -215,17 +218,23 @@ impl AccountProfileMutation
             None => return Err(t!("system.error.not_found").into()),
         };
 
+        // Protects the access.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
         if jwt_claims.public_user_id != account.public_user_id
         {
             return Err(t!("system.error.unauthorized").into());
         }
 
+        // The default account profile cannot be deleted.
         let default_account_profile_id = account.default_account_profile_id;
         if default_account_profile_id == account_profile.account_profile_id
         {
             return Err(t!("system.error.fatal").into());
         }
 
+        // Also deletes the avatar and cover.
+        let config = ctx.data::<Config>().unwrap();
+        let storage = ctx.data::<Arc<Box<dyn ObjectStore>>>().unwrap().as_ref();
         if let Some(avatar) = account_profile
             .find_related(AccountProfileAvatarEntity)
             .one(tsx)
@@ -243,7 +252,6 @@ impl AccountProfileMutation
             );
             storage.delete(&path).await.unwrap();
         };
-
         if let Some(cover) = account_profile
             .find_related(AccountProfileCoverEntity)
             .one(tsx)
@@ -266,7 +274,6 @@ impl AccountProfileMutation
         {
             return Err(e.to_string().into());
         };
-
         Ok(true)
     }
 }
