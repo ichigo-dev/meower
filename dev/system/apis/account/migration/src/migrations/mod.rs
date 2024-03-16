@@ -13,3 +13,4 @@ pub(crate) mod m20240214185125_create_account_profile_avatar_table;
 pub(crate) mod m20240221084000_create_account_profile_cover_table;
 pub(crate) mod m20240307090218_create_group_avatar_table;
 pub(crate) mod m20240307090332_create_group_cover_table;
+pub(crate) mod m20240316203412_create_group_policy_table;

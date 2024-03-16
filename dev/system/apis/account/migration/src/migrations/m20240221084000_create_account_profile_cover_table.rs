@@ -94,6 +94,7 @@ impl MigrationTrait for Migration
         let querys = vec!
         [
             "COMMENT ON TABLE \"account_profile_cover\" IS 'Account profile cover table'",
+            "COMMENT ON COLUMN \"account_profile_cover\".\"account_profile_cover_id\" IS 'Account profile cover ID'",
             "COMMENT ON COLUMN \"account_profile_cover\".\"account_profile_id\" IS 'Account profile ID'",
             "COMMENT ON COLUMN \"account_profile_cover\".\"file_key\" IS 'Cover file key'",
             "COMMENT ON COLUMN \"account_profile_cover\".\"file_name\" IS 'Cover file name'",

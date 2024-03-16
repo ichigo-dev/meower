@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-//! Creates group_cover table.
+//! Creates group_policy table.
 //------------------------------------------------------------------------------
 
-use crate::table_def::{ Group, GroupCover };
+use crate::table_def::{ Group, GroupPolicy };
 
 use sea_orm::Statement;
 use sea_orm_migration::prelude::*;
@@ -23,11 +23,11 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(GroupCover::Table)
+            .table(GroupPolicy::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(GroupCover::GroupCoverId)
+                ColumnDef::new(GroupPolicy::GroupPolicyId)
                     .big_integer()
                     .not_null()
                     .auto_increment()
@@ -35,40 +35,19 @@ impl MigrationTrait for Migration
             )
             .col
             (
-                ColumnDef::new(GroupCover::GroupId)
+                ColumnDef::new(GroupPolicy::GroupId)
                     .big_integer()
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(GroupCover::FileKey)
-                    .string()
-                    .string_len(255)
-                    .not_null()
-                    .unique_key()
-            )
-            .col
-            (
-                ColumnDef::new(GroupCover::FileName)
-                    .string()
-                    .string_len(255)
-            )
-            .col
-            (
-                ColumnDef::new(GroupCover::FileSize)
-                    .big_integer()
+                ColumnDef::new(GroupPolicy::RawPolicy)
+                    .text()
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(GroupCover::ContentType)
-                    .string()
-                    .string_len(255)
-                    .not_null()
-            )
-            .col
-            (
-                ColumnDef::new(GroupCover::CreatedAt)
+                ColumnDef::new(GroupPolicy::UpdatedAt)
                     .timestamp()
                     .default(Expr::current_timestamp())
                     .not_null()
@@ -76,8 +55,8 @@ impl MigrationTrait for Migration
             .foreign_key
             (
                 ForeignKey::create()
-                    .name("group_cover_group_id_fkey")
-                    .from(GroupCover::Table, GroupCover::GroupId)
+                    .name("group_policy_group_id_fkey")
+                    .from(GroupPolicy::Table, GroupPolicy::GroupId)
                     .to(Group::Table, Group::GroupId)
                     .on_delete(ForeignKeyAction::Cascade)
             )
@@ -85,22 +64,19 @@ impl MigrationTrait for Migration
         manager.create_table(table).await?;
 
         let index = Index::create()
-            .name("group_cover_group_id_idx")
-            .table(GroupCover::Table)
-            .col(GroupCover::GroupId)
+            .name("group_policy_group_id_idx")
+            .table(GroupPolicy::Table)
+            .col(GroupPolicy::GroupId)
             .to_owned();
         manager.create_index(index).await?;
 
         let querys = vec!
         [
-            "COMMENT ON TABLE \"group_cover\" IS 'Group cover table'",
-            "COMMENT ON COLUMN \"group_cover\".\"group_cover_id\" IS 'Group cover ID'",
-            "COMMENT ON COLUMN \"group_cover\".\"group_id\" IS 'Group ID'",
-            "COMMENT ON COLUMN \"group_cover\".\"file_key\" IS 'Cover file key'",
-            "COMMENT ON COLUMN \"group_cover\".\"file_name\" IS 'Cover file name'",
-            "COMMENT ON COLUMN \"group_cover\".\"file_size\" IS 'Cover file size'",
-            "COMMENT ON COLUMN \"group_cover\".\"content_type\" IS 'Cover file content type'",
-            "COMMENT ON COLUMN \"group_cover\".\"created_at\" IS 'Create date'",
+            "COMMENT ON TABLE \"group_policy\" IS 'Group policy table'",
+            "COMMENT ON COLUMN \"group_policy\".\"group_policy_id\" IS 'Group policy ID'",
+            "COMMENT ON COLUMN \"group_policy\".\"group_id\" IS 'Group ID'",
+            "COMMENT ON COLUMN \"group_policy\".\"raw_policy\" IS 'Raw policy'",
+            "COMMENT ON COLUMN \"group_policy\".\"updated_at\" IS 'Update date'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
@@ -118,7 +94,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(GroupCover::Table).to_owned())
+            .drop_table(Table::drop().table(GroupPolicy::Table).to_owned())
             .await?;
 
         Ok(())

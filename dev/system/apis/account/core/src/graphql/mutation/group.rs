@@ -9,6 +9,7 @@ use meower_account_entity::group::Entity as GroupEntity;
 use meower_account_entity::group::ActiveModel as GroupActiveModel;
 use meower_account_entity::group::Model as GroupModel;
 use meower_account_entity::group_member::ActiveModel as GroupMemberActiveModel;
+use meower_account_entity::group_policy::ActiveModel as GroupPolicyActiveModel;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
 
@@ -119,9 +120,10 @@ impl GroupMutation
         };
 
         // Adds the group member as the administrator.
+        let group_id = group.group_id;
         let group_member = GroupMemberActiveModel
         {
-            group_id: ActiveValue::Set(group.group_id),
+            group_id: ActiveValue::Set(group_id),
             account_id: ActiveValue::Set(account.account_id),
             account_profile_id: ActiveValue::Set(account.default_account_profile_id),
             ..Default::default()
@@ -130,6 +132,20 @@ impl GroupMutation
         {
             return Err(e.get_message().into());
         };
+
+        // Creates the default group policy.
+        let policy = "".to_string();
+        let group_policy = GroupPolicyActiveModel
+        {
+            group_id: ActiveValue::Set(group_id),
+            raw_policy: ActiveValue::Set(policy),
+            ..Default::default()
+        };
+        if let Err(e) = group_policy.validate_and_insert(tsx).await
+        {
+            return Err(e.get_message().into());
+        };
+
         Ok(group)
     }
 

@@ -94,6 +94,7 @@ impl MigrationTrait for Migration
         let querys = vec!
         [
             "COMMENT ON TABLE \"group_avatar\" IS 'Group avatar table'",
+            "COMMENT ON COLUMN \"group_avatar\".\"group_avatar_id\" IS 'Group avatar ID'",
             "COMMENT ON COLUMN \"group_avatar\".\"group_id\" IS 'Group ID'",
             "COMMENT ON COLUMN \"group_avatar\".\"file_key\" IS 'Avatar file key'",
             "COMMENT ON COLUMN \"group_avatar\".\"file_name\" IS 'Avatar file name'",
