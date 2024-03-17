@@ -162,7 +162,6 @@ impl GroupMutation
     ) -> Result<GroupModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-
         let group = match GroupEntity::find()
             .filter(GroupColumn::GroupName.eq(&input.group_name))
             .one(tsx)

@@ -49,7 +49,6 @@ pub(crate) async fn handler
     let query = req.0
         .data(state.config.clone())
         .data(state.storage.clone())
-        .data(state.enforcer.clone())
         .data(tsx.clone())
         .data(jwt_claims);
     let response = state.schema.execute(query).await;

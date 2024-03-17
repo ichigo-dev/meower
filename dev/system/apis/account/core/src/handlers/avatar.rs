@@ -55,13 +55,13 @@ pub async fn get_handler
                 {
                     let default_path = StoragePath::from
                     (
-                        config.default_avatar_path.clone()
+                        config.default_avatar_path
                     );
                     match storage.get(&default_path).await
                     {
                         Ok(default) =>
                         {
-                            (default, config.default_avatar_mime.clone())
+                            (default, config.default_avatar_mime.to_string())
                         },
                         Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
                     }
@@ -72,13 +72,13 @@ pub async fn get_handler
         {
             let default_path = StoragePath::from
             (
-                config.default_avatar_path.clone()
+                config.default_avatar_path
             );
             match storage.get(&default_path).await
             {
                 Ok(default) =>
                 {
-                    (default, config.default_avatar_mime.clone())
+                    (default, config.default_avatar_mime.to_string())
                 },
                 Err(_) => return Err(StatusCode::INTERNAL_SERVER_ERROR),
             }

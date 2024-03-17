@@ -5,13 +5,12 @@
 use crate::Config;
 use crate::graphql::{ QueryRoot, MutationRoot };
 
-use std::sync::{ Arc, RwLock };
+use std::sync::Arc;
 
 use async_graphql::{
     EmptySubscription,
     Schema,
 };
-use casbin::prelude::*;
 use object_store::ObjectStore;
 use object_store::local::LocalFileSystem;
 use sea_orm::{ Database, DbConn };
@@ -27,7 +26,6 @@ pub(crate) struct AppState
     pub(crate) hdb: DbConn,
     pub(crate) schema: Schema<QueryRoot, MutationRoot, EmptySubscription>,
     pub(crate) storage: Arc<Box<dyn ObjectStore>>,
-    pub(crate) enforcer: Arc<RwLock<Enforcer>>,
 }
 
 impl AppState
@@ -54,21 +52,12 @@ impl AppState
             .unwrap();
         let storage: Arc<Box<dyn ObjectStore>> = Arc::new(Box::new(storage));
 
-        // Casbin.
-        let enforcer = Enforcer::new
-        (
-            "authorization/model.conf",
-            "authorization/policy.csv"
-        ).await.unwrap();
-        let enforcer = Arc::new(RwLock::new(enforcer));
-
         Self
         {
             config,
             hdb,
             schema,
             storage,
-            enforcer,
         }
     }
 }

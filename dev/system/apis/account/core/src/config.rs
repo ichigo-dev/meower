@@ -26,19 +26,21 @@ pub(crate) struct Config
     pub(crate) storage_url: String,
     pub(crate) storage_bucket: String,
 
-    pub(crate) avatar_path: String,
-    pub(crate) default_avatar_path: String,
-    pub(crate) default_avatar_mime: String,
-    pub(crate) cover_path: String,
-    pub(crate) default_cover_path: String,
-    pub(crate) default_cover_mime: String,
+    pub(crate) avatar_path: &'static str,
+    pub(crate) default_avatar_path: &'static str,
+    pub(crate) default_avatar_mime: &'static str,
+    pub(crate) cover_path: &'static str,
+    pub(crate) default_cover_path: &'static str,
+    pub(crate) default_cover_mime: &'static str,
 
-    pub(crate) group_avatar_path: String,
-    pub(crate) default_group_avatar_path: String,
-    pub(crate) default_group_avatar_mime: String,
-    pub(crate) group_cover_path: String,
-    pub(crate) default_group_cover_path: String,
-    pub(crate) default_group_cover_mime: String,
+    pub(crate) group_avatar_path: &'static str,
+    pub(crate) default_group_avatar_path: &'static str,
+    pub(crate) default_group_avatar_mime: &'static str,
+    pub(crate) group_cover_path: &'static str,
+    pub(crate) default_group_cover_path: &'static str,
+    pub(crate) default_group_cover_mime: &'static str,
+
+    pub(crate) authorization_model_path: &'static str,
 }
 
 impl Config
@@ -72,19 +74,21 @@ impl Config
         let storage_bucket = env::var("STORAGE_BUCKET")
             .expect("STORAGE_BUCKET must be set");
 
-        let avatar_path = "avatar".to_string();
-        let default_avatar_path = "avatar/default.png".to_string();
-        let default_avatar_mime = "image/png".to_string();
-        let cover_path = "cover".to_string();
-        let default_cover_path = "cover/default.jpg".to_string();
-        let default_cover_mime = "image/jpg".to_string();
+        let avatar_path = "avatar";
+        let default_avatar_path = "avatar/default.png";
+        let default_avatar_mime = "image/png";
+        let cover_path = "cover";
+        let default_cover_path = "cover/default.jpg";
+        let default_cover_mime = "image/jpg";
 
-        let group_avatar_path = "group/avatar".to_string();
-        let default_group_avatar_path = "group/avatar/default.png".to_string();
-        let default_group_avatar_mime = "image/png".to_string();
-        let group_cover_path = "group/cover".to_string();
-        let default_group_cover_path = "group/cover/default.jpg".to_string();
-        let default_group_cover_mime = "image/jpg".to_string();
+        let group_avatar_path = "group/avatar";
+        let default_group_avatar_path = "group/avatar/default.png";
+        let default_group_avatar_mime = "image/png";
+        let group_cover_path = "group/cover";
+        let default_group_cover_path = "group/cover/default.jpg";
+        let default_group_cover_mime = "image/jpg";
+
+        let authorization_model_path = "authorization/model.conf";
 
         Self
         {
@@ -115,6 +119,8 @@ impl Config
             group_cover_path,
             default_group_cover_path,
             default_group_cover_mime,
+
+            authorization_model_path,
         }
     }
 }
