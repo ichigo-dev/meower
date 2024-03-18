@@ -274,10 +274,6 @@ type Group {
 	Gets the cover.
 	"""
 	cover: GroupCover
-	"""
-	Gets the policy.
-	"""
-	policy: GroupPolicy
 }
 
 type GroupAvatar {
@@ -331,17 +327,6 @@ type GroupMember {
 	Gets the account profile.
 	"""
 	accountProfile: AccountProfile
-}
-
-type GroupPolicy {
-	"""
-	Gets the raw policy.
-	"""
-	rawPolicy: String!
-	"""
-	Gets the group.
-	"""
-	group: Group
 }
 
 type GroupWorkspace {

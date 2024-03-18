@@ -15,6 +15,7 @@ use casbin::prelude::*;
 use object_store::ObjectStore;
 use object_store::local::LocalFileSystem;
 use sea_orm::{ Database, DbConn };
+use sqlx::postgres::PgPoolOptions;
 use sqlx_adapter::SqlxAdapter;
 use tokio::sync::RwLock;
 
@@ -57,13 +58,15 @@ impl AppState
         let storage: Arc<Box<dyn ObjectStore>> = Arc::new(Box::new(storage));
 
         // Casbin.
+        let pool = PgPoolOptions::new()
+            .max_connections(5)
+            .connect(&config.database_url)
+            .await
+            .unwrap();
         let model = DefaultModel::from_file("authorization/model.conf")
             .await
             .unwrap();
-        let adapter = SqlxAdapter::new
-            (
-                config.database_url.to_string() + "/casbin", 8
-            )
+        let adapter = SqlxAdapter::new_with_pool(pool)
             .await
             .unwrap();
         let enforcer = Arc::new(RwLock::new
