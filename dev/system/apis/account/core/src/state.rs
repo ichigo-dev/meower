@@ -11,9 +11,12 @@ use async_graphql::{
     EmptySubscription,
     Schema,
 };
+use casbin::prelude::*;
 use object_store::ObjectStore;
 use object_store::local::LocalFileSystem;
 use sea_orm::{ Database, DbConn };
+use sqlx_adapter::SqlxAdapter;
+use tokio::sync::RwLock;
 
 
 //------------------------------------------------------------------------------
@@ -26,6 +29,7 @@ pub(crate) struct AppState
     pub(crate) hdb: DbConn,
     pub(crate) schema: Schema<QueryRoot, MutationRoot, EmptySubscription>,
     pub(crate) storage: Arc<Box<dyn ObjectStore>>,
+    pub(crate) enforcer: Arc<RwLock<Enforcer>>,
 }
 
 impl AppState
@@ -52,12 +56,28 @@ impl AppState
             .unwrap();
         let storage: Arc<Box<dyn ObjectStore>> = Arc::new(Box::new(storage));
 
+        // Casbin.
+        let model = DefaultModel::from_file("authorization/model.conf")
+            .await
+            .unwrap();
+        let adapter = SqlxAdapter::new
+            (
+                config.database_url.to_string() + "/casbin", 8
+            )
+            .await
+            .unwrap();
+        let enforcer = Arc::new(RwLock::new
+        (
+            Enforcer::new(model, adapter).await.unwrap()
+        ));
+
         Self
         {
             config,
             hdb,
             schema,
             storage,
+            enforcer,
         }
     }
 }

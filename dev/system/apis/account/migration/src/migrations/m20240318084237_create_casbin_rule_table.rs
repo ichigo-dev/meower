@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
-//! Creates group_policy table.
+//! Creates casbin_rule table.
 //------------------------------------------------------------------------------
 
-use crate::table_def::{ Group, GroupPolicy };
+use crate::table_def::CasbinRule;
 
 use sea_orm::Statement;
 use sea_orm_migration::prelude::*;
@@ -23,60 +23,85 @@ impl MigrationTrait for Migration
     async fn up( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         let table = Table::create()
-            .table(GroupPolicy::Table)
+            .table(CasbinRule::Table)
             .if_not_exists()
             .col
             (
-                ColumnDef::new(GroupPolicy::GroupPolicyId)
-                    .big_integer()
+                ColumnDef::new(CasbinRule::Id)
+                    .integer()
                     .not_null()
                     .auto_increment()
                     .primary_key()
             )
             .col
             (
-                ColumnDef::new(GroupPolicy::GroupId)
-                    .big_integer()
+                ColumnDef::new(CasbinRule::Ptype)
+                    .string()
+                    .string_len(255)
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(GroupPolicy::RawPolicy)
-                    .text()
+                ColumnDef::new(CasbinRule::V0)
+                    .string()
+                    .string_len(255)
                     .not_null()
             )
             .col
             (
-                ColumnDef::new(GroupPolicy::UpdatedAt)
-                    .timestamp()
-                    .default(Expr::current_timestamp())
+                ColumnDef::new(CasbinRule::V1)
+                    .string()
+                    .string_len(255)
                     .not_null()
             )
-            .foreign_key
+            .col
             (
-                ForeignKey::create()
-                    .name("group_policy_group_id_fkey")
-                    .from(GroupPolicy::Table, GroupPolicy::GroupId)
-                    .to(Group::Table, Group::GroupId)
-                    .on_delete(ForeignKeyAction::Cascade)
+                ColumnDef::new(CasbinRule::V2)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(CasbinRule::V3)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(CasbinRule::V4)
+                    .string()
+                    .string_len(255)
+                    .not_null()
+            )
+            .col
+            (
+                ColumnDef::new(CasbinRule::V5)
+                    .string()
+                    .string_len(255)
+                    .not_null()
             )
             .to_owned();
         manager.create_table(table).await?;
 
         let index = Index::create()
-            .name("group_policy_group_id_idx")
-            .table(GroupPolicy::Table)
-            .col(GroupPolicy::GroupId)
+            .unique()
+            .name("unique_key_sqlx_adapter")
+            .table(CasbinRule::Table)
+            .col(CasbinRule::Ptype)
+            .col(CasbinRule::V0)
+            .col(CasbinRule::V1)
+            .col(CasbinRule::V2)
+            .col(CasbinRule::V3)
+            .col(CasbinRule::V4)
+            .col(CasbinRule::V5)
             .to_owned();
         manager.create_index(index).await?;
 
         let querys = vec!
         [
-            "COMMENT ON TABLE \"group_policy\" IS 'Group policy table'",
-            "COMMENT ON COLUMN \"group_policy\".\"group_policy_id\" IS 'Group policy ID'",
-            "COMMENT ON COLUMN \"group_policy\".\"group_id\" IS 'Group ID'",
-            "COMMENT ON COLUMN \"group_policy\".\"raw_policy\" IS 'Raw policy'",
-            "COMMENT ON COLUMN \"group_policy\".\"updated_at\" IS 'Update date'",
+            "COMMENT ON TABLE \"casbin_rule\" IS 'Casbin rule table (for Casbin library)'",
         ];
         let hdb = manager.get_connection();
         let backend = manager.get_database_backend();
@@ -94,7 +119,7 @@ impl MigrationTrait for Migration
     async fn down( &self, manager: &SchemaManager ) -> Result<(), DbErr>
     {
         manager
-            .drop_table(Table::drop().table(GroupPolicy::Table).to_owned())
+            .drop_table(Table::drop().table(CasbinRule::Table).to_owned())
             .await?;
 
         Ok(())

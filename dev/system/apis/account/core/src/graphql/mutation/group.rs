@@ -9,13 +9,13 @@ use meower_account_entity::group::Entity as GroupEntity;
 use meower_account_entity::group::ActiveModel as GroupActiveModel;
 use meower_account_entity::group::Model as GroupModel;
 use meower_account_entity::group_member::ActiveModel as GroupMemberActiveModel;
-use meower_account_entity::group_policy::ActiveModel as GroupPolicyActiveModel;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
 
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
+use casbin::{ CoreApi, Enforcer, MgmtApi };
 use rust_i18n::t;
 use sea_orm::{
     ActiveValue,
@@ -25,6 +25,7 @@ use sea_orm::{
     QueryFilter,
 };
 use sea_orm::entity::prelude::*;
+use tokio::sync::RwLock;
 
 
 //------------------------------------------------------------------------------
@@ -128,25 +129,31 @@ impl GroupMutation
             account_profile_id: ActiveValue::Set(account.default_account_profile_id),
             ..Default::default()
         };
-        if let Err(e) = group_member.validate_and_insert(tsx).await
+        let group_member = match group_member.validate_and_insert(tsx).await
         {
-            return Err(e.get_message().into());
+            Ok(group_member) => group_member,
+            Err(e) => return Err(e.get_message().into()),
         };
 
         // Creates the default group policy.
-        let policy = "".to_string();
-        let group_policy = GroupPolicyActiveModel
-        {
-            group_id: ActiveValue::Set(group_id),
-            raw_policy: ActiveValue::Set(policy),
-            ..Default::default()
-        };
-        if let Err(e) = group_policy.validate_and_insert(tsx).await
-        {
-            return Err(e.get_message().into());
-        };
+        let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
+        let mut enforcer = enforcer.write().await;
+        enforcer.add_policy(vec!
+        [
+            "admin".to_string(),
+            group.group_id.to_string(),
+            "*".to_string(),
+            "*".to_string(),
+        ]).await.unwrap();
+        enforcer.add_named_policy("g", vec!
+        [
+            group_member.group_member_id.to_string(),
+            group.group_id.to_string(),
+            "admin".to_string(),
+        ]).await.unwrap();
+        enforcer.save_policy().await.unwrap();
 
-        Ok(group)
+       Ok(group)
     }
 
     //--------------------------------------------------------------------------

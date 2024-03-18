@@ -104,20 +104,6 @@ pub(crate) enum Group
 
 
 //------------------------------------------------------------------------------
-/// Group policy.
-//------------------------------------------------------------------------------
-#[derive(Iden)]
-pub(crate) enum GroupPolicy
-{
-    Table,
-    GroupPolicyId,
-    GroupId,
-    RawPolicy,
-    UpdatedAt,
-}
-
-
-//------------------------------------------------------------------------------
 /// Group member.
 //------------------------------------------------------------------------------
 #[derive(Iden)]
@@ -203,4 +189,27 @@ pub(crate) enum GroupWorkspace
     GroupWorkspaceId,
     WorkspaceId,
     GroupId,
+}
+
+
+//------------------------------------------------------------------------------
+/// CasbinRule.
+///
+/// This table is used as an adapter to store the access control policy of the
+/// Casbin library.
+///
+/// reference: https://github.com/casbin-rs/sqlx-adapter
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum CasbinRule
+{
+    Table,
+    Id,
+    Ptype,
+    V0,
+    V1,
+    V2,
+    V3,
+    V4,
+    V5,
 }

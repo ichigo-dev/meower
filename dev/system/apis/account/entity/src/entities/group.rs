@@ -196,22 +196,6 @@ impl Model
             .await
             .unwrap()
     }
-
-    //--------------------------------------------------------------------------
-    /// Gets the policy.
-    //--------------------------------------------------------------------------
-    pub async fn policy
-    (
-        &self,
-        ctx: &Context<'_>,
-    ) -> Option<super::group_policy::Model>
-    {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        self.find_related(super::group_policy::Entity)
-            .one(tsx)
-            .await
-            .unwrap()
-    }
 }
 
 
@@ -483,9 +467,6 @@ pub enum Relation
     #[sea_orm(has_one = "super::group_cover::Entity")]
     GroupCover,
 
-    #[sea_orm(has_one = "super::group_policy::Entity")]
-    GroupPolicy,
-
     #[sea_orm(has_many = "super::group_member::Entity")]
     GroupMember,
 
@@ -506,14 +487,6 @@ impl Related<super::group_cover::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::GroupCover.def()
-    }
-}
-
-impl Related<super::group_policy::Entity> for Entity
-{
-    fn to() -> RelationDef
-    {
-        Relation::GroupPolicy.def()
     }
 }
 
