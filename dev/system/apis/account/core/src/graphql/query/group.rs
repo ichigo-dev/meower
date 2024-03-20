@@ -4,15 +4,18 @@
 
 use meower_account_entity::account::Column as AccountColumn;
 use meower_account_entity::account::Entity as AccountEntity;
+use meower_account_entity::entity_linked::AccountToGroup;
 use meower_account_entity::group::Column as GroupColumn;
 use meower_account_entity::group::Entity as GroupEntity;
 use meower_account_entity::group::Model as GroupModel;
-use meower_account_entity::entity_linked::AccountToGroup;
+use meower_account_entity::group_member::Column as GroupMemberColumn;
+use meower_account_entity::group_member::Entity as GroupMemberEntity;
 use meower_shared::JwtClaims;
 
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, Result };
+use casbin::{ CoreApi, Enforcer };
 use rust_i18n::t;
 use sea_orm::{
     ColumnTrait,
@@ -21,6 +24,7 @@ use sea_orm::{
     QueryFilter,
     ModelTrait,
 };
+use tokio::sync::RwLock;
 
 
 //------------------------------------------------------------------------------
@@ -43,7 +47,6 @@ impl GroupQuery
     ) -> Result<GroupModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
 
         let group = match GroupEntity::find()
             .filter(GroupColumn::GroupName.eq(&group_name))
@@ -55,7 +58,43 @@ impl GroupQuery
             None => return Err(t!("system.error.not_found").into()),
         };
 
-        // TODO: Check if the user is the member of the group.
+        if group.is_public
+        {
+            return Ok(group);
+        }
+
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+        let account = match AccountEntity::find()
+            .filter(AccountColumn::PublicUserId.eq(&jwt_claims.public_user_id))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account) => account,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        let group_member = match GroupMemberEntity::find()
+            .filter(GroupMemberColumn::GroupId.eq(group.group_id))
+            .filter(GroupMemberColumn::AccountId.eq(account.account_id))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(group_member) => group_member,
+            None => return Err(t!("system.error.unauthorized").into()),
+        };
+
+        // Checks the access.
+        let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
+        let enforcer = enforcer.read().await;
+        let group_member_id = group_member.group_member_id.to_string();
+        let group_id = group.group_id.to_string();
+        let request = (&group_member_id, &group_id, &group_id, "read");
+        if enforcer.enforce(request).unwrap() == false
+        {
+            return Err(t!("system.error.unauthorized").into());
+        }
 
         Ok(group)
     }

@@ -3,16 +3,22 @@
 //------------------------------------------------------------------------------
 
 use crate::Config;
+use meower_account_entity::account::Column as AccountColumn;
+use meower_account_entity::account::Entity as AccountEntity;
 use meower_account_entity::group::Column as GroupColumn;
 use meower_account_entity::group::Entity as GroupEntity;
 use meower_account_entity::group_cover::ActiveModel as GroupCoverActiveModel;
 use meower_account_entity::group_cover::Entity as GroupCoverEntity;
+use meower_account_entity::group_member::Column as GroupMemberColumn;
+use meower_account_entity::group_member::Entity as GroupMemberEntity;
 use meower_entity_ext::ValidateExt;
+use meower_shared::JwtClaims;
 
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
 use base64::prelude::*;
+use casbin::{ CoreApi, Enforcer };
 use object_store::ObjectStore;
 use object_store::path::Path as StoragePath;
 use rust_i18n::t;
@@ -24,6 +30,7 @@ use sea_orm::{
     ModelTrait,
     QueryFilter,
 };
+use tokio::sync::RwLock;
 
 
 //------------------------------------------------------------------------------
@@ -72,7 +79,38 @@ impl GroupCoverMutation
             None => return Err(t!("system.error.not_found").into()),
         };
 
-        // TODO: Check if the user is the owner of the group.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+        let account = match AccountEntity::find()
+            .filter(AccountColumn::PublicUserId.eq(&jwt_claims.public_user_id))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account) => account,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        let group_member = match GroupMemberEntity::find()
+            .filter(GroupMemberColumn::GroupId.eq(group.group_id))
+            .filter(GroupMemberColumn::AccountId.eq(account.account_id))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(group_member) => group_member,
+            None => return Err(t!("system.error.unauthorized").into()),
+        };
+
+        // Checks the access.
+        let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
+        let enforcer = enforcer.read().await;
+        let group_member_id = group_member.group_member_id.to_string();
+        let group_id = group.group_id.to_string();
+        let request = (&group_member_id, &group_id, &group_id, "write");
+        if enforcer.enforce(request).unwrap() == false
+        {
+            return Err(t!("system.error.unauthorized").into());
+        }
 
         if input.base64.is_some() || input.delete_file
         {
