@@ -76,9 +76,9 @@ everything.
 ## Services
 
 - auth: Authentication server.
-- api_gw: API Gateway. 
+- api_gw: API Gateway.
 - app: Delivery SPA application.
-- profile: Profile API.
+- account: Account API.
 
 
 ## Note
