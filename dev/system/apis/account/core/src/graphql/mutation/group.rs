@@ -8,6 +8,8 @@ use meower_account_entity::group::Column as GroupColumn;
 use meower_account_entity::group::Entity as GroupEntity;
 use meower_account_entity::group::ActiveModel as GroupActiveModel;
 use meower_account_entity::group::Model as GroupModel;
+use meower_account_entity::group_member::Column as GroupMemberColumn;
+use meower_account_entity::group_member::Entity as GroupMemberEntity;
 use meower_account_entity::group_member::ActiveModel as GroupMemberActiveModel;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
@@ -179,7 +181,37 @@ impl GroupMutation
             None => return Err(t!("system.error.not_found").into()),
         };
 
-        // TODO: Check if the user is the owner of the group.
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+        let account = match AccountEntity::find()
+            .filter(AccountColumn::PublicUserId.eq(&jwt_claims.public_user_id))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(account) => account,
+            None => return Err(t!("system.error.not_found").into()),
+        };
+
+        let group_member = match GroupMemberEntity::find()
+            .filter(GroupMemberColumn::GroupId.eq(group.group_id))
+            .filter(GroupMemberColumn::AccountId.eq(account.account_id))
+            .one(tsx)
+            .await
+            .unwrap()
+        {
+            Some(group_member) => group_member,
+            None => return Err(t!("system.error.unauthorized").into()),
+        };
+
+        // Checks the access.
+        let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
+        let enforcer = enforcer.read().await;
+        let group_member_id = group_member.group_member_id.to_string();
+        let group_id = group.group_id.to_string();
+        if enforcer.enforce((&group_member_id, &group_id, &group_id, "write")).unwrap()
+        {
+            return Err(t!("system.error.unauthorized").into());
+        }
 
         let mut group: GroupActiveModel = group.into();
         group.name = ActiveValue::Set(input.name);
