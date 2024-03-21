@@ -90,7 +90,13 @@ impl GroupQuery
         let enforcer = enforcer.read().await;
         let group_member_id = group_member.group_member_id.to_string();
         let group_id = group.group_id.to_string();
-        let request = (&group_member_id, &group_id, &group_id, "read");
+        let request =
+        (
+            &group_member_id,
+            &group_id,
+            format!("group:{}", &group_id),
+            "read",
+        );
         if enforcer.enforce(request).unwrap() == false
         {
             return Err(t!("system.error.unauthorized").into());

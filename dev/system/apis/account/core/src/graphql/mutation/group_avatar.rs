@@ -106,8 +106,14 @@ impl GroupAvatarMutation
         let enforcer = enforcer.read().await;
         let group_member_id = group_member.group_member_id.to_string();
         let group_id = group.group_id.to_string();
-        let request = (&group_member_id, &group_id, &group_id, "write");
-        if enforcer.enforce(request).unwrap() == false
+        let create_request =
+        (
+            &group_member_id,
+            &group_id,
+            format!("group_avatar:{}", &group_id),
+            "create"
+        );
+        if enforcer.enforce(create_request).unwrap() == false
         {
             return Err(t!("system.error.unauthorized").into());
         }
@@ -120,6 +126,18 @@ impl GroupAvatarMutation
                 .await
                 .unwrap()
             {
+                let delete_request =
+                (
+                    &group_member_id,
+                    &group_id,
+                    format!("group_avatar:{}", &group_id),
+                    "delete"
+                );
+                if enforcer.enforce(delete_request).unwrap() == false
+                {
+                    return Err(t!("system.error.unauthorized").into());
+                }
+
                 let exists_avatar_path = StoragePath::from
                 (
                     format!

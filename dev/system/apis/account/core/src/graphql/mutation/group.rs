@@ -140,12 +140,20 @@ impl GroupMutation
         // Creates the default group policy.
         let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
         let mut enforcer = enforcer.write().await;
+        let group_id = group.group_id.to_string();
         enforcer.add_policy(vec!
         [
             "admin".to_string(),
             group.group_id.to_string(),
+            format!("group:{}", &group_id),
             "*".to_string(),
-            "*".to_string(),
+        ]).await.unwrap();
+        enforcer.add_policy(vec!
+        [
+            "member".to_string(),
+            group.group_id.to_string(),
+            format!("group:{}", &group_id),
+            "read".to_string(),
         ]).await.unwrap();
         enforcer.add_named_policy("g", vec!
         [
@@ -208,7 +216,13 @@ impl GroupMutation
         let enforcer = enforcer.read().await;
         let group_member_id = group_member.group_member_id.to_string();
         let group_id = group.group_id.to_string();
-        let request = (&group_member_id, &group_id, &group_id, "write");
+        let request =
+        (
+            &group_member_id,
+            &group_id,
+            format!("group:{}", &group_id),
+            "update",
+        );
         if enforcer.enforce(request).unwrap() == false
         {
             return Err(t!("system.error.unauthorized").into());
