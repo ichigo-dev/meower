@@ -140,20 +140,34 @@ impl GroupMutation
         // Creates the default group policy.
         let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
         let mut enforcer = enforcer.write().await;
-        let group_id = group.group_id.to_string();
+        let group_objects =
+        [
+            "group",
+            "group_member",
+            "group_avatar",
+            "group_cover",
+            "group_workspace",
+        ];
+
+        // Member role.
+        for group_object in group_objects
+        {
+            enforcer.add_policy(vec!
+            [
+                "member".to_string(),
+                group.group_id.to_string(),
+                group_object.to_string(),
+                "read".to_string(),
+            ]).await.unwrap();
+        }
+
+        // Admin role.
         enforcer.add_policy(vec!
         [
             "admin".to_string(),
             group.group_id.to_string(),
-            format!("group:{}", &group_id),
             "*".to_string(),
-        ]).await.unwrap();
-        enforcer.add_policy(vec!
-        [
-            "member".to_string(),
-            group.group_id.to_string(),
-            format!("group:{}", &group_id),
-            "read".to_string(),
+            "*".to_string(),
         ]).await.unwrap();
         enforcer.add_named_policy("g", vec!
         [
@@ -163,7 +177,7 @@ impl GroupMutation
         ]).await.unwrap();
         enforcer.save_policy().await.unwrap();
 
-       Ok(group)
+        Ok(group)
     }
 
     //--------------------------------------------------------------------------
@@ -216,14 +230,10 @@ impl GroupMutation
         let enforcer = enforcer.read().await;
         let group_member_id = group_member.group_member_id.to_string();
         let group_id = group.group_id.to_string();
-        let request =
-        (
-            &group_member_id,
-            &group_id,
-            format!("group:{}", &group_id),
-            "update",
-        );
-        if enforcer.enforce(request).unwrap() == false
+        let result = enforcer
+            .enforce((&group_member_id, &group_id, "group", "update"))
+            .unwrap();
+        if result == false
         {
             return Err(t!("system.error.unauthorized").into());
         }
