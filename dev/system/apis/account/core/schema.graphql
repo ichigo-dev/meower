@@ -418,6 +418,10 @@ type MutationRoot {
 	Uploads cover.
 	"""
 	uploadGroupCover(input: UploadGroupCoverInput!): Boolean!
+	"""
+	Invites a group member.
+	"""
+	inviteGroupMember: Boolean!
 }
 
 """
