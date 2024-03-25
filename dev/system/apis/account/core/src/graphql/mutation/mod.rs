@@ -9,7 +9,7 @@ mod account_profile_cover;
 mod group;
 mod group_avatar;
 mod group_cover;
-mod group_member;
+mod group_member_invitation;
 
 use account::AccountMutation;
 use account_profile::AccountProfileMutation;
@@ -18,7 +18,7 @@ use account_profile_cover::AccountProfileCoverMutation;
 use group::GroupMutation;
 use group_avatar::GroupAvatarMutation;
 use group_cover::GroupCoverMutation;
-use group_member::GroupMemberMutation;
+use group_member_invitation::GroupMemberInvitationMutation;
 
 use async_graphql::MergedObject;
 
@@ -36,5 +36,5 @@ pub(crate) struct MutationRoot
     GroupMutation,
     GroupAvatarMutation,
     GroupCoverMutation,
-    GroupMemberMutation,
+    GroupMemberInvitationMutation,
 );

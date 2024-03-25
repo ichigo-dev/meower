@@ -470,6 +470,12 @@ pub enum Relation
     #[sea_orm(has_many = "super::group_member::Entity")]
     GroupMember,
 
+    #[sea_orm(has_many = "super::group_member_invitation::Entity")]
+    GroupMemberInvitation,
+
+    #[sea_orm(has_many = "super::group_member_request::Entity")]
+    GroupMemberRequest,
+
     #[sea_orm(has_many = "super::group_workspace::Entity")]
     GroupWorkspace,
 }
@@ -495,6 +501,22 @@ impl Related<super::group_member::Entity> for Entity
     fn to() -> RelationDef
     {
         Relation::GroupMember.def()
+    }
+}
+
+impl Related<super::group_member_invitation::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::GroupMemberInvitation.def()
+    }
+}
+
+impl Related<super::group_member_request::Entity> for Entity
+{
+    fn to() -> RelationDef
+    {
+        Relation::GroupMemberRequest.def()
     }
 }
 

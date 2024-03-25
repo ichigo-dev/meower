@@ -329,6 +329,17 @@ type GroupMember {
 	accountProfile: AccountProfile
 }
 
+type GroupMemberInvitation {
+	"""
+	Gets the group.
+	"""
+	group: Group
+	"""
+	Gets the account.
+	"""
+	account: Account
+}
+
 type GroupWorkspace {
 	"""
 	Gets the group.
@@ -341,6 +352,14 @@ type GroupWorkspace {
 }
 
 
+
+"""
+Inputs.
+"""
+input InviteGroupMemberInput {
+	groupName: String!
+	accountName: String!
+}
 
 """
 Mutation root.
@@ -400,14 +419,10 @@ type MutationRoot {
 	"""
 	Creates a new group with the specified account as administrator. The
 	account must belong to the logged in user.
-	
-	* Access is protected from users other than the owner.
 	"""
 	createGroup(input: CreateGroupInput!): Group!
 	"""
 	Updates the group.
-	
-	* Access is protected from users other than the owner.
 	"""
 	updateGroup(input: UpdateGroupInput!): Group!
 	"""
@@ -421,7 +436,7 @@ type MutationRoot {
 	"""
 	Invites a group member.
 	"""
-	inviteGroupMember: Boolean!
+	inviteGroupMember(input: InviteGroupMemberInput!): GroupMemberInvitation!
 }
 
 """

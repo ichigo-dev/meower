@@ -118,6 +118,33 @@ pub(crate) enum GroupMember
 
 
 //------------------------------------------------------------------------------
+/// Group member request.
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum GroupMemberInvitation
+{
+    Table,
+    GroupMemberInvitationId,
+    GroupId,
+    AccountId,
+}
+
+
+//------------------------------------------------------------------------------
+/// Group member.
+//------------------------------------------------------------------------------
+#[derive(Iden)]
+pub(crate) enum GroupMemberRequest
+{
+    Table,
+    GroupMemberRequestId,
+    GroupId,
+    AccountId,
+    AccountProfileId,
+}
+
+
+//------------------------------------------------------------------------------
 /// GroupAvatar.
 //------------------------------------------------------------------------------
 #[derive(Iden)]

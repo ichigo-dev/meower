@@ -75,8 +75,6 @@ impl GroupMutation
     //--------------------------------------------------------------------------
     /// Creates a new group with the specified account as administrator. The
     /// account must belong to the logged in user.
-    ///
-    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn create_group
     (
@@ -182,8 +180,6 @@ impl GroupMutation
 
     //--------------------------------------------------------------------------
     /// Updates the group.
-    ///
-    /// * Access is protected from users other than the owner.
     //--------------------------------------------------------------------------
     async fn update_group
     (

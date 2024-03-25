@@ -1,0 +1,8 @@
+entities:
+  group_member_invitation:
+    group_member_invitation_id:
+      name: "グループメンバー招待ID"
+    group_id:
+      name: "グループID"
+    account_id:
+      name: "アカウントID"
