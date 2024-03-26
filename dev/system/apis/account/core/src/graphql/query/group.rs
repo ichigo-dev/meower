@@ -47,7 +47,6 @@ impl GroupQuery
     ) -> Result<GroupModel>
     {
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-
         let group = match GroupEntity::find()
             .filter(GroupColumn::GroupName.eq(&group_name))
             .one(tsx)
@@ -90,14 +89,10 @@ impl GroupQuery
         let enforcer = enforcer.read().await;
         let group_member_id = group_member.group_member_id.to_string();
         let group_id = group.group_id.to_string();
-        let request =
-        (
-            &group_member_id,
-            &group_id,
-            format!("group:{}", &group_id),
-            "read",
-        );
-        if enforcer.enforce(request).unwrap() == false
+        let result = enforcer
+            .enforce((&group_member_id, &group_id, "group", "read"))
+            .unwrap();
+        if result == false
         {
             return Err(t!("system.error.unauthorized").into());
         }

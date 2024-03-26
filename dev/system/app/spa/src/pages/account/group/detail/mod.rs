@@ -88,10 +88,12 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
     let open_invite_dialog = create_signal(false);
     let invite_members = create_signal(Vec::new());
     let cloned_state = state.clone();
+    let search_keyword = create_signal("".to_string());
     let search_handler = move |values: FormValues, _|
     {
         let state = cloned_state.clone();
         let search = values.get("search").unwrap_or("".to_string());
+        search_keyword.set(search.clone());
 
         spawn_local_scoped(async move
         {
@@ -103,7 +105,6 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
             ).await
             {
                 invite_members.set(data.search_accounts);
-                open_invite_dialog.set(true);
             };
         });
     };
@@ -373,26 +374,16 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                 }
                 Box
                 {
-                    Form
+                    Button
                     (
-                        classes=StrProp("flex flex_row flex_align_center flex_gap_md").into(),
-                        on_submit=Box::new(search_handler),
+                        round=ButtonRound::Full.into(),
+                        on:click=move |_|
+                        {
+                            open_invite_dialog.set(true);
+                        },
                     )
                     {
-                        TextField
-                        (
-                            name=StrProp("search").into(),
-                            placeholder=StringProp(t!("pages.account.group.detail.members.invite.placeholder")).into(),
-                            full_width=BoolProp(true).into(),
-                        )
-                        Button
-                        (
-                            button_type=StrProp("submit").into(),
-                            round=ButtonRound::Full.into(),
-                        )
-                        {
-                            (t!("pages.account.group.detail.members.invite.button.search"))
-                        }
+                        (t!("pages.account.group.detail.members.invite.button.invite"))
                     }
                     Dialog
                     (
@@ -406,6 +397,31 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                         }
                         DialogBody
                         {
+                            Form
+                            (
+                                classes=StrProp("flex flex_row flex_align_center flex_gap_md margin_bottom").into(),
+                                on_submit=Box::new(search_handler),
+                            )
+                            {
+                                TextField
+                                (
+                                    name=StrProp("search").into(),
+                                    placeholder=StringProp(t!("pages.account.group.detail.members.invite.placeholder")).into(),
+                                    full_width=BoolProp(true).into(),
+                                )
+                                Button
+                                (
+                                    button_type=StrProp("submit").into(),
+                                    round=ButtonRound::Full.into(),
+                                    on:click=move |_|
+                                    {
+                                        open_invite_dialog.set(true);
+                                    },
+                                )
+                                {
+                                    (t!("pages.account.group.detail.members.invite.button.search"))
+                                }
+                            }
                             (
                                 if invite_members.get_clone().len() > 0
                                 {
@@ -460,6 +476,13 @@ pub async fn Detail<G: Html>( group_name: String ) -> View<G>
                                                 },
                                             )
                                         }
+                                    }
+                                }
+                                else if search_keyword.get_clone().len() <= 0
+                                {
+                                    view!
+                                    {
+                                        (t!("pages.account.group.detail.members.invite.dialog.no_keyword"))
                                     }
                                 }
                                 else

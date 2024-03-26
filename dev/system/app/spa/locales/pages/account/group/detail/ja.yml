@@ -21,9 +21,11 @@ pages:
           invite:
             placeholder: "アカウント名で検索"
             button:
-              search: "メンバーを招待"
+              invite: "メンバーを招待"
+              search: "検索"
             dialog:
               head: "アカウントをグループに招待"
+              no_keyword: "アカウント名を入力してください"
               not_found: "アカウントが見つかりませんでした"
               button:
                 cancel: "キャンセル"

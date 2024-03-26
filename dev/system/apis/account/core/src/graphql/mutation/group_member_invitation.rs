@@ -16,7 +16,7 @@ use meower_shared::JwtClaims;
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
-use casbin::{ CoreApi, Enforcer, MgmtApi };
+use casbin::{ CoreApi, Enforcer };
 use rust_i18n::t;
 use sea_orm::{
     ActiveValue,
