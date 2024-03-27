@@ -16,7 +16,7 @@ use meower_shared::JwtClaims;
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
-use casbin::{ CoreApi, Enforcer };
+use casbin::{ CoreApi, Enforcer, Filter };
 use rust_i18n::t;
 use sea_orm::{
     ActiveValue,
@@ -102,9 +102,13 @@ impl GroupMemberInvitationMutation
             None => return Err(t!("system.error.not_found").into()),
         };
         let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
-        let enforcer = enforcer.read().await;
+        let mut enforcer = enforcer.write().await;
         let group_member_id = group_member.group_member_id.to_string();
         let group_id = group.group_id.to_string();
+        let _ = enforcer.load_filtered_policy
+        (
+            Filter { p: vec![], g: vec![&group_member_id, &group_id] }
+        );
         let result = enforcer
             .enforce
             (

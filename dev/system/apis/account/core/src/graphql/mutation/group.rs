@@ -17,7 +17,7 @@ use meower_shared::JwtClaims;
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
-use casbin::{ CoreApi, Enforcer, MgmtApi };
+use casbin::{ CoreApi, Enforcer, Filter, MgmtApi };
 use rust_i18n::t;
 use sea_orm::{
     ActiveValue,
@@ -138,6 +138,7 @@ impl GroupMutation
         // Creates the default group policy.
         let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
         let mut enforcer = enforcer.write().await;
+        let _ = enforcer.load_policy();
         let group_objects =
         [
             "group",
@@ -146,6 +147,21 @@ impl GroupMutation
             "group_cover",
             "group_workspace",
         ];
+
+        // Admin role.
+        enforcer.add_policy(vec!
+        [
+            "admin".to_string(),
+            group.group_id.to_string(),
+            "*".to_string(),
+            "*".to_string(),
+        ]).await.unwrap();
+        enforcer.add_grouping_policy(vec!
+        [
+            group_member.group_member_id.to_string(),
+            group.group_id.to_string(),
+            "admin".to_string(),
+        ]).await.unwrap();
 
         // Member role.
         for group_object in group_objects
@@ -158,21 +174,6 @@ impl GroupMutation
                 "read".to_string(),
             ]).await.unwrap();
         }
-
-        // Admin role.
-        enforcer.add_policy(vec!
-        [
-            "admin".to_string(),
-            group.group_id.to_string(),
-            "*".to_string(),
-            "*".to_string(),
-        ]).await.unwrap();
-        enforcer.add_named_policy("g", vec!
-        [
-            group_member.group_member_id.to_string(),
-            group.group_id.to_string(),
-            "admin".to_string(),
-        ]).await.unwrap();
         enforcer.save_policy().await.unwrap();
 
         Ok(group)
@@ -223,9 +224,13 @@ impl GroupMutation
 
         // Checks the access.
         let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
-        let enforcer = enforcer.read().await;
+        let mut enforcer = enforcer.write().await;
         let group_member_id = group_member.group_member_id.to_string();
         let group_id = group.group_id.to_string();
+        let _ = enforcer.load_filtered_policy
+        (
+            Filter { p: vec![], g: vec![&group_member_id, &group_id] }
+        );
         let result = enforcer
             .enforce((&group_member_id, &group_id, "group", "update"))
             .unwrap();
