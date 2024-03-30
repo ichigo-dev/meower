@@ -68,8 +68,8 @@ impl GroupAvatarMutation
         (
             tsx,
             &mut enforcer,
-            &input.account_name,
             &input.group_name,
+            &input.account_name,
             &jwt_claims.public_user_id,
             "group_avatar",
             "create",
