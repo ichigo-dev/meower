@@ -2,7 +2,7 @@
 //! GroupAvatar mutation.
 //------------------------------------------------------------------------------
 
-use crate::{ Config, protect };
+use crate::{ Config, protect, utils };
 use meower_account_entity::group_avatar::ActiveModel as GroupAvatarActiveModel;
 use meower_account_entity::group_avatar::Entity as GroupAvatarEntity;
 use meower_entity_ext::ValidateExt;
@@ -11,7 +11,6 @@ use meower_shared::JwtClaims;
 use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
-use base64::prelude::*;
 use casbin::{ CoreApi, Enforcer };
 use object_store::ObjectStore;
 use object_store::path::Path as StoragePath;
@@ -120,22 +119,13 @@ impl GroupAvatarMutation
         // Uploads the new avatar.
         if let Some(base64) = input.base64
         {
-            let (prefix, base64) = match base64.split_once(",")
+            let base64_content = match utils::parse_base64(&base64)
             {
-                Some((content_type, base64)) => (content_type, base64),
-                None => return Err(t!("system.error.invalid_format").into()),
+                Ok(base64_content) => base64_content,
+                Err(e) => return Err(e.into()),
             };
-            let content_type = prefix
-                .split(";")
-                .next()
-                .unwrap()
-                .split(":")
-                .last()
-                .unwrap();
-            let binary = BASE64_STANDARD.decode(base64.as_bytes()).unwrap();
-            let file_len = binary.len().try_into().unwrap_or_default();
 
-            if content_type.starts_with("image/") == false
+            if base64_content.content_type.starts_with("image/") == false
             {
                 return Err(t!("system.error.invalid_format").into());
             }
@@ -144,9 +134,9 @@ impl GroupAvatarMutation
             let avatar = GroupAvatarActiveModel
             {
                 group_id: ActiveValue::Set(group_id),
-                content_type: ActiveValue::Set(content_type.to_string()),
+                content_type: ActiveValue::Set(base64_content.content_type),
                 file_name: ActiveValue::Set(input.file_name.unwrap_or_default()),
-                file_size: ActiveValue::Set(file_len),
+                file_size: ActiveValue::Set(base64_content.file_size),
                 ..Default::default()
             };
             let avatar = match avatar.validate_and_insert(tsx).await
@@ -159,7 +149,9 @@ impl GroupAvatarMutation
             (
                 format!("{}/{}", config.group_avatar_path, avatar.file_key)
             );
-            if let Err(e) = storage.put(&avatar_path, binary.into()).await
+            if let Err(e) = storage
+                .put(&avatar_path, base64_content.binary.into())
+                .await
             {
                 avatar.delete(tsx).await.unwrap();
                 return Err(e.to_string().into());

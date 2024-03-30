@@ -8,6 +8,7 @@ mod handlers;
 mod layers;
 mod protect;
 mod state;
+mod utils;
 
 use handlers::*;
 pub(crate) use config::Config;
