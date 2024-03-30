@@ -2,15 +2,9 @@
 //! GroupAvatar mutation.
 //------------------------------------------------------------------------------
 
-use crate::Config;
-use meower_account_entity::account::Column as AccountColumn;
-use meower_account_entity::account::Entity as AccountEntity;
-use meower_account_entity::group::Column as GroupColumn;
-use meower_account_entity::group::Entity as GroupEntity;
+use crate::{ Config, protect };
 use meower_account_entity::group_avatar::ActiveModel as GroupAvatarActiveModel;
 use meower_account_entity::group_avatar::Entity as GroupAvatarEntity;
-use meower_account_entity::group_member::Column as GroupMemberColumn;
-use meower_account_entity::group_member::Entity as GroupMemberEntity;
 use meower_entity_ext::ValidateExt;
 use meower_shared::JwtClaims;
 
@@ -18,17 +12,14 @@ use std::sync::Arc;
 
 use async_graphql::{ Context, Object, InputObject, Result };
 use base64::prelude::*;
-use casbin::{ CoreApi, Enforcer, Filter };
+use casbin::{ CoreApi, Enforcer };
 use object_store::ObjectStore;
 use object_store::path::Path as StoragePath;
 use rust_i18n::t;
 use sea_orm::{
     ActiveValue,
-    ColumnTrait,
     DatabaseTransaction,
-    EntityTrait,
     ModelTrait,
-    QueryFilter,
 };
 use tokio::sync::RwLock;
 
@@ -39,6 +30,7 @@ use tokio::sync::RwLock;
 #[derive(InputObject, Debug)]
 struct UploadGroupAvatarInput
 {
+    account_name: String,
     group_name: String,
     file_name: Option<String>,
     base64: Option<String>,
@@ -69,55 +61,26 @@ impl GroupAvatarMutation
         let config = ctx.data::<Config>().unwrap();
         let storage = ctx.data::<Arc<Box<dyn ObjectStore>>>().unwrap().as_ref();
 
-        let group = match GroupEntity::find()
-            .filter(GroupColumn::GroupName.eq(input.group_name))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(group) => group,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
+        // Protects the access.
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-        let account = match AccountEntity::find()
-            .filter(AccountColumn::PublicUserId.eq(&jwt_claims.public_user_id))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account) => account,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
-        let group_member = match GroupMemberEntity::find()
-            .filter(GroupMemberColumn::GroupId.eq(group.group_id))
-            .filter(GroupMemberColumn::AccountId.eq(account.account_id))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(group_member) => group_member,
-            None => return Err(t!("system.error.unauthorized").into()),
-        };
-
-        // Checks the access.
         let enforcer = ctx.data::<Arc<RwLock<Enforcer>>>().unwrap();
         let mut enforcer = enforcer.write().await;
-        let group_member_id = group_member.group_member_id.to_string();
-        let group_id = group.group_id.to_string();
-        let _ = enforcer.load_filtered_policy
+        let (group, group_member) = match protect::enforce_group_member
         (
-            Filter { p: vec![], g: vec![&group_member_id, &group_id] }
-        );
-        let result = enforcer
-            .enforce((&group_member_id, &group_id, "group_avatar", "create"))
-            .unwrap();
-        if result == false
+            tsx,
+            &mut enforcer,
+            &input.account_name,
+            &input.group_name,
+            &jwt_claims.public_user_id,
+            "group_avatar",
+            "create",
+        ).await
         {
-            return Err(t!("system.error.unauthorized").into());
-        }
+            Ok((group, _, group_member)) => (group, group_member),
+            Err(e) => return Err(e.into()),
+        };
 
+        // Deletes the existing avatar.
         if input.base64.is_some() || input.delete_file
         {
             if let Some(exists_avatar) = group
@@ -127,10 +90,13 @@ impl GroupAvatarMutation
                 .unwrap()
             {
                 let result = enforcer
-                    .enforce
+                    .enforce(
                     (
-                        (&group_member_id, &group_id, "group_avatar", "delete")
-                    )
+                        &group_member.group_member_id,
+                        &group.group_id,
+                        "group_avatar",
+                        "delete",
+                    ))
                     .unwrap();
                 if result == false
                 {
@@ -151,6 +117,7 @@ impl GroupAvatarMutation
             };
         }
 
+        // Uploads the new avatar.
         if let Some(base64) = input.base64
         {
             let (prefix, base64) = match base64.split_once(",")

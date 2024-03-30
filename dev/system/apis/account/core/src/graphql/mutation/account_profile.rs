@@ -2,11 +2,7 @@
 //! AccountProfile mutation.
 //------------------------------------------------------------------------------
 
-use crate::Config;
-use meower_account_entity::account::Column as AccountColumn;
-use meower_account_entity::account::Entity as AccountEntity;
-use meower_account_entity::account_profile::Column as AccountProfileColumn;
-use meower_account_entity::account_profile::Entity as AccountProfileEntity;
+use crate::{ Config, protect };
 use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
 use meower_account_entity::account_profile::Gender as AccountProfileGender;
 use meower_account_entity::account_profile::Model as AccountProfileModel;
@@ -21,13 +17,7 @@ use async_graphql::{ Context, Object, InputObject, Result };
 use object_store::ObjectStore;
 use object_store::path::Path as StoragePath;
 use rust_i18n::t;
-use sea_orm::{
-    ActiveValue,
-    ColumnTrait,
-    DatabaseTransaction,
-    EntityTrait,
-    QueryFilter,
-};
+use sea_orm::{ ActiveValue, DatabaseTransaction };
 use sea_orm::entity::prelude::*;
 
 
@@ -84,24 +74,21 @@ impl AccountProfileMutation
         input: CreateAccountProfileInput,
     ) -> Result<AccountProfileModel>
     {
+        // Protects the access.
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let account = match AccountEntity::find()
-            .filter(AccountColumn::AccountName.eq(&input.account_name))
-            .one(tsx)
-            .await
-            .unwrap()
+        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
+        let account = match protect::check_user_account
+        (
+            tsx,
+            &input.account_name,
+            &jwt_claims.public_user_id,
+        ).await
         {
-            Some(account) => account,
-            None => return Err(t!("system.error.not_found").into()),
+            Ok(account) => account,
+            Err(e) => return Err(e.into()),
         };
 
-        // Protects the access.
-        let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-        if jwt_claims.public_user_id != account.public_user_id
-        {
-            return Err(t!("system.error.unauthorized").into());
-        }
-
+        // Creates an account profile.
         let account_profile = AccountProfileActiveModel
         {
             account_id: ActiveValue::Set(account.account_id),
@@ -137,33 +124,21 @@ impl AccountProfileMutation
         input: UpdateAccountProfileInput,
     ) -> Result<AccountProfileModel>
     {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let account_profile = match AccountProfileEntity::find()
-            .filter(AccountProfileColumn::Token.eq(&input.token))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account_profile) => account_profile,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
-        let account = match account_profile.find_related(AccountEntity)
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account) => account,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
         // Protects the access.
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-        if jwt_claims.public_user_id != account.public_user_id
+        let account_profile = match protect::check_user_account_profile
+        (
+            tsx,
+            &input.token,
+            &jwt_claims.public_user_id,
+        ).await
         {
-            return Err(t!("system.error.unauthorized").into());
-        }
+            Ok((_, account_profile)) => account_profile,
+            Err(e) => return Err(e.into()),
+        };
 
+        // Updates the account profile.
         let mut account_profile: AccountProfileActiveModel
             = account_profile.into();
         account_profile.name = ActiveValue::Set(input.name);
@@ -198,32 +173,19 @@ impl AccountProfileMutation
         token: String,
     ) -> Result<bool>
     {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let account_profile = match AccountProfileEntity::find()
-            .filter(AccountProfileColumn::Token.eq(&token))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account_profile) => account_profile,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
-        let account = match account_profile.find_related(AccountEntity)
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account) => account,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
         // Protects the access.
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-        if jwt_claims.public_user_id != account.public_user_id
+        let (account, account_profile) = match protect::check_user_account_profile
+        (
+            tsx,
+            &token,
+            &jwt_claims.public_user_id,
+        ).await
         {
-            return Err(t!("system.error.unauthorized").into());
-        }
+            Ok((account, account_profile)) => (account, account_profile),
+            Err(e) => return Err(e.into()),
+        };
 
         // The default account profile cannot be deleted.
         let default_account_profile_id = account.default_account_profile_id;

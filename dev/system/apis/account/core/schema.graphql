@@ -359,6 +359,7 @@ Inputs.
 input InviteGroupMemberInput {
 	groupName: String!
 	accountName: String!
+	selectedAccountName: String!
 }
 
 """
@@ -519,6 +520,7 @@ input UpdateAccountProfileInput {
 }
 
 input UpdateGroupInput {
+	accountName: String!
 	groupName: String!
 	name: String!
 	description: String
@@ -554,6 +556,7 @@ input UploadCoverInput {
 Inputs.
 """
 input UploadGroupAvatarInput {
+	accountName: String!
 	groupName: String!
 	fileName: String
 	base64: String
@@ -564,6 +567,7 @@ input UploadGroupAvatarInput {
 Inputs.
 """
 input UploadGroupCoverInput {
+	accountName: String!
 	groupName: String!
 	fileName: String
 	base64: String

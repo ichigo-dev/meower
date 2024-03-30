@@ -2,10 +2,7 @@
 //! AccountProfileAvatar mutation.
 //------------------------------------------------------------------------------
 
-use crate::Config;
-use meower_account_entity::account::Entity as AccountEntity;
-use meower_account_entity::account_profile::Column as AccountProfileColumn;
-use meower_account_entity::account_profile::Entity as AccountProfileEntity;
+use crate::{ Config, protect };
 use meower_account_entity::account_profile_avatar::ActiveModel as AccountProfileAvatarActiveModel;
 use meower_account_entity::account_profile_avatar::Entity as AccountProfileAvatarEntity;
 use meower_entity_ext::ValidateExt;
@@ -20,11 +17,8 @@ use object_store::path::Path as StoragePath;
 use rust_i18n::t;
 use sea_orm::{
     ActiveValue,
-    ColumnTrait,
     DatabaseTransaction,
-    EntityTrait,
     ModelTrait,
-    QueryFilter,
 };
 
 
@@ -63,33 +57,19 @@ impl AccountProfileAvatarMutation
         input: UploadAvatarInput,
     ) -> Result<bool>
     {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let account_profile = match AccountProfileEntity::find()
-            .filter(AccountProfileColumn::Token.eq(input.account_profile_token))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account_profile) => account_profile,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
-        let account = match account_profile
-            .find_related(AccountEntity)
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account) => account,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
         // Protects the access.
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-        if jwt_claims.public_user_id != account.public_user_id
+        let account_profile = match protect::check_user_account_profile
+        (
+            tsx,
+            &input.account_profile_token,
+            &jwt_claims.public_user_id,
+        ).await
         {
-            return Err(t!("system.error.unauthorized").into());
-        }
+            Ok((_, account_profile)) => account_profile,
+            Err(e) => return Err(e.into()),
+        };
 
         // Deletes the existing avatar.
         let config = ctx.data::<Config>().unwrap();

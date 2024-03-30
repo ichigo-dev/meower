@@ -2,9 +2,8 @@
 //! Account mutation.
 //------------------------------------------------------------------------------
 
+use crate::protect;
 use meower_account_entity::account::ActiveModel as AccountActiveModel;
-use meower_account_entity::account::Column as AccountColumn;
-use meower_account_entity::account::Entity as AccountEntity;
 use meower_account_entity::account::Model as AccountModel;
 use meower_account_entity::account_profile::ActiveModel as AccountProfileActiveModel;
 use meower_account_entity::account_profile::Column as AccountProfileColumn;
@@ -74,23 +73,19 @@ impl AccountMutation
         account_name: String,
     ) -> Result<AccountModel>
     {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let account = match AccountEntity::find()
-            .filter(AccountColumn::AccountName.eq(account_name))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account) => account,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
         // Protects the access.
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-        if account.public_user_id != jwt_claims.public_user_id
+        let account = match protect::check_user_account
+        (
+            tsx,
+            &account_name,
+            &jwt_claims.public_user_id,
+        ).await
         {
-            return Err(t!("system.error.unauthorized").into());
-        }
+            Ok(account) => account,
+            Err(e) => return Err(e.into()),
+        };
 
         // Updates the last login time.
         let now = Utc::now().naive_utc();
@@ -124,6 +119,7 @@ impl AccountMutation
             return Err(t!("system.error.unauthorized").into());
         }
 
+        // Creates an account.
         let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let account = AccountActiveModel
         {
@@ -209,23 +205,19 @@ impl AccountMutation
         input: UpdateAccountInput,
     ) -> Result<AccountModel>
     {
-        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
-        let account = match AccountEntity::find()
-            .filter(AccountColumn::AccountName.eq(input.account_name))
-            .one(tsx)
-            .await
-            .unwrap()
-        {
-            Some(account) => account,
-            None => return Err(t!("system.error.not_found").into()),
-        };
-
         // Protects the access.
+        let tsx = ctx.data::<Arc<DatabaseTransaction>>().unwrap().as_ref();
         let jwt_claims = ctx.data::<JwtClaims>().unwrap();
-        if account.public_user_id != jwt_claims.public_user_id
+        let account = match protect::check_user_account
+        (
+            tsx,
+            &input.account_name,
+            &jwt_claims.public_user_id,
+        ).await
         {
-            return Err(t!("system.error.unauthorized").into());
-        }
+            Ok(account) => account,
+            Err(e) => return Err(e.into()),
+        };
 
         // Updates the account.
         let mut account: AccountActiveModel = account.into();

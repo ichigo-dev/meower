@@ -6,6 +6,7 @@ mod config;
 mod graphql;
 mod handlers;
 mod layers;
+mod protect;
 mod state;
 
 use handlers::*;

@@ -109,10 +109,20 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
             None => None,
         };
 
+        let selected_account = match state.selected_account.get_clone()
+        {
+            Some(selected_account) => selected_account,
+            None =>
+            {
+                alert_message.set(t!("pages.account.profile.components.account_profile_form.error.account_not_selected"));
+                return;
+            },
+        };
         if let Some(group_name) = cloned_group_name.clone()
         {
             let update_group_input = update_group::UpdateGroupInput
             {
+                account_name: selected_account.account_name.clone(),
                 group_name: group_name.clone(),
                 name: values.get("name").unwrap_or("".to_string()),
                 description: values.get("description").clone(),
@@ -126,6 +136,7 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
 
             let upload_group_avatar_input = update_group::UploadGroupAvatarInput
             {
+                account_name: selected_account.account_name.clone(),
                 group_name: group_name.clone(),
                 file_name: upload_avatar_file_name.get_clone(),
                 base64: upload_avatar_base64.get_clone(),
@@ -134,6 +145,7 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
 
             let upload_group_cover_input = update_group::UploadGroupCoverInput
             {
+                account_name: selected_account.account_name.clone(),
                 group_name: group_name.clone(),
                 file_name: upload_cover_file_name.get_clone(),
                 base64: upload_cover_base64.get_clone(),
@@ -173,15 +185,6 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
         }
         else
         {
-            let selected_account = match state.selected_account.get_clone()
-            {
-                Some(selected_account) => selected_account,
-                None =>
-                {
-                    alert_message.set(t!("pages.account.profile.components.account_profile_form.error.account_not_selected"));
-                    return;
-                },
-            };
             let create_group_input = create_group::CreateGroupInput
             {
                 account_name: selected_account.account_name.clone(),
@@ -212,6 +215,7 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
                     {
                         let upload_group_avatar_input = create_group_additional::UploadGroupAvatarInput
                         {
+                            account_name: selected_account.account_name.clone(),
                             group_name: data.create_group.group_name.clone(),
                             file_name: upload_avatar_file_name.get_clone(),
                             base64: upload_avatar_base64.get_clone(),
@@ -220,6 +224,7 @@ pub fn GroupForm<G: Html>( props: GroupFormProps ) -> View<G>
 
                         let upload_group_cover_input = create_group_additional::UploadGroupCoverInput
                         {
+                            account_name: selected_account.account_name.clone(),
                             group_name: data.create_group.group_name.clone(),
                             file_name: upload_cover_file_name.get_clone(),
                             base64: upload_cover_base64.get_clone(),
